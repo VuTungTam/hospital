@@ -1,0 +1,17 @@
+D:\App\Visual Studio\hospital\Hospital.Resource\bin\Debug\net6.0\Hospital.Resource.deps.json
+D:\App\Visual Studio\hospital\Hospital.Resource\bin\Debug\net6.0\Hospital.Resource.dll
+D:\App\Visual Studio\hospital\Hospital.Resource\bin\Debug\net6.0\Hospital.Resource.pdb
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.GeneratedMSBuildEditorConfig.editorconfig
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.AssemblyInfoInputs.cache
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.AssemblyInfo.cs
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.csproj.CoreCompileInputs.cache
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.dll
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\refint\Hospital.Resource.dll
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.pdb
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\ref\Hospital.Resource.dll
+D:\App\Visual Studio\hospital\Hospital.Resource\bin\Debug\net6.0\en-US\Hospital.Resource.resources.dll
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.Properties.Resources.resources
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.Properties.Resources.vn-VN.resources
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.Properties.Resource.en-US.resources
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\Hospital.Resource.csproj.GenerateResource.cache
+D:\App\Visual Studio\hospital\Hospital.Resource\obj\Debug\net6.0\en-US\Hospital.Resource.resources.dll
