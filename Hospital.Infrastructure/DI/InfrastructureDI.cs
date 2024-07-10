@@ -30,8 +30,6 @@ namespace Hospital.Infrastructure.DI
             //Social Network
             services.AddScoped<ISocialNetworkReadRepository, SocialNetworkReadRepository>();
             services.AddScoped<ISocialNetworkWriteRepository, SocialNetworkWriteRepository>();
-
-            services.AddScoped<IDateService, DateService>();
             
             return services;
         }

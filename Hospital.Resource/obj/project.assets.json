@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj",
+      "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
       "projectName": "Hospital.Resource",
-      "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj",
+      "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
       "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-      "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\obj\\",
+      "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",

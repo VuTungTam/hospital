@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\App\\Visual Studio\\hospital\\Hospital.Api\\Hospital.Api.csproj": {}
+    "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj": {}
   },
   "projects": {
-    "D:\\App\\Visual Studio\\hospital\\Hospital.Api\\Hospital.Api.csproj": {
+    "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.Api\\Hospital.Api.csproj",
+        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj",
         "projectName": "Hospital.Api",
-        "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Api\\Hospital.Api.csproj",
+        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj",
         "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Api\\obj\\",
+        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,14 +28,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj"
               },
-              "D:\\App\\Visual Studio\\hospital\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj"
               },
-              "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
               }
             }
           }
@@ -93,14 +93,14 @@
         }
       }
     },
-    "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj": {
+    "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj",
+        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj",
         "projectName": "Hospital.Application",
-        "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj",
+        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj",
         "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\obj\\",
+        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -117,8 +117,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\hospital\\Hospital.Domain\\Hospital.Domain.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Domain\\Hospital.Domain.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj"
               }
             }
           }
@@ -157,14 +157,14 @@
         }
       }
     },
-    "D:\\App\\Visual Studio\\hospital\\Hospital.Domain\\Hospital.Domain.csproj": {
+    "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.Domain\\Hospital.Domain.csproj",
+        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj",
         "projectName": "Hospital.Domain",
-        "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Domain\\Hospital.Domain.csproj",
+        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj",
         "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Domain\\obj\\",
+        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -181,8 +181,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
               }
             }
           }
@@ -221,14 +221,14 @@
         }
       }
     },
-    "D:\\App\\Visual Studio\\hospital\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
+    "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
+        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
         "projectName": "Hospital.Infrastructure",
-        "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
+        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Infrastructure\\obj\\",
+        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -245,8 +245,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Application\\Hospital.Application.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj"
               }
             }
           }
@@ -285,14 +285,14 @@
         }
       }
     },
-    "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj": {
+    "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj",
+        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
         "projectName": "Hospital.Resource",
-        "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj",
+        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
         "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\obj\\",
+        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -345,14 +345,14 @@
         }
       }
     },
-    "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
+    "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
+        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
         "projectName": "Hospital.SharedKernel",
-        "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
+        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
         "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\hospital\\Hospital.ShareKernel\\obj\\",
+        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -369,8 +369,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\hospital\\Hospital.Resource\\Hospital.Resource.csproj"
+              "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj": {
+                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj"
               }
             }
           }
@@ -413,6 +413,22 @@
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[10.0.1, )"
+            },
+            "Microsoft.AspNetCore": {
+              "target": "Package",
+              "version": "[2.1.7, )"
+            },
+            "Microsoft.AspNetCore.Localization": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.AspNetCore.Localization.Routing": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

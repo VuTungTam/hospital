@@ -27,11 +27,6 @@ namespace Hospital.Infra.Repositories
                 _dbContext.Database.BeginTransaction();
             }
         }
-
-        public WriteRepository(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
         public IUnitOfWork UnitOfWork => _dbContext;
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {

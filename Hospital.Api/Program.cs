@@ -1,6 +1,6 @@
 using Hospital.Application.DI;
 using Hospital.Infrastructure.DI;
-
+using Hospital.SharedKernel.Configures;
 namespace Hospital.Api
 {
     public class Program
@@ -20,6 +20,7 @@ namespace Hospital.Api
 
             builder.Services.AddInfrastructureService(builder.Configuration);
 
+            builder.Services.AddCoreService(builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
