@@ -1,8 +1,11 @@
-﻿using Hospital.Resource.Properties;
+﻿using Hospital.Domain.Constants;
+using Hospital.Domain.Specifications;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Repositories.Interface;
+using Hospital.SharedKernel.Application.Repositories.Models;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Libraries.Attributes;
 using Hospital.SharedKernel.Specifications.Interfaces;
@@ -35,7 +38,7 @@ namespace Hospital.Infra.Repositories
 
         public virtual async Task<T> GetByIdAsync(long id, string[] includes = null, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
+            return await FindBySpecificationAsync(new GetByIdSpecification<T>(id), new QueryOption(includes), cancellationToken);
         }
 
         public virtual async Task<List<T>> GetByIdsAsync(IList<long> ids, string[] includes = null, CancellationToken cancellationToken = default)
@@ -54,14 +57,12 @@ namespace Hospital.Infra.Repositories
 
         public virtual async Task<int> GetCountAsync(Expression<Func<T, bool>> predicate = null, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.CountAsync(predicate, cancellationToken);
+            return await _dbSet.CountAsync(cancellationToken);
         }
 
         public virtual async Task<PagingResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec = null, CancellationToken cancellationToken = default)
         {
-            var guardExpression = GuardDataAccess(spec).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
-                         .Where(guardExpression)
                          .BuildOrderBy(pagination.Sorts);
 
             var data = await query.BuildLimit(pagination.Offset, pagination.Size)

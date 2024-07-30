@@ -2,14 +2,17 @@
 using Polly;
 using Serilog;
 using Hospital.SharedKernel.Runtime.Exceptions;
+using Hospital.Resource.Properties;
+using Microsoft.Extensions.Localization;
 
 namespace Hospital.SharedKernel.Application.CQRS.Commands.Base
 {
     public abstract class BaseCommandHandler
     {
-        public BaseCommandHandler()
+        protected readonly IStringLocalizer<Resources> _localizer;
+        public BaseCommandHandler(IStringLocalizer<Resources> localizer)
         {
-
+            _localizer = localizer;
         }
         protected virtual AsyncRetryPolicy CreatePolicy(int retryCount = 1)
         {

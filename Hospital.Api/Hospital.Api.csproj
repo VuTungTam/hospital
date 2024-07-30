@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
@@ -19,6 +19,10 @@
 		<ProjectReference Include="..\Hospital.Application\Hospital.Application.csproj" />
 		<ProjectReference Include="..\Hospital.Infrastructure\Hospital.Infrastructure.csproj" />
 		<ProjectReference Include="..\Hospital.ShareKernel\Hospital.SharedKernel.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Migrations\" />
 	</ItemGroup>
 
 </Project>

@@ -28,5 +28,7 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
         void Delete(IEnumerable<T> entities);
 
         Task DeleteAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+
+        Task RollbackAsync(CancellationToken cancellationToken);
     }
 }

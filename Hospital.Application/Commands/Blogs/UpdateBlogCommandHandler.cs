@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Blogs;
 using Hospital.Domain.Entities.Blogs;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Commands.Blogs
 {
@@ -10,7 +12,8 @@ namespace Hospital.Application.Commands.Blogs
     {
         private readonly IMapper _mapper;
         private readonly IBlogWriteRepository _blogWriteRepository;
-        public UpdateBlogCommandHandler(IBlogWriteRepository blogWriteRepository, IMapper mapper)
+        public UpdateBlogCommandHandler(IStringLocalizer<Resources> localizer, IBlogWriteRepository blogWriteRepository, IMapper mapper)
+            : base(localizer)
         {
             _blogWriteRepository = blogWriteRepository;
             _mapper = mapper;

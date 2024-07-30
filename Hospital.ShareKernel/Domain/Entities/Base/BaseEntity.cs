@@ -1,5 +1,6 @@
 ﻿using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Domain.Events.BaseEvents;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -8,7 +9,7 @@ namespace Hospital.SharedKernel.Domain.Entities.Base
     public class BaseEntity : Entity, IBaseEntity
     {
         private List<DomainEvent> _domainEvents;
-        [System.ComponentModel.DataAnnotations.Key]
+        [Key]
         public long Id { get; set; }
 
         [NotMapped, JsonIgnore]

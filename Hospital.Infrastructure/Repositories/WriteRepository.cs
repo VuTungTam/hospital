@@ -25,6 +25,7 @@ namespace Hospital.Infra.Repositories
             if (_dbContext.Database.CurrentTransaction == null)
             {
                 _dbContext.Database.BeginTransaction();
+                
             }
         }
         public IUnitOfWork UnitOfWork => _dbContext;
@@ -34,6 +35,7 @@ namespace Hospital.Infra.Repositories
         }
         public virtual void Add(T entity)
         {
+            entity.Id = 0;
             _dbSet.Add(entity);
         }
 
@@ -103,10 +105,12 @@ namespace Hospital.Infra.Repositories
         #region Dispose
         public void Dispose()
         {
-            if (_dbContext.Database.CurrentTransaction != null)
-            {
-                _dbContext.Database.CurrentTransaction.Dispose();
-            }
+            _dbContext.Database.CurrentTransaction?.Dispose();
+        }
+
+        public virtual async Task RollbackAsync(CancellationToken cancellationToken)
+        {
+           await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
         }
         #endregion
     }

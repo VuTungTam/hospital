@@ -30,6 +30,9 @@ namespace Hospital.Infra.EFConfigurations.EntityTypeConfigurations
 
             builder.Property(x => x.Modified)
                    .HasColumnType("DATETIME");
+
+            builder.Property(x => x.Deleted)
+                   .HasColumnType("DATETIME");
         }
     }
 }

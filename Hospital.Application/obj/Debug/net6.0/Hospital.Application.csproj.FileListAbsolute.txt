@@ -39,3 +39,4 @@ D:\App\Visual Studio\clone\Hospital.Application\obj\Debug\net6.0\Hospital.Applic
 D:\App\Visual Studio\clone\Hospital.Application\obj\Debug\net6.0\refint\Hospital.Application.dll
 D:\App\Visual Studio\clone\Hospital.Application\obj\Debug\net6.0\Hospital.Application.pdb
 D:\App\Visual Studio\clone\Hospital.Application\obj\Debug\net6.0\ref\Hospital.Application.dll
+D:\App\Visual Studio\clone\Hospital.Application\bin\Debug\net6.0\vi-VN\Hospital.Resource.resources.dll

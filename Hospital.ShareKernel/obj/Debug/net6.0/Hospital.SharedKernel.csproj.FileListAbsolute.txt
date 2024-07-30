@@ -35,3 +35,4 @@ D:\App\Visual Studio\clone\Hospital.ShareKernel\bin\Debug\net6.0\en-US\Hospital.
 D:\App\Visual Studio\clone\Hospital.ShareKernel\obj\Debug\net6.0\Hospital.FF3127E2.Up2Date
 D:\App\Visual Studio\clone\Hospital.ShareKernel\obj\Debug\net6.0\Hospital.SharedKernel.genruntimeconfig.cache
 D:\App\Visual Studio\clone\Hospital.ShareKernel\obj\Debug\net6.0\ref\Hospital.SharedKernel.dll
+D:\App\Visual Studio\clone\Hospital.ShareKernel\bin\Debug\net6.0\vi-VN\Hospital.Resource.resources.dll

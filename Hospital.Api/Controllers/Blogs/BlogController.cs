@@ -1,10 +1,13 @@
-﻿using Hospital.Application.Commands.Blogs;
+﻿using FluentValidation;
+using Hospital.Application.Commands.Blogs;
 using Hospital.Application.Dtos.Blogs;
 using Hospital.Application.Queries.Blog.GetBlogById;
 using Hospital.Application.Queries.Blog.GetBlogs;
+using Hospital.Domain.Entities.Blogs;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Hospital.Api.Controllers.Blogs
 {
@@ -19,6 +22,7 @@ namespace Hospital.Api.Controllers.Blogs
         public virtual async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
             var query = new GetBlogQuery();
+
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
         [HttpGet("{id}")]

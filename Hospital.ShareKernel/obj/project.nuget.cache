@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "pC4/o/FTB1wZLJlgy55mHVib+bPx6kKszltV1uOnpUlC9/STct1OXDA58mainbibfhzgfFI1sPiDIL+tYP6JHQ==",
+  "dgSpecHash": "wHtexSW9SN84S5sv48BuqEuMQ0DhGI5PCeruSjFQ+2XoxnoF+Ymy2uPBkRrqI9nLcE6zqLc4qUih6WnG3DVIdQ==",
   "success": true,
   "projectFilePath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Welcome\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Welcome\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\Welcome\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Welcome\\.nuget\\packages\\fluentvalidation\\11.0.0\\fluentvalidation.11.0.0.nupkg.sha512",
+    "C:\\Users\\Welcome\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.0.0\\fluentvalidation.aspnetcore.11.0.0.nupkg.sha512",
     "C:\\Users\\Welcome\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.0.0\\fluentvalidation.dependencyinjectionextensions.11.0.0.nupkg.sha512",
     "C:\\Users\\Welcome\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Welcome\\.nuget\\packages\\idgen\\3.0.3\\idgen.3.0.3.nupkg.sha512",

@@ -35,3 +35,4 @@ D:\App\Visual Studio\clone\Hospital.Domain\obj\Debug\net6.0\Hospital.Domain.dll
 D:\App\Visual Studio\clone\Hospital.Domain\obj\Debug\net6.0\refint\Hospital.Domain.dll
 D:\App\Visual Studio\clone\Hospital.Domain\obj\Debug\net6.0\Hospital.Domain.pdb
 D:\App\Visual Studio\clone\Hospital.Domain\obj\Debug\net6.0\ref\Hospital.Domain.dll
+D:\App\Visual Studio\clone\Hospital.Domain\bin\Debug\net6.0\vi-VN\Hospital.Resource.resources.dll

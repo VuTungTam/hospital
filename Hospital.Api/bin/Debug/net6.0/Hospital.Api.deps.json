@@ -42,9 +42,29 @@
           }
         }
       },
+      "Dapper/2.0.123": {
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.123.33578"
+          }
+        }
+      },
       "FluentValidation/11.0.0": {
         "runtime": {
           "lib/net6.0/FluentValidation.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.0.0"
+          }
+        }
+      },
+      "FluentValidation.AspNetCore/11.0.0": {
+        "dependencies": {
+          "FluentValidation": "11.0.0",
+          "FluentValidation.DependencyInjectionExtensions": "11.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/FluentValidation.AspNetCore.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.0.0.0"
           }
@@ -1078,12 +1098,17 @@
         "resources": {
           "en-US/Hospital.Resource.resources.dll": {
             "locale": "en-US"
+          },
+          "vi-VN/Hospital.Resource.resources.dll": {
+            "locale": "vi-VN"
           }
         }
       },
       "Hospital.SharedKernel/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
+          "Dapper": "2.0.123",
+          "FluentValidation.AspNetCore": "11.0.0",
           "FluentValidation.DependencyInjectionExtensions": "11.0.0",
           "Hospital.Resource": "1.0.0",
           "IdGen": "3.0.3",
@@ -1100,6 +1125,7 @@
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "6.0.0",
           "Microsoft.Extensions.Configuration.Json": "6.0.0",
+          "Microsoft.Extensions.DependencyInjection": "6.0.1",
           "Microsoft.Extensions.Localization": "6.0.31",
           "Polly": "7.2.4",
           "Serilog": "4.0.0"
@@ -1130,12 +1156,26 @@
       "path": "automapper.extensions.microsoft.dependencyinjection/11.0.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512"
     },
+    "Dapper/2.0.123": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
+      "path": "dapper/2.0.123",
+      "hashPath": "dapper.2.0.123.nupkg.sha512"
+    },
     "FluentValidation/11.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-cD0VaOQfVZGxp3UFBDET5KztMe1W0QUgk7vP/e1zus0ofALqab5/B5S319+XEFvhw0KEStS3yfCDGpvQM10C6A==",
       "path": "fluentvalidation/11.0.0",
       "hashPath": "fluentvalidation.11.0.0.nupkg.sha512"
+    },
+    "FluentValidation.AspNetCore/11.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ld0kH/0BJXxF4vHlZRtpjghGA8eElOn/imgqYcFPJ602gVQcSDmsENxjHZx4kx/U89fNWwTA6Z2bcJcewm3DrQ==",
+      "path": "fluentvalidation.aspnetcore/11.0.0",
+      "hashPath": "fluentvalidation.aspnetcore.11.0.0.nupkg.sha512"
     },
     "FluentValidation.DependencyInjectionExtensions/11.0.0": {
       "type": "package",

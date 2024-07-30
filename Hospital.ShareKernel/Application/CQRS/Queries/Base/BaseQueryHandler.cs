@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Repositories.Interface;
+using Microsoft.Extensions.Localization;
 using Polly;
 using Polly.Retry;
 using Serilog;
@@ -9,9 +11,11 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries.Base
     public abstract class BaseQueryHandler
     {
         protected readonly IMapper _mapper;
-        protected BaseQueryHandler(IMapper mapper)
+        protected readonly IStringLocalizer<Resources> _localizer;
+        protected BaseQueryHandler(IMapper mapper, IStringLocalizer<Resources> localizer)
         {
             _mapper = mapper;
+            _localizer = localizer;
         }
         protected virtual AsyncRetryPolicy CreatePolicy()
         {

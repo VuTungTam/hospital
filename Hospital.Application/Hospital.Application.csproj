@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Common\Behaviours\" />
     <Folder Include="Common\Exceptions\" />
+    <Folder Include="Queries\Symptoms\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -43,3 +43,4 @@ D:\App\Visual Studio\clone\Hospital.Infrastructure\obj\Debug\net6.0\Hospital.Inf
 D:\App\Visual Studio\clone\Hospital.Infrastructure\obj\Debug\net6.0\refint\Hospital.Infrastructure.dll
 D:\App\Visual Studio\clone\Hospital.Infrastructure\obj\Debug\net6.0\Hospital.Infrastructure.pdb
 D:\App\Visual Studio\clone\Hospital.Infrastructure\obj\Debug\net6.0\ref\Hospital.Infrastructure.dll
+D:\App\Visual Studio\clone\Hospital.Infrastructure\bin\Debug\net6.0\vi-VN\Hospital.Resource.resources.dll

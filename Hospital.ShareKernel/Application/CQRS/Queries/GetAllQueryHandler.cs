@@ -4,6 +4,8 @@ using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using System.Resources;
+using Hospital.Resource.Properties;
+using Microsoft.Extensions.Localization;
 
 namespace Hospital.SharedKernel.Application.CQRS.Queries
 {
@@ -13,23 +15,23 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
     {
         protected readonly IReadRepository<T> _readRepository;
         public GetAllQueryHandler(
-
-        IMapper mapper,
-            TReadRepository readRepository
-        ) : base( mapper )
-        { 
+            IMapper mapper,
+            TReadRepository readRepository,
+            IStringLocalizer<Resources> localizer
+        ) : base(mapper, localizer)
+        {
             _readRepository = readRepository;
         }
 
         public async Task<List<TResponse>> Handle(GetAllQuery<T, TResponse> request, CancellationToken cancellationToken)
         {
             var entities = await _readRepository.GetAsync(cancellationToken: cancellationToken);
-            return _mapper.Map <List<TResponse>> (entities);
+            return _mapper.Map<List<TResponse>>(entities);
         }
     }
     public class GetAllQueryHandler<T, TResponse> : GetAllQueryHandler<T, TResponse, IReadRepository<T>> where T : BaseEntity
     {
-        public GetAllQueryHandler(IMapper mapper, IReadRepository<T> readRepository) : base(mapper, readRepository)
+        public GetAllQueryHandler(IMapper mapper, IReadRepository<T> readRepository, IStringLocalizer<Resources> localizer) : base(mapper, readRepository, localizer)
         {
         }
     }

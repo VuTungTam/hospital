@@ -394,6 +394,14 @@
               "target": "Package",
               "version": "[11.0.0, )"
             },
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.0.0, )"
@@ -459,6 +467,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.Localization": {
               "target": "Package",

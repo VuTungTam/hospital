@@ -13,6 +13,9 @@
         "resources": {
           "en-US/Hospital.Resource.resources.dll": {
             "locale": "en-US"
+          },
+          "vi-VN/Hospital.Resource.resources.dll": {
+            "locale": "vi-VN"
           }
         }
       }
