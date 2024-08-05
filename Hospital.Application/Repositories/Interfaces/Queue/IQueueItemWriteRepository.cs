@@ -5,5 +5,6 @@ namespace Hospital.Application.Repositories.Interfaces.Queue
 {
     public interface IQueueItemWriteRepository : IWriteRepository<QueueItem>
     {
+        
     }
 }

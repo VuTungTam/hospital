@@ -5,6 +5,8 @@ using Hospital.Domain.Entities.Declarations;
 using Hospital.Domain.Entities.Symptoms;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Domain.Entities.Users;
+using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -16,46 +18,30 @@ namespace Hospital.Application.Commands.Declarations
         private readonly IMapper _mapper;
         public readonly IDeclarationWriteRepository _declarationWriteRepository;
         public readonly ISymptomReadRepository _symptomReadRepository;
+        public readonly ILocationReadRepository _locationReadRepository;
         public AddDeclarationCommandHandler(
             IStringLocalizer<Resources> localizer,
             IDeclarationWriteRepository declarationWriteRepository,
             ISymptomReadRepository symptomReadRepository,
+            ILocationReadRepository locationReadRepository,
             IMapper mapper
             ) : base(localizer)
         {
             _declarationWriteRepository = declarationWriteRepository;
             _symptomReadRepository = symptomReadRepository;
             _mapper = mapper;
+            _locationReadRepository = locationReadRepository;
         }
 
         public async Task<long> Handle(AddDeclarationCommand request, CancellationToken cancellationToken)
         {
-            if ( !request.SymptomIds.Any()) {
-                throw new BadRequestException("Danh sách triệu chứng rỗng");
-            }
             var declaration = _mapper.Map<Declaration>(request.Dto);
+            declaration.Pname = await _locationReadRepository.GetNameByIdAsync(declaration.Pid, "province", cancellationToken);
+            declaration.Dname = await _locationReadRepository.GetNameByIdAsync(declaration.Did, "district", cancellationToken);
+            declaration.Wname = await _locationReadRepository.GetNameByIdAsync(declaration.Wid, "ward", cancellationToken);
             await _declarationWriteRepository.AddAsync(declaration, cancellationToken);
             long declarationId = declaration.Id;
-            declaration.DeclarationSymptom ??= new();
-            var symptoms = await _symptomReadRepository.GetByIdsAsync(request.SymptomIds, cancellationToken: cancellationToken);
-            foreach(var symptom in symptoms)
-            {
-                if(symptom == null)
-                {
-                    throw new BadRequestException("Triệu chứng không tồn tại");
-                }
-                else
-                {
-                    declaration.DeclarationSymptom.Add(new DeclarationSymptom { DeclarationId = declarationId, SymptomId = symptom.Id });
-                }
-            }
-            if (declaration == null)
-            {
-                throw new BadRequestException("Null");
-            }
-            await _declarationWriteRepository.UpdateAsync(declaration,cancellationToken: cancellationToken);
             return declarationId;
-            
         }
     }
 }

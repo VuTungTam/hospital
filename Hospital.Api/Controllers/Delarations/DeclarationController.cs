@@ -12,20 +12,21 @@ namespace Hospital.Api.Controllers.Delarations
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddDeclarationRequest
-    {
-        public DeclarationDto Declaration { get; set; }
-        public List<long> SymptomIds { get; set; }
-    }
     public class DeclarationController : ApiBaseController
     {
         public DeclarationController(IMediator mediator) : base(mediator)
         {
         }
         [HttpPost]
-        public virtual async Task<IActionResult> Add([FromBody] AddDeclarationRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Add(DeclarationDto declarationDto, CancellationToken cancellationToken = default)
         {
-            var command = new AddDeclarationCommand(request.Declaration, request.SymptomIds);
+            var command = new AddDeclarationCommand(declarationDto);
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
+        }
+        [HttpPost("add-symtom/{declarationId}")]
+        public virtual async Task<IActionResult> Add([FromRoute] long declarationId, [FromBody] List<long> symptomIds, CancellationToken cancellationToken = default)
+        {
+            var command = new AddSymptomForDeclarationCommand(declarationId, symptomIds);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
     }

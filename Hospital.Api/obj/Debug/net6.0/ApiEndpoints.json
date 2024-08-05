@@ -82,8 +82,29 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Hospital.Api.Controllers.Delarations.AddDeclarationRequest",
+        "Name": "declarationDto",
+        "Type": "Hospital.Application.Dtos.Declarations.DeclarationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Delarations.DeclarationController",
+    "Method": "Add",
+    "RelativePath": "api/Declaration/add-symtom/{declarationId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "declarationId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "symptomIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": true
       }
     ],
@@ -524,6 +545,95 @@
         "Name": "search",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "GetByDay",
+    "RelativePath": "api/Queue",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "created",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "Add",
+    "RelativePath": "api/Queue",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "DeclarationId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "GetByPosition",
+    "RelativePath": "api/Queue/{position}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "position",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "created",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "FinishCurrent",
+    "RelativePath": "api/Queue/complete",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "GetCurrentPossition",
+    "RelativePath": "api/Queue/current",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "RemovePosition",
+    "RelativePath": "api/Queue/remove{position}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "position",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

@@ -11,5 +11,6 @@ namespace Hospital.Infrastructure.Repositories.Queue
         public QueueItemWriteRepository(IServiceProvider serviceProvider, IStringLocalizer<Resources> localizer) : base(serviceProvider, localizer)
         {
         }
+
     }
 }

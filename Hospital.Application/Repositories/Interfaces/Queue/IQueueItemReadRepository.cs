@@ -6,6 +6,8 @@ namespace Hospital.Application.Repositories.Interfaces.Queue
     public interface IQueueItemReadRepository : IReadRepository<QueueItem>
     {
         Task<int> GetQuantityTodayAsync(CancellationToken cancellationToken);
-        Task<int> GetCurrentPositionAsync(CancellationToken cancellationToken);
+        Task<QueueItem> GetCurrentAsync(CancellationToken cancellationToken);
+        Task<QueueItem> GetByPositionAsync(int position, DateTime date, CancellationToken cancellationToken);
+        Task<List<QueueItem>> GetByDateAsync(DateTime date, CancellationToken cancellationToken);
     }
 }

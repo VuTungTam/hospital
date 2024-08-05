@@ -14,16 +14,26 @@ namespace Hospital.Infrastructure.Repositories.Queue
         {
         }
 
-        public async Task<int> GetCurrentPositionAsync(CancellationToken cancellationToken)
+        public async Task<List<QueueItem>> GetByDateAsync(DateTime date, CancellationToken cancellationToken)
         {
-            var item = await _dbContext.QueueItems.Where(q => q.State == 1).SingleOrDefaultAsync();
-            return item.Position;
+            return await _dbContext.QueueItems.Where(q => q.Created.Date == date.Date).ToListAsync(cancellationToken);
+        }
+
+        public async Task<QueueItem> GetByPositionAsync(int position, DateTime date, CancellationToken cancellationToken)
+        {
+            return await _dbContext.QueueItems.Where(q => q.Position == position && q.Created.Date == date.Date).SingleOrDefaultAsync(cancellationToken: cancellationToken);
+        }
+
+        public async Task<QueueItem> GetCurrentAsync(CancellationToken cancellationToken)
+        {
+            var item = await _dbContext.QueueItems.Where(q => q.State == 1 && q.Created.Date == DateTime.Now.Date).SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            return item;
         }
 
         public async Task<int> GetQuantityTodayAsync(CancellationToken cancellationToken)
         {
-            var today = DateOnly.FromDateTime(DateTime.Now);
-            return await _dbContext.QueueItems.Where(q => DateOnly.FromDateTime(q.Date) == today).CountAsync(cancellationToken: cancellationToken);
+            var today = DateTime.Today;
+            return await _dbContext.QueueItems.Where(q => q.Created.Date == today).CountAsync(cancellationToken: cancellationToken);
         }
     }
 }

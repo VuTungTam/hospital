@@ -1,4 +1,5 @@
 ﻿using Hospital.Domain.Entities.HeathServices;
+using Hospital.Domain.Entities.QueueItems;
 using Hospital.Domain.Entities.Symptoms;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
@@ -30,6 +31,7 @@ namespace Hospital.Domain.Entities.Declarations
         public long ServiceId { get; set; }
         public HealthService HealthService {  get; set; }
         public List<DeclarationSymptom> DeclarationSymptom { get; set; }
+        public List<QueueItem> QueueItems { get; set; }
         public DateTime? Modified { get; set; }
         public long? Modifier { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;

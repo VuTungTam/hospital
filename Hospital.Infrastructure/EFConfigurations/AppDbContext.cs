@@ -39,6 +39,7 @@ namespace Hospital.Infra.EFConfigurations
             modelBuilder.ApplyConfiguration(new ServiceTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthServiceEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new DeclarationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QueueItemEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 

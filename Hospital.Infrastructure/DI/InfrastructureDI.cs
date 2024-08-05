@@ -2,6 +2,7 @@
 using Hospital.Application.Repositories.Interfaces.Declarations;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Application.Repositories.Interfaces.Queue;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
@@ -12,6 +13,7 @@ using Hospital.Infrastructure.Repositories.Declarations;
 using Hospital.Infrastructure.Repositories.HealthFacilities;
 using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
+using Hospital.Infrastructure.Repositories.Queue;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
 using Hospital.Infrastructure.Repositories.Specilities;
@@ -74,6 +76,10 @@ namespace Hospital.Infrastructure.DI
             //Declaration
             services.AddScoped<IDeclarationReadRepository, DeclarationReadRepository>();
             services.AddScoped<IDeclarationWriteRepository, DeclarationWriteRepository>();
+
+            //Queue
+            services.AddScoped<IQueueItemReadRepository, QueueItemReadRepository>();
+            services.AddScoped<IQueueItemWriteRepository, QueueItemWriteRepository>();
             return services;
         }
     }

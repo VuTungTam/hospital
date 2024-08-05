@@ -399,6 +399,37 @@ namespace Hospital.Api.Migrations
                     b.ToTable("ServiceTypes", (string)null);
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entities.QueueItems.QueueItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long>("DeclarationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeclarationId");
+
+                    b.ToTable("QueueItems", (string)null);
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.SocialNetworks.SocialNetwork", b =>
                 {
                     b.Property<long>("Id")
@@ -685,6 +716,17 @@ namespace Hospital.Api.Migrations
                     b.Navigation("ServiceType");
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entities.QueueItems.QueueItem", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.Declarations.Declaration", "Declaration")
+                        .WithMany("QueueItems")
+                        .HasForeignKey("DeclarationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Declaration");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.FacilitySpecialty", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.HeathFacilities.HealthFacility", "Facility")
@@ -707,6 +749,8 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.Declarations.Declaration", b =>
                 {
                     b.Navigation("DeclarationSymptom");
+
+                    b.Navigation("QueueItems");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HeathFacilities.FacilityCategory", b =>

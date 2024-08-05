@@ -29,14 +29,16 @@ namespace Hospital.SharedKernel.Configures
             services.AddLocalization();
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.DefaultRequestCulture = new RequestCulture(culture: "vi-VN");
+                options.DefaultRequestCulture = new RequestCulture(culture: "en-US");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
                 options.RequestCultureProviders = new[] { new RouteDataRequestCultureProvider() };
+                
             });
 
             return services;
         }
+
         public static IServiceCollection AddCoreBehaviors(this IServiceCollection services)
         {
             return services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
