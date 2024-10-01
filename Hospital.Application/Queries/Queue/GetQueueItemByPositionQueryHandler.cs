@@ -23,7 +23,7 @@ namespace Hospital.Application.Queries.Queue
 
         public async Task<QueueItemDto> Handle(GetQueueItemByPositionQuery request, CancellationToken cancellationToken)
         {
-            var queueItem = await _readQueueItemRepository.GetByPositionAsync(request.Position, request.Created, cancellationToken);
+            var queueItem = await _readQueueItemRepository.GetByPositionAsync(request.ServiceId, request.Position, request.Created, cancellationToken);
             if (queueItem == null)
             {
                 throw new BadRequestException("Số thứ tự không tồn tại");

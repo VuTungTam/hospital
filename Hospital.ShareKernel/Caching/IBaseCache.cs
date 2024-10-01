@@ -2,8 +2,8 @@
 {
     public interface IBaseCache
     {
-        TimeSpan? DefaultAbsoluteExpireTime { get; }
+        TimeSpan? DefaultAbsoluteExpireTime { get; }//Thời gian hết hạn tuyệt đối
 
-        TimeSpan? DefaultSlidingExpireTime { get; }
+        TimeSpan? DefaultSlidingExpireTime { get; }// Thời gian hết hạn sẽ được làm mới khi có truy cập
     }
 }

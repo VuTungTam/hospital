@@ -1,5 +1,5 @@
 ﻿using Hospital.Domain.Entities.Declarations;
-using Hospital.Domain.Entities.HeathServices;
+using Hospital.Domain.Entities.HealthServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +12,10 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.Name)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
+
+            builder.Property(x => x.CICode)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(15)");
 
             builder.Property(x => x.Phone)
                    .IsRequired()
@@ -43,13 +47,10 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.Deleted)
                    .HasColumnType("DATETIME");
 
-            builder.HasMany(x => x.DeclarationSymptom)
+            builder.HasMany(x => x.Visits)
                    .WithOne(x => x.Declaration)
                    .HasForeignKey(x => x.DeclarationId);
 
-            builder.HasOne(x => x.HealthService)
-                   .WithMany(x => x.Declarations)
-                   .HasForeignKey(x => x.ServiceId);
         }
     }
 }

@@ -10,8 +10,10 @@ namespace Hospital.Application.Dtos.HealthFacility
 {
     public class HealthFacilityDto : BaseDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string NameVn { get; set; }
+        public string NameEn { get; set; }
+        public string DescriptionVn { get; set; }
+        public string DescriptionEn { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
@@ -30,8 +32,10 @@ namespace Hospital.Application.Dtos.HealthFacility
     {
         public HealthFacilityValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage(localizer["health_facility_name_is_not_empty"]);
-            RuleFor(x => x.Description).NotEmpty().WithMessage(localizer["health_facility_description_is_not_empty"]);
+            RuleFor(x => x.NameVn).NotEmpty().WithMessage(localizer["health_facility_name_vn_is_not_empty"]);
+            RuleFor(x => x.NameEn).NotEmpty().WithMessage(localizer["health_facility_name_en_is_not_empty"]);
+            RuleFor(x => x.DescriptionVn).NotEmpty().WithMessage(localizer["health_facility_description_vn_is_not_empty"]);
+            RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["health_facility_description_en_is_not_empty"]);
             RuleFor(x => x.Address).NotEmpty().WithMessage(localizer["health_facility_address_is_not_empty"]);
             RuleFor(x => x.Phone).Must(x => SmsUtility.IsVietnamesePhone(x)).WithMessage("invalid_phone_number");
             RuleFor(x => x.Email).Must(x => EmailUtility.IsEmail(x)).WithMessage(localizer["invalid_email"]);

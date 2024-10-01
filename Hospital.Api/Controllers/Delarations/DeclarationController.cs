@@ -23,11 +23,6 @@ namespace Hospital.Api.Controllers.Delarations
             var command = new AddDeclarationCommand(declarationDto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
-        [HttpPost("add-symtom/{declarationId}")]
-        public virtual async Task<IActionResult> Add([FromRoute] long declarationId, [FromBody] List<long> symptomIds, CancellationToken cancellationToken = default)
-        {
-            var command = new AddSymptomForDeclarationCommand(declarationId, symptomIds);
-            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
-        }
+        
     }
 }

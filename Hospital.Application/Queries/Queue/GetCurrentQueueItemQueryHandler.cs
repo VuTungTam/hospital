@@ -21,7 +21,7 @@ namespace Hospital.Application.Queries.Queue
 
         public async Task<int> Handle(GetCurrentQueueItemQuery request, CancellationToken cancellationToken)
         {
-            var curentQueueItem =  await _queueItemReadRepository.GetCurrentAsync(cancellationToken: cancellationToken);
+            var curentQueueItem =  await _queueItemReadRepository.GetCurrentAsync(request.ServiceId, cancellationToken: cancellationToken);
             if (curentQueueItem == null)
             {
                 throw new BadRequestException("Thứ tự không hợp lệ");

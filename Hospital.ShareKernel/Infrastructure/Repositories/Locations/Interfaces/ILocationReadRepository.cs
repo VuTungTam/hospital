@@ -13,5 +13,9 @@ namespace Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces
         Task<PagingResult<Ward>> GetWardsPagingAsync(int districtId, Pagination pagination, CancellationToken cancellationToken);
 
         Task<string> GetNameByIdAsync(int id, string type = "province", CancellationToken cancellationToken = default);
+
+        Task<int> GetPidByNameAsync(string name, CancellationToken cancellationToken = default);
+        Task<int> GetDidByNameAsync(string name, int pid, CancellationToken cancellationToken = default);
+        Task<int> GetWidByNameAsync(string name, int did, CancellationToken cancellationToken = default);
     }
 }

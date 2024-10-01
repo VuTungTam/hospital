@@ -6,10 +6,10 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 {
     public interface IOrmRepository
     {
-        ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec) where T : BaseEntity;
+        ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, bool ignoreOwner = false, bool ignoreBranch = false) where T : BaseEntity;
 
-        Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity;
+        Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, string[] includes = default, bool ignoreOwner = false, bool ignoreBranch = false, CancellationToken cancellationToken = default) where T : BaseEntity;
 
-        Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity;
+        Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, string[] includes = default, bool ignoreOwner = false, bool ignoreBranch = false, CancellationToken cancellationToken = default) where T : BaseEntity;
     }
 }

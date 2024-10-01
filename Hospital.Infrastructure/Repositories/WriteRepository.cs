@@ -8,6 +8,7 @@ using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Microsoft.Extensions.Localization;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Infrastructure.Redis;
 
 namespace Hospital.Infra.Repositories
 {
@@ -15,13 +16,16 @@ namespace Hospital.Infra.Repositories
     {
         protected readonly DbSet<T> _dbSet;
         protected readonly IStringLocalizer<Resources> _localizer;
+        protected readonly IRedisCache _redisCache;
         public WriteRepository(
             IServiceProvider serviceProvider,
-            IStringLocalizer<Resources> localizer
+            IStringLocalizer<Resources> localizer,
+            IRedisCache redisCache
             ) : base(serviceProvider)
         {
             _dbSet = _dbContext.Set<T>();
             _localizer = localizer;
+            _redisCache = redisCache;
             if (_dbContext.Database.CurrentTransaction == null)
             {
                 _dbContext.Database.BeginTransaction();

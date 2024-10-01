@@ -1,6 +1,4 @@
-﻿using Hospital.Domain.Entities.HeathServices;
-using Hospital.Domain.Entities.QueueItems;
-using Hospital.Domain.Entities.Symptoms;
+﻿using Hospital.Domain.Entities.Visits;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +15,7 @@ namespace Hospital.Domain.Entities.Declarations
         ISoftDelete,
         IDeletedBy
     {
+        public string CICode { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public int Gender { get; set; }
@@ -28,10 +27,7 @@ namespace Hospital.Domain.Entities.Declarations
         public int Wid { get; set; }
         public string Wname { get; set; }
         public string Address { get; set; }
-        public long ServiceId { get; set; }
-        public HealthService HealthService {  get; set; }
-        public List<DeclarationSymptom> DeclarationSymptom { get; set; }
-        public List<QueueItem> QueueItems { get; set; }
+        public List<Visit> Visits { get; set; }
         public DateTime? Modified { get; set; }
         public long? Modifier { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;

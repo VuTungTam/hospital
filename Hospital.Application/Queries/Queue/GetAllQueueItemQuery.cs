@@ -5,12 +5,13 @@ namespace Hospital.Application.Queries.Queue
 {
     public class GetAllQueueItemQuery : BaseQuery<List<QueueItemDto>>
     {
-        public GetAllQueueItemQuery(DateTime created)
+        public GetAllQueueItemQuery(long serviceId,DateTime created)
         {
 
             Created = created;
-
+            ServiceId = serviceId;
         }
         public DateTime Created { get;}
+        public long ServiceId { get;}
     }
 }

@@ -3,6 +3,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Infrastructure.Databases.Dapper;
+using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Microsoft.Extensions.Localization;
@@ -16,8 +17,9 @@ namespace Hospital.Infrastructure.Repositories.Locations
         public LocationReadRepository(
             IServiceProvider serviceProvider, 
             IStringLocalizer<Resources> localizer,
-            IDbConnection dbConnection
-            ) : base(serviceProvider, localizer)
+            IDbConnection dbConnection,
+            IRedisCache redisCache
+            ) : base(serviceProvider, localizer, redisCache)
         {
             _dbConnection = dbConnection;
         }
@@ -114,6 +116,24 @@ namespace Hospital.Infrastructure.Repositories.Locations
 
             var sql = $"SELECT {nameof(BaseLocation.Name)} FROM {table} WHERE Id = {id}";
             return await _dbConnection.QueryFirstOrDefaultAsync<string>(sql, null);
+        }
+
+        public async Task<int> GetPidByNameAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var sql = $"SELECT {nameof(BaseLocation.Id)} FROM {new Province().GetTableName()} WHERE {nameof(BaseLocation.Name)} like N'%{name}%'";
+            return await _dbConnection.QueryFirstOrDefaultAsync<int>(sql, null);
+        }
+
+        public async Task<int> GetDidByNameAsync(string name, int pid, CancellationToken cancellationToken = default)
+        {
+            var sql = $"SELECT {nameof(BaseLocation.Id)} FROM {new District().GetTableName()} WHERE {nameof(BaseLocation.Name)} like N'%{name}%' AND {nameof(District.ProvinceId)} = {pid}";
+            return await _dbConnection.QueryFirstOrDefaultAsync<int>(sql, null);
+        }
+
+        public async Task<int> GetWidByNameAsync(string name, int did, CancellationToken cancellationToken = default)
+        {
+            var sql = $"SELECT {nameof(BaseLocation.Id)} FROM {new Ward().GetTableName()} WHERE {nameof(BaseLocation.Name)} like N'%{name}%' AND {nameof(Ward.DistrictId)} = {did}";
+            return await _dbConnection.QueryFirstOrDefaultAsync<int>(sql, null);
         }
     }
 }

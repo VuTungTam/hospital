@@ -5,12 +5,14 @@ namespace Hospital.Application.Queries.Queue
 {
     public class GetQueueItemByPositionQuery : BaseQuery<QueueItemDto>
     {
-        public GetQueueItemByPositionQuery(int position, DateTime created) 
+        public GetQueueItemByPositionQuery(long serviceId,int position, DateTime created) 
         {
             Position = position;
             Created = created;
+            ServiceId = serviceId;
         }
         public int Position { get;}
         public DateTime Created {  get; }
+        public long ServiceId { get; }
     }
 }

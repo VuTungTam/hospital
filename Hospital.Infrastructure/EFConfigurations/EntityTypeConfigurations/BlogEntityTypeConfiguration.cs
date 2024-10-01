@@ -9,7 +9,11 @@ namespace Hospital.Infra.EFConfigurations.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<Blog> builder)
         {
             builder.ToTable("Blogs");
-            builder.Property(x => x.Name)
+            builder.Property(x => x.NameVn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(512)");
+
+            builder.Property(x => x.NameEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
 
@@ -17,7 +21,11 @@ namespace Hospital.Infra.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
 
-            builder.Property(x => x.Description)
+            builder.Property(x => x.DescriptionVn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(255)");
+
+            builder.Property(x => x.DescriptionEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
             builder.Property(x => x.ImageUrl)

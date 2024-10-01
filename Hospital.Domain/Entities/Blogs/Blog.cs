@@ -10,8 +10,10 @@ namespace Hospital.Domain.Entities.Blogs
         IModified,
         ISoftDelete
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string NameVn { get; set; }
+        public string NameEn { get; set; }
+        public string DescriptionVn { get; set; }
+        public string DescriptionEn { get; set; }
         public string Author { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? Modified { get; set; }

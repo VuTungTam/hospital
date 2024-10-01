@@ -10,7 +10,11 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
         {
             builder.ToTable("Symptoms");
 
-            builder.Property(x => x.Name)
+            builder.Property(x => x.NameVn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(512)");
+
+            builder.Property(x => x.NameEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
 
@@ -25,9 +29,10 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.Deleted)
                    .HasColumnType("DATETIME");
 
-            builder.HasMany(x => x.DeclarationSymptom)
+            builder.HasMany(x => x.VisitSymptom)
                    .WithOne(x => x.Symptom)
                    .HasForeignKey(x => x.SymptomId);
+
         }
     }
 }

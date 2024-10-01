@@ -1,4 +1,4 @@
-﻿using Hospital.Domain.Entities.HeathFacilities;
+﻿using Hospital.Domain.Entities.HealthFacilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,14 +9,18 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<HealthFacility> builder)
         {
             builder.ToTable("HealthFacilities");
-            builder.Property(x => x.Name)
+            builder.Property(x => x.NameVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
-
-            builder.Property(x => x.Description)
+            builder.Property(x => x.NameEn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(512)");
+            builder.Property(x => x.DescriptionVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
-
+            builder.Property(x => x.DescriptionEn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(255)");
             builder.Property(x => x.Email)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
@@ -61,9 +65,9 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .WithMany(x => x.Facilities)
                    .HasForeignKey(x => x.CategoryId);
 
-            builder.HasMany(x => x.FacilitySpecialties)
-                   .WithOne(x => x.Facility)
-                   .HasForeignKey(x => x.FacilityId);
+            //builder.HasMany(x => x.FacilitySpecialties)
+            //       .WithOne(x => x.Facility)
+            //       .HasForeignKey(x => x.FacilityId);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Hospital.Domain.Entities.HeathFacilities;
+﻿using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 
 namespace Hospital.Application.Repositories.Interfaces.HealthFacilities

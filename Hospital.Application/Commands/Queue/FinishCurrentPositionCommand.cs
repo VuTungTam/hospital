@@ -4,7 +4,9 @@ namespace Hospital.Application.Commands.Queue
 {
     public class FinishCurrentPositionCommand : BaseCommand
     {
-        public FinishCurrentPositionCommand() {
+        public FinishCurrentPositionCommand(long serviceId) {
+            ServiceId = serviceId;
         }
+        public long ServiceId { get; set; }
     }
 }

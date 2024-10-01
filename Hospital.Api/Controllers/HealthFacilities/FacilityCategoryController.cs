@@ -1,5 +1,5 @@
 ﻿using Hospital.Application.Dtos.HealthFacility;
-using Hospital.Domain.Entities.HeathFacilities;
+using Hospital.Domain.Entities.HealthFacilities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

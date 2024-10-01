@@ -25,7 +25,7 @@ namespace Hospital.Application.Commands.Queue
 
         public async Task<Unit> Handle(FinishCurrentPositionCommand request, CancellationToken cancellationToken)
         {
-            var curentQueueItem = await _queueItemReadRepository.GetCurrentAsync(cancellationToken: cancellationToken);
+            var curentQueueItem = await _queueItemReadRepository.GetCurrentAsync(request.ServiceId,cancellationToken: cancellationToken);
             if (curentQueueItem == null )
             {
                 throw new BadRequestException("Thứ tự không hợp lệ");
@@ -39,7 +39,7 @@ namespace Hospital.Application.Commands.Queue
                 do
                 {
                     currentPosition++;
-                    nextQueueItem = await _queueItemReadRepository.GetByPositionAsync(currentPosition, curentQueueItem.Created.Date, cancellationToken: cancellationToken);
+                    nextQueueItem = await _queueItemReadRepository.GetByPositionAsync(request.ServiceId, currentPosition, curentQueueItem.Created.Date, cancellationToken: cancellationToken);
                 }
                 while (nextQueueItem != null && nextQueueItem.State == -1);
                 if (nextQueueItem != null)

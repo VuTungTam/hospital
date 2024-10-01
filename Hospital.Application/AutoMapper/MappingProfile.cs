@@ -8,14 +8,16 @@ using Hospital.Application.Dtos.Queue;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Symptoms;
+using Hospital.Application.Dtos.Visits;
 using Hospital.Domain.Entities.Blogs;
 using Hospital.Domain.Entities.Declarations;
-using Hospital.Domain.Entities.HeathFacilities;
-using Hospital.Domain.Entities.HeathServices;
+using Hospital.Domain.Entities.HealthFacilities;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.QueueItems;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
+using Hospital.Domain.Entities.Visits;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using System.Reflection;
 
@@ -36,6 +38,7 @@ namespace Hospital.Application.Mappings
             CreateMap<Declaration, DeclarationDto>().ReverseMap();
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<QueueItem, QueueItemDto>().ReverseMap();
+            CreateMap<Visit, VisitDto>().ReverseMap();
             // Locations
             CreateMap<Province, ProvinceDto>().ReverseMap();
             CreateMap<District, DistrictDto>().ReverseMap();

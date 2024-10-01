@@ -7,8 +7,10 @@ namespace Hospital.Application.Dtos.Blogs
 {
     public class BlogDto : BaseDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string NameVn { get; set; }
+        public string NameEn { get; set; }
+        public string DescriptionVn { get; set; }
+        public string DescriptionEn { get; set; }
         public string Author { get; set; }
         public string ImageUrl { get; set; }
 
@@ -17,8 +19,10 @@ namespace Hospital.Application.Dtos.Blogs
     {
         public BLogValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage(localizer["blog_name_is_not_empty"]);
-            RuleFor(x => x.Description).NotEmpty().WithMessage(localizer["blog_description_is_not_empty"]);
+            RuleFor(x => x.NameVn).NotEmpty().WithMessage(localizer["blog_name_vn_is_not_empty"]);
+            RuleFor(x => x.NameEn).NotEmpty().WithMessage(localizer["blog_name_en_is_not_empty"]);
+            RuleFor(x => x.DescriptionVn).NotEmpty().WithMessage(localizer["blog_description_vn_is_not_empty"]);
+            RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["blog_description_en_is_not_empty"]);
             RuleFor(x => x.Author).NotEmpty().WithMessage(localizer["blog_author_is_not_empty"]);
             RuleFor(x => x.ImageUrl).NotEmpty().WithMessage(localizer["blog_image_url_is_not_empty"]);
         }

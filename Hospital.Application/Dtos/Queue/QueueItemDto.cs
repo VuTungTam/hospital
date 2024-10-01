@@ -2,7 +2,7 @@
 {
     public class QueueItemDto : BaseDto
     {
-        public string DeclarationId { get; set; }
+        public string VisitId { get; set; }
         public int Position { get; set; }
         public int State { get; set; }
     }

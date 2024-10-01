@@ -17,18 +17,15 @@ namespace Hospital.Application.Commands.Declarations
     {
         private readonly IMapper _mapper;
         public readonly IDeclarationWriteRepository _declarationWriteRepository;
-        public readonly ISymptomReadRepository _symptomReadRepository;
         public readonly ILocationReadRepository _locationReadRepository;
         public AddDeclarationCommandHandler(
             IStringLocalizer<Resources> localizer,
             IDeclarationWriteRepository declarationWriteRepository,
-            ISymptomReadRepository symptomReadRepository,
             ILocationReadRepository locationReadRepository,
             IMapper mapper
             ) : base(localizer)
         {
             _declarationWriteRepository = declarationWriteRepository;
-            _symptomReadRepository = symptomReadRepository;
             _mapper = mapper;
             _locationReadRepository = locationReadRepository;
         }

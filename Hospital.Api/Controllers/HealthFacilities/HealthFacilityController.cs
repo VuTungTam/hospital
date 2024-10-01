@@ -1,6 +1,6 @@
 ﻿using Hospital.Application.Commands.Specialties;
 using Hospital.Application.Dtos.HealthFacility;
-using Hospital.Domain.Entities.HeathFacilities;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;

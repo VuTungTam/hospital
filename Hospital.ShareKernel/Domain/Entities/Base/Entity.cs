@@ -36,7 +36,7 @@ namespace Hospital.SharedKernel.Domain.Entities.Base
             {
                 return ((TableAttribute)GetType().GetCustomAttributes(typeof(TableAttribute), false).First()).Name;
             }
-            return GetType().Name.ToSnakeCaseLowers();
+            return GetType().Name.ToSnakeCaseLower();
         }
     }
 }

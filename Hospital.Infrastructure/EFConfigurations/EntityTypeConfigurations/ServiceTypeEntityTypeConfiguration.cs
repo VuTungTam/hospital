@@ -1,4 +1,4 @@
-﻿using Hospital.Domain.Entities.HeathServices;
+﻿using Hospital.Domain.Entities.HealthServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +9,11 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<ServiceType> builder)
         {
             builder.ToTable("ServiceTypes");
-            builder.Property(x => x.Name)
+            builder.Property(x => x.NameVn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(512)");
+
+            builder.Property(x => x.NameEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
 

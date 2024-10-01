@@ -8,6 +8,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Domain.Constants;
+using Hospital.SharedKernel.Caching.Models;
 namespace Hospital.Api
 {
     public class Program
@@ -17,6 +18,7 @@ namespace Hospital.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            CachingConfig.SetConfig(builder.Configuration);
 
             builder.Services.AddControllersWithViews()
                             .AddFluentValidation(
@@ -49,6 +51,8 @@ namespace Hospital.Api
             builder.Services.AddInfrastructureService(builder.Configuration);
 
             builder.Services.AddCoreService(builder.Configuration);
+
+            builder.Services.AddCoreCache(builder.Configuration);
 
             builder.Services.AddCors(options =>
             {

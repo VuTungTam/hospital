@@ -9,6 +9,11 @@ using Hospital.SharedKernel.Application.Services.Date;
 using MediatR;
 using Hospital.SharedKernel.Infrastructure.Behaviors;
 using Microsoft.AspNetCore.Hosting;
+using Hospital.SharedKernel.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Redis;
+using StackExchange.Redis;
+using Hospital.SharedKernel.Runtime.ExecutionContext;
+using Hospital.SharedKernel.Caching.In_Memory;
 
 namespace Hospital.SharedKernel.Configures
 {
@@ -21,6 +26,7 @@ namespace Hospital.SharedKernel.Configures
             services.AddCoreLocalization();
             services.AddScoped<IDateService, DateService>();
             services.AddCoreBehaviors();
+            services.AddCoreExecutionContext();
             return services;
         }
         public static IServiceCollection AddCoreLocalization(this IServiceCollection services)
@@ -37,6 +43,11 @@ namespace Hospital.SharedKernel.Configures
             });
 
             return services;
+        }
+
+        public static IServiceCollection AddCoreExecutionContext(this IServiceCollection services)
+        {
+            return services.AddScoped<IExecutionContext, Runtime.ExecutionContext.ExecutionContext>();
         }
 
         public static IServiceCollection AddCoreBehaviors(this IServiceCollection services)
@@ -59,6 +70,23 @@ namespace Hospital.SharedKernel.Configures
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             });
+        }
+        public static IServiceCollection AddCoreCache(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                var configurationOptions = new ConfigurationOptions
+                {
+                    EndPoints = { $"{CachingConfig.Host}:{CachingConfig.Port}" },
+                    Password = CachingConfig.Password,
+                    DefaultDatabase = CachingConfig.DbNumber
+                };
+                return ConnectionMultiplexer.Connect(configurationOptions);
+            });
+
+            services.AddSingleton<IRedisCache, ConnectionMultiplexerRedis>();
+            services.AddSingleton<IMemoryCache, MemoryCache>();
+            return services;
         }
     }
 }

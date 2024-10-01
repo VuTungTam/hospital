@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Mappings;
+using Hospital.Application.Services.Impls.Auth;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,12 @@ namespace Hospital.Application.DI
             
             services.AddCommandHandlers();
             services.AddQueryHandlers();
+
+            // Auth
+            services.AddScoped<IAuthService, AuthService>();
+
             
+
             return services;
         }
     }

@@ -1,10 +1,9 @@
 ﻿using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.Specialities;
-using Hospital.Domain.Entities.HeathFacilities;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
-using Hospital.SharedKernel.Application.Service.Auth.Entities;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -39,27 +38,28 @@ namespace Hospital.Application.Commands.Specialties
             {
                 throw new BadRequestException("Chuyên khoa không hợp lệ");
             }
-            var includes = new string[] { nameof(HealthFacility.FacilitySpecialties) };
-            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.FacilityId, includes, cancellationToken);
-            if (facility == null)
-            {
-                throw new BadRequestException("Cơ sở không tồn tại");
-            }
+            //var includes = new string[] { nameof(HealthFacility.FacilitySpecialties) };
+            var includes = new string[] {};
+            //var facility = await _healthFacilityReadRepository.GetByIdAsync(request.FacilityId, includes, cancellationToken);
+            //if (facility == null)
+            //{
+            //    throw new BadRequestException("Cơ sở không tồn tại");
+            //}
 
-            facility.FacilitySpecialties ??= new();
+            //facility.FacilitySpecialties ??= new();
 
-            if(facility.FacilitySpecialties.Exists(x => x.SpecialtyId == request.SpecialtyId))
-            {
-                throw new BadRequestException("Chuyên khoa đã tồn tại");
-            }
+            //if(facility.FacilitySpecialties.Exists(x => x.SpecialtyId == request.SpecialtyId))
+            //{
+            //    throw new BadRequestException("Chuyên khoa đã tồn tại");
+            //}
 
-            var specialty = await _specialtyReadRepository.GetByIdAsync(request.SpecialtyId, cancellationToken: cancellationToken);
-            if (specialty == null)
-            {
-                throw new BadRequestException("Chuyên khoa không tồn tại");
-            }
-            facility.FacilitySpecialties.Add(new FacilitySpecialty { FacilityId = request.FacilityId, SpecialtyId = request.SpecialtyId });
-            await _healthFacilityWriteRepository.UpdateAsync(facility, cancellationToken: cancellationToken);
+            //var specialty = await _specialtyReadRepository.GetByIdAsync(request.SpecialtyId, cancellationToken: cancellationToken);
+            //if (specialty == null)
+            //{
+            //    throw new BadRequestException("Chuyên khoa không tồn tại");
+            //}
+            //facility.FacilitySpecialties.Add(new FacilitySpecialty { FacilityId = request.FacilityId, SpecialtyId = request.SpecialtyId });
+            //await _healthFacilityWriteRepository.UpdateAsync(facility, cancellationToken: cancellationToken);
             return Unit.Value;
         }
     }

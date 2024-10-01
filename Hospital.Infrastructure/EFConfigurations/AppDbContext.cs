@@ -1,21 +1,23 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Hospital.Domain.Entities.Blogs;
+﻿using Hospital.Domain.Entities.Blogs;
+using Hospital.Domain.Entities.Declarations;
+using Hospital.Domain.Entities.QueueItems;
+using Hospital.Domain.Entities.SocialNetworks;
+using Hospital.Domain.Entities.Symptoms;
+//using Hospital.Domain.Entities.Visits;
 using Hospital.Infra.EFConfigurations.EntityTypeConfigurations;
 using Hospital.Infra.Extensions;
+using Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations;
+using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Hospital.SharedKernel.Domain.Entities.Systems;
+using Hospital.SharedKernel.Domain.Entities.Users;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
-using Hospital.SharedKernel.Libraries.Utils;
-using System.Threading;
-using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
-using Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations;
-using Hospital.Domain.Entities.Symptoms;
-using Hospital.Domain.Entities.Declarations;
-using Hospital.SharedKernel.Runtime.Exceptions;
-using Hospital.Domain.Entities.QueueItems;
+using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Hospital.Infra.EFConfigurations
 {
@@ -33,13 +35,17 @@ namespace Hospital.Infra.EFConfigurations
             modelBuilder.ApplyConfiguration(new BlogEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SocialNetworkEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SymptomEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new HealthFacilityEntityTypeConfiguration());
+            //modelBuilder.ApplyConfiguration(new HealthFacilityEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FacilityCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SpecialtyEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthServiceEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new DeclarationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new QueueItemEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new VisitEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BranchEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserBranchEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -132,7 +138,15 @@ namespace Hospital.Infra.EFConfigurations
         public DbSet<Ward> Wards { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Declaration> Declarations { get; set; }
-        public DbSet<DeclarationSymptom> DeclarationSymptoms { get; set; }
         public DbSet<QueueItem> QueueItems { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<UserBranch> UserBranches { get; set; }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<RoleAction> RoleActions { get; set; }
+        public DbSet<Sequence> Sequences { get; set; }
+        public DbSet<SystemConfiguration> SystemConfigurations { get; set; }
+
     }
 }

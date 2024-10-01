@@ -1,6 +1,6 @@
 ﻿using Hospital.Application.Dtos.HealthServices;
 using Hospital.Application.Queries.HealthServices;
-using Hospital.Domain.Entities.HeathServices;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.SharedKernel.Application.CQRS.Queries;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;

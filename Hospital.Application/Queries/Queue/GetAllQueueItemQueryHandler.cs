@@ -22,7 +22,7 @@ namespace Hospital.Application.Queries.Queue
 
         public async Task<List<QueueItemDto>> Handle(GetAllQueueItemQuery request, CancellationToken cancellationToken)
         {
-            var list = await _queueItemReadRepository.GetByDateAsync(request.Created, cancellationToken);
+            var list = await _queueItemReadRepository.GetByDateAsync(request.ServiceId,request.Created, cancellationToken);
             if (list == null)
             {
                 throw new BadRequestException("Không lấy được danh sách xếp hàng");

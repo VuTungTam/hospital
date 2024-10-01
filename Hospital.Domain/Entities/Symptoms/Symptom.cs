@@ -1,4 +1,7 @@
 ﻿using Hospital.Domain.Entities.Declarations;
+using Hospital.Domain.Entities.Visits;
+
+//using Hospital.Domain.Entities.Visits;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,8 +18,9 @@ namespace Hospital.Domain.Entities.Symptoms
         ISoftDelete,
         IDeletedBy
     {
-        public string Name { get; set; }
-        public List<DeclarationSymptom> DeclarationSymptom { get; set; }
+        public string NameVn { get; set; }
+        public string NameEn { get; set; }
+        public List<VisitSymptom> VisitSymptom { get; set; }
         public DateTime? Modified { get; set; }
         public long? Modifier { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;

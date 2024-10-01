@@ -16,41 +16,41 @@ namespace Hospital.Api.Controllers.Queue
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> GetByDay([FromQuery] DateTime? created = null, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> GetByDay(long serviceId, [FromQuery] DateTime? created = null, CancellationToken cancellationToken = default)
         {
-            var query = new GetAllQueueItemQuery(created ?? today);
+            var query = new GetAllQueueItemQuery(serviceId,created ?? today);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
         [HttpGet("current")]
-        public virtual async Task<IActionResult> GetCurrentPossition( CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> GetCurrentPossition(long serviceId, CancellationToken cancellationToken = default)
         {
-            var query = new GetCurrentQueueItemQuery();
+            var query = new GetCurrentQueueItemQuery(serviceId);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
 
         [HttpGet("{position}")]
-        public virtual async Task<IActionResult> GetByPosition(int position,[FromQuery] DateTime? created = null, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> GetByPosition(long serviceId, int position,[FromQuery] DateTime? created = null, CancellationToken cancellationToken = default)
         {
-            var query = new GetQueueItemByPositionQuery(position, created ?? today);
+            var query = new GetQueueItemByPositionQuery(serviceId,position, created ?? today);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
         [HttpPost]
-        public virtual async Task<IActionResult> Add(long DeclarationId, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Add(long visitId, CancellationToken cancellationToken = default)
         {
-            var command = new AddDeclarationToQueueCommand(DeclarationId);
+            var command = new AddVisitToQueueCommand(visitId);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
         [HttpPut("complete")]
-        public virtual async Task<IActionResult> FinishCurrent(CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> FinishCurrent(long serviceId, CancellationToken cancellationToken = default)
         {
-            var command = new FinishCurrentPositionCommand();
+            var command = new FinishCurrentPositionCommand(serviceId);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
         [HttpPut("remove{position}")]
-        public virtual async Task<IActionResult> RemovePosition(int position, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> RemovePosition(long serviceId, int position, CancellationToken cancellationToken = default)
         {
 
-            var command = new RemovePositionCommand(position, today);
+            var command = new RemovePositionCommand(position, today, serviceId);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
     }

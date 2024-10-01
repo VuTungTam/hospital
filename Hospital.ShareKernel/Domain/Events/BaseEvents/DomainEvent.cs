@@ -1,20 +1,19 @@
 ﻿namespace Hospital.SharedKernel.Domain.Events.BaseEvents
 {
-    public class DomainEvent : Message
+    public class DomainEvent : IDomainEvent
     {
-        public Guid EventId { get; protected set; }
+        public string EventId { get; set; }
 
-        public DateTime Timestamp { get; protected set; }
+        public DateTime Timestamp { get; set; }
 
-        public string Body { get; protected set; }
+        public object Body { get; set; }
 
         public string EventType => GetType().Name;
 
-        public DomainEvent(Guid eventId, string body)
+        public DomainEvent()
         {
-            EventId = eventId;
-            Body = body;
-            Timestamp = DateTime.Now;
+            EventId = Guid.NewGuid().ToString();
+            Timestamp = DateTime.UtcNow;
         }
     }
 }

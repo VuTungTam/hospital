@@ -2,7 +2,9 @@
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Repositories.Interface;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Entities.Base;
+using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -17,10 +19,12 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
         protected readonly IWriteRepository<T> _writeRepository;
 
         public UpdateCommandHandler(
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             TWriteRepository writeRepository
-        ) : base(localizer)
+        ) : base(eventDispatcher, authService, localizer)
         {
             _mapper = mapper;
             _writeRepository = writeRepository;
@@ -53,7 +57,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
 
     public class UpdateCommandHandler<T, TDto, TResponse> : UpdateCommandHandler<T, TDto, TResponse, IWriteRepository<T>> where T : BaseEntity
     {
-        public UpdateCommandHandler(IStringLocalizer<Resources> localizer, IMapper mapper, IWriteRepository<T> writeRepository) : base(localizer, mapper, writeRepository)
+        public UpdateCommandHandler(IEventDispatcher eventDispatcher, IAuthService authService, IStringLocalizer<Resources> localizer, IMapper mapper, IWriteRepository<T> writeRepository) : base(eventDispatcher, authService, localizer, mapper, writeRepository)
         {
         }
     }
