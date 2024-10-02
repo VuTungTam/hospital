@@ -1,0 +1,211 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\app\\visual studio\\clone\\hospital.sharekernel\\domain\\entities\\systems\\systemconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\app\\visual studio\\clone\\hospital.infrastructure\\efconfigurations\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\app\\visual studio\\clone\\hospital.infrastructure\\repositories\\appconfigs\\systemconfigurationreadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\app\\visual studio\\clone\\hospital.infrastructure\\di\\infrastructuredi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\app\\visual studio\\clone\\hospital.application\\commands\\accounts\\reg\\regaccountcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\app\\visual studio\\clone\\hospital.api\\controllers\\accounts\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\accounts\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\app\\visual studio\\clone\\hospital.api\\controllers\\apibasecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\apibasecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\app\\visual studio\\clone\\hospital.api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\app\\visual studio\\clone\\hospital.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\app\\visual studio\\clone\\hospital.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\app\\visual studio\\clone\\hospital.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\app\\visual studio\\clone\\hospital.sharekernel\\application\\consts\\basecachekeys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SystemConfiguration.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Domain\\Entities\\Systems\\SystemConfiguration.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Domain\\Entities\\Systems\\SystemConfiguration.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Domain\\Entities\\Systems\\SystemConfiguration.cs",
+              "RelativeToolTip": "..\\Hospital.ShareKernel\\Domain\\Entities\\Systems\\SystemConfiguration.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T07:09:12.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
+              "ViewState": "AQIAAIkAAAAAAAAAAIA5wJQAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T07:04:32.603Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SystemConfigurationReadRepository.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Repositories\\AppConfigs\\SystemConfigurationReadRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\AppConfigs\\SystemConfigurationReadRepository.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Repositories\\AppConfigs\\SystemConfigurationReadRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\AppConfigs\\SystemConfigurationReadRepository.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAAACAAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T07:03:53.34Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "InfrastructureDI.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\DI\\InfrastructureDI.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\DI\\InfrastructureDI.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\DI\\InfrastructureDI.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\DI\\InfrastructureDI.cs",
+              "ViewState": "AQIAADQAAAAAAAAAAAAAAD0AAABkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T07:02:37.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RegAccountCommandHandler.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Commands\\Accounts\\Reg\\RegAccountCommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Accounts\\Reg\\RegAccountCommandHandler.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Commands\\Accounts\\Reg\\RegAccountCommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Accounts\\Reg\\RegAccountCommandHandler.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T06:57:28.296Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ApiBaseController.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Controllers\\ApiBaseController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ApiBaseController.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Controllers\\ApiBaseController.cs",
+              "RelativeToolTip": "Controllers\\ApiBaseController.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAwwBEAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T06:55:38.676Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Controllers\\Accounts\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Accounts\\AccountController.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Controllers\\Accounts\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\Accounts\\AccountController.cs",
+              "ViewState": "AQIAAAgAAAAAMTMzMzMLwBkAAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T06:54:23.548Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Controllers\\Auth\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Auth\\AuthController.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Controllers\\Auth\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\Auth\\AuthController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T06:50:17.284Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-23T06:46:19.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T06:41:45.225Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-23T06:42:11.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "BaseCacheKeys.cs",
+              "DocumentMoniker": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Application\\Consts\\BaseCacheKeys.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Application\\Consts\\BaseCacheKeys.cs",
+              "ToolTip": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Application\\Consts\\BaseCacheKeys.cs",
+              "RelativeToolTip": "..\\Hospital.ShareKernel\\Application\\Consts\\BaseCacheKeys.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAABUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T06:41:15.007Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

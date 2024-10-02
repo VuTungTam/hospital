@@ -1,0 +1,1260 @@
+[
+  {
+    "ContainingType": "Hospital.Api.Controllers.Accounts.AccountController",
+    "Method": "Register",
+    "RelativePath": "api/Account/reg",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Hospital.Application.Dtos.Auth.RegAccountDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Auth.AuthController",
+    "Method": "CheckAccessByPassword",
+    "RelativePath": "api/Auth/check-access-by-pwd/{username}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "autoSendOtp",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
+    "Method": "GetAll",
+    "RelativePath": "api/Blog",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
+    "Method": "Add",
+    "RelativePath": "api/Blog",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blog",
+        "Type": "Hospital.Application.Dtos.Blogs.BlogDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
+    "Method": "Update",
+    "RelativePath": "api/Blog",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blog",
+        "Type": "Hospital.Application.Dtos.Blogs.BlogDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
+    "Method": "Delete",
+    "RelativePath": "api/Blog",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
+    "Method": "GetById",
+    "RelativePath": "api/Blog/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Delarations.DeclarationController",
+    "Method": "Add",
+    "RelativePath": "api/Declaration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "declarationDto",
+        "Type": "Hospital.Application.Dtos.Declarations.DeclarationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/FacilityCategory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/FacilityCategory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/FacilityCategory",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/FacilityCategory",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/FacilityCategory/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/FacilityCategory/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/HealthFacility",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/HealthFacility",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthFacility.HealthFacilityDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/HealthFacility",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthFacility.HealthFacilityDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/HealthFacility",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/HealthFacility/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
+    "Method": "AddAction",
+    "RelativePath": "api/HealthFacility/add-specialty/{facilityId}/{specialtyId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "facilityId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "specialtyId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/HealthFacility/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/HealthService",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/HealthService",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthServices.HealthServiceDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/HealthService",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthServices.HealthServiceDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/HealthService",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/HealthService/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.HealthServices.HealthServiceController",
+    "Method": "GetPaging",
+    "RelativePath": "api/HealthService/facilityId/{facilityId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "facilityId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/HealthService/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
+    "Method": "GetDid",
+    "RelativePath": "api/Location/district/{name}/province/{pid}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "pid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
+    "Method": "GetDistricts",
+    "RelativePath": "api/Location/districts/{pid}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
+    "Method": "GetPid",
+    "RelativePath": "api/Location/province/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
+    "Method": "GetProvinces",
+    "RelativePath": "api/Location/provinces",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
+    "Method": "GetWid",
+    "RelativePath": "api/Location/ward/{name}/district/{did}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "did",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
+    "Method": "GetWards",
+    "RelativePath": "api/Location/wards/{did}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "did",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "GetByDay",
+    "RelativePath": "api/Queue",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "created",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "Add",
+    "RelativePath": "api/Queue",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "visitId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "GetByPosition",
+    "RelativePath": "api/Queue/{position}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "position",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "created",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "FinishCurrent",
+    "RelativePath": "api/Queue/complete",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "GetCurrentPossition",
+    "RelativePath": "api/Queue/current",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
+    "Method": "RemovePosition",
+    "RelativePath": "api/Queue/remove{position}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "position",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/ServiceType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/ServiceType",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthServices.ServiceTypeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/ServiceType",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.HealthServices.ServiceTypeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/ServiceType",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/ServiceType/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/ServiceType/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/SocialNetwork",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/SocialNetwork",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/SocialNetwork",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/SocialNetwork",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/SocialNetwork/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/SocialNetwork/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/Specialty",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/Specialty",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Specialties.SpecialtyDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/Specialty",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Specialties.SpecialtyDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/Specialty",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/Specialty/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/Specialty/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetAll",
+    "RelativePath": "api/Symptom",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Add",
+    "RelativePath": "api/Symptom",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Symptoms.SymptomDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Update",
+    "RelativePath": "api/Symptom",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Symptoms.SymptomDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "Delete",
+    "RelativePath": "api/Symptom",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetById",
+    "RelativePath": "api/Symptom/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "Method": "GetPaging",
+    "RelativePath": "api/Symptom/paging",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Visits.VisitController",
+    "Method": "AddVisit",
+    "RelativePath": "api/Visit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Visits.VisitDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Visits.VisitController",
+    "Method": "AddSymptom",
+    "RelativePath": "api/Visit/add-symtom/{visitId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "visitId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "symptomIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

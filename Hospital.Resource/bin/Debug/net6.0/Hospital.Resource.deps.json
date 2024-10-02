@@ -1,0 +1,31 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Hospital.Resource/1.0.0": {
+        "runtime": {
+          "Hospital.Resource.dll": {}
+        },
+        "resources": {
+          "en-US/Hospital.Resource.resources.dll": {
+            "locale": "en-US"
+          },
+          "vi-VN/Hospital.Resource.resources.dll": {
+            "locale": "vi-VN"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Hospital.Resource/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
