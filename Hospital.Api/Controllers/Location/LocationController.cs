@@ -3,6 +3,7 @@ using Hospital.Application.Queries.Locations;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.Location
@@ -14,7 +15,7 @@ namespace Hospital.Api.Controllers.Location
         public LocationController(IMediator mediator) : base(mediator)
         {
         }
-        [HttpGet("provinces")]
+        [HttpGet("provinces"), AllowAnonymous]
         public async Task<IActionResult> GetProvinces(int page = 0, int size = 20, string search = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search);

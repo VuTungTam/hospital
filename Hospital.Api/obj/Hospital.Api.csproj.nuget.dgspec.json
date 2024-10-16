@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj": {}
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Hospital.Api.csproj": {}
   },
   "projects": {
-    "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj": {
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Hospital.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj",
+        "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Hospital.Api.csproj",
         "projectName": "Hospital.Api",
-        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\Hospital.Api.csproj",
-        "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Api\\obj\\",
+        "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Hospital.Api.csproj",
+        "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+        "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,20 +22,21 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj"
               },
-              "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj"
               },
-              "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
               }
             }
           }
@@ -55,6 +56,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.30, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.31, )"
@@ -89,21 +94,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj": {
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj",
+        "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj",
         "projectName": "Hospital.Application",
-        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj",
-        "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\obj\\",
+        "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj",
+        "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+        "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -111,14 +116,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Hospital.Domain.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Hospital.Domain.csproj"
               }
             }
           }
@@ -153,21 +159,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj": {
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Hospital.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj",
+        "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Hospital.Domain.csproj",
         "projectName": "Hospital.Domain",
-        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\Hospital.Domain.csproj",
-        "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Domain\\obj\\",
+        "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Hospital.Domain.csproj",
+        "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+        "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -175,14 +181,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj"
               }
             }
           }
@@ -217,21 +224,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
         "projectName": "Hospital.Infrastructure",
-        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Infrastructure\\obj\\",
+        "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+        "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -239,14 +246,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Application\\Hospital.Application.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Hospital.Application.csproj"
               }
             }
           }
@@ -281,21 +289,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj": {
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
+        "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj",
         "projectName": "Hospital.Resource",
-        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
-        "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\obj\\",
+        "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj",
+        "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+        "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -303,6 +311,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -341,21 +350,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
+    "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
+        "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
         "projectName": "Hospital.SharedKernel",
-        "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
-        "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-        "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.ShareKernel\\obj\\",
+        "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj",
+        "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+        "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -363,14 +372,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj": {
-                "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj"
+              "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj": {
+                "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj"
               }
             }
           }
@@ -390,6 +400,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AspNetCoreRateLimit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[11.0.0, )"
@@ -430,6 +444,14 @@
               "target": "Package",
               "version": "[2.1.7, )"
             },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.30, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.30, )"
+            },
             "Microsoft.AspNetCore.Localization": {
               "target": "Package",
               "version": "[2.1.1, )"
@@ -441,6 +463,10 @@
             "Microsoft.AspNetCore.Mvc.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -484,6 +510,14 @@
               "target": "Package",
               "version": "[13.0.2, )"
             },
+            "Ocelot": {
+              "target": "Package",
+              "version": "[16.0.0, )"
+            },
+            "Ocelot.Provider.Polly": {
+              "target": "Package",
+              "version": "[16.0.0, )"
+            },
             "Polly": {
               "target": "Package",
               "version": "[7.2.4, )"
@@ -492,9 +526,17 @@
               "target": "Package",
               "version": "[4.0.0, )"
             },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "StackExchange.Redis": {
               "target": "Package",
               "version": "[2.6.66, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
             },
             "UAParser": {
               "target": "Package",
@@ -517,7 +559,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

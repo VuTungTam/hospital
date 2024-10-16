@@ -1,92 +1,62 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Hospital.Application.DI;
 using Hospital.Infrastructure.DI;
-using Hospital.SharedKernel.Configures;
-using FluentValidation.AspNetCore;
-using System.Reflection;
-using Hospital.Application.Dtos.SocialNetworks;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using Hospital.SharedKernel.Application.Models.Responses;
-using Hospital.SharedKernel.Domain.Constants;
+using Hospital.SharedKernel.Application.Services.Auth.Models;
 using Hospital.SharedKernel.Caching.Models;
+using Hospital.SharedKernel.Configures;
+using Hospital.SharedKernel.Domain.Constants;
+using Hospital.SharedKernel.Runtime.Filters;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
+
 namespace Hospital.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var services = builder.Services;
+
 
             // Add services to the container.
             CachingConfig.SetConfig(builder.Configuration);
 
-            builder.Services.AddControllersWithViews()
-                            .AddFluentValidation(
-                                c => c.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic))
-                            )
-                            .ConfigureApiBehaviorOptions(delegate (ApiBehaviorOptions options)
-                            {
-                                options.InvalidModelStateResponseFactory = delegate (ActionContext c)
-                                {
-                                    var errors = from v in c.ModelState.Values.Where((v) => v.Errors.Any()).SelectMany((v) => v.Errors) select v.ErrorMessage;
-                                    var msg = string.Join(", ", errors.Distinct());
+            AuthConfig.Set(builder.Configuration);
 
-                                    if (msg.Contains("line") && msg.Contains("position"))
-                                    {
-                                        msg = "Dữ liệu không hợp lệ";
-                                    }
-                                    return new BadRequestObjectResult(new BaseResponse(ErrorCodeConstant.BAD_REQUEST, msg));
-                                };
-                            });
+            services.AddCoreService(builder.Configuration);
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            services.AddCoreAuthentication(builder.Configuration);
 
-            builder.Services.AddSwaggerGen();
+            services.AddCoreCache(builder.Configuration);
 
-            //builder.Services.AddValidatorsFromAssemblyContaining<SocialNetworkDtoValidator>();
+            services.Configure<ForwardedHeadersOptions>(o => o.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto);
 
-            builder.Services.AddApplicationServices(builder.Configuration);
+            services.AddCoreExecutionContext();
 
-            builder.Services.AddInfrastructureService(builder.Configuration);
-
-            builder.Services.AddCoreService(builder.Configuration);
-
-            builder.Services.AddCoreCache(builder.Configuration);
-
-            builder.Services.AddCors(options =>
+            services.AddControllersWithViews(options =>
             {
-                options.AddPolicy("AllowAllOrigins",
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                               .AllowAnyMethod()
-                               .AllowAnyHeader();
-                    });
+                options.Filters.Add(new AccessTokenValidatorAsyncFilter());
             });
+
+            services.AddApplicationServices(builder.Configuration);
+
+            services.AddInfrastructureService(builder.Configuration);
+
+            services.AddHttpClient();
 
             var app = builder.Build();
 
-            app.UseCoreLocalization();
+            app.UseCoreCors(builder.Configuration);
 
-            // Configure the HTTP request pipeline.
-            app.UseCors("AllowAllOrigins");
+            app.UseCoreConfigure(app.Environment);
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-            // app.UseCoreConfigure(app.Environment);
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

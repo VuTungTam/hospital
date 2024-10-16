@@ -2,7 +2,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Accounts.AccountController",
     "Method": "Register",
-    "RelativePath": "api/Account/reg",
+    "RelativePath": "api/account/reg",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -16,9 +16,67 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Hospital.Api.Controllers.Accounts.AccountController",
+    "Method": "SendVerifyEmail",
+    "RelativePath": "api/account/send-verify-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Accounts.AccountController",
+    "Method": "VerifyEmail",
+    "RelativePath": "api/account/verify-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Hospital.SharedKernel.Application.Services.Accounts.Models.VerificationAccountModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Accounts.AccountController",
+    "Method": "VerifyPhone",
+    "RelativePath": "api/account/verify-phone",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Hospital.SharedKernel.Application.Services.Accounts.Models.VerificationAccountModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Auth.ActionController",
+    "Method": "GetAll",
+    "RelativePath": "api/action",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Hospital.Api.Controllers.Auth.AuthController",
     "Method": "CheckAccessByPassword",
-    "RelativePath": "api/Auth/check-access-by-pwd/{username}",
+    "RelativePath": "api/auth/check-access-by-pwd/{username}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -37,9 +95,41 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Hospital.Api.Controllers.Auth.AuthController",
+    "Method": "TraditionLogin",
+    "RelativePath": "api/auth/login/with-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Auth.TraditionLoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Auth.AuthController",
+    "Method": "LoginWithPhone",
+    "RelativePath": "api/auth/login/with-phone",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.Auth.TraditionLoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
     "Method": "GetAll",
-    "RelativePath": "api/Blog",
+    "RelativePath": "api/blog",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -49,7 +139,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
     "Method": "Add",
-    "RelativePath": "api/Blog",
+    "RelativePath": "api/blog",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -65,7 +155,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
     "Method": "Update",
-    "RelativePath": "api/Blog",
+    "RelativePath": "api/blog",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -81,7 +171,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
     "Method": "Delete",
-    "RelativePath": "api/Blog",
+    "RelativePath": "api/blog",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -97,7 +187,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Blogs.BlogController",
     "Method": "GetById",
-    "RelativePath": "api/Blog/{id}",
+    "RelativePath": "api/blog/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -113,7 +203,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Delarations.DeclarationController",
     "Method": "Add",
-    "RelativePath": "api/Declaration",
+    "RelativePath": "api/declaration",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -129,7 +219,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/FacilityCategory",
+    "RelativePath": "api/facilitycategory",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -139,7 +229,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/FacilityCategory",
+    "RelativePath": "api/facilitycategory",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -155,7 +245,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/FacilityCategory",
+    "RelativePath": "api/facilitycategory",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -171,7 +261,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/FacilityCategory",
+    "RelativePath": "api/facilitycategory",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -187,7 +277,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/FacilityCategory/{id}",
+    "RelativePath": "api/facilitycategory/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -203,7 +293,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.FacilityCategory, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityCategoryDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/FacilityCategory/paging",
+    "RelativePath": "api/facilitycategory/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -239,7 +329,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/HealthFacility",
+    "RelativePath": "api/healthfacility",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -249,7 +339,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/HealthFacility",
+    "RelativePath": "api/healthfacility",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -265,7 +355,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/HealthFacility",
+    "RelativePath": "api/healthfacility",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -281,7 +371,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/HealthFacility",
+    "RelativePath": "api/healthfacility",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -297,7 +387,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/HealthFacility/{id}",
+    "RelativePath": "api/healthfacility/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -313,7 +403,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
     "Method": "AddAction",
-    "RelativePath": "api/HealthFacility/add-specialty/{facilityId}/{specialtyId}",
+    "RelativePath": "api/healthfacility/add-specialty/{facilityId}/{specialtyId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -334,7 +424,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthFacilities.HealthFacility, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.HealthFacilityDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/HealthFacility/paging",
+    "RelativePath": "api/healthfacility/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -370,7 +460,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/HealthService",
+    "RelativePath": "api/healthservice",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -380,7 +470,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/HealthService",
+    "RelativePath": "api/healthservice",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -396,7 +486,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/HealthService",
+    "RelativePath": "api/healthservice",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -412,7 +502,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/HealthService",
+    "RelativePath": "api/healthservice",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -428,7 +518,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/HealthService/{id}",
+    "RelativePath": "api/healthservice/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -444,7 +534,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.HealthServices.HealthServiceController",
     "Method": "GetPaging",
-    "RelativePath": "api/HealthService/facilityId/{facilityId}",
+    "RelativePath": "api/healthservice/facilityid/{facilityId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -485,7 +575,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.HealthService, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.HealthServiceDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/HealthService/paging",
+    "RelativePath": "api/healthservice/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -521,7 +611,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
     "Method": "GetDid",
-    "RelativePath": "api/Location/district/{name}/province/{pid}",
+    "RelativePath": "api/location/district/{name}/province/{pid}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -542,7 +632,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
     "Method": "GetDistricts",
-    "RelativePath": "api/Location/districts/{pid}",
+    "RelativePath": "api/location/districts/{pid}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -573,7 +663,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
     "Method": "GetPid",
-    "RelativePath": "api/Location/province/{name}",
+    "RelativePath": "api/location/province/{name}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -589,7 +679,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
     "Method": "GetProvinces",
-    "RelativePath": "api/Location/provinces",
+    "RelativePath": "api/location/provinces",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -615,7 +705,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
     "Method": "GetWid",
-    "RelativePath": "api/Location/ward/{name}/district/{did}",
+    "RelativePath": "api/location/ward/{name}/district/{did}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -636,7 +726,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Location.LocationController",
     "Method": "GetWards",
-    "RelativePath": "api/Location/wards/{did}",
+    "RelativePath": "api/location/wards/{did}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -665,9 +755,19 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Hospital.Api.Controllers.Ping.PingController",
+    "Method": "Ping",
+    "RelativePath": "api/ping",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
     "Method": "GetByDay",
-    "RelativePath": "api/Queue",
+    "RelativePath": "api/queue",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -688,7 +788,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
     "Method": "Add",
-    "RelativePath": "api/Queue",
+    "RelativePath": "api/queue",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -704,7 +804,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
     "Method": "GetByPosition",
-    "RelativePath": "api/Queue/{position}",
+    "RelativePath": "api/queue/{position}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -730,7 +830,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
     "Method": "FinishCurrent",
-    "RelativePath": "api/Queue/complete",
+    "RelativePath": "api/queue/complete",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -746,7 +846,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
     "Method": "GetCurrentPossition",
-    "RelativePath": "api/Queue/current",
+    "RelativePath": "api/queue/current",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -762,7 +862,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Queue.QueueController",
     "Method": "RemovePosition",
-    "RelativePath": "api/Queue/remove{position}",
+    "RelativePath": "api/queue/remove{position}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -783,7 +883,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/ServiceType",
+    "RelativePath": "api/servicetype",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -793,7 +893,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/ServiceType",
+    "RelativePath": "api/servicetype",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -809,7 +909,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/ServiceType",
+    "RelativePath": "api/servicetype",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -825,7 +925,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/ServiceType",
+    "RelativePath": "api/servicetype",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -841,7 +941,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/ServiceType/{id}",
+    "RelativePath": "api/servicetype/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -857,7 +957,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/ServiceType/paging",
+    "RelativePath": "api/servicetype/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -893,7 +993,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/SocialNetwork",
+    "RelativePath": "api/socialnetwork",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -903,7 +1003,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/SocialNetwork",
+    "RelativePath": "api/socialnetwork",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -919,7 +1019,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/SocialNetwork",
+    "RelativePath": "api/socialnetwork",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -935,7 +1035,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/SocialNetwork",
+    "RelativePath": "api/socialnetwork",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -951,7 +1051,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/SocialNetwork/{id}",
+    "RelativePath": "api/socialnetwork/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -967,7 +1067,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/SocialNetwork/paging",
+    "RelativePath": "api/socialnetwork/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1003,7 +1103,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/Specialty",
+    "RelativePath": "api/specialty",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1013,7 +1113,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/Specialty",
+    "RelativePath": "api/specialty",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1029,7 +1129,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/Specialty",
+    "RelativePath": "api/specialty",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1045,7 +1145,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/Specialty",
+    "RelativePath": "api/specialty",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1061,7 +1161,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/Specialty/{id}",
+    "RelativePath": "api/specialty/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1077,7 +1177,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Specialties.Specialty, Hospital.SharedKernel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Specialties.SpecialtyDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/Specialty/paging",
+    "RelativePath": "api/specialty/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1113,7 +1213,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetAll",
-    "RelativePath": "api/Symptom",
+    "RelativePath": "api/symptom",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1123,7 +1223,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Add",
-    "RelativePath": "api/Symptom",
+    "RelativePath": "api/symptom",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1139,7 +1239,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
-    "RelativePath": "api/Symptom",
+    "RelativePath": "api/symptom",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1155,7 +1255,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Delete",
-    "RelativePath": "api/Symptom",
+    "RelativePath": "api/symptom",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1171,7 +1271,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
-    "RelativePath": "api/Symptom/{id}",
+    "RelativePath": "api/symptom/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1187,7 +1287,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.Symptoms.Symptom, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.Symptoms.SymptomDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetPaging",
-    "RelativePath": "api/Symptom/paging",
+    "RelativePath": "api/symptom/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1223,7 +1323,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Visits.VisitController",
     "Method": "AddVisit",
-    "RelativePath": "api/Visit",
+    "RelativePath": "api/visit",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1239,7 +1339,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Visits.VisitController",
     "Method": "AddSymptom",
-    "RelativePath": "api/Visit/add-symtom/{visitId}",
+    "RelativePath": "api/visit/add-symtom/{visitId}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1252,6 +1352,48 @@
       {
         "Name": "symptomIds",
         "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ocelot.Configuration.FileConfigurationController",
+    "Method": "Get",
+    "RelativePath": "configuration",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ocelot.Configuration.FileConfigurationController",
+    "Method": "Post",
+    "RelativePath": "configuration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fileConfiguration",
+        "Type": "Ocelot.Configuration.File.FileConfiguration",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ocelot.Cache.OutputCacheController",
+    "Method": "Delete",
+    "RelativePath": "outputcache/{region}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "region",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

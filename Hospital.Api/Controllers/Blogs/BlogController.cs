@@ -6,11 +6,13 @@ using Hospital.Application.Queries.Blog.GetBlogs;
 using Hospital.Domain.Entities.Blogs;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace Hospital.Api.Controllers.Blogs
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogController : ApiBaseController
@@ -18,6 +20,7 @@ namespace Hospital.Api.Controllers.Blogs
         public BlogController(IMediator mediator) : base(mediator)
         {
         }
+        
         [HttpGet]
         public virtual async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {

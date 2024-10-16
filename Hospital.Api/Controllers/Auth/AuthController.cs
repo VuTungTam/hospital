@@ -1,4 +1,6 @@
-﻿using Hospital.SharedKernel.Application.Models.Responses;
+﻿using Hospital.Application.Commands.Auth.Login;
+using Hospital.Application.Dtos.Auth;
+using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,6 +22,19 @@ namespace Hospital.Api.Controllers.Auth
         {
             var result = 0;
             return Ok(new SimpleDataResult { Data = result});
+        }
+        [HttpPost("login/with-email"), AllowAnonymous]
+        public async Task<IActionResult> TraditionLogin(TraditionLoginDto dto, CancellationToken cancellationToken = default)
+        {
+            var command = new TraditionLoginCommand(dto, "EMAIL");
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
+        }
+
+        [HttpPost("login/with-phone"), AllowAnonymous]
+        public async Task<IActionResult> LoginWithPhone(TraditionLoginDto dto, CancellationToken cancellationToken = default)
+        {
+            var command = new TraditionLoginCommand(dto, "PHONE");
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
     }
 }
