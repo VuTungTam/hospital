@@ -26,7 +26,7 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Models
             IpInfoTokenKey = configuration.GetRequiredSection("Auth:Config:IpInfoTokenKey").Value;
 
             var integration = new AuthIntegrationConfig();
-            configuration.GetRequiredSection("Auth:Integration").Bind(integration);
+            //configuration.GetRequiredSection("Auth:Integration").Bind(integration);
 
             Integration = integration;
         }

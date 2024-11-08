@@ -1,15 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.sharekernel\\configures\\coreconfigure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -17,37 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": -1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CoreConfigure.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
-              "RelativeToolTip": "..\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
-              "ViewState": "AgIAALcAAAAAAAAAAAAswNMBAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T02:42:47.785Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAQwDgAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T02:42:35.564Z",
-              "EditorCaption": ""
             }
           ]
         }

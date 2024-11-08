@@ -15,13 +15,21 @@ namespace Hospital.Domain.Entities.HealthServices
         IDeletedBy
     {
         public string NameVn { get; set; }
+
         public string NameEn { get; set; }
+
         public List<HealthService> Services { get; set; }
+
         public DateTime? Modified { get; set; }
+
         public long? Modifier { get; set; }
+
         public DateTime Created { get; set; } = DateTime.Now;
+
         public long? Creator { get; set; }
+
         public DateTime? Deleted { get; set; }
+
         public long? DeletedBy { get; set; }
     }
 }

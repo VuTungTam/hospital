@@ -3,7 +3,6 @@ using Hospital.Application.Dtos.Locations;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Responses;
-using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;

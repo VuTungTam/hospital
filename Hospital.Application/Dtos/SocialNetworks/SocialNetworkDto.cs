@@ -16,7 +16,6 @@ namespace Hospital.Application.Dtos.SocialNetworks
     {
         public SocialNetworkDtoValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            var culture = CultureInfo.CurrentCulture;
             RuleFor(x => x.Name).NotEmpty().WithMessage(localizer["social_network_name_is_not_empty"]);
             RuleFor(x => x.Link).NotEmpty().WithMessage(localizer["social_network_link_is_not_empty"]);
             RuleFor(x => x.Logo).NotEmpty().WithMessage(localizer["social_network_logo_is_not_empty"]);

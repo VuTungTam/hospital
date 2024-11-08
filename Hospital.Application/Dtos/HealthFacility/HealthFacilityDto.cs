@@ -1,15 +1,18 @@
 ﻿using FluentValidation;
+using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
 using Hospital.SharedKernel.Infrastructure.Services.Emails.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Sms.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Websites.Utils;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Dtos.HealthFacility
 {
     public class HealthFacilityDto : BaseDto
     {
+        public string BranchId { get; set; }
         public string NameVn { get; set; }
         public string NameEn { get; set; }
         public string DescriptionVn { get; set; }
@@ -18,6 +21,8 @@ namespace Hospital.Application.Dtos.HealthFacility
         public string Email { get; set; }
         public string Website { get; set; }
         public long CategoryId { get; set; }
+        public HealthFacilityStatus Status { get; set; }
+        public string StatusText => Status.GetDescription();
         public string Pid { get; set; }
         public string Pname { get; set; }
         public string Did { get; set; }

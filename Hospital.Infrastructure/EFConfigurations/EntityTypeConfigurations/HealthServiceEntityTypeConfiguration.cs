@@ -29,15 +29,26 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("DECIMAL(18,2)");
 
+            builder.Property(x => x.Created)
+                   .IsRequired()
+                   .HasColumnType("DATETIME")
+                   .HasDefaultValueSql("GETDATE()");
+
+            builder.Property(x => x.Modified)
+                   .HasColumnType("DATETIME");
+
+            builder.Property(x => x.Deleted)
+                   .HasColumnType("DATETIME");
+
             builder.HasOne(x => x.ServiceType)
                    .WithMany(x => x.Services)
                    .HasForeignKey(x => x.TypeId);
 
-            //builder.HasOne(x => x.BranchSpecialty)
-            //       .WithMany(x => x.Services)
-            //       .HasForeignKey(x => x.FacilitySpecialtyId);
+            builder.HasOne(x => x.FacilitySpecialty)
+                   .WithMany(x => x.Services)
+                   .HasForeignKey(x => x.FacilitySpecialtyId);
 
-            builder.HasMany(x => x.Visits)
+            builder.HasMany(x => x.Bookings)
                    .WithOne(x => x.Service)
                    .HasForeignKey(x => x.ServiceId);
         }

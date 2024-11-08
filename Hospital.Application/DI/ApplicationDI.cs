@@ -1,8 +1,9 @@
-﻿using FluentValidation;
-using Hospital.Application.Dtos.SocialNetworks;
-using Hospital.Application.Mappings;
+﻿using Hospital.Application.Mappings;
+using Hospital.Application.Services.Impls.Accounts;
 using Hospital.Application.Services.Impls.Auth;
+using Hospital.SharedKernel.Application.Services.Accounts.Interfaces;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Services.Emails.Extensions;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,10 +21,15 @@ namespace Hospital.Application.DI
             services.AddCommandHandlers();
             services.AddQueryHandlers();
 
+
+            // Email
+            EmailServiceExtensions.AddEmailService(services, configuration);
+
             // Auth
             services.AddScoped<IAuthService, AuthService>();
 
-            
+            // Accounts
+            services.AddScoped<IAccountService, AccountService>();
 
             return services;
         }

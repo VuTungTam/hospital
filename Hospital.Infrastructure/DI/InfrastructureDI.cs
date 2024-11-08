@@ -1,38 +1,40 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth;
+using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
-using Hospital.Application.Repositories.Interfaces.Blogs;
 using Hospital.Application.Repositories.Interfaces.Branches;
-using Hospital.Application.Repositories.Interfaces.Declarations;
+using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Application.Repositories.Interfaces.Newes;
 using Hospital.Application.Repositories.Interfaces.Queue;
 using Hospital.Application.Repositories.Interfaces.Sequences;
+using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Application.Repositories.Interfaces.Users;
-using Hospital.Application.Repositories.Interfaces.Visits;
+using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Infra.EFConfigurations;
 using Hospital.Infra.Repositories;
 using Hospital.Infrastructure.Events.Dispatchers;
 using Hospital.Infrastructure.Repositories.AppConfigs;
 using Hospital.Infrastructure.Repositories.Auth;
-using Hospital.Infrastructure.Repositories.Blogs;
 using Hospital.Infrastructure.Repositories.Branches;
-using Hospital.Infrastructure.Repositories.Declarations;
+using Hospital.Infrastructure.Repositories.HealthProfiles;
 using Hospital.Infrastructure.Repositories.HealthFacilities;
 using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
+using Hospital.Infrastructure.Repositories.Newes;
 using Hospital.Infrastructure.Repositories.Queue;
+using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
 using Hospital.Infrastructure.Repositories.Specilities;
 using Hospital.Infrastructure.Repositories.Symptoms;
 using Hospital.Infrastructure.Repositories.Users;
-using Hospital.Infrastructure.Repositories.Visits;
+using Hospital.Infrastructure.Repositories.Bookings;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
-using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Extensions;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
@@ -76,10 +78,12 @@ namespace Hospital.Infrastructure.DI
             // HealthFacility
             services.AddScoped<IHealthFacilityReadRepository, HealthFacilityReadRepository>();
             services.AddScoped<IHealthFacilityWriteRepository, HealthFacilityWriteRepository>();
+            services.AddScoped<IFacilityCategoryReadRepository, FacilityCategotyReadRepository>();
 
-            //Blog
-            services.AddScoped<IBlogReadRepository, BlogReadRepository>();
-            services.AddScoped<IBlogWriteRepository, BlogWriteRepository>();
+
+            //News
+            services.AddScoped<INewsReadRepository, NewsReadRepository>();
+            services.AddScoped<INewsWriteRepository, NewsWriteRepository>();
 
             //Social Network
             services.AddScoped<ISocialNetworkReadRepository, SocialNetworkReadRepository>();
@@ -94,18 +98,24 @@ namespace Hospital.Infrastructure.DI
 
             //Health Service
             services.AddScoped<IHealthServiceReadRepository, HealthServiceReadRepository>();
+            services.AddScoped<IHealthServiceWriteRepository, HealthServiceWriteRepository>();
+            services.AddScoped<IServiceTypeReadRepository, ServiceTypeReadRepository>();
 
-            //Declaration
-            services.AddScoped<IDeclarationReadRepository, DeclarationReadRepository>();
-            services.AddScoped<IDeclarationWriteRepository, DeclarationWriteRepository>();
+            //Service Time Rule
+            services.AddScoped<IServiceTimeRuleReadRepository, ServiceTimeRuleReadRepository>();
+            services.AddScoped<IServiceTimeRuleWriteRepository, ServiceTimeRuleWriteRepository>();
+
+            //HealthProfile
+            services.AddScoped<IHealthProfileReadRepository, HealthProfileReadRepository>();
+            services.AddScoped<IHealthProfileWriteRepository, HealthProfileWriteRepository>();
 
             //Queue
             services.AddScoped<IQueueItemReadRepository, QueueItemReadRepository>();
             services.AddScoped<IQueueItemWriteRepository, QueueItemWriteRepository>();
 
-            //Visit
-            services.AddScoped<IVisitReadRepository, VisitReadRepository>();
-            services.AddScoped<IVisitWriteRepository, VisitWriteRepository>();
+            //Booking
+            services.AddScoped<IBookingReadRepository, BookingReadRepository>();
+            services.AddScoped<IBookingWriteRepository, BookingWriteRepository>();
 
             // Sequences
             services.AddScoped<ISequenceRepository, SequenceRepository>();
@@ -120,7 +130,7 @@ namespace Hospital.Infrastructure.DI
             // Roles
             services.AddScoped<IRoleReadRepository, RoleReadRepository>();
             services.AddScoped<IRoleWriteRepository, RoleWriteRepository>();
-            //services.AddScoped<IActionReadRepository, ActionReadRepository>();
+            services.AddScoped<IActionReadRepository, ActionReadRepository>();
 
             // Users
             services.AddScoped<IUserReadRepository, UserReadRepository>();

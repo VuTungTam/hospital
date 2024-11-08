@@ -30,17 +30,6 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
             _writeRepository = writeRepository;
         }
 
-        public AddCommandHandler(
-            IStringLocalizer<Resources> localizer,
-            IMapper mapper,
-            TWriteRepository writeRepository,
-            IValidator<TDto> validator
-        ) : base(localizer)
-        {
-            _mapper = mapper;
-            _writeRepository = writeRepository;
-        }
-
         public virtual async Task<TResponse> Handle(AddCommand<T, TDto, TResponse> request, CancellationToken cancellationToken)
         {
             await ValidateAndThrowAsync(request, cancellationToken);

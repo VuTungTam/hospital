@@ -6,7 +6,6 @@ using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Repositories.Interface;
-using Hospital.SharedKernel.Application.Repositories.Models;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Redis;
@@ -19,7 +18,6 @@ using Microsoft.Extensions.Localization;
 using Serilog;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
 using VetHospital.Infrastructure.Extensions;
 
 namespace Hospital.Infra.Repositories

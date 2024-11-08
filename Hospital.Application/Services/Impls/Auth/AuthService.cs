@@ -126,15 +126,12 @@ namespace Hospital.Application.Services.Impls.Auth
             claims.Add(new Claim(ClaimConstant.USER_ID, user.Id.ToString()));
             claims.Add(new Claim(ClaimConstant.USERNAME, user.Username ?? ""));
             claims.Add(new Claim(ClaimConstant.FULL_NAME, user.Name ?? ""));
-            //claims.Add(new Claim(ClaimConstant.SHARDING, user.Shard.ToString()));
             claims.Add(new Claim(ClaimConstant.ROLES, roleStrings));
             claims.Add(new Claim(ClaimConstant.PERMISSION, permission));
             claims.Add(new Claim(ClaimConstant.ACCOUNT_TYPE, ((int)accountType).ToString()));
             claims.Add(new Claim(ClaimConstant.IP_ADDRESS, AuthUtility.TryGetIP(_executionContext.HttpContext.Request)));
             claims.Add(new Claim(ClaimConstant.CREATE_AT, now.ToString()));
-            //claims.Add(new Claim(ClaimConstant.AUTHOR, "Cương Nguyễn"));
-            //claims.Add(new Claim(ClaimConstant.ORGANIZATION, "VetHospital"));
-            claims.Add(new Claim(ClaimConstant.AUTHORS_MESSAGE, "Contact for work: 0847-88-4444; Facebook: https://facebook.com/cuongnguyen.ftdev"));
+            claims.Add(new Claim(ClaimConstant.AUTHORS_MESSAGE, "Contact for work: 0859-26-1203; Facebook: https://www.facebook.com/tam.tung.92754")); 
 
             var expires = now.AddSeconds(AuthConfig.TokenTime);
             var securityToken = new JwtSecurityToken(

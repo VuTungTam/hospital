@@ -10,9 +10,7 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
         {
             builder.ToTable("QueueItems");
 
-            builder.HasOne(x => x.Visit)
-                   .WithMany(x => x.QueueItems)
-                   .HasForeignKey(x => x.VisitId);
+            
 
             builder.Property(x => x.State)
                    .IsRequired()

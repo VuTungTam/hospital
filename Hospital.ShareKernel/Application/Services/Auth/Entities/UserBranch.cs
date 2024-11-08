@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.SharedKernel.Application.Services.Auth.Entities
 {
-    [Table("UserBranch")]
+    [Table("perm_users_branches")]
     public class UserBranch :
         BaseEntity,
         ICreated,

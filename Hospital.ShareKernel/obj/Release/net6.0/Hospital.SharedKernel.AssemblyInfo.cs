@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Hospital.SharedKernel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ecea3244dadcd358b023f2be3132600640ee51ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36fc85d49a5276912232baa36bd9879cd028bec3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Hospital.SharedKernel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Hospital.SharedKernel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

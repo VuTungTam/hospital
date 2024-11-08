@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Welcome\\.nuget\\packages\\": {}
+    "C:\\Users\\Tung Tam\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
+      "projectUniqueName": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj",
       "projectName": "Hospital.Resource",
-      "projectPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\Hospital.Resource.csproj",
-      "packagesPath": "C:\\Users\\Welcome\\.nuget\\packages\\",
-      "outputPath": "D:\\App\\Visual Studio\\clone\\Hospital.Resource\\obj\\",
+      "projectPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\Hospital.Resource.csproj",
+      "packagesPath": "C:\\Users\\Tung Tam\\.nuget\\packages\\",
+      "outputPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Resource\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Welcome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Tung Tam\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -28,6 +28,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -66,7 +67,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

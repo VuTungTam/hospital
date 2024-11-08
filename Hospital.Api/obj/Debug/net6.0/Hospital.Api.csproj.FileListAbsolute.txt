@@ -244,3 +244,5 @@ D:\Apps\Visual Studio\Projects\hos\Hospital.Api\bin\Debug\net6.0\Serilog.Setting
 D:\Apps\Visual Studio\Projects\hos\Hospital.Api\bin\Debug\net6.0\Serilog.Sinks.Console.dll
 D:\Apps\Visual Studio\Projects\hos\Hospital.Api\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
 D:\Apps\Visual Studio\Projects\hos\Hospital.Api\bin\Debug\net6.0\Serilog.Sinks.File.dll
+D:\Apps\Visual Studio\Projects\hos\Hospital.Api\bin\Debug\net6.0\HtmlAgilityPack.dll
+D:\Apps\Visual Studio\Projects\hos\Hospital.Api\bin\Debug\net6.0\CloudinaryDotNet.dll

@@ -9,6 +9,10 @@ using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Microsoft.Extensions.Localization;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Application.Consts;
+using Hospital.Domain.Constants;
+using Hospital.Domain.Specifications;
+using IdGen;
 
 namespace Hospital.Infra.Repositories
 {
@@ -93,6 +97,11 @@ namespace Hospital.Infra.Repositories
         {
             Update(entity);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+
+            var key = GetCacheKey(entity.Id);
+
+            await _redisCache.SetAsync(key, entity, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+
         }
 
         public void UpdateRange(IEnumerable<T> entities)
@@ -117,5 +126,23 @@ namespace Hospital.Infra.Repositories
            await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
         }
         #endregion
+
+        protected string GetCacheKey(long id = 0, string type = "")
+        {
+            if (type == "all")
+            {
+                if (typeof(T).HasInterface<IPersonalizeEntity>())
+                {
+                    return BaseCacheKeys.DbOwnerAllKey<T>(_executionContext.UserId);
+                }
+                return BaseCacheKeys.DbSystemAllKey<T>();
+            }
+
+            if (typeof(T).HasInterface<IPersonalizeEntity>())
+            {
+                return BaseCacheKeys.DbOwnerIdKey<T>(id, _executionContext.UserId);
+            }
+            return BaseCacheKeys.DbSystemIdKey<T>(id);
+        }
     }
 }

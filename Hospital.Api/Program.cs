@@ -1,17 +1,12 @@
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using Hospital.Application.DI;
+using Hospital.Domain.Configs;
 using Hospital.Infrastructure.DI;
-using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Models;
 using Hospital.SharedKernel.Caching.Models;
 using Hospital.SharedKernel.Configures;
-using Hospital.SharedKernel.Domain.Constants;
+using Hospital.SharedKernel.Configures.Models;
 using Hospital.SharedKernel.Runtime.Filters;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
 
 namespace Hospital.Api
 {
@@ -25,7 +20,11 @@ namespace Hospital.Api
 
 
             // Add services to the container.
+            CdnConfig.SetConfig(builder.Configuration); 
+
             CachingConfig.SetConfig(builder.Configuration);
+
+            FeatureConfig.SetConfig(builder.Configuration);
 
             AuthConfig.Set(builder.Configuration);
 
@@ -34,6 +33,8 @@ namespace Hospital.Api
             services.AddCoreAuthentication(builder.Configuration);
 
             services.AddCoreCache(builder.Configuration);
+
+            services.AddCloudinary(builder.Configuration);
 
             services.Configure<ForwardedHeadersOptions>(o => o.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto);
 

@@ -1,8 +1,10 @@
-﻿using Hospital.Application.Repositories.Interfaces.Declarations;
+﻿using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.Queue;
 using Hospital.Domain.Entities.QueueItems;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -14,10 +16,12 @@ namespace Hospital.Application.Commands.Queue
         private readonly IQueueItemReadRepository _queueItemReadRepository;
         private readonly IQueueItemWriteRepository _queueItemWriteRepository;
         public FinishCurrentPositionCommandHandler(
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IQueueItemReadRepository queueItemReadRepository,
             IQueueItemWriteRepository queueItemWriteRepository
-            ) : base(localizer)
+            ) : base(eventDispatcher, authService, localizer)
         {
             _queueItemReadRepository = queueItemReadRepository;
             _queueItemWriteRepository = queueItemWriteRepository;

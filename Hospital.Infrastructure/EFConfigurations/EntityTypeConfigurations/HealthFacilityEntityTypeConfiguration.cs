@@ -65,9 +65,9 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .WithMany(x => x.Facilities)
                    .HasForeignKey(x => x.CategoryId);
 
-            //builder.HasMany(x => x.FacilitySpecialties)
-            //       .WithOne(x => x.Facility)
-            //       .HasForeignKey(x => x.FacilityId);
+            builder.HasMany(x => x.FacilitySpecialties)
+                   .WithOne(x => x.Facility)
+                   .HasForeignKey(x => x.FacilityId);
         }
     }
 }

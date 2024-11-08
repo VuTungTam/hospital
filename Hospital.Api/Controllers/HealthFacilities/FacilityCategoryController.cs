@@ -1,7 +1,6 @@
 ﻿using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Domain.Entities.HealthFacilities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.HealthFacilities

@@ -1,8 +1,10 @@
 ﻿using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.SharedKernel.Application.Services.Auth.Entities
 {
+    [Table("mcs_refresh_tokens")]
     public class RefreshToken :
         BaseEntity,
         IPersonalizeEntity,

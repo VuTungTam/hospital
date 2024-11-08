@@ -1,6 +1,10 @@
-﻿namespace Hospital.Application.Repositories.Interfaces.Branches
+﻿using Hospital.SharedKernel.Application.Repositories.Interface;
+using Hospital.SharedKernel.Domain.Entities.Branches;
+
+namespace Hospital.Application.Repositories.Interfaces.Branches
 {
-    public interface IBranchWriteRepository
+    public interface IBranchWriteRepository : IWriteRepository<Branch>
     {
+        
     }
 }

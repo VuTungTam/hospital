@@ -29,9 +29,9 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.Deleted)
                    .HasColumnType("DATETIME");
 
-            builder.HasMany(x => x.VisitSymptom)
-                   .WithOne(x => x.Symptom)
-                   .HasForeignKey(x => x.SymptomId);
+            //builder.HasMany(x => x.BookingSymptom)
+            //       .WithOne(x => x.Symptom)
+            //       .HasForeignKey(x => x.SymptomId);
 
         }
     }

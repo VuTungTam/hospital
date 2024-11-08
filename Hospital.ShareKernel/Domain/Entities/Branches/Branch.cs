@@ -25,6 +25,7 @@ namespace Hospital.SharedKernel.Domain.Entities.Branches
 
         [Filterable("Địa chỉ")]
         public string Address { get; set; }
+
         public DateTime? FoundingDate { get; set; }
 
         public bool? Active { get; set; }

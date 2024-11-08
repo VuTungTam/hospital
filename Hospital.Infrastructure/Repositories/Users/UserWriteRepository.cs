@@ -1,6 +1,5 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Users;
-using Hospital.Domain.Constants;
 using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Services.Auth.Entities;
@@ -53,10 +52,11 @@ namespace Hospital.Infrastructure.Repositories.Users
             customer.Username = customer.Email;
             customer.Status = status;
             customer.IsCustomer = true;
-
+            customer.PasswordHash = customer.Password.ToMD5();
+            customer.Password = "";
             if (customer.UserRoles == null || !customer.UserRoles.Any())
             {
-                customer.UserRoles = new List<UserRole> { new UserRole { RoleId = roles.First(x => x.Code == RoleCodeConstant.CUSTOMER).Id } };
+                //customer.UserRoles = new List<UserRole> { new UserRole { RoleId = roles.First(x => x.Code == RoleCodeConstant.CUSTOMER).Id } };
             }
 
             Add(customer);

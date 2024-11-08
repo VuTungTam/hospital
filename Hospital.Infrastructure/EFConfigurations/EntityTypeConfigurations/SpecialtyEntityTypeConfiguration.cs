@@ -29,7 +29,7 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.Deleted)
                    .HasColumnType("DATETIME");
 
-            builder.HasMany(x => x.BranchSpecialties)
+            builder.HasMany(x => x.FacilitySpecialties)
                    .WithOne(x => x.Specialty)
                    .HasForeignKey(x => x.SpecialtyId);
         }

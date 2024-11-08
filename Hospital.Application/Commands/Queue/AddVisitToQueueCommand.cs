@@ -1,13 +1,13 @@
-﻿using Hospital.Application.Dtos.Declarations;
+﻿using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 
 namespace Hospital.Application.Commands.Queue
 {
-    public class AddVisitToQueueCommand : BaseCommand<int>
+    public class AddBookingToQueueCommand : BaseCommand<int>
     {
-        public AddVisitToQueueCommand(long visitId) {
-            VisitId = visitId;
+        public AddBookingToQueueCommand(long bookingId) {
+            BookingId = bookingId;
         }
-        public long VisitId { get; set; }
+        public long BookingId { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Hospital.Application.Queries.Blog.GetBlogById;
-using Hospital.Application.Queries.Locations;
+﻿using Hospital.Application.Queries.Locations;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;

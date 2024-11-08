@@ -23,6 +23,7 @@
         public const int MasterAction = 43200;
         public const int SystemConfiguration = 86400;
         public const int Tenant = 86400;
+        public const int NewsSlug = 259200;
         public const int VerifyAccountWithEmailCode = 604800;
     }
 }

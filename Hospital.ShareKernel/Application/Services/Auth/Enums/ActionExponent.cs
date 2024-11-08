@@ -48,11 +48,11 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Enums
         [Description("Quản lý hiển thị")]
         UIManagement = 11,
 
-        [Description("Quản lý tuyển dụng")]
-        RecruitmentManagement = 12,
+        [Description("Quản lý triệu chứng")]
+        SymptomManagement = 12,
 
-        [Description("Quản lý thú nuôi")]
-        PetManagement = 13,
+        [Description("Quản lý tuyển dụng")]
+        RecruitmentManagement = 13,
 
         [Description("Quản lý lịch hẹn")]
         BookingManagement = 14,

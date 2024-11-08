@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
+using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Dtos.HealthServices
@@ -8,12 +11,24 @@ namespace Hospital.Application.Dtos.HealthServices
     public class HealthServiceDto : BaseDto
     {
         public string NameVn { get; set; }
+
         public string NameEn { get; set; }
+
         public string DescriptionVn { get; set; }
+
         public string DescriptionEn { get; set; }
+
         public long TypeId { get; set; }
+
         public decimal Price { get; set; }
+
+        public HealthServiceStatus Status { get; set; }
+
+        public string StatusText => Status.GetDescription();
+
         public long FacilitySpecialtyId { get; set; }
+
+        public List<TimeFrame> TimeSlots ;
     }
     public class HealthServiceValidator : BaseAbstractValidator<HealthServiceDto>
     {

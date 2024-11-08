@@ -35,9 +35,9 @@ namespace Hospital.Api.Controllers.Queue
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
         [HttpPost]
-        public virtual async Task<IActionResult> Add(long visitId, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Add(long BookingId, CancellationToken cancellationToken = default)
         {
-            var command = new AddVisitToQueueCommand(visitId);
+            var command = new AddBookingToQueueCommand(BookingId);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
         [HttpPut("complete")]

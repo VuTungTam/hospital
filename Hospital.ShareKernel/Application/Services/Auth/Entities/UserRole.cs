@@ -1,9 +1,11 @@
 ﻿using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Domain.Entities.Users;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.SharedKernel.Application.Services.Auth.Entities
 {
+    [Table("perm_users_roles")]
     public class UserRole :
         BaseEntity,
         ICreated,

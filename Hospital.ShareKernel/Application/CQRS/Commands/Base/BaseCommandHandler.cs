@@ -14,18 +14,12 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands.Base
         protected readonly IEventDispatcher _eventDispatcher;
         protected readonly IAuthService _authService;
         protected readonly IStringLocalizer<Resources> _localizer;
-        private IStringLocalizer<Resources> localizer;
 
         public BaseCommandHandler(IEventDispatcher eventDispatcher, IAuthService authService, IStringLocalizer<Resources> localizer)
         {
             _eventDispatcher = eventDispatcher;
             _authService = authService;
             _localizer = localizer;
-        }
-
-        protected BaseCommandHandler(IStringLocalizer<Resources> localizer)
-        {
-            this.localizer = localizer;
         }
 
         protected virtual AsyncRetryPolicy CreatePolicy(int retryCount = 1)

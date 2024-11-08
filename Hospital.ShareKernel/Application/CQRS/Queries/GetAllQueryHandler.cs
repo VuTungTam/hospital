@@ -6,6 +6,7 @@ using Hospital.SharedKernel.Domain.Entities.Base;
 using System.Resources;
 using Hospital.Resource.Properties;
 using Microsoft.Extensions.Localization;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 
 namespace Hospital.SharedKernel.Application.CQRS.Queries
 {
@@ -14,11 +15,13 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
         where TReadRepository : IReadRepository<T>
     {
         protected readonly IReadRepository<T> _readRepository;
+
         public GetAllQueryHandler(
+            IAuthService authService,
             IMapper mapper,
-            TReadRepository readRepository,
-            IStringLocalizer<Resources> localizer
-        ) : base(mapper, localizer)
+            IStringLocalizer<Resources> localizer,
+            TReadRepository readRepository
+        ) : base(authService, mapper, localizer)
         {
             _readRepository = readRepository;
         }
@@ -29,9 +32,10 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
             return _mapper.Map<List<TResponse>>(entities);
         }
     }
+
     public class GetAllQueryHandler<T, TResponse> : GetAllQueryHandler<T, TResponse, IReadRepository<T>> where T : BaseEntity
     {
-        public GetAllQueryHandler(IMapper mapper, IReadRepository<T> readRepository, IStringLocalizer<Resources> localizer) : base(mapper, readRepository, localizer)
+        public GetAllQueryHandler(IAuthService authService, IMapper mapper, IStringLocalizer<Resources> localizer, IReadRepository<T> readRepository) : base(authService, mapper, localizer, readRepository)
         {
         }
     }

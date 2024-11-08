@@ -1,9 +1,9 @@
-﻿using Hospital.Domain.Entities.Declarations;
+﻿using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 
-namespace Hospital.Application.Repositories.Interfaces.Declarations
+namespace Hospital.Application.Repositories.Interfaces.HealthProfiles
 {
-    public interface IDeclarationReadRepository : IReadRepository<Declaration>
+    public interface IHealthProfileReadRepository : IReadRepository<HealthProfile>
     {
     }
 }
