@@ -7,6 +7,7 @@ using Hospital.SharedKernel.Runtime.Exceptions;
 using System.Resources;
 using Microsoft.Extensions.Localization;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 
 namespace Hospital.SharedKernel.Application.CQRS.Queries
 {
@@ -17,10 +18,11 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
         protected readonly IReadRepository<T> _readRepository;
 
         public GetByIdQueryHandler(
+            IAuthService authService,
             IMapper mapper,
-            IReadRepository<T> readRepository,
-            IStringLocalizer<Resources> localizer
-            ) : base(mapper, localizer)
+            IStringLocalizer<Resources> localizer,
+            IReadRepository<T> readRepository
+            ) : base(authService, mapper, localizer)
         {
             _readRepository = readRepository;
         }
@@ -42,7 +44,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
     }
     public class GetByIdQueryHandler<T, TResponse> : GetByIdQueryHandler<T, TResponse, IReadRepository<T>> where T : BaseEntity
     {
-        public GetByIdQueryHandler(IMapper mapper, IReadRepository<T> readRepository, IStringLocalizer<Resources> localizer) : base(mapper, readRepository,localizer)
+        public GetByIdQueryHandler(IAuthService authService, IMapper mapper, IStringLocalizer<Resources> localizer, IReadRepository<T> readRepository) : base(authService, mapper, localizer, readRepository)
         {
         }
     }

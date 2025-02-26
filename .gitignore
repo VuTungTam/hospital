@@ -1,0 +1,42 @@
+# Bỏ qua thư mục bin và obj (build output)
+bin/
+obj/
+out/
+
+# Bỏ qua file user-specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Bỏ qua các file lock và cache
+project.lock.json
+project.assets.json
+Thumbs.db
+ehthumbs.db
+
+# Bỏ qua thư mục .vs của Visual Studio
+.vs/
+
+# Bỏ qua file cấu hình của Rider và JetBrains
+.idea/
+*.iml
+
+# Bỏ qua file tạm thời của Visual Studio Code
+.vscode/
+
+# Bỏ qua file log và debug
+*.log
+*.tlog
+*.cache
+
+# Bỏ qua các file tạm thời của nuget
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Bỏ qua file xuất bản
+publish/
+wwwroot/
+appsettings.Development.json

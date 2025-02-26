@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -11,10 +12,11 @@ namespace Hospital.Application.Queries.Locations
     {
         private readonly ILocationReadRepository _locationReadRepository;
         public GetWardIdByNameQueryHandler(
+            IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
             ILocationReadRepository locationReadRepository
-            ) : base(mapper, localizer)
+        ) : base(authService, mapper, localizer)
         {
             _locationReadRepository = locationReadRepository;
         }

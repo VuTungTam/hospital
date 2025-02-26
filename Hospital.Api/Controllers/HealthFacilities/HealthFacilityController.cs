@@ -8,9 +8,11 @@ using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Domain.Entities.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace Hospital.Api.Controllers.HealthFacilities
 {
@@ -38,7 +40,7 @@ namespace Hospital.Api.Controllers.HealthFacilities
             return Ok(new SimpleDataResult { Data = dtos });
         }
 
-        [HttpGet("paging")]
+        [HttpGet("paging"), AllowAnonymous]
         public async Task<IActionResult> GetPaging(
             int page,
             int size,
@@ -56,6 +58,16 @@ namespace Hospital.Api.Controllers.HealthFacilities
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
+
+        [HttpGet("{facilityId}"), AllowAnonymous]
+        public async Task<IActionResult> GetFacility(long facilityId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetFacilityByIdQuery(facilityId);
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = result });
+        }
+
 
         [HttpPost]
         public virtual async Task<IActionResult> Add(HealthFacilityDto healthFacility, CancellationToken cancellationToken = default)

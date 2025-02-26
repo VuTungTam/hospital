@@ -1600,83 +1600,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "Hospital.Api.Controllers.SocialNetworks.SocialNetworkController",
     "Method": "GetAll",
     "RelativePath": "api/socialnetwork",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "Add",
-    "RelativePath": "api/socialnetwork",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "Update",
-    "RelativePath": "api/socialnetwork",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "Delete",
-    "RelativePath": "api/socialnetwork",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ids",
-        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "GetById",
-    "RelativePath": "api/socialnetwork/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.SocialNetworks.SocialNetwork, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "GetPaging",
-    "RelativePath": "api/socialnetwork/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1705,6 +1631,38 @@
         "Name": "desc",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.SocialNetworks.SocialNetworkController",
+    "Method": "AddSocialNetwork",
+    "RelativePath": "api/socialnetwork",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "socialNetworkDto",
+        "Type": "Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.SocialNetworks.SocialNetworkController",
+    "Method": "Update",
+    "RelativePath": "api/socialnetwork",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Hospital.Application.Dtos.SocialNetworks.SocialNetworkDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

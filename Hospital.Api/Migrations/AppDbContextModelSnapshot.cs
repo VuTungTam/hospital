@@ -208,6 +208,9 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("NVARCHAR(255)");
+
                     b.Property<decimal>("Latitude")
                         .HasColumnType("DECIMAL(9,6)");
 
@@ -1321,7 +1324,7 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.BookingSymptom", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
-                        .WithMany("BookingSymptom")
+                        .WithMany("BookingSymptoms")
                         .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1467,7 +1470,7 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
                 {
-                    b.Navigation("BookingSymptom");
+                    b.Navigation("BookingSymptoms");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.FacilityCategory", b =>

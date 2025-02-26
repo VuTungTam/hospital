@@ -17,6 +17,7 @@ namespace Hospital.Application.Dtos.HealthFacility
         public string NameEn { get; set; }
         public string DescriptionVn { get; set; }
         public string DescriptionEn { get; set; }
+        public string ImageUrl { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }

@@ -13,8 +13,6 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries.Base
         protected readonly IAuthService _authService;
         protected readonly IMapper _mapper;
         protected readonly IStringLocalizer<Resources> _localizer;
-        private IMapper mapper;
-        private IStringLocalizer<Resources> localizer;
 
         public BaseQueryHandler(IAuthService authService, IMapper mapper, IStringLocalizer<Resources> localizer)
         {
@@ -22,13 +20,6 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries.Base
             _mapper = mapper;
             _localizer = localizer;
         }
-
-        protected BaseQueryHandler(IMapper mapper, IStringLocalizer<Resources> localizer)
-        {
-            this.mapper = mapper;
-            this.localizer = localizer;
-        }
-
         protected virtual AsyncRetryPolicy CreatePolicy()
         {
             return Policy.Handle<Exception>()

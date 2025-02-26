@@ -3,13 +3,40 @@
   "WorkspaceRootPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\bookings\\cancelbookingcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\users\\checkaccessbypasswordqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\bookings\\bookanappointmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\queue\\getqueueitembypositionqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\writerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\queue\\getcurrentqueueitemqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\queue\\getallqueueitemqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\locations\\getwardspagingqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\locations\\getwardidbynamequeryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\locations\\getprovincespagingqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\locations\\getprovinceidbynamequeryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\locations\\getdistrictspagingqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\locations\\getdistrictidbynamequeryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\branches\\branchwriterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.sharekernel\\domain\\entities\\branches\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,41 +54,158 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "WriteRepository.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\WriteRepository.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\WriteRepository.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\WriteRepository.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\WriteRepository.cs",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAcwHUAAAAXAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "CheckAccessByPasswordQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Users\\CheckAccessByPasswordQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Users\\CheckAccessByPasswordQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Users\\CheckAccessByPasswordQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Users\\CheckAccessByPasswordQueryHandler.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAUwBYAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-08T02:22:02.988Z",
+              "WhenOpened": "2025-02-26T14:43:20.992Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BookAnAppointmentCommandHandler.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
-              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAYwEAAAABOAAAAAAAAAA==",
+              "Title": "GetQueueItemByPositionQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Queue\\GetQueueItemByPositionQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Queue\\GetQueueItemByPositionQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Queue\\GetQueueItemByPositionQueryHandler.cs*",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Queue\\GetQueueItemByPositionQueryHandler.cs*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-08T02:21:09.923Z",
+              "WhenOpened": "2025-02-26T14:42:28.486Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CancelBookingCommandHandler.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\CancelBookingCommandHandler.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Bookings\\CancelBookingCommandHandler.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\CancelBookingCommandHandler.cs*",
-              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Bookings\\CancelBookingCommandHandler.cs*",
-              "ViewState": "AgIAADUAAAAAAAAAAAAAwEkAAAA6AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "GetCurrentQueueItemQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Queue\\GetCurrentQueueItemQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Queue\\GetCurrentQueueItemQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Queue\\GetCurrentQueueItemQueryHandler.cs*",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Queue\\GetCurrentQueueItemQueryHandler.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-08T01:38:04.431Z",
+              "WhenOpened": "2025-02-26T14:41:38.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GetAllQueueItemQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Queue\\GetAllQueueItemQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Queue\\GetAllQueueItemQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Queue\\GetAllQueueItemQueryHandler.cs*",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Queue\\GetAllQueueItemQueryHandler.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:40:33.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GetWardsPagingQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetWardsPagingQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Locations\\GetWardsPagingQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetWardsPagingQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Locations\\GetWardsPagingQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:40:27.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GetWardIdByNameQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetWardIdByNameQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Locations\\GetWardIdByNameQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetWardIdByNameQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Locations\\GetWardIdByNameQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:40:20.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GetProvincesPagingQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetProvincesPagingQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Locations\\GetProvincesPagingQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetProvincesPagingQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Locations\\GetProvincesPagingQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:40:13.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GetProvinceIdByNameQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetProvinceIdByNameQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Locations\\GetProvinceIdByNameQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetProvinceIdByNameQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Locations\\GetProvinceIdByNameQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:40:04.672Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GetDistrictsPagingQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetDistrictsPagingQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Locations\\GetDistrictsPagingQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetDistrictsPagingQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Locations\\GetDistrictsPagingQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:39:56.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GetDistrictIdByNameQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetDistrictIdByNameQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Locations\\GetDistrictIdByNameQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Locations\\GetDistrictIdByNameQueryHandler.cs*",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Locations\\GetDistrictIdByNameQueryHandler.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:37:38.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BranchWriteRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Branches\\BranchWriteRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\Branches\\BranchWriteRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Branches\\BranchWriteRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\Branches\\BranchWriteRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:37:25.428Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Branch.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Domain\\Entities\\Branches\\Branch.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Domain\\Entities\\Branches\\Branch.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Domain\\Entities\\Branches\\Branch.cs",
+              "RelativeToolTip": "..\\Hospital.ShareKernel\\Domain\\Entities\\Branches\\Branch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:36:44.169Z",
               "EditorCaption": ""
             }
           ]

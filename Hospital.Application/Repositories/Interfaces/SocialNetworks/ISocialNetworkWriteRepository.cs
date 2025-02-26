@@ -5,5 +5,6 @@ namespace Hospital.Application.Repositories.Interfaces.SocialNetworks
 {
     public interface ISocialNetworkWriteRepository : IWriteRepository<SocialNetwork>
     {
+        
     }
 }

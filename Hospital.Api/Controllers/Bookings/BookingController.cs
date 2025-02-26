@@ -67,7 +67,7 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet("paging")]
+        [HttpGet("paging"), AllowAnonymous]
         public async Task<IActionResult> GetPaging(
             int page,
             int size,

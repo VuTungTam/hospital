@@ -1,6 +1,7 @@
 ﻿using Hospital.Application.Commands.HealhProfiles;
 using Hospital.Application.Commands.HealthProfiles;
 using Hospital.Application.Dtos.HealthProfiles;
+using Hospital.Application.Queries.HealthFacilities;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -15,11 +16,21 @@ namespace Hospital.Api.Controllers.Delarations
         public HealthProfileController(IMediator mediator) : base(mediator)
         {
         }
+
         [HttpPost, AllowAnonymous]
         public virtual async Task<IActionResult> AddProfile(HealthProfileDto HealthProfileDto, CancellationToken cancellationToken = default)
         {
             var command = new AddHealthProfileCommand(HealthProfileDto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
+        }
+
+        [HttpGet("{profileId}"), AllowAnonymous]
+        public async Task<IActionResult> GetProfile(long profileId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetFacilityByIdQuery(profileId);
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = result });
         }
 
         [HttpPut]
@@ -30,6 +41,13 @@ namespace Hospital.Api.Controllers.Delarations
             return Ok(new BaseResponse {  });
         }
 
+        [HttpDelete]
+        public virtual async Task<IActionResult> DeleteProfile(List<long> ids, CancellationToken cancellationToken = default)
+        {
+            var command = new DeleteHealthProfileCommand(ids);
+            await _mediator.Send(command, cancellationToken);
+            return Ok(new BaseResponse());
+        }
 
     }
 }

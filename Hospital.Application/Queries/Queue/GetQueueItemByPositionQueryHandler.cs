@@ -4,6 +4,7 @@ using Hospital.Application.Repositories.Interfaces.Queue;
 using Hospital.Domain.Entities.QueueItems;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -13,10 +14,13 @@ namespace Hospital.Application.Queries.Queue
     public class GetQueueItemByPositionQueryHandler : BaseQueryHandler, IRequestHandler<GetQueueItemByPositionQuery, QueueItemDto>
     {
         private readonly IQueueItemReadRepository _readQueueItemRepository;
+
         public GetQueueItemByPositionQueryHandler(
-            IMapper mapper, IStringLocalizer<Resources> localizer,
+            IAuthService authService, 
+            IMapper mapper,
+            IStringLocalizer<Resources> localizer,
             IQueueItemReadRepository readQueueItemRepository
-            ) : base(mapper, localizer)
+            ) : base(authService, mapper, localizer)
         {
             _readQueueItemRepository = readQueueItemRepository;
         }

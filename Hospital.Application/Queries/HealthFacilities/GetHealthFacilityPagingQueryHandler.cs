@@ -3,6 +3,7 @@ using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
@@ -11,20 +12,18 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.HealthFacilities
 {
-    public class GetHealthFacilityPagingQueryHandler : BaseCommandHandler, IRequestHandler<GetHealthFacilityPagingQuery, PagingResult<HealthFacilityDto>>
+    public class GetHealthFacilityPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthFacilityPagingQuery, PagingResult<HealthFacilityDto>>
     {
-        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
-        private readonly IMapper _mapper;
+        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;   
+        
         public GetHealthFacilityPagingQueryHandler(
-            IEventDispatcher eventDispatcher,
             IAuthService authService,
+            IMapper mapper,
             IStringLocalizer<Resources> localizer,
-            IHealthFacilityReadRepository healthFacilityReadRepository,
-            IMapper mapper
-            ) : base(eventDispatcher, authService, localizer)
+            IHealthFacilityReadRepository healthFacilityReadRepository
+            ) : base(authService, mapper, localizer)
         {
             _healthFacilityReadRepository = healthFacilityReadRepository;
-            _mapper = mapper;
         }
 
         public async Task<PagingResult<HealthFacilityDto>> Handle(GetHealthFacilityPagingQuery request, CancellationToken cancellationToken)

@@ -25,6 +25,9 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
 
+            builder.Property(x => x.ImageUrl)
+                   .HasColumnType("NVARCHAR(255)");
+
             builder.Property(x => x.Phone)
                    .HasColumnType("NVARCHAR(50)");
 

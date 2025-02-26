@@ -3,6 +3,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Repositories.Interface;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -14,16 +15,15 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
         where TReadRepository : IReadRepository<T>
     {
         protected readonly IReadRepository<T> _readRepository;
-
         public GetPagingQueryHandler(
+            IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
             TReadRepository readRepository
-        ) : base(mapper, localizer)
+            ) : base(authService, mapper, localizer)
         {
             _readRepository = readRepository;
         }
-
         public async Task<PagingResult<TResponse>> Handle(GetPagingQuery<T, TResponse> request, CancellationToken cancellationToken)
         {
             var result = await _readRepository.GetPagingAsync(request.Pagination, cancellationToken: cancellationToken);
@@ -32,7 +32,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
     }
     public class GetPagingQueryHandler<T, TResponse> : GetPagingQueryHandler<T, TResponse, IReadRepository<T>> where T : BaseEntity
     {
-        public GetPagingQueryHandler(IMapper mapper, IStringLocalizer<Resources> localizer, IReadRepository<T> readRepository) : base(mapper, localizer, readRepository)
+        public GetPagingQueryHandler(IAuthService authService, IMapper mapper, IStringLocalizer<Resources> localizer, IReadRepository<T> readRepository) : base(authService, mapper, localizer, readRepository)
         {
         }
     }

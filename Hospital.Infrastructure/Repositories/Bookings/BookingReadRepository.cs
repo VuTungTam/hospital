@@ -8,14 +8,11 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
-using Hospital.SharedKernel.Application.Services.Bookings.Models;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System.Linq;
 using VetHospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.Bookings
