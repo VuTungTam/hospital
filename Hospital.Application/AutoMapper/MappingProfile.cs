@@ -48,12 +48,13 @@ namespace Hospital.Application.Mappings
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             CreateMap<QueueItem, QueueItemDto>().ReverseMap();
             // Booking
-            CreateMap<Booking, BookingDto>()
-            .ForMember(des => des.Symptoms, opt => opt.MapFrom(src => src.BookingSymptoms != null ? src.BookingSymptoms.Select(x => x.Symptom).ToList() : new()));
+            CreateMap<Booking, BookingResponseDto>()
+                .ForMember(dest => dest.SymptomIds, opt => opt.MapFrom(src => src.BookingSymptoms != null
+                    ? src.BookingSymptoms.Select(bs => bs.SymptomId.ToString()).ToList()
+                    : new List<string>()));
 
-            CreateMap<BookingDto, Booking>()
-                .ForMember(des => des.ServiceId, opt => opt.MapFrom(src => StringToInt64(src.ServiceId)))
-                .ForMember(des => des.HealthProfileId, opt => opt.MapFrom(src => StringToInt64(src.HealthProfileId)));
+            CreateMap<BookingRequestDto, Booking>()
+                .ForMember(dest => dest.BookingSymptoms, opt => opt.Ignore());
 
             // Locations
             CreateMap<Province, ProvinceDto>().ReverseMap();

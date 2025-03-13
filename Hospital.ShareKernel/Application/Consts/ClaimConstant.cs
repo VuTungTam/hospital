@@ -4,8 +4,6 @@
     {
         public const string IS_SA = "is_sa";
         public const string SHARDING = "sharding_group";
-        public const string BRANCH_ID = "branch_id";
-        public const string BRANCH_IDS = "branch_ids";
         public const string USER_ID = "user_id";
         public const string USERNAME = "username";
         public const string ROLES = "roles";

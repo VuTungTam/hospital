@@ -20,8 +20,6 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
         private string _username;
         private string _permission;
         private string _uid;
-        private long _branchId;
-        private List<long> _branchIds;
         private long _userId;
         //private int _shard;
         private (bool HasValue, bool Value) _superAdminValue;
@@ -52,10 +50,6 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
         public string Uid => _uid;
 
         public AccountType AccountType => _accountType;
-
-        public long BranchId => _branchId;
-
-        public List<long> BranchIds => _branchIds;
 
         public long UserId => _userId;
 
@@ -111,8 +105,6 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
                 var jwtSecurityToken = handler.ReadJwtToken(_accessToken);
                 var claims = jwtSecurityToken.Claims;
 
-                _branchId = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.BRANCH_ID).Value);
-                _branchIds = JsonConvert.DeserializeObject<List<long>>(claims.First(c => c.Type == ClaimConstant.BRANCH_IDS).Value);
                 _userId = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.USER_ID).Value);
                 //_shard = Convert.ToInt32(claims.First(c => c.Type == ClaimConstant.SHARDING).Value);
                 _username = claims.First(c => c.Type == ClaimConstant.USERNAME).Value;

@@ -37,7 +37,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var timeRule = await _serviceTimeRuleReadRepository.GetByIdAsync(id, cancellationToken: cancellationToken);
+            var timeRule = await _serviceTimeRuleReadRepository.GetByIdAsync(id, _serviceTimeRuleReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (timeRule == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);

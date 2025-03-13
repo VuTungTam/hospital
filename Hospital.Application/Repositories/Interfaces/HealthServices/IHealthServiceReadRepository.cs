@@ -8,6 +8,6 @@ namespace Hospital.Application.Repositories.Interfaces.HealthServices
 {
     public interface IHealthServiceReadRepository : IReadRepository<HealthService>
     {
-        Task<PagingResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId = 0, long facilityId = 0, long specialtyId = 0, bool ignoreOwner = false,  CancellationToken cancellationToken = default);
+        Task<PagingResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long? serviceTypeId = null, long? facilityId = null, long? specialtyId = null,  CancellationToken cancellationToken = default);
     }
 }

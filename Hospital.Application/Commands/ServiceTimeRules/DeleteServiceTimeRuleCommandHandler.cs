@@ -12,7 +12,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 {
     public class DeleteServiceTimeRuleCommandHandler : BaseCommandHandler, IRequestHandler<DeleteServiceTimeRuleCommand>
     {
-        private readonly IServiceTimeRuleReadRepository _erviceTimeRuleReadRepository;
+        private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
         public DeleteServiceTimeRuleCommandHandler(
             IEventDispatcher eventDispatcher,
@@ -22,7 +22,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository
             ) : base(eventDispatcher, authService, localizer)
         {
-            _erviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
+            _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
         }
 
@@ -33,10 +33,10 @@ namespace Hospital.Application.Commands.ServiceTimeRules
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var news = await _erviceTimeRuleReadRepository.GetByIdsAsync(request.Ids, cancellationToken: cancellationToken);
-            if (news.Any())
+            var rules = await _serviceTimeRuleReadRepository.GetByIdsAsync(request.Ids, _serviceTimeRuleReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            if (rules.Any())
             {
-                await _serviceTimeRuleWriteRepository.DeleteAsync(news, cancellationToken);
+                await _serviceTimeRuleWriteRepository.DeleteAsync(rules, cancellationToken);
             }
 
             return Unit.Value;

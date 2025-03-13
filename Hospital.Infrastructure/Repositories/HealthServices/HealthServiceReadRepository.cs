@@ -6,11 +6,11 @@ using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System;
 using VetHospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.HealthServices
@@ -21,25 +21,25 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
         {
         }
 
-        public async Task<PagingResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId = 0, long facilityId = 0, long specialtyId = 0, bool ignoreOwner = false, CancellationToken cancellationToken = default)
+        public async Task<PagingResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long? serviceTypeId = null, long? facilityId = null, long? specialtyId = null, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthService> spec = new GetHealthServicesByStatusSpecification(status);
-            if (serviceTypeId > 0)
+            if (serviceTypeId.HasValue && serviceTypeId.Value > 0)
             {
-                spec = spec.And(new GetHealthServicesByTypeSpecification(serviceTypeId));
+                spec = spec.And(new GetHealthServicesByTypeSpecification(serviceTypeId.Value));
             }
 
-            if (facilityId > 0)
+            if (facilityId.HasValue && facilityId.Value > 0)
             {
-                spec = spec.And(new GetHealthServicesByFacilityIdSpecification(facilityId));
+                spec = spec.And(new GetHealthServicesByFacilityIdSpecification(facilityId.Value));
             }
 
-            if (specialtyId > 0)
+            if (specialtyId.HasValue && specialtyId.Value > 0)
             {
-                spec = spec.And(new GetHealthServicesBySpecialtyIdSpecification(specialtyId));
+                spec = spec.And(new GetHealthServicesBySpecialtyIdSpecification(specialtyId.Value));
             }
-
-            var guardExpression = GuardDataAccess(spec, ignoreOwner).GetExpression();
+            QueryOption option = new QueryOption();
+            var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.Modified ?? x.Created);
@@ -50,5 +50,6 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
 
             return new PagingResult<HealthService>(data, count);
         }
+
     }
 }

@@ -84,7 +84,7 @@ namespace Hospital.Application.Commands.Accounts.Reg
 
             async Task InternalValidateAsync(ExpressionSpecification<User> spec, string localizeKey)
             {
-                var entity = await _userReadRepository.FindBySpecificationAsync(spec, cancellationToken: cancellationToken);
+                var entity = await _userReadRepository.FindBySpecificationAsync(spec, _userReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
                 if (entity != null)
                 {
                     throw new BadRequestException(_localizer[localizeKey]);

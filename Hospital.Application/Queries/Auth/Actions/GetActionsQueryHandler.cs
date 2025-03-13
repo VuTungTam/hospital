@@ -25,7 +25,7 @@ namespace Hospital.Application.Queries.Auth.Actions
         }
         public async Task<List<ActionDto>> Handle(GetActionsQuery request, CancellationToken cancellationToken)
         {
-            var actions = await _actionReadRepository.GetAsync(cancellationToken: cancellationToken);
+            var actions = await _actionReadRepository.GetAsync(null,_actionReadRepository.DefaultQueryOption,cancellationToken: cancellationToken);
             return _mapper.Map<List<ActionDto>>(actions);
         }
     }

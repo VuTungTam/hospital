@@ -1,18 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Hospital.Domain.Specifications;
+using Hospital.Infra.EFConfigurations;
+using Hospital.Infrastructure.Extensions;
 using Hospital.SharedKernel.Application.Repositories.Interface;
-using Hospital.SharedKernel.Application.Repositories.Models;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
+using Hospital.SharedKernel.Runtime.ExecutionContext;
+using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
-using System.Threading;
-using System;
-using Hospital.Infra.EFConfigurations;
 using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
-using Hospital.Infrastructure.Extensions;
-using Hospital.SharedKernel.Specifications;
-using Hospital.SharedKernel.Runtime.ExecutionContext;
-using Hospital.Domain.Specifications;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Hospital.Infra.Repositories
 {
@@ -31,7 +29,7 @@ namespace Hospital.Infra.Repositories
             _executionContext = serviceProvider.GetRequiredService<IExecutionContext>();
         }
 
-        public virtual ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, bool ignoreOwner = false, bool ignoreBranch = false) where T : BaseEntity
+        public virtual ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, QueryOption option) where T : BaseEntity
         {
             spec ??= new ExpressionSpecification<T>(x => true);
 
@@ -40,12 +38,7 @@ namespace Hospital.Infra.Repositories
                 return spec;
             }
 
-            if (!ignoreBranch && typeof(T).HasInterface<IBranchId>())
-            {
-                spec = spec.And(new LimitByBranchIdSpecification<T>(_executionContext.BranchId));
-            }
-
-            if (!ignoreOwner && typeof(T).HasInterface<IPersonalizeEntity>())
+            if (!option.IgnoreOwner && typeof(T).HasInterface<IOwnedEntity>())
             {
                 spec = spec.And(new LimitByOwnerIdSpecification<T>(_executionContext.UserId));
             }
@@ -53,31 +46,31 @@ namespace Hospital.Infra.Repositories
             return spec;
         }
 
-        public virtual async Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, string[] includes = default, bool ignoreOwner = false, bool ignoreBranch = false, CancellationToken cancellationToken = default) where T : BaseEntity
+        public virtual async Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default) where T : BaseEntity
         {
             var dbSet = _dbContext.Set<T>();
             var query = dbSet.AsNoTracking();
 
-            spec = GuardDataAccess(spec, ignoreOwner, ignoreBranch);
+            spec = GuardDataAccess(spec, option);
 
-            if (includes != null && includes.Any())
+            if (option.Includes != null && option.Includes.Any())
             {
-                query = query.IncludesRelateData(includes);
+                query = query.IncludesRelateData(option.Includes);
             }
 
             return await query.FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
         }
 
-        public virtual async Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, string[] includes = default, bool ignoreOwner = false, bool ignoreBranch = false, CancellationToken cancellationToken = default) where T : BaseEntity
+        public virtual async Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default) where T : BaseEntity
         {
             var dbSet = _dbContext.Set<T>();
             var query = dbSet.AsNoTracking();
 
-            spec = GuardDataAccess(spec, ignoreOwner, ignoreBranch);
+            spec = GuardDataAccess(spec, option);
 
-            if (includes != null && includes.Any())
+            if (option.Includes != null && option.Includes.Any())
             {
-                query = query.IncludesRelateData(includes);
+                query = query.IncludesRelateData(option.Includes);
             }
 
             if (typeof(T).HasInterface<IModified>())

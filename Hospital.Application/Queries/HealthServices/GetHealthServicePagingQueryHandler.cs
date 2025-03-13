@@ -25,7 +25,7 @@ namespace Hospital.Application.Queries.HealthServices
 
         public async Task<PagingResult<HealthServiceDto>> Handle(GetHealthServicePagingQuery request, CancellationToken cancellationToken)
         {
-            var result = await _healthServiceReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.TypeId, request.FacilityId, request.SpecialtyId, false, cancellationToken: cancellationToken);
+            var result = await _healthServiceReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.TypeId, request.FacilityId, request.SpecialtyId, cancellationToken: cancellationToken);
 
             var dtos = _mapper.Map<List<HealthServiceDto>>(result.Data);
 

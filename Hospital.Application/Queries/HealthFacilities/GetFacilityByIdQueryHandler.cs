@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -29,9 +30,15 @@ namespace Hospital.Application.Queries.HealthFacilities
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
-            var entity = await _healthFacilityReadRepository.GetByIdAsync(request.Id, ignoreOwner: true, cancellationToken: cancellationToken);
-            var facility = _mapper.Map<HealthFacilityDto>(entity);
-            return facility;
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.Id, _healthFacilityReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+
+            if (facility == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
+            var facilityDto = _mapper.Map<HealthFacilityDto>(facility);
+            return facilityDto;
         }
     }
 }

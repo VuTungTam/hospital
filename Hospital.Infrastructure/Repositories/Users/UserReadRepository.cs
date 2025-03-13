@@ -8,6 +8,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Domain.Entities.Users;
 using Hospital.SharedKernel.Domain.Enums;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
 using Hospital.SharedKernel.Specifications.Interfaces;
@@ -34,8 +35,6 @@ namespace Hospital.Infrastructure.Repositories.Users
 
             query = query.Include(x => x.UserRoles)
                          .ThenInclude(x => x.Role)
-                         .Include(x => x.UserBranches)
-                         .Where(x => x.UserBranches.Any(b => b.BranchId == _executionContext.BranchId))
                          .Where(x => x.IsCustomer == false);
 
             if (state != AccountStatus.None)
@@ -111,7 +110,7 @@ namespace Hospital.Infrastructure.Repositories.Users
             if (!includeRole)
             {
                 var executionContext = _serviceProvider.GetRequiredService<IExecutionContext>();
-                return await base.GetByIdAsync(_executionContext.UserId, cancellationToken: cancellationToken);
+                return await base.GetByIdAsync(_executionContext.UserId, DefaultQueryOption, cancellationToken: cancellationToken);
             }
             return await _dbSet
                    .AsNoTracking()
@@ -165,7 +164,8 @@ namespace Hospital.Infrastructure.Repositories.Users
         public async Task<List<User>> GetCustomerNamesAsync(CancellationToken cancellationToken = default)
         {
             ISpecification<User> spec = null;
-            var guard = GuardDataAccess(spec);
+            QueryOption option = new QueryOption();
+            var guard = GuardDataAccess(spec, option);
             var customers = await _dbSet.Where(guard.GetExpression())
                                   .Where(x => x.IsCustomer == true && (x.Status == AccountStatus.Active || x.Status == AccountStatus.UnConfirm))
                                   .OrderBy(x => x.Name)

@@ -1,9 +1,9 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
-using Hospital.Application.Repositories.Interfaces.Branches;
-using Hospital.Application.Repositories.Interfaces.HealthProfiles;
+using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.Newes;
 using Hospital.Application.Repositories.Interfaces.Queue;
@@ -13,15 +13,14 @@ using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Application.Repositories.Interfaces.Users;
-using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Infra.EFConfigurations;
 using Hospital.Infra.Repositories;
 using Hospital.Infrastructure.Events.Dispatchers;
 using Hospital.Infrastructure.Repositories.AppConfigs;
 using Hospital.Infrastructure.Repositories.Auth;
-using Hospital.Infrastructure.Repositories.Branches;
-using Hospital.Infrastructure.Repositories.HealthProfiles;
+using Hospital.Infrastructure.Repositories.Bookings;
 using Hospital.Infrastructure.Repositories.HealthFacilities;
+using Hospital.Infrastructure.Repositories.HealthProfiles;
 using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
 using Hospital.Infrastructure.Repositories.Newes;
@@ -32,7 +31,6 @@ using Hospital.Infrastructure.Repositories.Specialities;
 using Hospital.Infrastructure.Repositories.Specilities;
 using Hospital.Infrastructure.Repositories.Symptoms;
 using Hospital.Infrastructure.Repositories.Users;
-using Hospital.Infrastructure.Repositories.Bookings;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
@@ -122,10 +120,6 @@ namespace Hospital.Infrastructure.DI
 
             // Auth
             services.AddScoped<IAuthRepository, AuthRepository>();
-
-            // Branches
-            services.AddScoped<IBranchReadRepository, BranchReadRepository>();
-            services.AddScoped<IBranchWriteRepository, BranchWriteRepository>();
 
             // Roles
             services.AddScoped<IRoleReadRepository, RoleReadRepository>();

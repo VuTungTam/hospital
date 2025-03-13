@@ -4,6 +4,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Entities;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,9 @@ namespace Hospital.Infrastructure.Repositories.Auth
         {
         }
 
-        public override async Task<PagingResult<Role>> GetPagingAsync(Pagination pagination, ISpecification<Role> spec = null, bool ignoreOwner = false, bool ignoreBranch = false, CancellationToken cancellationToken = default)
+        public override async Task<PagingResult<Role>> GetPagingAsync(Pagination pagination, ISpecification<Role> spec, QueryOption option, CancellationToken cancellationToken = default)
         {
-            var guardExpression = GuardDataAccess(spec, ignoreOwner, ignoreBranch).GetExpression();
+            var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Include(x => x.RoleActions)
                          .ThenInclude(x => x.Action)

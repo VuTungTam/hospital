@@ -131,14 +131,14 @@ namespace Hospital.Infra.Repositories
         {
             if (type == "all")
             {
-                if (typeof(T).HasInterface<IPersonalizeEntity>())
+                if (typeof(T).HasInterface<IOwnedEntity>())
                 {
                     return BaseCacheKeys.DbOwnerAllKey<T>(_executionContext.UserId);
                 }
                 return BaseCacheKeys.DbSystemAllKey<T>();
             }
 
-            if (typeof(T).HasInterface<IPersonalizeEntity>())
+            if (typeof(T).HasInterface<IOwnedEntity>())
             {
                 return BaseCacheKeys.DbOwnerIdKey<T>(id, _executionContext.UserId);
             }

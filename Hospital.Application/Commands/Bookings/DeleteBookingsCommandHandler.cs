@@ -34,11 +34,10 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var bookings = await _bookingReadRepository.GetByIdsAsync(request.Ids, ignoreOwner: true, cancellationToken: cancellationToken);
+            var bookings = await _bookingReadRepository.GetByIdsAsync(request.Ids, _bookingReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (bookings.Any())
             {
                 await _bookingWriteRepository.DeleteAsync(bookings, cancellationToken);
-
             }
 
             return Unit.Value;

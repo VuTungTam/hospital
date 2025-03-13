@@ -5,6 +5,8 @@ using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Libraries.Attributes;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Hospital.Domain.Entities.Bookings
 {
@@ -15,7 +17,8 @@ namespace Hospital.Domain.Entities.Bookings
         IModified,
         IModifier,
         ISoftDelete,
-        IDeletedBy
+        IDeletedBy,
+        IOwnedEntity
     {
         [Filterable("Mã lịch khám")]
         public string Code { get; set; }
@@ -38,6 +41,8 @@ namespace Hospital.Domain.Entities.Bookings
 
         public int Order {  get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<BookingSymptom> BookingSymptoms { get; set; }
 
         public DateTime Created { get; set; } = DateTime.Now;
@@ -51,5 +56,6 @@ namespace Hospital.Domain.Entities.Bookings
         public DateTime? Deleted { get; set; }
 
         public long? DeletedBy { get; set; }
+        public long OwnerId { get; set; }
     }
 }

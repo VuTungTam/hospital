@@ -37,7 +37,7 @@ namespace Hospital.Application.Commands.SocialNetworks
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var socialNetwork = await _socialNetworkReadRepository.GetByIdAsync(id, cancellationToken: cancellationToken);
+            var socialNetwork = await _socialNetworkReadRepository.GetByIdAsync(id,_socialNetworkReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (socialNetwork == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);

@@ -33,7 +33,7 @@ namespace Hospital.Application.Commands.Newes
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var news = await _newsReadRepository.GetByIdsAsync(request.Ids, cancellationToken: cancellationToken);
+            var news = await _newsReadRepository.GetByIdsAsync(request.Ids, _newsReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (news.Any())
             {
                 await _newsWriteRepository.DeleteAsync(news, cancellationToken);

@@ -20,7 +20,7 @@ namespace Hospital.Application.Commands.Queue
     public class AddBookingToQueueCommandHandler : BaseCommandHandler, IRequestHandler<AddBookingToQueueCommand, int>
     {
         private readonly IMapper _mapper;
-        private readonly IBookingReadRepository _BookingReadRepository;
+        private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IQueueItemReadRepository _queueItemReadRepository;
         private readonly IQueueItemWriteRepository _queueItemWriteRepository;
         public AddBookingToQueueCommandHandler(
@@ -33,7 +33,7 @@ namespace Hospital.Application.Commands.Queue
             IQueueItemWriteRepository queueItemWriteRepository
             ) : base(eventDispatcher, authService, localizer)
         {
-            _BookingReadRepository = BookingReadRepository;
+            _bookingReadRepository = BookingReadRepository;
             _queueItemWriteRepository = queueItemWriteRepository;
             _queueItemReadRepository = queueItemReadRepository;
             _mapper = mapper;
@@ -41,7 +41,7 @@ namespace Hospital.Application.Commands.Queue
 
         public async Task<int> Handle(AddBookingToQueueCommand request, CancellationToken cancellationToken)
         {
-            var Booking = await _BookingReadRepository.GetByIdAsync(request.BookingId, cancellationToken: cancellationToken);
+            var Booking = await _bookingReadRepository.GetByIdAsync(request.BookingId,_bookingReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (Booking == null)
             {
                 throw new BadRequestException("Lượt khám không tồn tại");
@@ -68,7 +68,7 @@ namespace Hospital.Application.Commands.Queue
 
             async Task InternalValidateAsync(ExpressionSpecification<QueueItem> spec, string localizeKey)
             {
-                var entity = await _queueItemReadRepository.FindBySpecificationAsync(spec, cancellationToken: cancellationToken);
+                var entity = await _queueItemReadRepository.FindBySpecificationAsync(spec,_bookingReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
                 if (entity != null)
                 {
                     throw new BadRequestException(_localizer[localizeKey]);

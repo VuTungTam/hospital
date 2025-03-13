@@ -14,8 +14,7 @@ namespace Hospital.Domain.Entities.HealthFacilities
         ICreated,
         ICreator,
         ISoftDelete,
-        IDeletedBy,
-        IBranchId
+        IDeletedBy
     {
         public string NameVn { get; set; }
         public string NameEn { get; set; }
@@ -44,6 +43,5 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public long? Creator { get; set; }
         public DateTime? Deleted { get; set; }
         public long? DeletedBy { get; set; }
-        public long BranchId { get; set; }
     }
 }

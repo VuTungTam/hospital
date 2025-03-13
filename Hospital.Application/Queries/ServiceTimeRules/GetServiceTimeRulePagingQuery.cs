@@ -1,0 +1,22 @@
+﻿using Hospital.Application.Dtos.ServiceTimeRules;
+using Hospital.SharedKernel.Application.CQRS.Queries.Base;
+using Hospital.SharedKernel.Application.Models.Requests;
+using Hospital.SharedKernel.Application.Models.Responses;
+
+namespace Hospital.Application.Queries.ServiceTimeRules
+{
+    public class GetServiceTimeRulePagingQuery : BaseAllowAnonymousQuery<PagingResult<ServiceTimeRuleDto>>
+    {
+        public GetServiceTimeRulePagingQuery(Pagination pagination, long? serviceId, DayOfWeek? dayOfWeek, DateTime? date) 
+        {
+            Pagination = pagination;
+            ServiceId = serviceId;
+            DayOfWeek = dayOfWeek;
+            Date = date;
+        }
+        public long? ServiceId { get;}
+        public DayOfWeek? DayOfWeek { get;}
+        public DateTime? Date { get;}
+        public Pagination Pagination { get;}
+    }
+}

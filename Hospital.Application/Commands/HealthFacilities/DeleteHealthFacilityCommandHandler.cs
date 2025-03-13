@@ -32,7 +32,7 @@ namespace Hospital.Application.Commands.HealthFacilities
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var facilities = await _healthFacilityReadRepository.GetByIdsAsync(request.Ids);
+            var facilities = await _healthFacilityReadRepository.GetByIdsAsync(request.Ids, _healthFacilityReadRepository.DefaultQueryOption,cancellationToken);
             if (facilities.Any())
             {
                 await _healthFacilityWriteRepository.DeleteAsync(facilities, cancellationToken);

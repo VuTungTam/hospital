@@ -8,6 +8,7 @@ using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,8 @@ namespace Hospital.Infrastructure.Repositories.Newes
             var data = await _redisCache.GetAsync<News>(key, cancellationToken);
             if (data == null)
             {
-                data = await FindBySpecificationAsync(new GetNewsBySlugSpecification(slug), cancellationToken: cancellationToken);
+                QueryOption option = new QueryOption();
+                data = await FindBySpecificationAsync(new GetNewsBySlugSpecification(slug), option, cancellationToken: cancellationToken);
                 if (data != null)
                 {
                     await _redisCache.SetAsync(key, data, TimeSpan.FromSeconds(AppCacheTime.NewsSlug), cancellationToken: cancellationToken);
@@ -51,8 +53,8 @@ namespace Hospital.Infrastructure.Repositories.Newes
             {
                 spec = spec.Not(new GetByIdSpecification<News>(excludeId));
             }
-
-            var guardExpression = GuardDataAccess(spec).GetExpression();
+            QueryOption option = new QueryOption();
+            var guardExpression = GuardDataAccess(spec,option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
 
             if (true || clientSort)

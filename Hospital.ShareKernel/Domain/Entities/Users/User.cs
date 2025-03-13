@@ -79,8 +79,6 @@ namespace Hospital.SharedKernel.Domain.Entities.Users
 
         public List<UserRole> UserRoles { get; set; }
 
-        public List<UserBranch> UserBranches { get; set; }
-
         public DateTime Created { get; set; } = DateTime.Now;
 
         public long? Creator { get; set; }

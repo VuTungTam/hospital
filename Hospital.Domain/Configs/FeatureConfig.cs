@@ -11,8 +11,6 @@ namespace Hospital.Domain.Configs
         public static bool SystemSetting { get; set; }
         public static bool Audit { get; set; }
         public static bool Decentralization { get; set; }
-        public static bool Branch { get; set; }
-
 
         public static void SetConfig(IConfiguration configuration)
         {
@@ -23,7 +21,6 @@ namespace Hospital.Domain.Configs
             SystemSetting = bool.Parse(configuration.GetRequiredSection("Features:SystemSetting").Value);
             Audit = bool.Parse(configuration.GetRequiredSection("Features:Audit").Value);
             Decentralization = bool.Parse(configuration.GetRequiredSection("Features:Decentralization").Value);
-            Branch = bool.Parse(configuration.GetRequiredSection("Features:Branch").Value);
         }
 
         public static object Get()
@@ -36,8 +33,7 @@ namespace Hospital.Domain.Configs
                 Booking,
                 SystemSetting,
                 Audit,
-                Decentralization,
-                Branch
+                Decentralization
             };
         }
     }

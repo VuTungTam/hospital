@@ -6,13 +6,14 @@ using Hospital.Domain.Entities.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetBookingByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingByIdQuery, BookingDto>
+    public class GetBookingByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingByIdQuery, BookingResponseDto>
     {
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly ISymptomReadRepository _symptomReadRepository;
@@ -32,32 +33,52 @@ namespace Hospital.Application.Queries.Bookings
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
-        public async Task<BookingDto> Handle(GetBookingByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BookingResponseDto> Handle(GetBookingByIdQuery request, CancellationToken cancellationToken)
         {
             if (request.Id <= 0)
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
-            var entity = await _bookingReadRepository.GetByIdAsync(request.Id, ignoreOwner: true, cancellationToken: cancellationToken);
 
-            var booking = _mapper.Map<BookingDto>(entity);
-
-            if (booking != null)
+            var option = new QueryOption
             {
-                var symptoms = await _symptomReadRepository.GetAsync(cancellationToken: cancellationToken);
-                var services = await _healthServiceReadRepository.GetAsync(cancellationToken: cancellationToken);
-                
-                //foreach (var id in booking.SymptomIds)
-                //{
-                //    var symptom = symptoms.FirstOrDefault(x => x.Id == long.Parse(id));
-                //    booking.SymptomNameEns.Add(symptom.NameEn ?? "");
-                //    booking.SymptomNameVns.Add(symptom.NameVn ?? "");
-                //}
-                //booking.ServiceNameVn = services.FirstOrDefault(x => x.Id == long.Parse(booking.ServiceId))?.NameVn ?? "";
-                //booking.ServiceNameEn = services.FirstOrDefault(x => x.Id == long.Parse(booking.ServiceId))?.NameEn ?? "";
+                IgnoreOwner = true,
+                Includes = new string[] { nameof(Booking.BookingSymptoms) }
+            };
+
+            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
+
+            if (booking == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
+            var bookingDto = _mapper.Map<BookingResponseDto>(booking);
+            
+            if (bookingDto != null)
+            {
+                var serviceId = _mapper.Map<long>(bookingDto.ServiceId);
+                var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, _healthServiceReadRepository.DefaultQueryOption, cancellationToken);
+                if (service != null)
+                {
+                    bookingDto.ServiceNameVn = service.NameVn;
+                    bookingDto.ServiceNameEn = service.NameEn;
+                }
+
+                var symptomIds = _mapper.Map<List<long>>(bookingDto.SymptomIds);
+                if (symptomIds?.Any() == true)
+                {
+                    var symptoms = await _symptomReadRepository.GetByIdsAsync(symptomIds, _symptomReadRepository.DefaultQueryOption, cancellationToken);
+                    if (symptoms?.Any() == true)
+                    {
+                        bookingDto.SymptomNameVns = symptoms.Select(x => x.NameVn).ToList();
+                        bookingDto.SymptomNameEns = symptoms.Select(x => x.NameEn).ToList();
+                    }
+                }
 
             }
-            return booking;
+            
+            return bookingDto;
         }
     }
 }

@@ -8,11 +8,11 @@ namespace Hospital.Application.Commands.Bookings
     [RequiredPermission(ActionExponent.BookingManagement)]
     public class UpdateBookingCommand : BaseCommand
     {
-        public UpdateBookingCommand(BookingDto booking)
+        public UpdateBookingCommand(BookingRequestDto booking)
         {
             Booking = booking;
         }
 
-        public BookingDto Booking { get; }
+        public BookingRequestDto Booking { get; }
     }
 }

@@ -2,6 +2,7 @@
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -39,10 +40,15 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var booking = await _bookingReadRepository.GetByIdAsync(id, ignoreOwner: true, cancellationToken: cancellationToken);
+            var booking = await _bookingReadRepository.GetByIdAsync(id, _bookingReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (booking == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+            }
+
+            if (booking.Status != BookingStatus.Waiting)
+            {
+                throw new BadRequestException(_localizer["booking_status_is_not_waiting"]);
             }
 
             var entity = _mapper.Map<Booking>(request.Booking);

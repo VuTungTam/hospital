@@ -29,7 +29,7 @@ namespace Hospital.Infrastructure.Repositories.Users
         {
             var roleReadRepository = _serviceProvider.GetRequiredService<IRoleReadRepository>();
             var sequenceRepository = _serviceProvider.GetRequiredService<ISequenceRepository>();
-            var roles = await roleReadRepository.GetAsync(cancellationToken: cancellationToken);
+            var roles = await roleReadRepository.GetAsync(null, roleReadRepository.DefaultQueryOption,cancellationToken: cancellationToken);
             var table = "customer";
             var code = await sequenceRepository.GetSequenceAsync(table, cancellationToken);
             if (string.IsNullOrEmpty(customer.Password))
@@ -69,13 +69,6 @@ namespace Hospital.Infrastructure.Repositories.Users
             user.PasswordHash = string.IsNullOrEmpty(user.Password) ? "" : user.Password.ToMD5();
             user.Salt = Utility.RandomString(6);
             user.IsCustomer = false;
-            user.UserBranches = new List<UserBranch>
-            {
-                new UserBranch
-                {
-                    BranchId = _executionContext.BranchId
-                }
-            };
             await _dbSet.AddAsync(user, cancellationToken);
         }
 

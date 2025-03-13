@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using MediatR;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Repositories.Interface;
-using Hospital.SharedKernel.Domain.Entities.Base;
-using System.Resources;
-using Hospital.Resource.Properties;
-using Microsoft.Extensions.Localization;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Domain.Entities.Base;
+using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace Hospital.SharedKernel.Application.CQRS.Queries
 {
@@ -28,7 +27,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
 
         public async Task<List<TResponse>> Handle(GetAllQuery<T, TResponse> request, CancellationToken cancellationToken)
         {
-            var entities = await _readRepository.GetAsync(cancellationToken: cancellationToken);
+            var entities = await _readRepository.GetAsync(null,_readRepository.DefaultQueryOption,cancellationToken: cancellationToken);
             return _mapper.Map<List<TResponse>>(entities);
         }
     }

@@ -37,7 +37,7 @@ namespace Hospital.Application.Commands.HealthServices
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var service = _healthServiceReadRepository.GetByIdAsync(id, cancellationToken: cancellationToken);
+            var service = _healthServiceReadRepository.GetByIdAsync(id,_healthServiceReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
 
             if (service == null)
             {

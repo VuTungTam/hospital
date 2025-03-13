@@ -1,13 +1,17 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
+using Hospital.Domain.Specifications.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
+using Hospital.SharedKernel.Specifications.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -39,43 +43,50 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, ignoreOwner: true, cancellationToken: cancellationToken);
-            if (booking == null)
+            var cancelBooking = await _bookingReadRepository.GetByIdAsync(request.Id, _bookingReadRepository.DefaultQueryOption, cancellationToken);
+            if (cancelBooking == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
             }
-
-            if (booking.Status != BookingStatus.Confirmed)
+            if (cancelBooking.Status == BookingStatus.Completed)
             {
-                throw new BadRequestException(_localizer["booking_status_is_not_confirmed"]);
-                //throw new BadRequestException(booking.Status.ToString());
+                throw new BadRequestException(_localizer["Khong huy duoc lich da thuc hien"]);
             }
 
-            booking.Status = BookingStatus.Cancel;
+            cancelBooking.Status = BookingStatus.Cancel;
+            var cancelOrder = cancelBooking.Order;
+            cancelBooking.Order = -1;
 
-            booking.Order = -1;
+            _bookingWriteRepository.Update(cancelBooking);
+            await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
-            _bookingWriteRepository.Update(booking);
+            var spec = new GetBookingsByDateSpecification(cancelBooking.Date)
+                .And(new GetBookingsByServiceIdSpecification(cancelBooking.ServiceId))
+                .And(new GetBookingsByTimeRangeSpecification(cancelBooking.ServiceStartTime, cancelBooking.ServiceEndTime))
+                .And(new GetBookingNextOrderSpecification(cancelOrder));
+
+            var option = new QueryOption
+            {
+                IgnoreOwner = true,
+            };
+
+            var bookings = await _bookingReadRepository.GetAsync(spec, option, cancellationToken);
+
+            foreach (var booking in bookings)
+            {
+                if (booking.Order > cancelOrder)
+                {
+                    booking.Order = booking.Order - 1;
+                    _bookingWriteRepository.Update(booking);
+                }
+            }
 
             await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
-            var nextBookings = await _bookingReadRepository.GetNextBookingAsync
-                (booking, cancellationToken: cancellationToken);
-
-            foreach (var nextBooking in nextBookings)
-            {
-                nextBooking.Order--;
-            }
-
-            var key = BaseCacheKeys.GetQueueOrder(booking.ServiceId, booking.Date, booking.ServiceStartTime, booking.ServiceEndTime);
-
-            var oldOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, booking.ServiceStartTime, booking.ServiceEndTime, cancellationToken);
-
-            await _bookingWriteRepository.UpdateRangeAsync(nextBookings, cancellationToken: cancellationToken);
-
-            await _redisCache.SetAsync(key, oldOrder - 1, cancellationToken: cancellationToken);
+            await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
             return Unit.Value;
         }
+
     }
 }

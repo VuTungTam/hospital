@@ -28,11 +28,11 @@ namespace Hospital.Application.Queries.HealthFacilities
 
         public async Task<PagingResult<HealthFacilityDto>> Handle(GetHealthFacilityPagingQuery request, CancellationToken cancellationToken)
         {
-            var result = await _healthFacilityReadRepository.GetPagingWithFilterAsync(request.Pagination, request.TypeId, request.BrandId, request.Status, false, cancellationToken);
+            var facilities = await _healthFacilityReadRepository.GetPagingWithFilterAsync(request.Pagination, request.TypeId, request.Status, cancellationToken);
             
-            var facilities = _mapper.Map<List< HealthFacilityDto>>(result.Data);
+            var facilitieDtos = _mapper.Map<List< HealthFacilityDto>>(facilities.Data);
             
-            return new PagingResult<HealthFacilityDto>(facilities, result.Total );
+            return new PagingResult<HealthFacilityDto>(facilitieDtos, facilities.Total );
         }
     }
 }

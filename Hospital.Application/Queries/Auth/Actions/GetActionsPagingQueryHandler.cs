@@ -26,7 +26,7 @@ namespace Hospital.Application.Queries.Auth.Actions
 
         public async Task<PagingResult<ActionDto>> Handle(GetActionsPagingQuery request, CancellationToken cancellationToken)
         {
-            var pagination = await _actionReadRepository.GetPagingAsync(request.Pagination, cancellationToken: cancellationToken);
+            var pagination = await _actionReadRepository.GetPagingAsync(request.Pagination, spec:null, _actionReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             var dtos = _mapper.Map<List<ActionDto>>(pagination.Data);
 
             return new PagingResult<ActionDto>(dtos, pagination.Total);

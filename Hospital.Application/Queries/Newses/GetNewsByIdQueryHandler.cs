@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.Newes;
 using Hospital.Application.Repositories.Interfaces.Newes;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -30,7 +31,13 @@ namespace Hospital.Application.Queries.Newses
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
-            var news = await _newsReadRepository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
+            var news = await _newsReadRepository.GetByIdAsync(request.Id, _newsReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+
+            if (news == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
             return _mapper.Map<NewsDto>(news);
         }
     }

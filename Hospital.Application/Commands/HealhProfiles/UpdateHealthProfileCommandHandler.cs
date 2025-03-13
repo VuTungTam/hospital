@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Hospital.Application.Dtos.HealthProfiles;
-using Hospital.Application.Repositories.Interfaces.Branches;
-using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+using Hospital.Application.Commands.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Resource.Properties;
@@ -42,7 +40,7 @@ namespace Hospital.Application.Commands.HealhProfiles
 
             var entity = _mapper.Map<HealthProfile>(request.HealthProfile);
 
-            var profile = _healthProfileReadRepository.GetByIdAsync(id, cancellationToken: cancellationToken);
+            var profile = _healthProfileReadRepository.GetByIdAsync(id, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
 
             if (profile == null) 
             {

@@ -12,7 +12,6 @@ namespace Hospital.Application.Dtos.HealthFacility
 {
     public class HealthFacilityDto : BaseDto
     {
-        public string BranchId { get; set; }
         public string NameVn { get; set; }
         public string NameEn { get; set; }
         public string DescriptionVn { get; set; }

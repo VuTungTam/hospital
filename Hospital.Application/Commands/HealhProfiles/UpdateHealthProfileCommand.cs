@@ -1,7 +1,7 @@
 ﻿using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 
-namespace Hospital.Application.Commands.HealhProfiles
+namespace Hospital.Application.Commands.HealthProfiles
 {
     public class UpdateHealthProfileCommand : BaseCommand
     {

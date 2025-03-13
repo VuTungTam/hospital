@@ -3,6 +3,7 @@ using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -31,9 +32,17 @@ namespace Hospital.Application.Queries.HealthProfiles
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
-            var entity = await _healthProfileReadRepository.GetByIdAsync(request.Id, ignoreOwner: true, cancellationToken: cancellationToken);
-            var profile = _mapper.Map<HealthProfileDto>(entity);
-            return profile;
+            
+            var profile = await _healthProfileReadRepository.GetByIdAsync(request.Id, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+
+            if (profile == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
+            var profileDto = _mapper.Map<HealthProfileDto>(profile);
+            
+            return profileDto;
         }
     }
 }

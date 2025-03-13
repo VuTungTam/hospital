@@ -6,7 +6,7 @@ namespace Hospital.Domain.Specifications
 {
     public class LimitByOwnerIdSpecification<T> : ExpressionSpecification<T> where T : BaseEntity
     {
-        public LimitByOwnerIdSpecification(long userId) : base(x => (x as IPersonalizeEntity).OwnerId == userId)
+        public LimitByOwnerIdSpecification(long userId) : base(x => (x as IOwnedEntity).OwnerId == userId)
         {
         }
     }

@@ -4,12 +4,12 @@ namespace Hospital.Application.Commands.Specialties
 {
     public class RemoveSpecialtyForFacilityCommand : BaseCommand
     {
-        public RemoveSpecialtyForFacilityCommand(long branchId, long specialtyId)
+        public RemoveSpecialtyForFacilityCommand(long facilityId, long specialtyId)
         {
-            BranchId = branchId;
+            FacilityId = facilityId;
             SpecialtyId = specialtyId;
         }
-        public long BranchId { get; }
+        public long FacilityId { get; }
         public long SpecialtyId { get; }
     }
 }

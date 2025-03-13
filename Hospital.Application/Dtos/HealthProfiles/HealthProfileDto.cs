@@ -44,7 +44,7 @@ namespace Hospital.Application.Dtos.HealthProfiles
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage(localizer["patient_name_is_not_empty"]);
             RuleFor(x => x.Phone).NotEmpty().WithMessage(localizer["patient_phone_is_not_empty"]);
-            //RuleFor(x => x.Gender).NotEmpty().WithMessage(localizer["patient_gender_is_not_empty"]);
+            RuleFor(x => x.Gender).NotEmpty().WithMessage(localizer["patient_gender_is_not_empty"]);
             RuleFor(x => x.Dob).Must(x => x != default && x < DateTime.Now && x > new DateTime(1950, 1, 1)).WithMessage(localizer["invalid_date_of_birth"]);
             RuleFor(x => x.Phone).Must(x => SmsUtility.IsVietnamesePhone(x)).WithMessage(localizer["invalid_phone_number"]);
             RuleFor(x => x.Pid).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_province"]);

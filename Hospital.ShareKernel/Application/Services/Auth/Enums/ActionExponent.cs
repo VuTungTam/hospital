@@ -9,9 +9,6 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Enums
         [Description("Tất cả các quyền")]
         Master = 32,
 
-        [Description("Quản lý chi nhánh")]
-        BranchManagement = 31,
-
         [Description("Xem")]
         View = 0,
 

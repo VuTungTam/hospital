@@ -18,7 +18,6 @@ namespace Hospital.Api
 
             var services = builder.Services;
 
-
             // Add services to the container.
             CdnConfig.SetConfig(builder.Configuration); 
 

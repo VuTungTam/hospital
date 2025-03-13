@@ -1,13 +1,12 @@
-﻿using Hospital.Application.Repositories.Interfaces.Branches;
-using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+﻿using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
-using Hospital.SharedKernel.Domain.Entities.Branches;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -44,8 +43,11 @@ namespace Hospital.Application.Commands.Specialties
             {
                 throw new BadRequestException("Chuyên khoa không hợp lệ");
             }
-            var includes = new string[] { nameof( HealthFacility.FacilitySpecialties) };
-            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.FacilityId, includes, cancellationToken: cancellationToken);
+            var option = new QueryOption
+            {
+                Includes = new string[] { nameof(HealthFacility.FacilitySpecialties) }
+            };
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.FacilityId, option, cancellationToken: cancellationToken);
             if (facility == null)
             {
                 throw new BadRequestException("Co so không tồn tại");
@@ -58,7 +60,7 @@ namespace Hospital.Application.Commands.Specialties
                 throw new BadRequestException("Chuyên khoa đã tồn tại");
             }
 
-            var specialty = await _specialtyReadRepository.GetByIdAsync(request.SpecialtyId, cancellationToken: cancellationToken);
+            var specialty = await _specialtyReadRepository.GetByIdAsync(request.SpecialtyId,_specialtyReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (specialty == null)
             {
                 throw new BadRequestException("Chuyên khoa không tồn tại");

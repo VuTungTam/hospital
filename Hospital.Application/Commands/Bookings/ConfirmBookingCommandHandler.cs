@@ -1,12 +1,14 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
@@ -42,8 +44,14 @@ namespace Hospital.Application.Commands.Bookings
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
+
+            var option = new QueryOption
+            {
+                IgnoreOwner = true,
+            };
+
+            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
             
-            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, ignoreOwner: true, cancellationToken: cancellationToken);
             if (booking == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
@@ -54,22 +62,21 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["booking_status_is_not_waiting"]);
             }
 
-            var oldOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, booking.ServiceStartTime, booking.ServiceEndTime, cancellationToken);
+            var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date,
+                booking.ServiceStartTime, booking.ServiceEndTime, cancellationToken);
 
-            if (oldOrder == await _serviceTimeRuleReadRepository.GetMaxSlotAsync(booking.ServiceId, booking.Date, cancellationToken))
+            var maxSlot = await _serviceTimeRuleReadRepository.GetMaxSlotAsync(booking.ServiceId, booking.Date, cancellationToken);
+
+            if (maxOrder == maxSlot)
             {
                 throw new BadRequestException(_localizer["So luong da day"]);
             }
 
             booking.Status = BookingStatus.Confirmed;
 
-            booking.Order = oldOrder + 1;
+            booking.Order = maxOrder + 1;
 
             await _bookingWriteRepository.UpdateAsync(booking, cancellationToken: cancellationToken);
-
-            var key = BaseCacheKeys.GetQueueOrder(booking.ServiceId, booking.Date, booking.ServiceStartTime, booking.ServiceEndTime);
-
-            await _redisCache.SetAsync(key, oldOrder + 1, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

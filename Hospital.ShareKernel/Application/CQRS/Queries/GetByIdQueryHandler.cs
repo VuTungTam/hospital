@@ -35,7 +35,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
             }
             else
             {
-                var entity = await _readRepository.GetByIdAsync(request.GetId(), cancellationToken: cancellationToken);
+                var entity = await _readRepository.GetByIdAsync(request.GetId(), _readRepository.DefaultQueryOption, cancellationToken: cancellationToken);
                 var dto = _mapper.Map<TResponse>(entity);
                 return dto;
             }

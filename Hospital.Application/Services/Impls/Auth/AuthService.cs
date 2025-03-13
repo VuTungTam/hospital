@@ -111,16 +111,10 @@ namespace Hospital.Application.Services.Impls.Auth
             if (user.IsCustomer == true)
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, "false"));
-                claims.Add(new Claim(ClaimConstant.BRANCH_ID, "0"));
-                claims.Add(new Claim(ClaimConstant.BRANCH_IDS, "[0]"));
             }
             else
             {
-                var branchIds = user.UserBranches.Select(x => x.BranchId);
-
                 claims.Add(new Claim(ClaimConstant.IS_SA, (roles.Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN)).ToString()));
-                claims.Add(new Claim(ClaimConstant.BRANCH_ID, branchIds.First(x => selectedBranchId == 0 || x == selectedBranchId).ToString()));
-                claims.Add(new Claim(ClaimConstant.BRANCH_IDS, JsonConvert.SerializeObject(branchIds)));
             }
 
             claims.Add(new Claim(ClaimConstant.USER_ID, user.Id.ToString()));

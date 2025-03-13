@@ -8,10 +8,12 @@ namespace Hospital.Application.Queries.HealthProfiles
 {
     public class GetHealthProfilePagingQuery : BaseQuery<PagingResult<HealthProfileDto>>
     {
-        public GetHealthProfilePagingQuery(Pagination pagination, HealthFacilityStatus status)
+        public GetHealthProfilePagingQuery(Pagination pagination,long userId)
         {
             Pagination = pagination;
+            UserId = userId;
         }
         public Pagination Pagination { get; }
+        public long UserId { get; }
     }
 }

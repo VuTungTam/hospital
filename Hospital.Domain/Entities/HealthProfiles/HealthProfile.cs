@@ -14,7 +14,7 @@ namespace Hospital.Domain.Entities.HealthProfiles
         ICreator,
         ISoftDelete,
         IDeletedBy,
-        IPersonalizeEntity
+        IOwnedEntity
     {
         public string CICode { get; set; }
 

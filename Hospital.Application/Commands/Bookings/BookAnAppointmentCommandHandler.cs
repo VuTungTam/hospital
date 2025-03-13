@@ -47,40 +47,11 @@ namespace Hospital.Application.Commands.Bookings
         {
             var booking = _mapper.Map<Booking>(request.Booking);
 
-            var oldOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, 
-                booking.ServiceStartTime, booking.ServiceEndTime, cancellationToken);
-
-            if(oldOrder == await _serviceTimeRuleReadRepository.GetMaxSlotAsync(booking.ServiceId, booking.Date, cancellationToken))
-            {
-                throw new BadRequestException(_localizer["So luong da day"]);
-            }
-
-
             booking.Status = BookingStatus.Waiting;
 
-            await _bookingWriteRepository.AddWithCodeAsync(booking, cancellationToken);
+            await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 
-            _bookingWriteRepository.Add(booking);
-
-            await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
-
-            //foreach (var symptomId in request.Booking.Symptoms)
-            //{
-            //    if (!long.TryParse(symptomId, out var id) || id <= 0)
-            //    {
-            //        throw new BadRequestException(_localizer["common_id_is_not_valid"]);
-            //    }
-
-            //    var symptom = await _symptomReadRepository.GetByIdAsync(id);
-            //    if (symptom == null)
-            //    {
-            //        throw new BadRequestException(_localizer["common_id_is_not_valid"]);
-            //    }
-
-            //    booking.BookingSymptom.Add(new BookingSymptom { BookingId = booking.Id, SymptomId = id });
-            //}
-
-            await _bookingWriteRepository.UpdateAsync(booking, cancellationToken: cancellationToken);
+            await _bookingWriteRepository.AddAsync(booking,cancellationToken);
 
             return booking.Id.ToString();
         }

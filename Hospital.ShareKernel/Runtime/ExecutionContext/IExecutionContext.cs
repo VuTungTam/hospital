@@ -15,10 +15,6 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
         string Permission { get; }
 
-        long BranchId { get; }
-
-        List<long> BranchIds { get; }
-
         long UserId { get; }
 
         //int Shard { get; }

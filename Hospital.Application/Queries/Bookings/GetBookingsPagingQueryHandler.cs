@@ -11,7 +11,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetBookingsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingsPagingQuery, PagingResult<BookingDto>>
+    public class GetBookingsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingsPagingQuery, PagingResult<BookingResponseDto>>
     {
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly ISymptomReadRepository _symptomReadRepository;
@@ -31,29 +31,36 @@ namespace Hospital.Application.Queries.Bookings
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
-        public async Task<PagingResult<BookingDto>> Handle(GetBookingsPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PagingResult<BookingResponseDto>> Handle(GetBookingsPagingQuery request, CancellationToken cancellationToken)
         {
-            var paging = await _bookingReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.ExcludeId, request.Date, request.UserId, true, cancellationToken);
-            var bookings = _mapper.Map<List<BookingDto>>(paging.Data);
-            if (bookings != null && bookings.Any())
+            var bookings = await _bookingReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.ExcludeId, request.Date, request.UserId, cancellationToken);
+            var bookingDtos = _mapper.Map<List<BookingResponseDto>>(bookings.Data);
+            if (bookingDtos != null && bookingDtos.Any())
             {
-                var symptoms = await _symptomReadRepository.GetAsync(cancellationToken: cancellationToken);
-                var services = await _healthServiceReadRepository.GetAsync(cancellationToken: cancellationToken);
-
-                foreach (var booking in bookings)
+                foreach (var bookingDto in bookingDtos)
                 {
-                    //foreach (var id in booking.SymptomIds)
-                    //{
-                    //    var symptom = symptoms.FirstOrDefault(x => x.Id == long.Parse(id));
-                    //    booking.SymptomNameEns.Add(symptom.NameEn ?? "");
-                    //    booking.SymptomNameVns.Add(symptom.NameVn ?? "");
-                    //}
-                    //booking.ServiceNameVn = services.FirstOrDefault(x => x.Id == long.Parse(booking.ServiceId))?.NameVn ?? "";
-                    //booking.ServiceNameEn = services.FirstOrDefault(x => x.Id == long.Parse(booking.ServiceId))?.NameEn ?? "";
+                    var serviceId = _mapper.Map<long>(bookingDto.ServiceId);
+                    var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, _healthServiceReadRepository.DefaultQueryOption, cancellationToken);
+                    if (service != null)
+                    {
+                        bookingDto.ServiceNameVn = service.NameVn;
+                        bookingDto.ServiceNameEn = service.NameEn;
+                    }
+
+                    var symptomIds = _mapper.Map<List<long>>(bookingDto.SymptomIds);
+                    if (symptomIds?.Any() == true)
+                    {
+                        var symptoms = await _symptomReadRepository.GetByIdsAsync(symptomIds, _symptomReadRepository.DefaultQueryOption, cancellationToken);
+                        if (symptoms?.Any() == true)
+                        {
+                            bookingDto.SymptomNameVns = symptoms.Select(x => x.NameVn).ToList();
+                            bookingDto.SymptomNameEns = symptoms.Select(x => x.NameEn).ToList();
+                        }
+                    }
                 }
             }
 
-            return new PagingResult<BookingDto>(bookings, paging.Total);
+            return new PagingResult<BookingResponseDto>(bookingDtos, paging.Total);
         }
     }
 }

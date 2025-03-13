@@ -9,7 +9,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 namespace Hospital.Application.Queries.Bookings
 {
     [RequiredPermission(ActionExponent.BookingManagement)]
-    public class GetBookingsPagingQuery : BaseQuery<PagingResult<BookingDto>>
+    public class GetBookingsPagingQuery : BaseQuery<PagingResult<BookingResponseDto>>
     {
         public GetBookingsPagingQuery(Pagination pagination, long userId, BookingStatus status, DateTime date, long excludeId)
         {

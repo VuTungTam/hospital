@@ -37,16 +37,6 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new SimpleDataResult { Data = user });
         }
 
-        [HttpGet("current/{serviceId}")]
-        public virtual async Task<IActionResult> GetCurrent(long serviceId, CancellationToken cancellationToken = default)
-        {
-            var query = new GetCurrentOrderQuery(serviceId);
-
-            var index = await _mediator.Send(query, cancellationToken);
-
-            return Ok(new SimpleDataResult { Data = index });
-        }
-
         [HttpGet("myself/paging")]
         public async Task<IActionResult> GetMyListPaging(
             int page,
@@ -89,24 +79,42 @@ namespace Hospital.Api.Controllers.Bookings
         }
 
         [HttpPost("book-an-appointment"), AllowAnonymous]
-        public virtual async Task<IActionResult> BookAnAppointment(BookingDto dto, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> BookAnAppointment(BookingRequestDto dto, CancellationToken cancellationToken = default)
         {
             var command = new BookAnAppointmentCommand(dto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
+        [HttpPut("add-symptoms"), AllowAnonymous]
+        public virtual async Task<IActionResult> AddSymptoms(long bookingId, List<long> symptomIds, CancellationToken cancellationToken = default)
+        {
+            var command = new AddSymptomsForBookingCommand(bookingId, symptomIds);
+            await _mediator.Send(command, cancellationToken);
+            return Ok(new BaseResponse());
+        }
+
         [HttpPost]
-        public virtual async Task<IActionResult> Add(BookingDto dto, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Add(BookingRequestDto dto, CancellationToken cancellationToken = default)
         {
             var command = new AddBookingCommand(dto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
         [HttpPut]
-        public virtual async Task<IActionResult> Update(BookingDto dto, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Update(BookingRequestDto dto, CancellationToken cancellationToken = default)
         {
             await _mediator.Send(new UpdateBookingCommand(dto), cancellationToken);
             return Ok(new BaseResponse());
+        }
+
+        [HttpGet("current/{serviceId}")]
+        public virtual async Task<IActionResult> GetCurrent(long serviceId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetCurrentOrderQuery(serviceId);
+
+            var index = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = index });
         }
 
         [HttpPut("confirm")]
@@ -129,6 +137,22 @@ namespace Hospital.Api.Controllers.Bookings
             var command = new DeleteBookingsCommand(ids);
             await _mediator.Send(command, cancellationToken);
             return Ok(new BaseResponse());
+        }
+
+        [HttpGet("booked-slots")]
+        public virtual async Task<IActionResult> GetQuantity
+            (long serviceId, 
+            DateTime date, 
+            TimeSpan serviceStartTime, 
+            TimeSpan serviceEndTime, 
+            
+            CancellationToken cancellationToken = default)
+        {
+            var query = new GetCurrentOrderQuery(serviceId);
+
+            var index = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = index });
         }
     }
 }

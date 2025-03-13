@@ -6,6 +6,7 @@ using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -44,8 +45,11 @@ namespace Hospital.Application.Commands.Auth.Roles
                 throw new BadRequestException("Chức năng không hợp lệ");
             }
 
-            var includes = new string[] { nameof(Role.RoleActions) };
-            var role = await _roleReadRepository.GetByIdAsync(request.RoleId, includes, cancellationToken: cancellationToken);
+            var option = new QueryOption
+            {
+                Includes = new string[] { nameof(Role.RoleActions) }
+            };
+            var role = await _roleReadRepository.GetByIdAsync(request.RoleId, option, cancellationToken);
             if (role == null)
             {
                 throw new BadRequestException("Vai trò không tồn tại");
@@ -68,7 +72,7 @@ namespace Hospital.Application.Commands.Auth.Roles
                 throw new BadRequestException("Không thể thêm chức năng này");
             }
 
-            var action = await _actionReadRepository.GetByIdAsync(request.ActionId, cancellationToken: cancellationToken);
+            var action = await _actionReadRepository.GetByIdAsync(request.ActionId, _actionReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (action == null)
             {
                 throw new BadRequestException("Chức năng không tồn tại");

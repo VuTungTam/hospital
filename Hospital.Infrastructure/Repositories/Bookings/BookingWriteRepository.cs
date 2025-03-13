@@ -20,7 +20,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
         {
         }
 
-        public async Task AddWithCodeAsync(Booking booking, CancellationToken cancellationToken)
+        public async Task AddBookingCodeAsync(Booking booking, CancellationToken cancellationToken)
         {
             var table = "booking";
             var sequenceRepository = _serviceProvider.GetRequiredService<ISequenceRepository>();

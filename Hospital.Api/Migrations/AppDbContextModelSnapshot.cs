@@ -63,6 +63,9 @@ namespace Hospital.Api.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
                     b.Property<TimeSpan>("ServiceEndTime")
                         .HasColumnType("time");
 
@@ -169,9 +172,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR(512)");
-
-                    b.Property<long>("BranchId")
-                        .HasColumnType("bigint");
 
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
@@ -896,43 +896,6 @@ namespace Hospital.Api.Migrations
                     b.ToTable("perm_roles_actions");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.UserBranch", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<long?>("Creator")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("perm_users_branches");
-                });
-
             modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.UserRole", b =>
                 {
                     b.Property<long>("Id")
@@ -972,61 +935,6 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("perm_users_roles");
-                });
-
-            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Branches.Branch", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool?>("Active")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIT")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<DateTime?>("FoundingDate")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("Modifier")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Branches");
                 });
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Systems.SystemConfiguration", b =>
@@ -1430,25 +1338,6 @@ namespace Hospital.Api.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.UserBranch", b =>
-                {
-                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Branches.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Users.User", "User")
-                        .WithMany("UserBranches")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.UserRole", b =>
                 {
                     b.HasOne("Hospital.SharedKernel.Application.Services.Auth.Entities.Role", "Role")
@@ -1529,8 +1418,6 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Users.User", b =>
                 {
-                    b.Navigation("UserBranches");
-
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

@@ -124,10 +124,15 @@ namespace Hospital.SharedKernel.Configures
 
             #region AddController + CamelCase + FluentValidation
             services.AddControllersWithViews()
-                    .AddNewtonsoftJson()
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    })
                     .AddJsonOptions(options =>
-                        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                    )
+                    {
+                        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                    })
                     .AddFluentValidation(delegate (FluentValidationMvcConfiguration f)
                     {
                         f.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic));

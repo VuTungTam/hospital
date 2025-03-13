@@ -38,7 +38,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
 
             await ValidateAndThrowAsync(request, cancellationToken);
 
-            var entities = await _readRepository.GetByIdsAsync(request.Ids, cancellationToken: cancellationToken);
+            var entities = await _readRepository.GetByIdsAsync(request.Ids, _readRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (entities.Any())
             {
                 await _writeRepository.DeleteAsync(entities, cancellationToken);

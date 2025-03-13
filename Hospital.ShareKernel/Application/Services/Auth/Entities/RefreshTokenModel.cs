@@ -7,7 +7,7 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Entities
     [Table("mcs_refresh_tokens")]
     public class RefreshToken :
         BaseEntity,
-        IPersonalizeEntity,
+        IOwnedEntity,
         ICreated,
         ICreator,
         IModified,

@@ -32,7 +32,7 @@ namespace Hospital.Application.Commands.Symptoms
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var symptoms = await _symptomReadRepository.GetByIdsAsync(request.Ids);
+            var symptoms = await _symptomReadRepository.GetByIdsAsync(request.Ids, _symptomReadRepository.DefaultQueryOption,cancellationToken);
             if (symptoms.Any())
             {
                 await _symptomWriteRepository.DeleteAsync(symptoms,cancellationToken);

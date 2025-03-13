@@ -55,8 +55,6 @@ namespace Hospital.Infra.EFConfigurations
             modelBuilder.ApplyConfiguration(new QueueItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new BookingEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new BranchEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new UserBranchEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -106,19 +104,14 @@ namespace Hospital.Infra.EFConfigurations
 
                         if (!_executionContext.IsAnonymous)
                         {
-                            if (entry.Entity is IBranchId && (entry.Entity as IBranchId).BranchId == 0)
-                            {
-                                (entry.Entity as IBranchId).BranchId = _executionContext.BranchId;
-                            }
-
                             if (entry.Entity is ICreator)
                             {
                                 (entry.Entity as ICreator).Creator = _executionContext.UserId;
                             }
 
-                            if (entry.Entity is IPersonalizeEntity && (entry.Entity as IPersonalizeEntity).OwnerId == 0)
+                            if (entry.Entity is IOwnedEntity && (entry.Entity as IOwnedEntity).OwnerId == 0)
                             {
-                                (entry.Entity as IPersonalizeEntity).OwnerId = _executionContext.UserId;
+                                (entry.Entity as IOwnedEntity).OwnerId = _executionContext.UserId;
                             }
                         }
 
@@ -132,11 +125,6 @@ namespace Hospital.Infra.EFConfigurations
                         //{
                         //    entry.Property(nameof(IPersonalizeEntity.OwnerId)).IsModified = false;
                         //}
-
-                        if (entry.Entity is IBranchId)
-                        {
-                            entry.Property(nameof(IBranchId.BranchId)).IsModified = false;
-                        }
 
                         if (entry.Entity is ICreator)
                         {
@@ -219,8 +207,6 @@ namespace Hospital.Infra.EFConfigurations
         public DbSet<QueueItem> QueueItems { get; set; }
 
         public DbSet<User> Users { get; set; }
-
-        public DbSet<UserBranch> UserBranches { get; set; }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 

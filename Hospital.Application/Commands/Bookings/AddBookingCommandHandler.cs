@@ -36,9 +36,11 @@ namespace Hospital.Application.Commands.Bookings
                 booking.Status = BookingStatus.Waiting;
             }
 
-            await _bookingWriteRepository.AddWithCodeAsync(booking, cancellationToken);
+            await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 
             await _bookingWriteRepository.AddAsync(booking, cancellationToken);
+
+            await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
             return booking.Id.ToString();
         }

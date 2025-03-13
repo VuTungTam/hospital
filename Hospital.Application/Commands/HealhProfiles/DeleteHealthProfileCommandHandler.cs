@@ -1,6 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.Bookings;
+﻿using Hospital.Application.Commands.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -34,7 +33,7 @@ namespace Hospital.Application.Commands.HealhProfiles
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var healthProfiles = await _healthProfileReadRepository.GetByIdsAsync(request.Ids, ignoreOwner: true, cancellationToken: cancellationToken);
+            var healthProfiles = await _healthProfileReadRepository.GetByIdsAsync(request.Ids, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             if (healthProfiles.Any())
             {
                 await _healthProfileWriteRepository.DeleteAsync(healthProfiles, cancellationToken);

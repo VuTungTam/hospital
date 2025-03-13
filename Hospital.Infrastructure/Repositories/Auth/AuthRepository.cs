@@ -1,7 +1,5 @@
 ﻿using Hospital.Application.Helpers;
 using Hospital.Application.Repositories.Interfaces.Auth;
-using Hospital.Application.Repositories.Interfaces.Branches;
-using Hospital.Domain.Constants;
 using Hospital.Domain.Models.Admin;
 using Hospital.Infra.Repositories;
 using Hospital.SharedKernel.Application.Services.Auth.Entities;
@@ -9,7 +7,6 @@ using Hospital.SharedKernel.Domain.Entities.Users;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
 
 namespace Hospital.Infrastructure.Repositories.Auth
@@ -36,22 +33,6 @@ namespace Hospital.Infrastructure.Repositories.Auth
                    .ThenInclude(r => r.RoleActions)
                    .ThenInclude(ra => ra.Action)
                    .FirstOrDefaultAsync(cancellationToken);
-
-            if (user != null)
-            {
-                if (user.UserRoles.Select(x => x.Role).Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN))
-                {
-                    var branchReadRepository = _serviceProvider.GetRequiredService<IBranchReadRepository>();
-                    var branches = await branchReadRepository.GetAsync(cancellationToken: cancellationToken);
-
-                    user.UserBranches = branches.Select(b => new UserBranch { BranchId = b.Id, UserId = user.Id }).ToList();
-                }
-                else if (!user.IsCustomer == true)
-                {
-                    var ubes = await _dbContext.UserBranches.Where(x => x.UserId == user.Id).ToListAsync(cancellationToken);
-                    user.UserBranches = ubes ?? new();
-                }
-            }
 
             return user;
         }

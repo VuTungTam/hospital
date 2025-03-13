@@ -5,11 +5,11 @@ namespace Hospital.Application.Commands.Bookings
 {
     public class BookAnAppointmentCommand : BaseAllowAnonymousCommand<string>
     {
-        public BookAnAppointmentCommand(BookingDto booking)
+        public BookAnAppointmentCommand(BookingRequestDto booking)
         {
             Booking = booking;
         }
 
-        public BookingDto Booking { get; }
+        public BookingRequestDto Booking { get; }
     }
 }
