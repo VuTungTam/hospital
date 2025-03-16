@@ -11,7 +11,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Locations
 {
-    public class GetWardsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetWardsPagingQuery, PagingResult<WardDto>>
+    public class GetWardsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetWardsPagingQuery, PaginationResult<WardDto>>
     {
         private readonly ILocationReadRepository _locationReadRepository;
         public GetWardsPagingQueryHandler(
@@ -24,12 +24,12 @@ namespace Hospital.Application.Queries.Locations
             _locationReadRepository = locationReadRepository;
         }
 
-        public async Task<PagingResult<WardDto>> Handle(GetWardsPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<WardDto>> Handle(GetWardsPagingQuery request, CancellationToken cancellationToken)
         {
             var paging = await _locationReadRepository.GetWardsPagingAsync(request.DistrictId, request.Pagination, cancellationToken);
             var wards = _mapper.Map<List<WardDto>>(paging.Data);
 
-            return new PagingResult<WardDto>(wards, paging.Total);
+            return new PaginationResult<WardDto>(wards, paging.Total);
         }
     }
 }

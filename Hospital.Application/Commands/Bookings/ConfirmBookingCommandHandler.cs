@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.Bookings;
+﻿using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Bookings;
@@ -26,11 +27,12 @@ namespace Hospital.Application.Commands.Bookings
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IRedisCache redisCache
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;

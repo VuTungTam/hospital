@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.Locations
 {
-    public class GetWardsPagingQuery : BaseQuery<PagingResult<WardDto>>
+    public class GetWardsPagingQuery : BaseQuery<PaginationResult<WardDto>>
     {
         public GetWardsPagingQuery(Pagination pagination, int districtId) 
         {

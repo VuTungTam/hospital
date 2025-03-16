@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Hospital.Application\Hospital.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Users\" />
+  </ItemGroup>
+
 </Project>

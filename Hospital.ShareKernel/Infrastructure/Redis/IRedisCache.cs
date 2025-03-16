@@ -1,4 +1,4 @@
-﻿using Hospital.SharedKernel.Caching;
+﻿using Hospital.SharedKernel.Infrastructure.Caching;
 using StackExchange.Redis;
 namespace Hospital.SharedKernel.Infrastructure.Redis
 {
@@ -12,9 +12,9 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
 
         Task<T> GetWihtoutPrefixAsync<T>(string key, CancellationToken cancellationToken = default);
 
-        Task SetAsync(string key, object value, TimeSpan? absoluteExpireTime = null, TimeSpan? slidingExpireTime = null, CancellationToken cancellationToken = default);
+        Task SetAsync(string key, object value, TimeSpan? absoluteExpireTime = null, CancellationToken cancellationToken = default);
 
-        Task SetWithoutPrefixAsync(string key, object value, TimeSpan? absoluteExpireTime = null, TimeSpan? slidingExpireTime = null, CancellationToken cancellationToken = default);
+        Task SetWithoutPrefixAsync(string key, object value, TimeSpan? absoluteExpireTime = null, CancellationToken cancellationToken = default);
 
         Task RemoveAsync(string key, CancellationToken cancellationToken = default);
 

@@ -13,7 +13,6 @@ namespace Hospital.Application.Commands.Symptoms
 {
     public class AddSymptomCommandHandler : BaseCommandHandler, IRequestHandler<AddSymptomCommand, string>
     {
-        private readonly IMapper _mapper;
         private readonly ISymptomWriteRepository _symptomWriteRepository;
         public AddSymptomCommandHandler(
             IEventDispatcher eventDispatcher,
@@ -21,9 +20,8 @@ namespace Hospital.Application.Commands.Symptoms
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             ISymptomWriteRepository symptomWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _symptomWriteRepository = symptomWriteRepository;
         }
 

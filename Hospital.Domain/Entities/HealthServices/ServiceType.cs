@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.HealthServices
 {
-    [Table("ServiceTypes")]
+    [Table("tbl_service_types")]
     public class ServiceType
        : BaseEntity,
-        IModified,
-        IModifier,
-        ICreated,
-        ICreator,
+        IModifiedAt,
+        IModifiedBy,
+        ICreatedAt,
+        ICreatedBy,
         ISoftDelete,
         IDeletedBy
     {
@@ -20,15 +20,17 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public List<HealthService> Services { get; set; }
 
-        public DateTime? Modified { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public long? Modifier { get; set; }
+        public long? CreatedBy { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime? ModifiedAt { get; set; }
 
-        public long? Creator { get; set; }
+        public long? ModifiedBy { get; set; }
 
-        public DateTime? Deleted { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
     }

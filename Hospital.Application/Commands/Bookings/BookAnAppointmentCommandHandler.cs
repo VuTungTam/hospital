@@ -17,7 +17,6 @@ namespace Hospital.Application.Commands.Bookings
 {
     public class BookAnAppointmentCommandHandler : BaseCommandHandler, IRequestHandler<BookAnAppointmentCommand, string>
     {
-        private readonly IMapper _mapper;
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
@@ -33,9 +32,8 @@ namespace Hospital.Application.Commands.Bookings
             IBookingReadRepository bookingReadRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             ISymptomReadRepository symptomReadRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;
             _symptomReadRepository = symptomReadRepository;

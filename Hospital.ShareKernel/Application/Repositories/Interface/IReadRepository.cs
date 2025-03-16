@@ -11,16 +11,16 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
     {
         QueryOption DefaultQueryOption { get; }
 
-        Task<T> GetByIdAsync(long id, QueryOption option, CancellationToken cancellationToken = default);
+        Task<T> GetByIdAsync(long id, QueryOption option = default, CancellationToken cancellationToken = default);
 
-        Task<List<T>> GetByIdsAsync(IList<long> id, QueryOption option, CancellationToken cancellationToken = default);
+        Task<List<T>> GetByIdsAsync(IList<long> id, QueryOption option = default, CancellationToken cancellationToken = default);
 
-        Task<List<T>> GetAsync(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default);
+        Task<List<T>> GetAsync(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
 
-        Task<PagingResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default);
+        Task<PaginationResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
 
         Task<int> GetCountAsync(Expression<Func<T, bool>> predicate = null, CancellationToken cancellationToken = default);
 
-        Task<int> GetCountBySpecAsync(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default);
+        Task<int> GetCountBySpecAsync(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
     }
 }

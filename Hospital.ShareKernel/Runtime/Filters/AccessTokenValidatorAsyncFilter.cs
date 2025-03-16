@@ -24,7 +24,7 @@ namespace Hospital.SharedKernel.Runtime.Filters
                     var accessToken = bearerToken.GetValue()[7..];
                     var executionContext = context.HttpContext.RequestServices.GetRequiredService<IExecutionContext>();
                     var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthService>();
-                    var tokens = await authService.GetLiveAccessTokensOfUserAsync(executionContext.UserId);
+                    var tokens = await authService.GetLiveAccessTokensOfUserAsync(executionContext.Identity);
                             
                     // If the user is logged out
                     var token = tokens.Find(t => t.Value == accessToken);
@@ -44,8 +44,8 @@ namespace Hospital.SharedKernel.Runtime.Filters
                         case TokenStatus.Banned:
                             throw new UnauthorizeException((object)"force_logout");
 
-                        case TokenStatus.ShouldRefresh:
-                            throw new UnauthorizeException((object)"refresh");
+                        case TokenStatus.FetchNew:
+                            throw new UnauthorizeException((object)"fetch_new");
                         default:
                             break;
                     }

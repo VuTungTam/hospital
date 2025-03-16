@@ -6,7 +6,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetMyListBookingsPagingQuery : BaseQuery<PagingResult<BookingResponseDto>>
+    public class GetMyListBookingsPagingQuery : BaseQuery<PaginationResult<BookingResponseDto>>
     {
         public GetMyListBookingsPagingQuery(Pagination pagination, BookingStatus status, long serviceId, DateTime date)
         {

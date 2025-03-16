@@ -6,9 +6,9 @@ using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Repositories.Interface;
-using Hospital.SharedKernel.Caching.Models;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Libraries.Attributes;
@@ -20,7 +20,7 @@ using Microsoft.Extensions.Localization;
 using Serilog;
 using System.Linq.Expressions;
 using System.Reflection;
-using VetHospital.Infrastructure.Extensions;
+using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infra.Repositories
 {
@@ -50,7 +50,7 @@ namespace Hospital.Infra.Repositories
         public QueryOption DefaultQueryOption => QueryOption;
 
         #region Paging
-        public virtual async Task<PagingResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default)
+        public virtual async Task<PaginationResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default)
         {
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
@@ -63,8 +63,8 @@ namespace Hospital.Infra.Repositories
 
             if (!option.IgnoreOwner)
             {
-                var cacheEntry = CacheManager.GetPaginationCacheEntry<T>(pagination, _executionContext.UserId);
-                var valueFactory = async () => new PagingResult<T>(await dataFactory(), await countFactory());
+                var cacheEntry = CacheManager.GetPaginationCacheEntry<T>(pagination, _executionContext.Identity);
+                var valueFactory = async () => new PaginationResult<T>(await dataFactory(), await countFactory());
 
                 return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
             }
@@ -72,7 +72,7 @@ namespace Hospital.Infra.Repositories
             var data = await dataFactory();
             var count = await countFactory();
 
-            return new PagingResult<T>(data, count);
+            return new PaginationResult<T>(data, count);
         }
 
         protected virtual IQueryable<T> BuildSearchPredicate(IQueryable<T> query, Pagination pagination)
@@ -146,21 +146,21 @@ namespace Hospital.Infra.Repositories
         }
         #endregion
 
-        public virtual async Task<T> GetByIdAsync(long id, QueryOption option, CancellationToken cancellationToken = default)
+        public virtual async Task<T> GetByIdAsync(long id, QueryOption option = default, CancellationToken cancellationToken = default)
         {
             if (option.Includes != null && option.Includes.Any())
             {
                 return await FindBySpecificationAsync(new GetByIdSpecification<T>(id), option, cancellationToken);
             }
 
-            var key = GetCacheKey(id);
-            var data = await _redisCache.GetAsync<T>(key, cancellationToken);
+            var cacheEntry = GetCacheEntry(id);
+            var data = await _redisCache.GetAsync<T>(cacheEntry.Key, cancellationToken);
             if (data == null)
             {
                 data = await FindBySpecificationAsync(new GetByIdSpecification<T>(id), option, cancellationToken);
                 if (data != null)
                 {
-                    await _redisCache.SetAsync(key, data, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
                 }
             }
 
@@ -172,7 +172,7 @@ namespace Hospital.Infra.Repositories
             return data;
         }
 
-        public virtual async Task<List<T>> GetByIdsAsync(IList<long> ids, QueryOption option, CancellationToken cancellationToken = default)
+        public virtual async Task<List<T>> GetByIdsAsync(IList<long> ids, QueryOption option = default, CancellationToken cancellationToken = default)
             => await GetBySpecificationAsync(new GetByIdsSpecification<T>(ids), option, cancellationToken);
 
         public virtual async Task<List<T>> GetAsync(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default)
@@ -182,14 +182,14 @@ namespace Hospital.Infra.Repositories
                 return await GetBySpecificationAsync<T>(spec, option, cancellationToken);
             }
 
-            var key = GetCacheKey(type: "all");
-            var data = await _redisCache.GetAsync<List<T>>(key, cancellationToken: cancellationToken);
+            var cacheEntry = GetCacheEntry(type: "all");
+            var data = await _redisCache.GetAsync<List<T>>(cacheEntry.Key, cancellationToken: cancellationToken);
             if (data == null)
             {
                 data = await GetBySpecificationAsync<T>(spec, option, cancellationToken);
                 if (data != null && data.Any())
                 {
-                    await _redisCache.SetAsync(key, data, TimeSpan.FromSeconds(AppCacheTime.Records), cancellationToken: cancellationToken);
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.Records), cancellationToken: cancellationToken);
                 }
             }
             return data;
@@ -200,28 +200,28 @@ namespace Hospital.Infra.Repositories
             return await _dbSet.CountAsync(predicate, cancellationToken);
         }
 
-        public virtual async Task<int> GetCountBySpecAsync(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default)
+        public virtual async Task<int> GetCountBySpecAsync(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default)
         {
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = _dbSet.AsNoTracking().Where(guardExpression);
             return await query.CountAsync(cancellationToken);
         }
-        protected string GetCacheKey(long id = 0, string type = "")
+        protected CacheEntry GetCacheEntry(long id = 0, string type = "")
         {
             if (type == "all")
             {
                 if (typeof(T).HasInterface<IOwnedEntity>())
                 {
-                    return BaseCacheKeys.DbOwnerAllKey<T>(_executionContext.UserId);
+                    return CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity);
                 }
-                return BaseCacheKeys.DbSystemAllKey<T>();
+                return CacheManager.DbSystemAllCacheEntry<T>();
             }
 
             if (typeof(T).HasInterface<IOwnedEntity>())
             {
-                return BaseCacheKeys.DbOwnerIdKey<T>(id, _executionContext.UserId);
+                return CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity);
             }
-            return BaseCacheKeys.DbSystemIdKey<T>(id);
+            return CacheManager.DbSystemIdCacheEntry<T>(id);
         }
 
         

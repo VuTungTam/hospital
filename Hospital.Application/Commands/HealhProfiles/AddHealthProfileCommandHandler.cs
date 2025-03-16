@@ -13,7 +13,6 @@ namespace Hospital.Application.Commands.HealthProfiles
 {
     public class AddHealthProfileCommandHandler : BaseCommandHandler, IRequestHandler<AddHealthProfileCommand, long>
     {
-        private readonly IMapper _mapper;
         public readonly IHealthProfileWriteRepository _HealthProfileWriteRepository;
         public readonly ILocationReadRepository _locationReadRepository;
         public AddHealthProfileCommandHandler(
@@ -23,10 +22,9 @@ namespace Hospital.Application.Commands.HealthProfiles
             IHealthProfileWriteRepository HealthProfileWriteRepository,
             ILocationReadRepository locationReadRepository,
             IMapper mapper
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _HealthProfileWriteRepository = HealthProfileWriteRepository;
-            _mapper = mapper;
             _locationReadRepository = locationReadRepository;
         }
 

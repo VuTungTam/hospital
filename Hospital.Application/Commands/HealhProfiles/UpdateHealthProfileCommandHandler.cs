@@ -14,7 +14,6 @@ namespace Hospital.Application.Commands.HealhProfiles
 {
     public class UpdateHealthProfileCommandHandler : BaseCommandHandler, IRequestHandler<UpdateHealthProfileCommand>
     {
-        private readonly IMapper _mapper;
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         private readonly IHealthProfileWriteRepository _healthProfileWriteRepository;
         public UpdateHealthProfileCommandHandler(
@@ -24,9 +23,8 @@ namespace Hospital.Application.Commands.HealhProfiles
             IMapper mapper,
             IHealthProfileReadRepository healthProfileReadRepository,
             IHealthProfileWriteRepository healthProfileWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _healthProfileReadRepository = healthProfileReadRepository;
             _healthProfileWriteRepository = healthProfileWriteRepository;
         }

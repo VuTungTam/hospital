@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Commands.HealthProfiles;
+﻿using AutoMapper;
+using Hospital.Application.Commands.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -17,10 +18,11 @@ namespace Hospital.Application.Commands.HealhProfiles
         public DeleteHealthProfileCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
-            IStringLocalizer<Resources> localizer,
+            IStringLocalizer<Resources> localizer, 
+            IMapper mapper,
             IHealthProfileReadRepository healthProfileReadRepository,
             IHealthProfileWriteRepository healthProfileWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthProfileReadRepository = healthProfileReadRepository;
             _healthProfileWriteRepository = healthProfileWriteRepository;

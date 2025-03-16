@@ -6,7 +6,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.HealthFacilities
 {
-    public class GetHealthFacilityPagingQuery : BaseAllowAnonymousQuery<PagingResult<HealthFacilityDto>>
+    public class GetHealthFacilityPagingQuery : BaseAllowAnonymousQuery<PaginationResult<HealthFacilityDto>>
     {
         public GetHealthFacilityPagingQuery(Pagination pagination, long typeId, HealthFacilityStatus status)
         {

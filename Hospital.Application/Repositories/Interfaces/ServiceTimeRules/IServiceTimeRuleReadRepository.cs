@@ -8,7 +8,7 @@ namespace Hospital.Application.Repositories.Interfaces.ServiceTimeRules
     public interface IServiceTimeRuleReadRepository : IReadRepository<ServiceTimeRule>
     {
         Task<int> GetMaxSlotAsync(long serviceId, DateTime date ,CancellationToken cancellationToken);
-        Task<PagingResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination, long? serviceId, 
+        Task<PaginationResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination, long? serviceId, 
             DayOfWeek? dayOfWeek, CancellationToken cancellationToken = default);
     }
 }

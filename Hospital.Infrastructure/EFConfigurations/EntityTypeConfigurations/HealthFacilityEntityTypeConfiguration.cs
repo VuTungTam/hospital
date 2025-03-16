@@ -8,7 +8,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<HealthFacility> builder)
         {
-            builder.ToTable("HealthFacilities");
             builder.Property(x => x.NameVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
@@ -52,25 +51,20 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("DECIMAL(9,6)");
 
-            builder.Property(x => x.Created)
+            builder.Property(x => x.CreatedAt)
                    .IsRequired()
                    .HasColumnType("DATETIME")
                    .HasDefaultValueSql("GETDATE()");
 
-            builder.Property(x => x.Modified)
+            builder.Property(x => x.ModifiedAt)
                    .HasColumnType("DATETIME");
 
-            builder.Property(x => x.Deleted)
+            builder.Property(x => x.DeletedAt)
                    .HasColumnType("DATETIME");
 
-
-            builder.HasOne(x => x.Category)
-                   .WithMany(x => x.Facilities)
-                   .HasForeignKey(x => x.CategoryId);
-
-            builder.HasMany(x => x.FacilitySpecialties)
-                   .WithOne(x => x.Facility)
-                   .HasForeignKey(x => x.FacilityId);
+            //builder.HasMany(x => x.FacilitySpecialties)
+            //       .WithOne(x => x.Facility)
+            //       .HasForeignKey(x => x.FacilityId);
         }
     }
 }

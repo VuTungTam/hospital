@@ -1,4 +1,5 @@
-﻿using Hospital.Application.EventBus;
+﻿using AutoMapper;
+using Hospital.Application.EventBus;
 using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -19,9 +20,10 @@ namespace Hospital.Application.Commands.Auth.Logout
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IExecutionContext executionContext,
             IAuthRepository authRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _executionContext = executionContext;
             _authRepository = authRepository;
@@ -29,7 +31,7 @@ namespace Hospital.Application.Commands.Auth.Logout
 
         public async Task<Unit> Handle(LogoutCommand request, CancellationToken cancellationToken)
         {
-            await _authService.RevokeAccessTokenAsync(_executionContext.UserId, _executionContext.AccessToken, cancellationToken);
+            await _authService.RevokeAccessTokenAsync(_executionContext.Identity, _executionContext.AccessToken, cancellationToken);
 
             await _authRepository.RemoveRefreshTokenAsync(_executionContext.AccessToken, cancellationToken);
 

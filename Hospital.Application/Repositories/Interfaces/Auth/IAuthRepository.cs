@@ -1,4 +1,4 @@
-﻿using Hospital.SharedKernel.Application.Services.Auth.Entities;
+﻿using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Users;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 
@@ -8,19 +8,11 @@ namespace Hospital.Application.Repositories.Interfaces.Auth
     {
         IUnitOfWork UnitOfWork { get; }
 
-        Task<User> GetUserByIdentityAsync(string username, string password, CancellationToken cancellationToken);
-
-        Task<User> GetUserByIdAsync(long id, CancellationToken cancellationToken);
-
-        Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
-
-        Task<User> GetUserByPhoneAsync(string phone, CancellationToken cancellationToken);
-
-        Task<User> GetUserByZaloIdAsync(string zaloId, CancellationToken cancellationToken);
+        Task AddLoginHistoryAsync(LoginHistory loginHistory, CancellationToken cancellationToken);
 
         Task<RefreshToken> GetRefreshTokenAsync(string value, long ownerId, CancellationToken cancellationToken);
 
-        void AddRefreshToken(RefreshToken refreshToken);
+        Task AddRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken);
 
         void UpdateRefreshToken(RefreshToken refreshToken);
 

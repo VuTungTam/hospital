@@ -15,7 +15,7 @@ using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
-using VetHospital.Infrastructure.Extensions;
+using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
 {
@@ -38,7 +38,7 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
             return rule.MaxPatients;
         }
 
-        public async Task<PagingResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination,long? serviceId, DayOfWeek? dayOfWeek, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination,long? serviceId, DayOfWeek? dayOfWeek, CancellationToken cancellationToken = default)
         {
             ISpecification<ServiceTimeRule> spec = null; 
                 
@@ -55,13 +55,13 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
-                         .OrderByDescending(x => x.Modified ?? x.Created);
+                         .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query.BuildLimit(pagination.Offset, pagination.Size)
                                   .ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
 
-            return new PagingResult<ServiceTimeRule>(data, count);
+            return new PaginationResult<ServiceTimeRule>(data, count);
         }
     }
 }

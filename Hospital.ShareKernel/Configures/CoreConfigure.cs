@@ -1,19 +1,16 @@
 ﻿using AspNetCoreRateLimit;
-using CloudinaryDotNet;
 using FluentValidation.AspNetCore;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Caching.In_Memory;
-using Hospital.SharedKernel.Caching.Models;
 using Hospital.SharedKernel.Configures.Models;
 using Hospital.SharedKernel.CoreConfigs;
 using Hospital.SharedKernel.Domain.Constants;
 using Hospital.SharedKernel.Infrastructure.Behaviors;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Services.Cloud;
-using Hospital.SharedKernel.Infrastructure.Services.Sms;
 using Hospital.SharedKernel.Libraries.Security;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Middlewares;
@@ -42,7 +39,6 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ocelot.Values;
 using Serilog;
 using StackExchange.Redis;
 using System.Globalization;
@@ -213,7 +209,7 @@ namespace Hospital.SharedKernel.Configures
                     ValidateIssuer = true,
                     ValidIssuer = Configuration["Auth:JwtSettings:Issuer"],
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Auth:JwtSettings:Key"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Auth:JwtSettings:SecretKey"])),
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                 };
@@ -278,14 +274,15 @@ namespace Hospital.SharedKernel.Configures
             {
                 var configurationOptions = new ConfigurationOptions
                 {
-                    EndPoints = { $"{CachingConfig.Host}:{CachingConfig.Port}" },
-                    Password = CachingConfig.Password,
-                    DefaultDatabase = CachingConfig.DbNumber
+                    EndPoints = { $"{RedisConfig.Host}:{RedisConfig.Port}" },
+                    Password = RedisConfig.Password,
+                    DefaultDatabase = RedisConfig.DbNumber,
+                    ConnectTimeout = RedisConfig.Timeout
                 };
                 return ConnectionMultiplexer.Connect(configurationOptions);
             });
 
-            services.AddSingleton<IRedisCache, ConnectionMultiplexerRedis>();
+            services.AddSingleton<IRedisCache, RedisCache>();
             services.AddSingleton<IMemoryCache, MemoryCache>();
             return services;
         }
@@ -312,8 +309,7 @@ namespace Hospital.SharedKernel.Configures
         public static void UseCoreConfigure(this IApplicationBuilder app, IWebHostEnvironment environment)
         {
             app.UseCoreLocalization();
-            app.UseCoreTraceId();
-            app.UseCoreUnauthorized();
+            app.UseCoreExceptionHandler();
 
             if (ElasticSearchConfig.Enabled)
             {
@@ -328,11 +324,15 @@ namespace Hospital.SharedKernel.Configures
                         diagnosticContext.Set("Origin", httpContext.Request.Headers[HeaderNames.Origin]);
                         diagnosticContext.Set("QueryString", httpContext.Request.QueryString);
                         diagnosticContext.Set("Header", JsonConvert.SerializeObject(httpContext.Request.Headers));
+                        diagnosticContext.Set("Uid", httpContext.Request.Headers[HeaderNamesExtension.Uid]);
+                        diagnosticContext.Set("Screen", httpContext.Request.Headers[HeaderNamesExtension.Screen]);
+                        diagnosticContext.Set("DeviceType", httpContext.Request.Headers[HeaderNamesExtension.DeviceType]);
+                        diagnosticContext.Set("PagePath", httpContext.Request.Headers[HeaderNamesExtension.PagePath]);
 
                         if (!ec.IsAnonymous)
                         {
-                            diagnosticContext.Set("Username", ec.Username);
-                            diagnosticContext.Set("UserId", ec.UserId.ToString());
+                            diagnosticContext.Set("UserId", ec.Identity.ToString());
+                            diagnosticContext.Set("Email", ec.Email);
                         }
                         else
                         {
@@ -342,14 +342,6 @@ namespace Hospital.SharedKernel.Configures
                 });
             }
 
-            app.UseCoreTimezone();
-
-            //app.UseCoreAuthor();
-            //if (!environment.IsDevelopment())
-            //{
-            //    app.UseReject3P();
-            //}
-            app.UseCoreExceptionHandler();
             app.UseIpRateLimiting();
             app.UseForwardedHeaders();
             app.UseHttpsRedirection();
@@ -369,10 +361,7 @@ namespace Hospital.SharedKernel.Configures
                 endpoints.MapControllers();
             });
 
-            if (environment.IsDevelopment())
-            {
-                app.UseCoreSwagger();
-            }
+            app.UseCoreSwagger();
             // app.UseCoreHealthChecks();
         }
         public static void UseCoreSwagger(this IApplicationBuilder app)

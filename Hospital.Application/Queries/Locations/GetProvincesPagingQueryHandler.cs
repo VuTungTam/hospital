@@ -10,7 +10,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Locations
 {
-    public class GetProvincesPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetProvincesPagingQuery, PagingResult<ProvinceDto>>
+    public class GetProvincesPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetProvincesPagingQuery, PaginationResult<ProvinceDto>>
     {
         private readonly ILocationReadRepository _locationReadRepository;
 
@@ -24,11 +24,11 @@ namespace Hospital.Application.Queries.Locations
             _locationReadRepository = locationReadRepository;
         }
 
-        public async Task<PagingResult<ProvinceDto>> Handle(GetProvincesPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<ProvinceDto>> Handle(GetProvincesPagingQuery request, CancellationToken cancellationToken)
         {
             var paging = await _locationReadRepository.GetProvincesPagingAsync(request.Pagination, cancellationToken);
             var provinces = _mapper.Map<List<ProvinceDto>>(paging.Data);
-            return new PagingResult<ProvinceDto> ( provinces, paging.Total );
+            return new PaginationResult<ProvinceDto> ( provinces, paging.Total );
         }
     }
 }

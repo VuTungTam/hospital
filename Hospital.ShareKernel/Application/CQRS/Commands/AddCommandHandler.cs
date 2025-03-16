@@ -15,7 +15,6 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
         where T : BaseEntity
         where TWriteRepository : IWriteRepository<T>
     {
-        protected readonly IMapper _mapper;
         protected readonly IWriteRepository<T> _writeRepository;
 
         public AddCommandHandler(
@@ -24,9 +23,8 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             TWriteRepository writeRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _writeRepository = writeRepository;
         }
 

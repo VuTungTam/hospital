@@ -15,7 +15,6 @@ namespace Hospital.Application.Commands.SocialNetworks
     {
         private readonly ISocialNetworkReadRepository _socialNetworkReadRepository;
         private readonly ISocialNetworkWriteRepository _socialNetworkWriteRepository;
-        private readonly IMapper _mapper;
         public UpdateSocialNetworkCommandHandler(
             IEventDispatcher eventDispatcher, 
             IAuthService authService, 
@@ -23,11 +22,10 @@ namespace Hospital.Application.Commands.SocialNetworks
             ISocialNetworkReadRepository socialNetworkReadRepository,
             ISocialNetworkWriteRepository socialNetworkWriteRepository,
             IMapper mapper
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _socialNetworkReadRepository = socialNetworkReadRepository;
             _socialNetworkWriteRepository = socialNetworkWriteRepository;
-            _mapper = mapper;
         }
 
         public async Task<Unit> Handle(UpdateSocialNetworkCommand request, CancellationToken cancellationToken)

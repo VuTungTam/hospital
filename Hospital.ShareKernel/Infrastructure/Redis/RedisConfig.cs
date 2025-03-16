@@ -23,7 +23,8 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
             Password = configuration.GetRequiredSection("Caching:Redis:Password").Value;
             Port = int.Parse(configuration.GetRequiredSection("Caching:Redis:Port").Value);
             DbNumber = int.Parse(configuration.GetRequiredSection("Caching:Redis:DbNumber").Value);
-            Timeout = int.Parse(configuration.GetRequiredSection("Caching:Redis:Timeout").Value);
+            Timeout = 
+                int.Parse(configuration.GetRequiredSection("Caching:Redis:Timeout").Value);
         }
     }
 }

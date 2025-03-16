@@ -13,7 +13,6 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 {
     public class UpdateServiceTimeRuleCommandHandler : BaseCommandHandler, IRequestHandler<UpdateServiceTImeRuleCommand>
     {
-        private readonly IMapper _mapper;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
         public UpdateServiceTimeRuleCommandHandler(
@@ -23,9 +22,8 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             IMapper mapper,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
         }

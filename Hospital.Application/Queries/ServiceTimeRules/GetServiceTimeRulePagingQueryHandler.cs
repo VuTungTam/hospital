@@ -12,7 +12,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.ServiceTimeRules
 {
-    public class GetServiceTimeRulePagingQueryHandler : BaseQueryHandler, IRequestHandler<GetServiceTimeRulePagingQuery, PagingResult<ServiceTimeRuleDto>>
+    public class GetServiceTimeRulePagingQueryHandler : BaseQueryHandler, IRequestHandler<GetServiceTimeRulePagingQuery, PaginationResult<ServiceTimeRuleDto>>
     {
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         public GetServiceTimeRulePagingQueryHandler(
@@ -25,13 +25,13 @@ namespace Hospital.Application.Queries.ServiceTimeRules
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
         }
 
-        public async Task<PagingResult<ServiceTimeRuleDto>> Handle(GetServiceTimeRulePagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<ServiceTimeRuleDto>> Handle(GetServiceTimeRulePagingQuery request, CancellationToken cancellationToken)
         {
             var result = await _serviceTimeRuleReadRepository.GetPagingWithFilterAsync(request.Pagination, request.ServiceId, request.DayOfWeek, cancellationToken: cancellationToken);
 
             var dtos = _mapper.Map<List<ServiceTimeRuleDto>>(result.Data);
 
-            return new PagingResult<ServiceTimeRuleDto>(dtos, result.Total);
+            return new PaginationResult<ServiceTimeRuleDto>(dtos, result.Total);
         }
     }
 }

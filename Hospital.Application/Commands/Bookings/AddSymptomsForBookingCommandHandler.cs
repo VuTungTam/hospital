@@ -1,13 +1,9 @@
-﻿using Hospital.Application.Repositories.Interfaces.Auth.Actions;
-using Hospital.Application.Repositories.Interfaces.Auth.Roles;
+﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
-using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.Bookings;
-using Hospital.Domain.Entities.Symptoms;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
@@ -26,10 +22,11 @@ namespace Hospital.Application.Commands.Bookings
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository,
             ISymptomReadRepository symptomReadRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingWriteRepository = bookingWriteRepository;
             _bookingReadRepository = bookingReadRepository;

@@ -3,6 +3,7 @@ using Hospital.Application.Dtos.HealthServices;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Symptoms;
+using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.SocialNetworks;
@@ -24,31 +25,31 @@ namespace Hospital.Application.DI
 
             services.AddScoped<IRequestHandler<GetAllQuery<Symptom, SymptomDto>, List<SymptomDto>>, GetAllQueryHandler<Symptom, SymptomDto>>();
             services.AddScoped<IRequestHandler<GetByIdQuery<Symptom, SymptomDto>, SymptomDto>, GetByIdQueryHandler<Symptom, SymptomDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<Symptom, SymptomDto>,PagingResult<SymptomDto>>, GetPagingQueryHandler<Symptom, SymptomDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<Symptom, SymptomDto>,PaginationResult<SymptomDto>>, GetPagingQueryHandler<Symptom, SymptomDto>>();
 
             services.AddScoped<IRequestHandler<GetAllQuery<ServiceType, ServiceTypeDto>, List<ServiceTypeDto>>, GetAllQueryHandler<ServiceType, ServiceTypeDto>>();
             services.AddScoped<IRequestHandler<GetByIdQuery<ServiceType, ServiceTypeDto>, ServiceTypeDto>, GetByIdQueryHandler<ServiceType, ServiceTypeDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<ServiceType, ServiceTypeDto>, PagingResult<ServiceTypeDto>>, GetPagingQueryHandler<ServiceType, ServiceTypeDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<ServiceType, ServiceTypeDto>, PaginationResult<ServiceTypeDto>>, GetPagingQueryHandler<ServiceType, ServiceTypeDto>>();
 
             services.AddScoped<IRequestHandler<GetAllQuery<HealthService, HealthServiceDto>, List<HealthServiceDto>>, GetAllQueryHandler<HealthService, HealthServiceDto>>();
             services.AddScoped<IRequestHandler<GetByIdQuery<HealthService, HealthServiceDto>, HealthServiceDto>, GetByIdQueryHandler<HealthService, HealthServiceDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<HealthService, HealthServiceDto>, PagingResult<HealthServiceDto>>, GetPagingQueryHandler<HealthService, HealthServiceDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<HealthService, HealthServiceDto>, PaginationResult<HealthServiceDto>>, GetPagingQueryHandler<HealthService, HealthServiceDto>>();
 
-            services.AddScoped<IRequestHandler<GetAllQuery<FacilityCategory, FacilityCategoryDto>, List<FacilityCategoryDto>>, GetAllQueryHandler<FacilityCategory, FacilityCategoryDto>>();
-            services.AddScoped<IRequestHandler<GetByIdQuery<FacilityCategory, FacilityCategoryDto>, FacilityCategoryDto>, GetByIdQueryHandler<FacilityCategory, FacilityCategoryDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<FacilityCategory, FacilityCategoryDto>, PagingResult<FacilityCategoryDto>>, GetPagingQueryHandler<FacilityCategory, FacilityCategoryDto>>();
+            services.AddScoped<IRequestHandler<GetAllQuery<FacilityType, FacilityCategoryDto>, List<FacilityCategoryDto>>, GetAllQueryHandler<FacilityType, FacilityCategoryDto>>();
+            services.AddScoped<IRequestHandler<GetByIdQuery<FacilityType, FacilityCategoryDto>, FacilityCategoryDto>, GetByIdQueryHandler<FacilityType, FacilityCategoryDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<FacilityType, FacilityCategoryDto>, PaginationResult<FacilityCategoryDto>>, GetPagingQueryHandler<FacilityType, FacilityCategoryDto>>();
 
             services.AddScoped<IRequestHandler<GetAllQuery<HealthFacility, HealthFacilityDto>, List<HealthFacilityDto>>, GetAllQueryHandler<HealthFacility, HealthFacilityDto>>();
             services.AddScoped<IRequestHandler<GetByIdQuery<HealthFacility, HealthFacilityDto>, HealthFacilityDto>, GetByIdQueryHandler<HealthFacility, HealthFacilityDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<HealthFacility, HealthFacilityDto>, PagingResult<HealthFacilityDto>>, GetPagingQueryHandler<HealthFacility, HealthFacilityDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<HealthFacility, HealthFacilityDto>, PaginationResult<HealthFacilityDto>>, GetPagingQueryHandler<HealthFacility, HealthFacilityDto>>();
 
             services.AddScoped<IRequestHandler<GetAllQuery<Specialty, SpecialtyDto>, List<SpecialtyDto>>, GetAllQueryHandler<Specialty, SpecialtyDto>>();
             services.AddScoped<IRequestHandler<GetByIdQuery<Specialty, SpecialtyDto>, SpecialtyDto>, GetByIdQueryHandler< Specialty, SpecialtyDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<Specialty, SpecialtyDto>, PagingResult<SpecialtyDto>>, GetPagingQueryHandler<Specialty, SpecialtyDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<Specialty, SpecialtyDto>, PaginationResult<SpecialtyDto>>, GetPagingQueryHandler<Specialty, SpecialtyDto>>();
 
             services.AddScoped<IRequestHandler<GetAllQuery<Specialty, SpecialtyDto>, List<SpecialtyDto>>, GetAllQueryHandler<Specialty, SpecialtyDto>>();
             services.AddScoped<IRequestHandler<GetByIdQuery<Specialty, SpecialtyDto>, SpecialtyDto>, GetByIdQueryHandler<Specialty, SpecialtyDto>>();
-            services.AddScoped<IRequestHandler<GetPagingQuery<Specialty, SpecialtyDto>, PagingResult<SpecialtyDto>>, GetPagingQueryHandler<Specialty, SpecialtyDto>>();
+            services.AddScoped<IRequestHandler<GetPagingQuery<Specialty, SpecialtyDto>, PaginationResult<SpecialtyDto>>, GetPagingQueryHandler<Specialty, SpecialtyDto>>();
             return services;
         }
     }

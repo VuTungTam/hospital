@@ -1,14 +1,13 @@
-﻿using Hospital.Domain.Entities.HealthFacilities;
+﻿using Hospital.Domain.Entities.FacilityTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
 {
-    public class FacilityCategoryEntityTypeConfiguration : IEntityTypeConfiguration<FacilityCategory>
+    public class FacilityCategoryEntityTypeConfiguration : IEntityTypeConfiguration<FacilityType>
     {
-        public void Configure(EntityTypeBuilder<FacilityCategory> builder)
+        public void Configure(EntityTypeBuilder<FacilityType> builder)
         {
-            builder.ToTable("FacilityCategories");
             builder.Property(x => x.NameVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
@@ -21,12 +20,12 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.DescriptionEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
-            builder.Property(x => x.Created)
+            builder.Property(x => x.CreatedAt)
                    .IsRequired()
                    .HasColumnType("DATETIME")
                    .HasDefaultValueSql("GETDATE()");
 
-            builder.Property(x => x.Deleted)
+            builder.Property(x => x.DeletedAt)
                    .HasColumnType("DATETIME");
 
         }

@@ -6,7 +6,7 @@ namespace Hospital.Domain.Specifications.HealthFacilities
 {
     public class GetHealthFacilitiesByTypeIdSpecification : ExpressionSpecification<HealthFacility>
     {
-        public GetHealthFacilitiesByTypeIdSpecification(long typeId) : base(x => (x.CategoryId == typeId))
+        public GetHealthFacilitiesByTypeIdSpecification(long typeId) : base(x => x.FacilityTypeMappings.Any(ftm => ftm.TypeId == typeId))
         {
         }
     }

@@ -9,8 +9,8 @@ namespace Hospital.SharedKernel.Domain.Entities.Systems
     public class SystemConfiguration
       : BaseEntity,
 
-        IModified,
-        IModifier
+        IModifiedAt,
+        IModifiedBy
     {
         public PasswordLevel RequiresPasswordLevel { get; set; }
 
@@ -24,10 +24,8 @@ namespace Hospital.SharedKernel.Domain.Entities.Systems
 
         public bool? PreventCopying { get; set; }
 
+        public DateTime? ModifiedAt { get; set; }
 
-
-        public DateTime? Modified { get; set; }
-
-        public long? Modifier { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 }

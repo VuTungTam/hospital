@@ -14,17 +14,15 @@ namespace Hospital.Application.Commands.HealthServices
     {
 
         private readonly IHealthServiceWriteRepository _healthServiceWriteRepository;
-        private readonly IMapper _mapper;
         public AddHealthServiceCommandHandler(
             IEventDispatcher eventDispatcher, 
             IAuthService authService, 
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IHealthServiceWriteRepository healthServiceWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthServiceWriteRepository = healthServiceWriteRepository;
-            _mapper = mapper;
         }
 
         public async Task<string> Handle(AddHealthServiceCommand request, CancellationToken cancellationToken)

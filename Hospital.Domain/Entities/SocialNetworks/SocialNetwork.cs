@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.SocialNetworks
 {
-    [Table("SocialNetworks")]
+    [Table("tbl_social_networks")]
     public class SocialNetwork : BaseEntity,
 
-        ICreated,
-        ICreator,
-        IModified,
-        IModifier,
+        ICreatedAt,
+        ICreatedBy,
+        IModifiedAt,
+        IModifiedBy,
         ISoftDelete,
         IDeletedBy
     {
@@ -22,15 +22,17 @@ namespace Hospital.Domain.Entities.SocialNetworks
 
         public string Qr { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
-        public long? Creator { get; set; }
+        public long? CreatedBy { get; set; }
 
-        public DateTime? Modified { get; set; }
+        public DateTime? ModifiedAt { get; set; }
 
-        public long? Modifier { get; set; }
+        public long? ModifiedBy { get; set; }
 
-        public DateTime? Deleted { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
 

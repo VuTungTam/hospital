@@ -1,32 +1,32 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.Auth;
-using Hospital.Application.Dtos.HealthProfiles;
+using Hospital.Application.Dtos.Bookings;
+using Hospital.Application.Dtos.Customers;
+using Hospital.Application.Dtos.Employee;
 using Hospital.Application.Dtos.HealthFacility;
+using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.Application.Dtos.HealthServices;
 using Hospital.Application.Dtos.Locations;
-using Hospital.Application.Dtos.Newes;
-using Hospital.Application.Dtos.Queue;
 using Hospital.Application.Dtos.ServiceTimeRules;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Symptoms;
-using Hospital.Application.Dtos.Users;
-using Hospital.Application.Dtos.Bookings;
-using Hospital.Domain.Entities.HealthProfiles;
+using Hospital.Application.Models.Auth;
+using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Domain.Entities.HealthFacilities;
+using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
-using Hospital.Domain.Entities.Newses;
-using Hospital.Domain.Entities.QueueItems;
 using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
-using Hospital.Domain.Entities.Bookings;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
-using Hospital.SharedKernel.Domain.Entities.Users;
+using Hospital.SharedKernel.Domain.Entities.Auths;
+using Hospital.SharedKernel.Domain.Entities.Customers;
+using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using System.Reflection;
-using Action = Hospital.SharedKernel.Application.Services.Auth.Entities.Action;
+using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
 namespace Hospital.Application.Mappings
 {
     public class MappingProfile : Profile
@@ -35,7 +35,6 @@ namespace Hospital.Application.Mappings
         {
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
             CreateMap<SocialNetwork, SocialNetworkDto>().ReverseMap();
-            CreateMap<News, NewsDto>().ReverseMap();
             CreateMap<Symptom, SymptomDto>().ReverseMap();
             CreateMap<ServiceType, ServiceTypeDto>().ReverseMap();
             CreateMap<HealthServiceDto, HealthService>().ReverseMap();
@@ -43,10 +42,9 @@ namespace Hospital.Application.Mappings
             //CreateMap<HealthService, HealthServiceDto>()
             //.ForMember(dest => dest.TimeSlots, opt => opt.MapFrom(src => src.ServiceTimeRule.GenerateTimeSlots()));
             CreateMap<HealthFacility, HealthFacilityDto>().ReverseMap();
-            CreateMap<FacilityCategory, FacilityCategoryDto>().ReverseMap();
+            CreateMap<FacilityType, FacilityCategoryDto>().ReverseMap();
             CreateMap<HealthProfile, HealthProfileDto>().ReverseMap();
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
-            CreateMap<QueueItem, QueueItemDto>().ReverseMap();
             // Booking
             CreateMap<Booking, BookingResponseDto>()
                 .ForMember(dest => dest.SymptomIds, opt => opt.MapFrom(src => src.BookingSymptoms != null
@@ -62,13 +60,21 @@ namespace Hospital.Application.Mappings
             CreateMap<Ward, WardDto>().ReverseMap();
 
             // Users
-            CreateMap<RegAccountDto, User>();
+            CreateMap<RegAccountRequest, Customer>();
 
-            CreateMap<User, UserDto>()
-                .ForMember(des => des.HasPassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.PasswordHash)))
-                .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.UserRoles != null ? src.UserRoles.Select(x => x.Role).ToList() : new()));
+            CreateMap<EmployeeDto, Employee>();
 
-            CreateMap<UserDto, User>();
+            CreateMap<Employee, EmployeeDto>()
+                .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.EmployeeRoles != null ? src.EmployeeRoles.Select(x => x.Role).ToList() : new()))
+                .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.EmployeeActions != null ? src.EmployeeActions.Select(x => x.Action).ToList() : new()))
+                .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
+
+            CreateMap<CustomerDto, Customer>();
+
+            CreateMap<Customer, CustomerDto>()
+                .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
+
+            CreateMap<Customer, CustomerNameDto>();
             // Roles
             CreateMap<Action, ActionDto>();
 

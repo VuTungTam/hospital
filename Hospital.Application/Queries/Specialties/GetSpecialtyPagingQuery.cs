@@ -6,7 +6,7 @@ using Hospital.SharedKernel.Application.Validators;
 
 namespace Hospital.Application.Queries.Specialties
 {
-    public class GetSpecialtyPagingQuery : BaseAllowAnonymousQuery<PagingResult<SpecialtyDto>>
+    public class GetSpecialtyPagingQuery : BaseAllowAnonymousQuery<PaginationResult<SpecialtyDto>>
     {
         public GetSpecialtyPagingQuery(Pagination pagination, long facilityId)
         {

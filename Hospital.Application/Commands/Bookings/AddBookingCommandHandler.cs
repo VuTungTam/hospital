@@ -13,7 +13,6 @@ namespace Hospital.Application.Commands.Bookings
 {
     public class AddBookingCommandHandler : BaseCommandHandler, IRequestHandler<AddBookingCommand, string>
     {
-        private readonly IMapper _mapper;
         private readonly IBookingWriteRepository _bookingWriteRepository;
 
         public AddBookingCommandHandler(
@@ -22,9 +21,8 @@ namespace Hospital.Application.Commands.Bookings
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IBookingWriteRepository bookingWriteRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _bookingWriteRepository = bookingWriteRepository;
         }
 

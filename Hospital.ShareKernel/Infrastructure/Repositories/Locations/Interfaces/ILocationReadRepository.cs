@@ -6,11 +6,11 @@ namespace Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces
 {
     public interface ILocationReadRepository
     {
-        Task<PagingResult<Province>> GetProvincesPagingAsync(Pagination pagination, CancellationToken cancellationToken);
+        Task<PaginationResult<Province>> GetProvincesPagingAsync(Pagination pagination, CancellationToken cancellationToken);
 
-        Task<PagingResult<District>> GetDistrictsPagingAsync(int provinceId, Pagination pagination, CancellationToken cancellationToken);
+        Task<PaginationResult<District>> GetDistrictsPagingAsync(int provinceId, Pagination pagination, CancellationToken cancellationToken);
 
-        Task<PagingResult<Ward>> GetWardsPagingAsync(int districtId, Pagination pagination, CancellationToken cancellationToken);
+        Task<PaginationResult<Ward>> GetWardsPagingAsync(int districtId, Pagination pagination, CancellationToken cancellationToken);
 
         Task<string> GetNameByIdAsync(int id, string type = "province", CancellationToken cancellationToken = default);
 

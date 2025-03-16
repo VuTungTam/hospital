@@ -1,8 +1,7 @@
-﻿using Hospital.Domain.Constants;
-using Hospital.Infra.EFConfigurations;
-using Hospital.SharedKernel.Application.Consts;
+﻿using Hospital.Infra.EFConfigurations;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Entities.Systems;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
@@ -29,10 +28,10 @@ namespace Hospital.Infrastructure.Repositories.AppConfigs
 
         public async Task<SystemConfiguration> GetAsync(CancellationToken cancellationToken = default)
         {
-            var key = BaseCacheKeys.GetSystemConfigurationKey();
+            var cacheEntry = CacheManager.SystemConfiguration;
             var valueFactory = () => _dbContext.SystemConfigurations.FirstOrDefaultAsync(cancellationToken);
 
-            var config = await _redisCache.GetOrSetAsync(key, valueFactory, TimeSpan.FromSeconds(AppCacheTime.SystemConfiguration), cancellationToken: cancellationToken);
+            var config = await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
             if (config == null)
             {
                 throw new CatchableException("Not found app config");

@@ -1,5 +1,6 @@
-﻿using Hospital.SharedKernel.Application.Consts;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using MassTransit.Internals;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
@@ -7,31 +8,61 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
 {
     public class RedisCache : IRedisCache
     {
-        private readonly IDistributedCache _cacheInstance;
+        public TimeSpan? DefaultAbsoluteExpireTime => TimeSpan.FromSeconds(CacheManager.DefaultExpiriesInSeconds);
 
-        public TimeSpan? DefaultAbsoluteExpireTime => TimeSpan.FromSeconds(BaseCacheTime.Default);
+        private readonly IConnectionMultiplexer _redis;
 
-        public TimeSpan? DefaultSlidingExpireTime => null;
+        private readonly IDatabase _db;
 
-        public RedisCache(IDistributedCache cache)
+        public RedisCache(IConnectionMultiplexer redis)
         {
-            _cacheInstance = cache;
+            _redis = redis;
+            _db = redis.GetDatabase();
         }
 
-        public IDistributedCache GetInstance() => _cacheInstance;
+        public IConnectionMultiplexer GetInstance() => _redis;
 
-        IConnectionMultiplexer IRedisCache.GetInstance()
+        public async Task<T> GetAsync<T>(string key, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var value = await _db.StringGetAsync(CacheManager.GetCombineKey(key));
+
+            if (!value.HasValue)
+            {
+                return default;
+            }
+            return JsonConvert.DeserializeObject<T>(value.ToString());
+        }
+
+        public async Task<T> GetWihtoutPrefixAsync<T>(string key, CancellationToken cancellationToken = default)
+        {
+            var value = await _db.StringGetAsync(key);
+
+            if (!value.HasValue)
+            {
+                return default;
+            }
+            return JsonConvert.DeserializeObject<T>(value.ToString());
         }
 
         public async Task<T> GetOrSetAsync<T>(string key, Func<Task<T>> valueFactory, TimeSpan? absoluteExpireTime = null, CancellationToken cancellationToken = default)
         {
             var data = await GetAsync<T>(key, cancellationToken);
-            var isList = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>);
+            var isCollection = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>);
+            var isPagination = typeof(T).HasInterface<IPaginationResult>();
+
             if (data != null)
             {
-                if (!isList || isList && ((System.Collections.ICollection)data).Count > 0)
+                if (!isCollection && !isPagination)
+                {
+                    return data;
+                }
+
+                if (isCollection && ((System.Collections.ICollection)data).Count > 0)
+                {
+                    return data;
+                }
+
+                if (isPagination && (data as IPaginationResult).Total > 0)
                 {
                     return data;
                 }
@@ -40,7 +71,11 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
             data = await valueFactory();
             if (data != null)
             {
-                if (!isList || isList && ((System.Collections.ICollection)data).Count > 0)
+                if (
+                    (!isCollection && !isPagination) ||
+                    (isCollection && ((System.Collections.ICollection)data).Count > 0) ||
+                    (isPagination && (data as IPaginationResult).Total > 0)
+                )
                 {
                     await SetAsync(key, data, absoluteExpireTime, cancellationToken: cancellationToken);
                 }
@@ -48,58 +83,25 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
             return data;
         }
 
-        public async Task<T> GetAsync<T>(string key, CancellationToken cancellationToken = default)
-        {
-            var jsonData = await _cacheInstance.GetStringAsync(BaseCacheKeys.GetCombineKey(key), cancellationToken);
-            if (jsonData is null)
-            {
-                return default;
-            }
-
-            return JsonConvert.DeserializeObject<T>(jsonData);
-        }
-
-        public string GetString(string key) => _cacheInstance.GetString(BaseCacheKeys.GetCombineKey(key));
-
-        public async Task<string> GetStringAsync(string key, CancellationToken cancellationToken = default)
-            => await _cacheInstance.GetStringAsync(BaseCacheKeys.GetCombineKey(key), cancellationToken) ?? string.Empty;
-
-        public async Task SetAsync(string key, object value, TimeSpan? absoluteExpireTime = null, TimeSpan? slidingExpireTime = null, CancellationToken cancellationToken = default)
-        {
-            string jsonData;
-            if (value?.GetType() == typeof(string))
-            {
-                jsonData = value.ToString();
-            }
-            else
-            {
-                jsonData = JsonConvert.SerializeObject(value);
-            }
-            var options = new DistributedCacheEntryOptions()
-            {
-                AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? DefaultAbsoluteExpireTime,
-                SlidingExpiration = slidingExpireTime ?? DefaultSlidingExpireTime
-            };
-
-            await _cacheInstance.SetStringAsync(BaseCacheKeys.GetCombineKey(key), jsonData, options, cancellationToken);
-        }
-
         public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
-            => await _cacheInstance.RemoveAsync(BaseCacheKeys.GetCombineKey(key), cancellationToken);
+            => await _db.KeyDeleteAsync(CacheManager.GetCombineKey(key));
 
-        public Task RemoveByPatternAsync(string pattern)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task SetAsync(string key, object value, TimeSpan? absoluteExpireTime = null, CancellationToken cancellationToken = default)
+            => await _db.StringSetAsync(CacheManager.GetCombineKey(key), new RedisValue(JsonConvert.SerializeObject(value)), absoluteExpireTime ?? DefaultAbsoluteExpireTime);
 
-        public Task<T> GetWihtoutPrefixAsync<T>(string key, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task SetWithoutPrefixAsync(string key, object value, TimeSpan? absoluteExpireTime = null, CancellationToken cancellationToken = default)
+            => await _db.StringSetAsync(key, new RedisValue(JsonConvert.SerializeObject(value)), absoluteExpireTime ?? DefaultAbsoluteExpireTime);
 
-        public Task SetWithoutPrefixAsync(string key, object value, TimeSpan? absoluteExpireTime = null, TimeSpan? slidingExpireTime = null, CancellationToken cancellationToken = default)
+        public async Task RemoveByPatternAsync(string pattern)
         {
-            throw new NotImplementedException();
+            var server = _redis.GetServers().First();
+            var keys = server.Keys(pattern: pattern).ToList();
+
+            if (keys != null && keys.Any())
+            {
+                var tasks = keys.Select(key => _db.KeyDeleteAsync(key));
+                await Task.WhenAll(tasks);
+            }
         }
     }
 }

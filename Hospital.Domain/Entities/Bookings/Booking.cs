@@ -10,17 +10,18 @@ using System.Text.Json.Serialization;
 
 namespace Hospital.Domain.Entities.Bookings
 {
-    [Table("Bookings")]
+    [Table("tbl_bookings")]
     public class Booking : BaseEntity,
-        ICreated,
-        ICreator,
-        IModified,
-        IModifier,
+        ICreatedAt,
+        ICreatedBy,
+        IModifiedAt,
+        IModifiedBy,
         ISoftDelete,
         IDeletedBy,
         IOwnedEntity
     {
         [Filterable("Mã lịch khám")]
+        [Immutable]
         public string Code { get; set; }
 
         public long HealthProfileId { get; set; }
@@ -45,15 +46,17 @@ namespace Hospital.Domain.Entities.Bookings
         [IgnoreDataMember]
         public List<BookingSymptom> BookingSymptoms { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
-        public long? Creator { get; set; }
+        public long? CreatedBy { get; set; }
 
-        public DateTime? Modified { get; set; }
+        public DateTime? ModifiedAt { get; set; }
 
-        public long? Modifier { get; set; }
+        public long? ModifiedBy { get; set; }
 
-        public DateTime? Deleted { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
         public long OwnerId { get; set; }

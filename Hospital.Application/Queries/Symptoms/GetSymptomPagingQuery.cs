@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.Symptoms
 {
-    public class GetSymptomPagingQuery : BaseAllowAnonymousQuery<PagingResult<SymptomDto>>
+    public class GetSymptomPagingQuery : BaseAllowAnonymousQuery<PaginationResult<SymptomDto>>
     {
         public GetSymptomPagingQuery(Pagination pagination)
         {

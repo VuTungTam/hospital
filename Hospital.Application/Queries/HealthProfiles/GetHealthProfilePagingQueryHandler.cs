@@ -10,7 +10,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.HealthProfiles
 {
-    public class GetHealthProfilePagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthProfilePagingQuery, PagingResult<HealthProfileDto>>
+    public class GetHealthProfilePagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthProfilePagingQuery, PaginationResult<HealthProfileDto>>
     {
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         public GetHealthProfilePagingQueryHandler(
@@ -23,13 +23,13 @@ namespace Hospital.Application.Queries.HealthProfiles
             _healthProfileReadRepository = healthProfileReadRepository;
         }
 
-        public async Task<PagingResult<HealthProfileDto>> Handle(GetHealthProfilePagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<HealthProfileDto>> Handle(GetHealthProfilePagingQuery request, CancellationToken cancellationToken)
         {
             var profiles = await _healthProfileReadRepository.GetPagingWithFilterAsync(request.Pagination, request.UserId, cancellationToken);   
             
             var profileDtos = _mapper.Map<List<HealthProfileDto>>(profiles.Data); 
             
-            return new PagingResult<HealthProfileDto> (profileDtos, profiles.Total );
+            return new PaginationResult<HealthProfileDto> (profileDtos, profiles.Total );
         }
     }
 }

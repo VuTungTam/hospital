@@ -1,10 +1,11 @@
-﻿using Hospital.Application.Repositories.Interfaces.Auth.Actions;
+﻿using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Domain.Constants;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -23,10 +24,11 @@ namespace Hospital.Application.Commands.Auth.Roles
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IRoleReadRepository roleReadRepository,
             IRoleWriteRepository roleWriteRepository,
             IActionReadRepository actionReadRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _roleReadRepository = roleReadRepository;
             _roleWriteRepository = roleWriteRepository;

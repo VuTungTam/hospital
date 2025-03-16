@@ -8,8 +8,8 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
     {
         ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, QueryOption option) where T : BaseEntity;
 
-        Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default) where T : BaseEntity;
+        Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity;
 
-        Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default) where T : BaseEntity;
+        Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity;
     }
 }

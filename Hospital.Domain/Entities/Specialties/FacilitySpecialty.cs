@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.Specialties
 {
-    [Table("FacilitySpecialty")]
+    [Table("tbl_facility_specialty")]
     public class FacilitySpecialty : 
         BaseEntity,
-        ICreated,
-        ICreator,
+        ICreatedAt,
+        ICreatedBy,
         ISoftDelete,
         IDeletedBy
     {
@@ -18,10 +18,16 @@ namespace Hospital.Domain.Entities.Specialties
         public long SpecialtyId { get; set; }
         public HealthFacility Facility { get; set; }
         public Specialty Specialty { get; set; }
-        public DateTime Created { get; set; } = DateTime.Now;
+
         public List<HealthService> Services { get; set; }
-        public long? Creator { get; set; }
-        public DateTime? Deleted { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public long? CreatedBy { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
+
         public long? DeletedBy { get; set; }
     }
 }

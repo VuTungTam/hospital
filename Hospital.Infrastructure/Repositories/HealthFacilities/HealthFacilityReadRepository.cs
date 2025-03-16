@@ -14,7 +14,7 @@ using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using VetHospital.Infrastructure.Extensions;
+using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.HealthFacilities
 {
@@ -24,7 +24,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
         {
         }
 
-        public async Task<PagingResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, HealthFacilityStatus status = default, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, HealthFacilityStatus status = default, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthFacility> spec = new GetHealthFacilitiesByStatusSpecification(status);
             if (facilityTypeId > 0)
@@ -35,13 +35,13 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
-                         .OrderByDescending(x => x.Modified ?? x.Created);
+                         .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query.BuildLimit(pagination.Offset, pagination.Size)
                                   .ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
 
-            return new PagingResult<HealthFacility>(data, count);
+            return new PaginationResult<HealthFacility>(data, count);
         }
     }
 }

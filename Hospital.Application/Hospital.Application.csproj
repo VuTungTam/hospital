@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\Accounts\" />
     <Folder Include="Common\Behaviours\" />
     <Folder Include="Common\Exceptions\" />
+    <Folder Include="Queries\Users\" />
+    <Folder Include="Repositories\Interfaces\Users\" />
   </ItemGroup>
 
   <ItemGroup>

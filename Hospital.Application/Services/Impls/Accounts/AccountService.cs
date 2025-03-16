@@ -19,7 +19,7 @@ namespace Hospital.Application.Services.Impls.Accounts
             _emailService = emailService;
         }
 
-        public async Task SendChangePasswordNoticeAsync(User user, RequestInfo requestInfo, CancellationToken cancellationToken)
+        public async Task SendChangePasswordNoticeAsync(BaseUser user, RequestInfo requestInfo, CancellationToken cancellationToken)
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
@@ -35,7 +35,7 @@ namespace Hospital.Application.Services.Impls.Accounts
             await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "[Quan trọng] Bạn vừa thay đổi mật khẩu" }, cancellationToken);
         }
 
-        public async Task SendVerifyEmailAsync(User user, string code, CancellationToken cancellationToken)
+        public async Task SendVerifyEmailAsync(BaseUser user, string code, CancellationToken cancellationToken)
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
@@ -52,7 +52,7 @@ namespace Hospital.Application.Services.Impls.Accounts
             await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "Xác nhận tài khoản Pet5H" }, cancellationToken);
         }
 
-        public async Task SendVerifyEmailWithPasswordAsync(User user, string code, CancellationToken cancellationToken)
+        public async Task SendVerifyEmailWithPasswordAsync(BaseUser user, string code, CancellationToken cancellationToken)
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
@@ -74,7 +74,7 @@ namespace Hospital.Application.Services.Impls.Accounts
             await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "Xác nhận tài khoản Pet5H" }, cancellationToken);
         }
 
-        public async Task SendForgotPwdAsync(User user, string code, CancellationToken cancellationToken)
+        public async Task SendForgotPwdAsync(BaseUser user, string code, CancellationToken cancellationToken)
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
@@ -89,7 +89,7 @@ namespace Hospital.Application.Services.Impls.Accounts
             await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "[Quan trọng] Quên mật khẩu Pet5H" }, cancellationToken);
         }
 
-        public async Task SendPasswordForUserAsync(User user, CancellationToken cancellationToken)
+        public async Task SendPasswordForUserAsync(BaseUser user, CancellationToken cancellationToken)
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>

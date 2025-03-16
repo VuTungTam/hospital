@@ -1,4 +1,5 @@
-﻿using Hospital.Resource.Properties;
+﻿using AutoMapper;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -21,9 +22,10 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IReadRepository<T> readRepository,
             TWriteRepository writeRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
@@ -59,7 +61,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
 
     public class DeleteCommandHandler<T, TResponse> : DeleteCommandHandler<T, TResponse, IWriteRepository<T>> where T : BaseEntity
     {
-        public DeleteCommandHandler(IEventDispatcher eventDispatcher, IAuthService authService, IStringLocalizer<Resources> localizer, IReadRepository<T> readRepository, IWriteRepository<T> writeRepository) : base(eventDispatcher, authService, localizer, readRepository, writeRepository)
+        public DeleteCommandHandler(IEventDispatcher eventDispatcher, IAuthService authService, IStringLocalizer<Resources> localizer, IMapper mapper, IReadRepository<T> readRepository, IWriteRepository<T> writeRepository) : base(eventDispatcher, authService, localizer, mapper, readRepository, writeRepository)
         {
         }
     }

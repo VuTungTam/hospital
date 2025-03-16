@@ -1,27 +1,26 @@
 ﻿using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthProfiles;
-using Hospital.Domain.Entities.Newses;
-using Hospital.Domain.Entities.QueueItems;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
-using Hospital.Infra.Extensions;
 using Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Application.Services.Date;
+using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Base;
+using Hospital.SharedKernel.Domain.Entities.Customers;
+using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Domain.Entities.Systems;
-using Hospital.SharedKernel.Domain.Entities.Users;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities;
-using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Hospital.Infrastructure.Persistences.EF.EntityTypeConfigurations;
+using Hospital.Domain.Entities.Articles;
+using Hospital.Domain.Entities.Distances;
 
 namespace Hospital.Infra.EFConfigurations
 {
@@ -45,16 +44,22 @@ namespace Hospital.Infra.EFConfigurations
         {
             modelBuilder.ApplyConfiguration(new SocialNetworkEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SymptomEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new NewsEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthFacilityEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FacilityCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SpecialtyEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthServiceEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthProfileEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new QueueItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new BookingEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ActionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeActionEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeRoleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ArticleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DoctorEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new FeedbackEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -77,24 +82,24 @@ namespace Hospital.Infra.EFConfigurations
                         //    (entry.Entity as IBaseEntity).Id = AuthUtility.GenerateSnowflakeId();
                         //}
 
-                        if (entry.Entity is ICreated)
+                        if (entry.Entity is ICreatedAt)
                         {
-                            (entry.Entity as ICreated).Created = timestamp;
+                            (entry.Entity as ICreatedAt).CreatedAt = timestamp;
                         }
 
-                        if (entry.Entity is IModified)
+                        if (entry.Entity is IModifiedAt)
                         {
-                            (entry.Entity as IModified).Modified = null;
+                            (entry.Entity as IModifiedAt).ModifiedAt = null;
                         }
 
-                        if (entry.Entity is IModifier)
+                        if (entry.Entity is IModifiedBy)
                         {
-                            (entry.Entity as IModifier).Modifier = null;
+                            (entry.Entity as IModifiedBy).ModifiedBy = null;
                         }
 
                         if (entry.Entity is ISoftDelete)
                         {
-                            (entry.Entity as ISoftDelete).Deleted = null;
+                            (entry.Entity as ISoftDelete).DeletedAt = null;
                         }
 
                         if (entry.Entity is IDeletedBy)
@@ -104,14 +109,14 @@ namespace Hospital.Infra.EFConfigurations
 
                         if (!_executionContext.IsAnonymous)
                         {
-                            if (entry.Entity is ICreator)
+                            if (entry.Entity is ICreatedBy)
                             {
-                                (entry.Entity as ICreator).Creator = _executionContext.UserId;
+                                (entry.Entity as ICreatedBy).CreatedBy = _executionContext.Identity;
                             }
 
                             if (entry.Entity is IOwnedEntity && (entry.Entity as IOwnedEntity).OwnerId == 0)
                             {
-                                (entry.Entity as IOwnedEntity).OwnerId = _executionContext.UserId;
+                                (entry.Entity as IOwnedEntity).OwnerId = _executionContext.Identity;
                             }
                         }
 
@@ -126,29 +131,29 @@ namespace Hospital.Infra.EFConfigurations
                         //    entry.Property(nameof(IPersonalizeEntity.OwnerId)).IsModified = false;
                         //}
 
-                        if (entry.Entity is ICreator)
+                        if (entry.Entity is ICreatedBy)
                         {
-                            entry.Property(nameof(ICreator.Creator)).IsModified = false;
+                            entry.Property(nameof(ICreatedBy.CreatedBy)).IsModified = false;
                         }
 
-                        if (entry.Entity is ICreated)
+                        if (entry.Entity is ICreatedAt)
                         {
-                            entry.Property(nameof(ICreated.Created)).IsModified = false;
+                            entry.Property(nameof(ICreatedAt.CreatedAt)).IsModified = false;
                         }
 
-                        if (entry.Entity is ISoftDelete && entry.Entity is IDeletedBy && (entry.Entity as ISoftDelete).Deleted != null)
+                        if (entry.Entity is ISoftDelete && entry.Entity is IDeletedBy && (entry.Entity as ISoftDelete).DeletedAt != null)
                         {
-                            (entry.Entity as IDeletedBy).DeletedBy = _executionContext.UserId;
+                            (entry.Entity as IDeletedBy).DeletedBy = _executionContext.Identity;
                         }
                         else
                         {
-                            if (entry.Entity is IModified)
+                            if (entry.Entity is IModifiedAt)
                             {
-                                (entry.Entity as IModified).Modified = timestamp;
+                                (entry.Entity as IModifiedAt).ModifiedAt = timestamp;
                             }
-                            if (entry.Entity is IModifier)
+                            if (entry.Entity is IModifiedBy)
                             {
-                                (entry.Entity as IModifier).Modifier = _executionContext.UserId;
+                                (entry.Entity as IModifiedBy).ModifiedBy = _executionContext.Identity;
                             }
                         }
                         break;
@@ -204,9 +209,9 @@ namespace Hospital.Infra.EFConfigurations
 
         public DbSet<FacilitySpecialty> BrancSpecialties { get; set; }
 
-        public DbSet<QueueItem> QueueItems { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
@@ -216,6 +221,10 @@ namespace Hospital.Infra.EFConfigurations
 
         public DbSet<SystemConfiguration> SystemConfigurations { get; set; }
 
-        public DbSet<News> News { get; set; }
+        public DbSet<LoginHistory> LoginHistories { get; set; }
+
+        public DbSet<Article> Articles { get; set; }
+
+        public DbSet<Distance> Distances { get; set; }
     }
 }

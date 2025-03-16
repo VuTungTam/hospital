@@ -13,6 +13,11 @@ using Hospital.SharedKernel.Application.Consts;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Specifications;
 using IdGen;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
+using Hospital.SharedKernel.Runtime.Exceptions;
+using StackExchange.Redis;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Infra.Repositories
 {
@@ -51,7 +56,7 @@ namespace Hospital.Infra.Repositories
         {
             Add(entity);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
-
+            await RemoveCacheWhenAddAsync(cancellationToken);
         }
 
         public virtual void AddRange(IEnumerable<T> entities)
@@ -63,6 +68,7 @@ namespace Hospital.Infra.Repositories
         {
             AddRange(entities);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+            await RemoveCacheWhenAddAsync(cancellationToken);
         }
 
         public virtual void Delete(IEnumerable<T> entities)
@@ -72,7 +78,7 @@ namespace Hospital.Infra.Repositories
                 var dateService = _serviceProvider.GetRequiredService<IDateService>();
                 foreach( var entity in entities)
                 {
-                    (entity as ISoftDelete).Deleted = dateService.GetClientTime();
+                    (entity as ISoftDelete).DeletedAt = dateService.GetClientTime();
                 }
                 _dbSet.UpdateRange(entities);
             }
@@ -86,6 +92,7 @@ namespace Hospital.Infra.Repositories
         {
             Delete(entities);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+            await RemoveCacheWhenDeleteAsync(cancellationToken);
         }
 
         public virtual void Update(T entity)
@@ -93,56 +100,111 @@ namespace Hospital.Infra.Repositories
             _dbSet.Update(entity);
         }
 
-        public virtual async Task UpdateAsync(T entity, List<string> specificUpdates = null, CancellationToken cancellationToken = default)
+        public virtual async Task UpdateAsync(T entity, List<string> excludes = null, CancellationToken cancellationToken = default)
         {
-            Update(entity);
-            await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+            var cacheEntry = CacheManager.GetLockUpdateCacheEntry<T>(entity.Id);
+            var locked = await _redisCache.GetAsync<string>(cacheEntry.Key, cancellationToken);
+            if (!string.IsNullOrEmpty(locked))
+            {
+                throw new BadRequestException(_localizer["CommonMessage.RecordIsUpdating"]);
+            }
 
-            var key = GetCacheKey(entity.Id);
+            try
+            {
+                await _redisCache.SetAsync(cacheEntry.Key, "locked", TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
 
-            await _redisCache.SetAsync(key, entity, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+                Update(entity);
+                var properties = entity.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0 && p.PropertyType.IsPrimitive());
+
+                excludes ??= new();
+
+                var entry = _dbContext.Entry(entity);
+                foreach (var property in properties)
+                {
+                    if (property.GetCustomAttributes(typeof(ImmutableAttribute), true).Any())
+                    {
+                        entry.Property(property.Name).IsModified = false;
+                        continue;
+                    }
+
+                    if (excludes.Contains(property.Name))
+                    {
+                        entry.Property(property.Name).IsModified = false;
+                    }
+                }
+
+                await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+
+                await RemoveCacheWhenUpdateAsync(entity.Id, cancellationToken);
+            }
+            finally
+            {
+                await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
+            }
 
         }
 
-        public void UpdateRange(IEnumerable<T> entities)
-        {
-            _dbSet.UpdateRange(entities);
-        }
-
-        public virtual async Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
-        {
-            UpdateRange(entities);
-            
-            await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
-        }
         #region Dispose
         public void Dispose()
         {
-            _dbContext.Database.CurrentTransaction?.Dispose();
+            if (_dbContext.Database.CurrentTransaction != null)
+            {
+                _dbContext.Database.CurrentTransaction.Dispose();
+            }
         }
-
+        #endregion
         public virtual async Task RollbackAsync(CancellationToken cancellationToken)
         {
            await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
         }
-        #endregion
 
-        protected string GetCacheKey(long id = 0, string type = "")
+        #region Remove Cache
+        protected virtual async Task RemoveOneRecordCacheAsync(long id, CancellationToken cancellationToken)
         {
-            if (type == "all")
-            {
-                if (typeof(T).HasInterface<IOwnedEntity>())
-                {
-                    return BaseCacheKeys.DbOwnerAllKey<T>(_executionContext.UserId);
-                }
-                return BaseCacheKeys.DbSystemAllKey<T>();
-            }
+            var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
+                      CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity) :
+                      CacheManager.DbSystemIdCacheEntry<T>(id);
 
-            if (typeof(T).HasInterface<IOwnedEntity>())
-            {
-                return BaseCacheKeys.DbOwnerIdKey<T>(id, _executionContext.UserId);
-            }
-            return BaseCacheKeys.DbSystemIdKey<T>(id);
+            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
         }
+
+        protected virtual async Task RemoveAllRecordsCacheAsync(CancellationToken cancellationToken)
+        {
+            var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
+                         CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity) :
+                         CacheManager.DbSystemAllCacheEntry<T>();
+
+            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
+        }
+
+        protected virtual async Task RemovePaginationCacheAsync(CancellationToken cancellationToken)
+        {
+            var key = CacheManager.GetRemovePaginationPattern<T>(_executionContext.Identity);
+            await _redisCache.RemoveAsync(key, cancellationToken);
+        }
+
+        protected virtual async Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken)
+        {
+            await RemoveAllRecordsCacheAsync(cancellationToken);
+            await RemovePaginationCacheAsync(cancellationToken);
+        }
+
+        protected virtual async Task RemoveCacheWhenUpdateAsync(long id, CancellationToken cancellationToken)
+        {
+            var tasks = new List<Task>
+                {
+                    RemoveAllRecordsCacheAsync(cancellationToken),
+                    RemoveOneRecordCacheAsync(id, cancellationToken),
+                    RemovePaginationCacheAsync(cancellationToken)
+                };
+            await Task.WhenAll(tasks);
+        }
+
+        protected virtual async Task RemoveCacheWhenDeleteAsync(CancellationToken cancellationToken)
+        {
+            await RemoveAllRecordsCacheAsync(cancellationToken);
+            await RemovePaginationCacheAsync(cancellationToken);
+        }
+        #endregion
     }
 }

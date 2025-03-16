@@ -11,7 +11,7 @@ using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Linq;
-using VetHospital.Infrastructure.Extensions;
+using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.HealthProfiles
 {
@@ -21,7 +21,7 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
         {
         }
 
-        public async Task<PagingResult<HealthProfile>> GetPagingWithFilterAsync(Pagination pagination, long userId, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<HealthProfile>> GetPagingWithFilterAsync(Pagination pagination, long userId, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthProfile> spec = null;
 
@@ -38,14 +38,14 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
 
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
-                         .OrderByDescending(x => x.Modified ?? x.Created);
+                         .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query.BuildLimit(pagination.Offset, pagination.Size)
                                   .ToListAsync(cancellationToken);
 
             var count = await query.CountAsync(cancellationToken);
 
-            return new PagingResult<HealthProfile>(data, count);
+            return new PaginationResult<HealthProfile>(data, count);
         }
     }
 }

@@ -6,7 +6,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.HealthProfiles
 {
-    public class GetHealthProfilePagingQuery : BaseQuery<PagingResult<HealthProfileDto>>
+    public class GetHealthProfilePagingQuery : BaseQuery<PaginationResult<HealthProfileDto>>
     {
         public GetHealthProfilePagingQuery(Pagination pagination,long userId)
         {

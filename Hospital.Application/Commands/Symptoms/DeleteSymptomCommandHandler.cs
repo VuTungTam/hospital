@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.Symptoms;
+﻿using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -17,9 +18,10 @@ namespace Hospital.Application.Commands.Symptoms
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             ISymptomReadRepository symptomReadRepository,
             ISymptomWriteRepository symptomWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _symptomReadRepository = symptomReadRepository;
             _symptomWriteRepository = symptomWriteRepository;

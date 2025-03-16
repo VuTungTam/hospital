@@ -14,16 +14,14 @@ namespace Hospital.Application.Commands.Specialties
     public class AddSpecialtyCommandHandler : BaseCommandHandler, IRequestHandler<AddSpecialtyCommand, string>
     {
         private readonly ISpecialtyWriteRepository _writeSpecialtyRepository;
-        private readonly IMapper _mapper;
         public AddSpecialtyCommandHandler(
             IEventDispatcher eventDispatcher, 
             IAuthService authService, 
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             ISpecialtyWriteRepository writeSpecialtyRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _writeSpecialtyRepository = writeSpecialtyRepository;
         }
 

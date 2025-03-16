@@ -1,7 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
+using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Microsoft.Extensions.Localization;
 

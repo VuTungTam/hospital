@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Domain.Entities.Base;
 
 namespace Hospital.SharedKernel.Application.CQRS.Queries
 {
-    public class GetPagingQuery<T, TResponse> : BaseQuery<PagingResult<TResponse>> where T : BaseEntity
+    public class GetPagingQuery<T, TResponse> : BaseQuery<PaginationResult<TResponse>> where T : BaseEntity
     {
         public GetPagingQuery(Pagination pagination)
         {

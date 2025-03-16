@@ -24,7 +24,7 @@ namespace Hospital.Infrastructure.Repositories.Locations
             _dbConnection = dbConnection;
         }
         
-        public async Task<PagingResult<District>> GetDistrictsPagingAsync(int provinceId, Pagination pagination, CancellationToken cancellationToken)
+        public async Task<PaginationResult<District>> GetDistrictsPagingAsync(int provinceId, Pagination pagination, CancellationToken cancellationToken)
         {
             var sql = $"SELECT * FROM {new District().GetTableName()} WHERE 1=1";
             var sqlCount = sql.Replace("*", "COUNT(*)");
@@ -47,9 +47,9 @@ namespace Hospital.Infrastructure.Repositories.Locations
             var data = await _dbConnection.QueryAsync<District>(sql, new { pagination.Search });
             var total = await _dbConnection.QueryFirstOrDefaultAsync<int>(sqlCount, new { pagination.Search });
 
-            return new PagingResult<District>(data, total);
+            return new PaginationResult<District>(data, total);
         }
-        public async Task<PagingResult<Province>> GetProvincesPagingAsync(Pagination pagination, CancellationToken cancellationToken)
+        public async Task<PaginationResult<Province>> GetProvincesPagingAsync(Pagination pagination, CancellationToken cancellationToken)
         {
             var sql = $"SELECT * FROM {new Province().GetTableName()}";
             var sqlCount = sql.Replace("*", "COUNT(*)");
@@ -66,10 +66,10 @@ namespace Hospital.Infrastructure.Repositories.Locations
             var data = await _dbConnection.QueryAsync<Province>(sql, new { pagination.Search });
             var total = await _dbConnection.QueryFirstOrDefaultAsync<int>(sqlCount, new { pagination.Search });
 
-            return new PagingResult<Province>(data, total);
+            return new PaginationResult<Province>(data, total);
         }
 
-        public async Task<PagingResult<Ward>> GetWardsPagingAsync(int districtId, Pagination pagination, CancellationToken cancellationToken)
+        public async Task<PaginationResult<Ward>> GetWardsPagingAsync(int districtId, Pagination pagination, CancellationToken cancellationToken)
         {
             var sql = $"SELECT * FROM {new Ward().GetTableName()} WHERE 1=1";
             var sqlCount = sql.Replace("*", "COUNT(*)");
@@ -92,7 +92,7 @@ namespace Hospital.Infrastructure.Repositories.Locations
             var data = await _dbConnection.QueryAsync<Ward>(sql, new { pagination.Search });
             var total = await _dbConnection.QueryFirstOrDefaultAsync<int>(sqlCount, new { pagination.Search });
 
-            return new PagingResult<Ward>(data, total);
+            return new PaginationResult<Ward>(data, total);
         }
         public async Task<string> GetNameByIdAsync(int id, string type = "province", CancellationToken cancellationToken = default)
         {

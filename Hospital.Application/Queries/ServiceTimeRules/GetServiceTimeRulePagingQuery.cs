@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.ServiceTimeRules
 {
-    public class GetServiceTimeRulePagingQuery : BaseAllowAnonymousQuery<PagingResult<ServiceTimeRuleDto>>
+    public class GetServiceTimeRulePagingQuery : BaseAllowAnonymousQuery<PaginationResult<ServiceTimeRuleDto>>
     {
         public GetServiceTimeRulePagingQuery(Pagination pagination, long? serviceId, DayOfWeek? dayOfWeek, DateTime? date) 
         {

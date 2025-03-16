@@ -9,5 +9,7 @@
         public int ExpiresIn => AuthConfig.TokenTime;
 
         public string TokenType => "Bearer";
+
+        public bool IsPasswordChangeRequired { get; set; }
     }
 }

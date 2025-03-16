@@ -13,82 +13,59 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 {
     public class ExecutionContext : IExecutionContext
     {
-        private readonly string _traceId;
-        private readonly IHttpContextAccessor _accessor;
-        private readonly HttpContext _httpContext;
-        private string _accessToken;
-        private string _username;
-        private string _permission;
-        private string _uid;
-        private long _userId;
-        //private int _shard;
-        private (bool HasValue, bool Value) _superAdminValue;
-        public AccountType _accountType;
+        public string TraceId { get; private set; }
 
-        public ExecutionContext(IHttpContextAccessor accessor)
-        {
-            _traceId = Guid.NewGuid().ToString();
-            _accessor = accessor;
-            _httpContext = accessor.HttpContext;
-            _uid = _accessor.HttpContext?.Request.Headers[HeaderNamesExtension.Uid];
-            _accessToken = GetAccessToken();
+        public string AccessToken { get; private set; }
 
-            if (!string.IsNullOrEmpty(_accessToken))
-            {
-                SetInformation(_accessToken);
-            }
-        }
+        public string Email { get; private set; }
 
-        public string TraceId => _traceId;
+        public string Permission { get; private set; }
 
-        public string AccessToken => _accessToken;
+        public string Uid { get; private set; }
 
-        public string Username => _username;
+        public AccountType AccountType { get; private set; }
 
-        public string Permission => _permission;
-
-        public string Uid => _uid;
-
-        public AccountType AccountType => _accountType;
-
-        public long UserId => _userId;
-
-        //public int Shard => _shard;
+        public long Identity { get; private set; }
 
         public bool IsAnonymous => string.IsNullOrEmpty(AccessToken);
 
-        public HttpContext HttpContext => _httpContext;
+        public bool IsSA { get; private set; }
+
+        public HttpContext HttpContext { get; private set; }
+
+        public ExecutionContext(IHttpContextAccessor accessor)
+        {
+            HttpContext = accessor.HttpContext;
+            TraceId = Guid.NewGuid().ToString();
+            Uid = HttpContext?.Request.Headers[HeaderNamesExtension.Uid];
+            AccessToken = GetAccessToken();
+
+            if (!string.IsNullOrEmpty(AccessToken))
+            {
+                PopulateInformation(AccessToken);
+            }
+        }
 
         public void UpdateContext(string accessToken)
         {
-            if (string.IsNullOrEmpty(_accessToken))
+            if (string.IsNullOrEmpty(accessToken))
             {
-                SetInformation(accessToken);
+                return;
             }
+
+            PopulateInformation(accessToken);
         }
 
         public void MakeAnonymousRequest()
         {
-            _accessToken = string.Empty;
-            _userId = default;
-            _username = default;
-            _permission = default;
-        }
-
-        public bool IsSuperAdmin()
-        {
-            if (!_superAdminValue.HasValue)
-            {
-                var action = AuthUtility.FromExponentToPermission((int)ActionExponent.Master);
-                _superAdminValue.Value = AuthUtility.ComparePermissionAsString(_permission, action);
-                _superAdminValue.HasValue = true;
-            }
-            return _superAdminValue.Value;
+            AccessToken = string.Empty;
+            Identity = default;
+            Permission = default;
         }
 
         private string GetAccessToken()
         {
-            var bearerToken = _accessor.HttpContext?.Request.Headers[HeaderNames.Authorization].ToString();
+            var bearerToken = HttpContext?.Request.Headers[HeaderNames.Authorization].ToString();
             if (string.IsNullOrEmpty(bearerToken) || bearerToken.Equals("Bearer"))
             {
                 return "";
@@ -96,26 +73,26 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
             return bearerToken[7..];
         }
 
-        private void SetInformation(string accessToken)
+        private void PopulateInformation(string accessToken)
         {
             try
             {
-                _accessToken = accessToken;
                 var handler = new JwtSecurityTokenHandler();
-                var jwtSecurityToken = handler.ReadJwtToken(_accessToken);
+                var jwtSecurityToken = handler.ReadJwtToken(accessToken);
                 var claims = jwtSecurityToken.Claims;
+                var action = AuthUtility.FromExponentToPermission((int)ActionExponent.Master);
 
-                _userId = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.USER_ID).Value);
-                //_shard = Convert.ToInt32(claims.First(c => c.Type == ClaimConstant.SHARDING).Value);
-                _username = claims.First(c => c.Type == ClaimConstant.USERNAME).Value;
-                _permission = claims.First(c => c.Type == ClaimConstant.PERMISSION).Value;
-                _accountType = (AccountType)Convert.ToInt32(claims.First(c => c.Type == ClaimConstant.ACCOUNT_TYPE).Value);
-                _uid = _accessor.HttpContext?.Request.Headers[HeaderNamesExtension.Uid];
+                AccessToken = accessToken;
+                Identity = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.USER_ID).Value);
+                Email = claims.First(c => c.Type == ClaimConstant.EMAIL).Value;
+                Permission = claims.First(c => c.Type == ClaimConstant.PERMISSION).Value;
+                AccountType = (AccountType)Convert.ToInt32(claims.First(c => c.Type == ClaimConstant.ACCOUNT_TYPE).Value);
+                Uid = HttpContext?.Request.Headers[HeaderNamesExtension.Uid];
+                IsSA = AuthUtility.ComparePermissionAsString(Permission, action);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed when validate access token {Exception}", ex);
-                throw new UnauthorizeException();
+                throw new UnauthorizeException(ex.Message);
             }
         }
     }

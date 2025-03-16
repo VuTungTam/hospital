@@ -6,7 +6,6 @@ using Hospital.Domain.Specifications.Bookings;
 using Hospital.Infra.Repositories;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Date;
@@ -15,7 +14,7 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using VetHospital.Infrastructure.Extensions;
+using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.Bookings
 {
@@ -43,7 +42,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
 
         public async Task<int> GetMaxOrderAsync(long serviceId, DateTime date, TimeSpan start, TimeSpan end, CancellationToken cancellationToken)
         {
-            var key = BaseCacheKeys.GetQueueOrder(serviceId, date, start, end);
+            var key = "queue";//BaseCacheKeys.GetQueueOrder(serviceId, date, start, end);
 
             var valueFactory = async () =>
             {
@@ -64,7 +63,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
 
         public async Task<int> GetCurrentAsync(long serviceId, CancellationToken cancellationToken)
         {
-            var cacheKey = BaseCacheKeys.GetCurrentOrder(serviceId);
+            var cacheKey = "current"; //BaseCacheKeys.GetCurrentOrder(serviceId);
             var now = _dateService.GetClientTime();
             var spec = new GetBookingsByDateSpecification(now);
             spec.And(new GetBookingsByServiceIdSpecification(serviceId));
@@ -87,7 +86,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             //return await _redisCache.GetOrSetAsync<int>(cacheKey, valueFactory, TimeSpan.FromMinutes(30), cancellationToken: cancellationToken);
             return booking.Order;         
         }
-        public async Task<PagingResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default)
         {
             ISpecification<Booking> spec = new GetBookingsByStatusSpecification(status);
             if (date != default)
@@ -109,16 +108,16 @@ namespace Hospital.Infrastructure.Repositories.Bookings
                          .Where(guardExpression)
                          .OrderByDescending(x => x.Code)
                          .ThenByDescending(x => x.Date)
-                         .ThenByDescending(x => x.Modified ?? x.Created);
+                         .ThenByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
             
-            return new PagingResult<Booking>(data, count);
+            return new PaginationResult<Booking>(data, count);
         }
 
-        public async Task<PagingResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long profileId = 0, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long profileId = 0, CancellationToken cancellationToken = default)
         {
             ISpecification<Booking> spec = new GetBookingsByStatusSpecification(status);
             if (profileId > 0)
@@ -145,13 +144,13 @@ namespace Hospital.Infrastructure.Repositories.Bookings
                          .Where(guardExpression)
                          .OrderByDescending(x => x.Code)
                          .ThenByDescending(x => x.Date)
-                         .ThenByDescending(x => x.Modified ?? x.Created);
+                         .ThenByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
 
-            return new PagingResult<Booking>(data, count);
+            return new PaginationResult<Booking>(data, count);
         }
 
         public async Task<List<Booking>> GetNextBookingAsync(Booking booking, CancellationToken cancellationToken = default)

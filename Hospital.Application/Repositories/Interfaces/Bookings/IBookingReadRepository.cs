@@ -9,9 +9,9 @@ namespace Hospital.Application.Repositories.Interfaces.Symptoms
     public interface IBookingReadRepository : IReadRepository<Booking>
     {
         Task<Booking> GetBookingByIdAsync(long id, CancellationToken cancellationToken = default);
-        Task<PagingResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default);
+        Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default);
 
-        Task<PagingResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long ownerId = 0, CancellationToken cancellationToken = default);
+        Task<PaginationResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long ownerId = 0, CancellationToken cancellationToken = default);
 
         Task<List<Booking>> GetNextBookingAsync(Booking booking, CancellationToken cancellationToken = default);
 

@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.HealthProfiles
 {
-    [Table("HealthProfiles")]
+    [Table("tbl_health_profiles")]
     public class HealthProfile
         : BaseEntity,
-        IModified,
-        IModifier,
-        ICreated,
-        ICreator,
+        IModifiedAt,
+        IModifiedBy,
+        ICreatedAt,
+        ICreatedBy,
         ISoftDelete,
         IDeletedBy,
         IOwnedEntity
@@ -46,15 +46,17 @@ namespace Hospital.Domain.Entities.HealthProfiles
 
         public List<Booking> Bookings { get; set; }
 
-        public DateTime? Modified { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public long? Modifier { get; set; }
+        public long? CreatedBy { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime? ModifiedAt { get; set; }
 
-        public long? Creator { get; set; }
+        public long? ModifiedBy { get; set; }
 
-        public DateTime? Deleted { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
 

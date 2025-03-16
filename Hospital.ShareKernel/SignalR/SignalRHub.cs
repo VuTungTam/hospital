@@ -1,5 +1,6 @@
 ﻿using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Enums;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.SignalR.Models;
 using Microsoft.AspNetCore.Http;
@@ -63,7 +64,7 @@ namespace Hospital.SharedKernel.SignalR
                 var username = claims.First(x => x.Type == ClaimConstant.USERNAME).Value;
                 var fullname = claims.First(x => x.Type == ClaimConstant.FULL_NAME).Value;
                 var type = (AccountType)int.Parse(claims.First(x => x.Type == ClaimConstant.ACCOUNT_TYPE).Value);
-                var key = BaseCacheKeys.GetSocketKey(long.Parse(userId));
+                var key = CacheManager.GetConnectionSocketKey(long.Parse(userId));
 
                 var value = new AuthenticatedAccessInfo
                 {
@@ -124,7 +125,7 @@ namespace Hospital.SharedKernel.SignalR
             {
                 var userId = claims.First(x => x.Type == ClaimConstant.USER_ID).Value;
                 var type = (AccountType)int.Parse(claims.First(x => x.Type == ClaimConstant.ACCOUNT_TYPE).Value);
-                var key = BaseCacheKeys.GetSocketKey(long.Parse(userId));
+                var key = CacheManager.GetConnectionSocketKey(long.Parse(userId));
 
                 switch (type)
                 {

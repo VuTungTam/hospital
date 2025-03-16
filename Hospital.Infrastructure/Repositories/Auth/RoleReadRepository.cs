@@ -3,7 +3,7 @@ using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
+using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
@@ -18,7 +18,7 @@ namespace Hospital.Infrastructure.Repositories.Auth
         {
         }
 
-        public override async Task<PagingResult<Role>> GetPagingAsync(Pagination pagination, ISpecification<Role> spec, QueryOption option, CancellationToken cancellationToken = default)
+        public override async Task<PaginationResult<Role>> GetPagingAsync(Pagination pagination, ISpecification<Role> spec, QueryOption option, CancellationToken cancellationToken = default)
         {
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
@@ -34,7 +34,7 @@ namespace Hospital.Infrastructure.Repositories.Auth
                        .Take(pagination.Size)
                        .ToList();
 
-            return new PagingResult<Role>(data, count);
+            return new PaginationResult<Role>(data, count);
         }
     }
 }

@@ -6,7 +6,7 @@
         Ok = 1,
         LoggedOut = 2,
         Banned = 3,
-        ShouldRefresh = 4,
+        FetchNew = 4,
         ForceLogout = 5,
     }
 }

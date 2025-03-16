@@ -1,4 +1,5 @@
-﻿using Hospital.Resource.Properties;
+﻿using AutoMapper;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
@@ -18,8 +19,9 @@ namespace Hospital.Application.Commands.Images
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             ICloudinaryService cloudService
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _cloudService = cloudService;
         }

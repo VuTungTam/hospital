@@ -14,19 +14,17 @@ namespace Hospital.Application.Commands.SocialNetworks
     {
         private readonly ISocialNetworkReadRepository _socialNetworkReadRepository;
         private readonly ISocialNetworkWriteRepository _socialNetworkWriteRepository;
-        private readonly IMapper _mapper;
         public AddSocialNetworkCommandHandler(
             IEventDispatcher eventDispatcher, 
             IAuthService authService, 
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             ISocialNetworkReadRepository socialNetworkReadRepository,
-            ISocialNetworkWriteRepository socialNetworkWriteRepository,
-            IMapper mapper
-            ) : base(eventDispatcher, authService, localizer)
+            ISocialNetworkWriteRepository socialNetworkWriteRepository
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _socialNetworkReadRepository = socialNetworkReadRepository;
             _socialNetworkWriteRepository = socialNetworkWriteRepository;
-            _mapper = mapper;
         }
 
         public async Task<string> Handle(AddSocialNetworkCommand request, CancellationToken cancellationToken)

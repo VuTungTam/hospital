@@ -1,5 +1,4 @@
 ﻿using Hospital.Domain.Entities.HealthProfiles;
-using Hospital.Domain.Entities.HealthServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -39,15 +38,15 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.Ethinic)
                    .HasColumnType("NVARCHAR(512)");
 
-            builder.Property(x => x.Created)
+            builder.Property(x => x.CreatedAt)
                    .IsRequired()
                    .HasColumnType("DATETIME")
                    .HasDefaultValueSql("GETDATE()");
 
-            builder.Property(x => x.Modified)
+            builder.Property(x => x.ModifiedAt)
                    .HasColumnType("DATETIME");
 
-            builder.Property(x => x.Deleted)
+            builder.Property(x => x.DeletedAt)
                    .HasColumnType("DATETIME");
 
             builder.HasMany(x => x.Bookings)

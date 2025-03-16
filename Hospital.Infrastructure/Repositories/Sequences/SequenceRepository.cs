@@ -2,6 +2,7 @@
 using Hospital.Infra.EFConfigurations;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Caching.In_Memory;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -22,12 +23,12 @@ namespace Hospital.Application.Repositories.Interfaces.Sequences
 
         public async Task<Sequence> GetSequenceAsync(string table, CancellationToken cancellationToken)
         {
-            var key = BaseCacheKeys.GetSequenceKey(table);
-            var sequence = JsonConvert.DeserializeObject<Sequence>(JsonConvert.SerializeObject(_memoryCache.Get(key)));
+            var cacheEntry = CacheManager.GetSequenceCacheEntry(table);
+            var sequence = JsonConvert.DeserializeObject<Sequence>(JsonConvert.SerializeObject(_memoryCache.Get(cacheEntry.Key)));
             if (sequence == null)
             {
                 sequence = await _dbContext.Sequences.AsNoTracking().FirstOrDefaultAsync(x => x.Table == table, cancellationToken);
-                _memoryCache.Set(key, sequence, TimeSpan.FromSeconds(AppCacheTime.Sequence));
+                _memoryCache.Set(cacheEntry.Key, sequence, TimeSpan.FromSeconds(AppCacheTime.Sequence));
             }
 
             return sequence;
@@ -45,8 +46,8 @@ namespace Hospital.Application.Repositories.Interfaces.Sequences
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, table);
 
-            var key = BaseCacheKeys.GetSequenceKey(table);
-            _memoryCache.Remove(key);
+            var cacheEntry = CacheManager.GetSequenceCacheEntry(table);
+            _memoryCache.Remove(cacheEntry.Key);
         }
 
         public void UpdateSequence(Sequence sequence)

@@ -11,6 +11,7 @@
         public const string FIRST_NAME = "first_name";
         public const string LAST_NAME = "last_name";
         public const string FULL_NAME = "full_name";
+        public const string PHONE = "phone";
         public const string IP_ADDRESS = "ip_address";
         public const string CREATE_AT = "created_at";
         public const string AUTHOR = "author";

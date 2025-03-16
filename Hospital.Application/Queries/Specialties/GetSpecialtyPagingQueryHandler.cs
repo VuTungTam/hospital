@@ -13,7 +13,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Specialties
 {
-    public class GetSpecialtyPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetSpecialtyPagingQuery, PagingResult<SpecialtyDto>>
+    public class GetSpecialtyPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetSpecialtyPagingQuery, PaginationResult<SpecialtyDto>>
     {
         private readonly ISpecialtyReadRepository _specialtyReadRepository; 
         public GetSpecialtyPagingQueryHandler(
@@ -26,7 +26,7 @@ namespace Hospital.Application.Queries.Specialties
             _specialtyReadRepository = specialtyReadRepository;
         }
 
-        public async Task<PagingResult<SpecialtyDto>> Handle(GetSpecialtyPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<SpecialtyDto>> Handle(GetSpecialtyPagingQuery request, CancellationToken cancellationToken)
         {
             ISpecification<Specialty> spec = null;
             if (request.FacilityId > 0)
@@ -38,7 +38,7 @@ namespace Hospital.Application.Queries.Specialties
 
             var specialties = _mapper.Map<List<SpecialtyDto>>(result.Data);
 
-            return new PagingResult<SpecialtyDto>(specialties, result.Total);
+            return new PaginationResult<SpecialtyDto>(specialties, result.Total);
         }
     }
 }

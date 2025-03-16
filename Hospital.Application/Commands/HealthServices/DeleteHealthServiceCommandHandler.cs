@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.HealthServices;
+﻿using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -18,9 +19,10 @@ namespace Hospital.Application.Commands.HealthServices
             IEventDispatcher eventDispatcher, 
             IAuthService authService, 
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IHealthServiceReadRepository healthServiceReadRepository,
             IHealthServiceWriteRepository healthServiceWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthServiceReadRepository = healthServiceReadRepository;
             _healthServiceWriteRepository = healthServiceWriteRepository;

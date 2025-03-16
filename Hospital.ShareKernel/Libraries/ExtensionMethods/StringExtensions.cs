@@ -157,9 +157,9 @@ namespace Hospital.SharedKernel.Libraries.ExtensionMethods
             }
         }
 
-        public static string StripHtml(this string input)
+        public static string StripHtml(this string input,string value = "")
         {
-            return Regex.Replace(input, "<.*?>", string.Empty);
+            return Regex.Replace(input, "<.*?>", value);
         }
 
         public static string GetUpperChars(this string input)

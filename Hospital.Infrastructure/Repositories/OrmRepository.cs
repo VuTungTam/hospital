@@ -29,8 +29,10 @@ namespace Hospital.Infra.Repositories
             _executionContext = serviceProvider.GetRequiredService<IExecutionContext>();
         }
 
-        public virtual ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, QueryOption option) where T : BaseEntity
+        public virtual ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, QueryOption option = default) where T : BaseEntity
         {
+            option ??= new QueryOption();
+
             spec ??= new ExpressionSpecification<T>(x => true);
 
             if (_executionContext.IsAnonymous || typeof(T).HasInterface<ISystemEntity>())
@@ -40,13 +42,13 @@ namespace Hospital.Infra.Repositories
 
             if (!option.IgnoreOwner && typeof(T).HasInterface<IOwnedEntity>())
             {
-                spec = spec.And(new LimitByOwnerIdSpecification<T>(_executionContext.UserId));
+                spec = spec.And(new LimitByOwnerIdSpecification<T>(_executionContext.Identity));
             }
 
             return spec;
         }
 
-        public virtual async Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default) where T : BaseEntity
+        public virtual async Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity
         {
             var dbSet = _dbContext.Set<T>();
             var query = dbSet.AsNoTracking();
@@ -61,7 +63,7 @@ namespace Hospital.Infra.Repositories
             return await query.FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
         }
 
-        public virtual async Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default) where T : BaseEntity
+        public virtual async Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity
         {
             var dbSet = _dbContext.Set<T>();
             var query = dbSet.AsNoTracking();
@@ -73,15 +75,15 @@ namespace Hospital.Infra.Repositories
                 query = query.IncludesRelateData(option.Includes);
             }
 
-            if (typeof(T).HasInterface<IModified>())
+            if (typeof(T).HasInterface<IModifiedAt>())
             {
-                if (typeof(T).HasInterface<ICreated>())
+                if (typeof(T).HasInterface<ICreatedAt>())
                 {
-                    query = query.OrderByDescending(x => (x as IModified).Modified ?? (x as ICreated).Created);
+                    query = query.OrderByDescending(x => (x as IModifiedAt).ModifiedAt ?? (x as ICreatedAt).CreatedAt);
                 }
                 else
                 {
-                    query = query.OrderByDescending(x => (x as IModified).Modified);
+                    query = query.OrderByDescending(x => (x as IModifiedAt).ModifiedAt);
                 }
             }
 

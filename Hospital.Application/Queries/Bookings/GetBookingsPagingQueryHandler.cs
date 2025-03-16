@@ -11,7 +11,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetBookingsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingsPagingQuery, PagingResult<BookingResponseDto>>
+    public class GetBookingsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingsPagingQuery, PaginationResult<BookingResponseDto>>
     {
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly ISymptomReadRepository _symptomReadRepository;
@@ -31,7 +31,7 @@ namespace Hospital.Application.Queries.Bookings
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
-        public async Task<PagingResult<BookingResponseDto>> Handle(GetBookingsPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<BookingResponseDto>> Handle(GetBookingsPagingQuery request, CancellationToken cancellationToken)
         {
             var bookings = await _bookingReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.ExcludeId, request.Date, request.UserId, cancellationToken);
             var bookingDtos = _mapper.Map<List<BookingResponseDto>>(bookings.Data);
@@ -60,7 +60,7 @@ namespace Hospital.Application.Queries.Bookings
                 }
             }
 
-            return new PagingResult<BookingResponseDto>(bookingDtos, paging.Total);
+            return new PaginationResult<BookingResponseDto>(bookingDtos, bookings.Total);
         }
     }
 }

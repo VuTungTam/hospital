@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+﻿using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Resource.Properties;
@@ -21,10 +22,11 @@ namespace Hospital.Application.Commands.Specialties
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             ISpecialtyReadRepository specialtyReadRepository,
             IHealthFacilityReadRepository healthFacilityReadRepository,
             IHealthFacilityWriteRepository healthFacilityWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthFacilityReadRepository = healthFacilityReadRepository;
             _healthFacilityWriteRepository = healthFacilityWriteRepository;

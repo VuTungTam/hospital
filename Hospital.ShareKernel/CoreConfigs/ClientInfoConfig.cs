@@ -7,9 +7,10 @@ namespace Hospital.SharedKernel.CoreConfigs
     {
         public static string Url { get; private set; }
 
-        public static void SetConfig(IConfiguration configuration)
+        public static void Set(IConfiguration configuration)
         {
-            Url = configuration.GetRequiredSection("ClientInfo:Url").Value;
+            Url = "";
+                //configuration.GetRequiredSection("ClientInfo:Url").Value;
         }
     }
 }

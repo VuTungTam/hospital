@@ -8,8 +8,8 @@ namespace Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities
     public class Sequence :
         BaseEntity,
 
-        IModified,
-        IModifier
+        IModifiedAt,
+        IModifiedBy
     {
         public string Table { get; set; }
 
@@ -23,11 +23,9 @@ namespace Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities
 
         public string ValueString => Prefix + GetOffset() + Value + Suffix;
 
+        public DateTime? ModifiedAt { get; set; }
 
-
-        public DateTime? Modified { get; set; }
-
-        public long? Modifier { get; set; }
+        public long? ModifiedBy { get; set; }
 
         private string GetOffset()
         {

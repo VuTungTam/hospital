@@ -13,7 +13,6 @@ namespace Hospital.Application.Commands.HealthServices
 {
     public class UpdateHealthServiceCommandHandler : BaseCommandHandler, IRequestHandler<UpdateHealthServiceCommand>
     {
-        private readonly IMapper _mapper;
         private readonly IHealthServiceWriteRepository _healthServiceWriteRepository;
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         public UpdateHealthServiceCommandHandler(
@@ -23,9 +22,8 @@ namespace Hospital.Application.Commands.HealthServices
             IMapper mapper,
             IHealthServiceWriteRepository healthServiceWriteRepository,
             IHealthServiceReadRepository healthServiceReadRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _healthServiceWriteRepository = healthServiceWriteRepository;
             _healthServiceReadRepository = healthServiceReadRepository;
         }

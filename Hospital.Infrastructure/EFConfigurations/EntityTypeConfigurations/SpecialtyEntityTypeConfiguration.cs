@@ -8,8 +8,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Specialty> builder)
         {
-            builder.ToTable("Specialties");
-
             builder.Property(x => x.NameVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
@@ -18,15 +16,15 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
 
-            builder.Property(x => x.Created)
+            builder.Property(x => x.CreatedAt)
                    .IsRequired()
                    .HasColumnType("DATETIME")
                    .HasDefaultValueSql("GETDATE()");
 
-            builder.Property(x => x.Modified)
+            builder.Property(x => x.ModifiedAt)
                    .HasColumnType("DATETIME");
 
-            builder.Property(x => x.Deleted)
+            builder.Property(x => x.DeletedAt)
                    .HasColumnType("DATETIME");
 
             builder.HasMany(x => x.FacilitySpecialties)

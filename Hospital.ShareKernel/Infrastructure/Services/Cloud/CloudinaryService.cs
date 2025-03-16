@@ -77,8 +77,8 @@ public class CloudinaryService : ICloudinaryService
         try
         {
             // Tạo key cho Redis cache
-            var key = BaseCacheKeys.GetCloudinaryCacheFileKey(publicId);
-            var imageUrl = await _redisCache.GetAsync<string>(key);
+            //var key = BaseCacheKeys.GetCloudinaryCacheFileKey(publicId);
+            var imageUrl = await _redisCache.GetAsync<string>(null);
 
             if (!string.IsNullOrEmpty(imageUrl))
             {
@@ -91,7 +91,7 @@ public class CloudinaryService : ICloudinaryService
             Log.Logger.Warning($"Download file from Cloudinary with public ID = {publicId}");
 
             // Lưu URL vào Redis cache
-            await _redisCache.SetAsync(key, imageUrl, TimeSpan.FromDays(expiryTime), cancellationToken: cancellationToken);
+            await _redisCache.SetAsync(null, imageUrl, TimeSpan.FromDays(expiryTime), cancellationToken: cancellationToken);
 
             return new DownloadResponse(imageUrl, expiryTime, publicId);
         }

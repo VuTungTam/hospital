@@ -19,11 +19,7 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 
         void Update(T entity);
 
-        Task UpdateAsync(T entity, List<string> specificUpdates = null, CancellationToken cancellationToken = default);
-
-        void UpdateRange(IEnumerable<T> entities);
-
-        Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+        Task UpdateAsync(T entity, List<string> excludes = null, CancellationToken cancellationToken = default);
 
         void Delete(IEnumerable<T> entities);
 

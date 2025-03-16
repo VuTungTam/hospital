@@ -7,6 +7,6 @@ namespace Hospital.Application.Repositories.Interfaces.SocialNetworks
 {
     public interface ISocialNetworkReadRepository : IReadRepository<SocialNetwork>
     {
-        Task<PagingResult<SocialNetwork>> GetPaging(Pagination pagination, CancellationToken cancellationToken);
+        Task<PaginationResult<SocialNetwork>> GetPaging(Pagination pagination, CancellationToken cancellationToken);
     }
 }

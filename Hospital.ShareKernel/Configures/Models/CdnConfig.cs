@@ -12,7 +12,7 @@ namespace Hospital.SharedKernel.Configures.Models
 
         public static string BaseUrl => $"https://res.cloudinary.com/{CloudName}/image/upload";
 
-        public static void SetConfig(IConfiguration configuration)
+        public static void Set(IConfiguration configuration)
         {
             CloudName = configuration.GetRequiredSection("Cloudinary:CloudName").Value;
             ApiKey = configuration.GetRequiredSection("Cloudinary:ApiKey").Value;

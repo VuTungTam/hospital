@@ -2,6 +2,6 @@
 {
     public interface ISoftDelete
     {
-        DateTime? Deleted { get; set; }
+        DateTime? DeletedAt { get; set; }
     }
 }

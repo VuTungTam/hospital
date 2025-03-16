@@ -7,11 +7,11 @@ using System.Text.Json.Serialization;
 
 namespace Hospital.Domain.Entities.Bookings
 {
-    [Table("BookingSymptom")]
+    [Table("tbl_booking_symptom")]
     public class BookingSymptom :
         BaseEntity,
-        ICreator,
-        ICreated
+        ICreatedBy,
+        ICreatedAt
     {
         public long BookingId { get; set; }
         [JsonIgnore]
@@ -20,7 +20,11 @@ namespace Hospital.Domain.Entities.Bookings
         public long SymptomId { get; set; }
         [JsonIgnore]
         public Symptom Symptom { get; set; }
-        public long? Creator { get ; set ; }
-        public DateTime Created { get ; set ; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public long? CreatedBy { get; set; }
+
+        
     }
 }

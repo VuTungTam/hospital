@@ -9,7 +9,7 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Threading;
-using VetHospital.Infrastructure.Extensions;
+using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.SocialNetworks
 {
@@ -19,7 +19,7 @@ namespace Hospital.Infrastructure.Repositories.SocialNetworks
         {
         }
 
-        public async Task<PagingResult<SocialNetwork>> GetPaging(Pagination pagination, CancellationToken cancellationToken)
+        public async Task<PaginationResult<SocialNetwork>> GetPaging(Pagination pagination, CancellationToken cancellationToken)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
 
@@ -27,7 +27,7 @@ namespace Hospital.Infrastructure.Repositories.SocialNetworks
                                   .ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
 
-            return new PagingResult<SocialNetwork>(data, count);
+            return new PaginationResult<SocialNetwork>(data, count);
         }
 
     }

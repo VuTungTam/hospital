@@ -15,7 +15,6 @@ namespace Hospital.Application.Commands.Bookings
 {
     public class UpdateBookingCommandHandler : BaseCommandHandler, IRequestHandler<UpdateBookingCommand>
     {
-        private readonly IMapper _mapper;
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IBookingWriteRepository _bookingWriteRepository;
 
@@ -26,9 +25,8 @@ namespace Hospital.Application.Commands.Bookings
             IMapper mapper,
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository
-        ) : base(eventDispatcher, authService, localizer)
+        ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _mapper = mapper;
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;
         }

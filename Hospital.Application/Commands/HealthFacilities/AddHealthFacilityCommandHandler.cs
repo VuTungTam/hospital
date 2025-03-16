@@ -14,7 +14,6 @@ namespace Hospital.Application.Commands.HealthFacilities
     {
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
         private readonly IHealthFacilityWriteRepository _healthFacilityWriteRepository;
-        private readonly IMapper _mapper;
 
         public AddHealthFacilityCommandHandler(
             IEventDispatcher eventDispatcher,
@@ -23,11 +22,10 @@ namespace Hospital.Application.Commands.HealthFacilities
             IHealthFacilityReadRepository healthFacilityReadRepository,
             IHealthFacilityWriteRepository healthFacilityWriteRepository,
             IMapper mapper
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthFacilityReadRepository = healthFacilityReadRepository;   
             _healthFacilityWriteRepository = healthFacilityWriteRepository;
-            _mapper = mapper;
         }
 
         public async Task<string> Handle(AddHealthFacilityCommand request, CancellationToken cancellationToken)

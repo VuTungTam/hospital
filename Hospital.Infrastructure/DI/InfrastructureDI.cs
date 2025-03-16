@@ -1,40 +1,43 @@
-﻿using Hospital.Application.Repositories.Interfaces.Auth;
+﻿using Hospital.Application.Repositories.Interfaces.Articles;
+using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Customers;
+using Hospital.Application.Repositories.Interfaces.Distances;
+using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
-using Hospital.Application.Repositories.Interfaces.Newes;
-using Hospital.Application.Repositories.Interfaces.Queue;
 using Hospital.Application.Repositories.Interfaces.Sequences;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
-using Hospital.Application.Repositories.Interfaces.Users;
 using Hospital.Infra.EFConfigurations;
 using Hospital.Infra.Repositories;
 using Hospital.Infrastructure.Events.Dispatchers;
 using Hospital.Infrastructure.Repositories.AppConfigs;
+using Hospital.Infrastructure.Repositories.Articles;
 using Hospital.Infrastructure.Repositories.Auth;
 using Hospital.Infrastructure.Repositories.Bookings;
+using Hospital.Infrastructure.Repositories.Customers;
+using Hospital.Infrastructure.Repositories.Distances;
+using Hospital.Infrastructure.Repositories.Employees;
 using Hospital.Infrastructure.Repositories.HealthFacilities;
 using Hospital.Infrastructure.Repositories.HealthProfiles;
 using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
-using Hospital.Infrastructure.Repositories.Newes;
-using Hospital.Infrastructure.Repositories.Queue;
 using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
 using Hospital.Infrastructure.Repositories.Specilities;
 using Hospital.Infrastructure.Repositories.Symptoms;
-using Hospital.Infrastructure.Repositories.Users;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Extensions;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +68,9 @@ namespace Hospital.Infrastructure.DI
             // Dapper
             services.AddDbConenctionService(configuration);
 
+            // Google Maps
+            services.AddScoped<IGoogleMapsService, GoogleMapsService>();
+
             // Base
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
@@ -78,10 +84,9 @@ namespace Hospital.Infrastructure.DI
             services.AddScoped<IHealthFacilityWriteRepository, HealthFacilityWriteRepository>();
             services.AddScoped<IFacilityCategoryReadRepository, FacilityCategotyReadRepository>();
 
-
-            //News
-            services.AddScoped<INewsReadRepository, NewsReadRepository>();
-            services.AddScoped<INewsWriteRepository, NewsWriteRepository>();
+            // HealthFacility
+            services.AddScoped<IArticleReadRepository, ArticleReadRepository>();
+            services.AddScoped<IArticleWriteRepository, ArticleWriteRepository>();
 
             //Social Network
             services.AddScoped<ISocialNetworkReadRepository, SocialNetworkReadRepository>();
@@ -107,10 +112,6 @@ namespace Hospital.Infrastructure.DI
             services.AddScoped<IHealthProfileReadRepository, HealthProfileReadRepository>();
             services.AddScoped<IHealthProfileWriteRepository, HealthProfileWriteRepository>();
 
-            //Queue
-            services.AddScoped<IQueueItemReadRepository, QueueItemReadRepository>();
-            services.AddScoped<IQueueItemWriteRepository, QueueItemWriteRepository>();
-
             //Booking
             services.AddScoped<IBookingReadRepository, BookingReadRepository>();
             services.AddScoped<IBookingWriteRepository, BookingWriteRepository>();
@@ -127,8 +128,18 @@ namespace Hospital.Infrastructure.DI
             services.AddScoped<IActionReadRepository, ActionReadRepository>();
 
             // Users
-            services.AddScoped<IUserReadRepository, UserReadRepository>();
-            services.AddScoped<IUserWriteRepository, UserWriteRepository>();
+
+
+            // Employees
+            services.AddScoped<IEmployeeReadRepository, EmployeeReadRepository>();
+            services.AddScoped<IEmployeeWriteRepository, EmployeeWriteRepository>();
+
+            // Customers
+            services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+
+            // Distances
+            services.AddScoped<IDistanceRepository, DistanceRepository>();
 
             return services;
         }

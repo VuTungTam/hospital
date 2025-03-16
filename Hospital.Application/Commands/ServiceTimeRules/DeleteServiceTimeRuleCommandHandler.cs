@@ -1,4 +1,4 @@
-﻿using Hospital.Application.Repositories.Interfaces.Newes;
+﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -18,9 +18,10 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
+            IMapper mapper,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository
-            ) : base(eventDispatcher, authService, localizer)
+            ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Symptoms
 {
-    public class GetSymptomPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetSymptomPagingQuery, PagingResult<SymptomDto>>
+    public class GetSymptomPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetSymptomPagingQuery, PaginationResult<SymptomDto>>
     {
         private readonly ISymptomReadRepository _symptomReadRepository;
 
@@ -24,13 +24,13 @@ namespace Hospital.Application.Queries.Symptoms
             _symptomReadRepository = symptomReadRepository;
         }
 
-        public async Task<PagingResult<SymptomDto>> Handle(GetSymptomPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<SymptomDto>> Handle(GetSymptomPagingQuery request, CancellationToken cancellationToken)
         {
             var paging = await _symptomReadRepository.GetPagingAsync(request.Pagination,spec:null, _symptomReadRepository.DefaultQueryOption ,cancellationToken);
 
             var symptoms = _mapper.Map<List<SymptomDto>>(paging.Data);
 
-            return new PagingResult<SymptomDto>(symptoms, paging.Total);
+            return new PaginationResult<SymptomDto>(symptoms, paging.Total);
         }
     }
 }

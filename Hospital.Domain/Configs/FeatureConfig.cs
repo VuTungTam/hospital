@@ -12,7 +12,7 @@ namespace Hospital.Domain.Configs
         public static bool Audit { get; set; }
         public static bool Decentralization { get; set; }
 
-        public static void SetConfig(IConfiguration configuration)
+        public static void Set(IConfiguration configuration)
         {
             Employee = bool.Parse(configuration.GetRequiredSection("Features:Employee").Value);
             Customer = bool.Parse(configuration.GetRequiredSection("Features:Customer").Value);

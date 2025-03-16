@@ -11,15 +11,15 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
         string Uid { get; }
 
-        string Username { get; }
+        string Email { get; }
 
         string Permission { get; }
 
-        long UserId { get; }
-
-        //int Shard { get; }
+        long Identity { get; }
 
         bool IsAnonymous { get; }
+
+        bool IsSA { get; }
 
         AccountType AccountType { get; }
 
@@ -28,7 +28,5 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
         void UpdateContext(string accessToken);
 
         void MakeAnonymousRequest();
-
-        bool IsSuperAdmin();
     }
 }

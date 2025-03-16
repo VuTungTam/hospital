@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using MassTransit.Internals;
 
 
-namespace VetHospital.Infrastructure.Extensions
+namespace Hospital.Infrastructure.Extensions
 {
     public static class QueryablePagingExtensionss
     {
@@ -28,19 +28,19 @@ namespace VetHospital.Infrastructure.Extensions
                 return query;
             }
 
-            if (typeof(T).HasInterface<IModified>() && typeof(T).HasInterface<ICreated>())
+            if (typeof(T).HasInterface<IModifiedAt>() && typeof(T).HasInterface<ICreatedAt>())
             {
-                return query.OrderByDescending(x => (x as IModified).Modified ?? (x as ICreated).Created);
+                return query.OrderByDescending(x => (x as IModifiedAt).ModifiedAt ?? (x as ICreatedAt).CreatedAt);
             }
 
-            if (typeof(T).HasInterface<IModified>() && !typeof(T).HasInterface<ICreated>())
+            if (typeof(T).HasInterface<IModifiedAt>() && !typeof(T).HasInterface<ICreatedAt>())
             {
-                return query.OrderByDescending(x => (x as IModified).Modified);
+                return query.OrderByDescending(x => (x as IModifiedAt).ModifiedAt);
             }
 
-            if (typeof(T).HasInterface<ICreated>())
+            if (typeof(T).HasInterface<ICreatedAt>())
             {
-                return query.OrderByDescending(x => (x as ICreated).Created);
+                return query.OrderByDescending(x => (x as ICreatedAt).CreatedAt);
             }
 
             return query;

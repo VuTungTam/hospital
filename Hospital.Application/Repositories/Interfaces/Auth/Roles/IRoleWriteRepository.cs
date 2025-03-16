@@ -1,5 +1,5 @@
 ﻿using Hospital.SharedKernel.Application.Repositories.Interface;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
+using Hospital.SharedKernel.Domain.Entities.Auths;
 
 namespace Hospital.Application.Repositories.Interfaces.Auth.Roles
 {

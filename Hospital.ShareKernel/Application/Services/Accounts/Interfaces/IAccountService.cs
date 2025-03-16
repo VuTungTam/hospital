@@ -5,14 +5,14 @@ namespace Hospital.SharedKernel.Application.Services.Accounts.Interfaces
 {
     public interface IAccountService
     {
-        Task SendVerifyEmailAsync(User user, string code, CancellationToken cancellationToken);
+        Task SendVerifyEmailAsync(BaseUser user, string code, CancellationToken cancellationToken);
 
-        Task SendVerifyEmailWithPasswordAsync(User user, string code, CancellationToken cancellationToken);
+        Task SendVerifyEmailWithPasswordAsync(BaseUser user, string code, CancellationToken cancellationToken);
 
-        Task SendForgotPwdAsync(User user, string code, CancellationToken cancellationToken);
+        Task SendForgotPwdAsync(BaseUser user, string code, CancellationToken cancellationToken);
 
-        Task SendChangePasswordNoticeAsync(User user, RequestInfo requestInfo, CancellationToken cancellationToken);
+        Task SendChangePasswordNoticeAsync(BaseUser user, RequestInfo requestInfo, CancellationToken cancellationToken);
 
-        Task SendPasswordForUserAsync(User user, CancellationToken cancellationToken);
+        Task SendPasswordForUserAsync(BaseUser user, CancellationToken cancellationToken);
     }
 }

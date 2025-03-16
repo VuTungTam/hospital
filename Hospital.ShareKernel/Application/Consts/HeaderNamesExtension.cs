@@ -10,5 +10,8 @@
         public static string ClientIdHeader = "X-ClientId";
         public static string InternalKey = "Internal-Key";
         public static string Uid = "Uid";
+        public static string Screen = "X-Client-Screen";
+        public static string DeviceType = "X-Client-Device-Type";
+        public static string PagePath = "X-Client-Path";
     }
 }

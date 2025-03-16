@@ -1,5 +1,6 @@
 ﻿using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Services.Auth.Models;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using IdGen;
 using Microsoft.AspNetCore.Http;
@@ -246,8 +247,8 @@ namespace Hospital.SharedKernel.Libraries.Utils
         public static async Task<IpInformation> GetIpInformationAsync(IServiceProvider provider, string ip)
         {
             var redisCache = provider.GetRequiredService<IRedisCache>();
-            var key = BaseCacheKeys.GetClientInformationKey(ip);
-            var data = await redisCache.GetAsync<IpInformation>(key);
+            var cacheEntry = CacheManager.GetClientInformationCacheEntry(ip);
+            var data = await redisCache.GetAsync<IpInformation>(cacheEntry.Key);
             if (data != null)
             {
                 return data;
@@ -261,7 +262,7 @@ namespace Hospital.SharedKernel.Libraries.Utils
             if (result.IsSuccessStatusCode)
             {
                 var info = JsonConvert.DeserializeObject<IpInformation>(await result.Content.ReadAsStringAsync());
-                await redisCache.SetAsync(key, info, TimeSpan.FromDays(BaseCacheTime.IpAddress));
+                await redisCache.SetAsync(cacheEntry.Key, info, TimeSpan.FromDays(cacheEntry.ExpiriesInSeconds));
                 return info;
             }
             return null;

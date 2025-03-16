@@ -10,7 +10,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.HealthServices
 {
-    public class GetHealthServicePagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthServicePagingQuery, PagingResult<HealthServiceDto>>
+    public class GetHealthServicePagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthServicePagingQuery, PaginationResult<HealthServiceDto>>
     {
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         public GetHealthServicePagingQueryHandler(
@@ -23,13 +23,13 @@ namespace Hospital.Application.Queries.HealthServices
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
-        public async Task<PagingResult<HealthServiceDto>> Handle(GetHealthServicePagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<HealthServiceDto>> Handle(GetHealthServicePagingQuery request, CancellationToken cancellationToken)
         {
             var result = await _healthServiceReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.TypeId, request.FacilityId, request.SpecialtyId, cancellationToken: cancellationToken);
 
             var dtos = _mapper.Map<List<HealthServiceDto>>(result.Data);
 
-            return new PagingResult<HealthServiceDto>(dtos, result.Total);
+            return new PaginationResult<HealthServiceDto>(dtos, result.Total);
 
         }
     }

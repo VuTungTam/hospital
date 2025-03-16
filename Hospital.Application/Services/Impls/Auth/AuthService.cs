@@ -1,27 +1,34 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth;
+using Hospital.Application.Repositories.Interfaces.Auth.Actions;
+using Hospital.Application.Repositories.Interfaces.Customers;
+using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Constants;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Configs;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
-using Hospital.SharedKernel.Application.Services.Auth.Entities;
 using Hospital.SharedKernel.Application.Services.Auth.Enums;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Application.Services.Auth.Models;
-using Hospital.SharedKernel.Application.Services.Date;
-using Hospital.SharedKernel.CoreConfigs;
 using Hospital.SharedKernel.Domain.Constants;
+using Hospital.SharedKernel.Domain.Entities.Auths;
+using Hospital.SharedKernel.Domain.Entities.Customers;
+using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Entities.Systems;
 using Hospital.SharedKernel.Domain.Entities.Users;
 using Hospital.SharedKernel.Domain.Enums;
+using Hospital.SharedKernel.Domain.Models.Auths;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polly;
@@ -34,29 +41,26 @@ namespace Hospital.Application.Services.Impls.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IAuthRepository _repository;
-        private readonly IConfiguration _configuration;
+        private readonly IAuthRepository _authRepository;
+        private readonly IActionReadRepository _actionReadRepository;
         private readonly IRedisCache _redisCache;
         private readonly IExecutionContext _executionContext;
-        private readonly IDateService _dateService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IStringLocalizer<Resources> _localizer;
 
         public AuthService(
             IAuthRepository repository,
-            IConfiguration configuration,
+            IActionReadRepository actionReadRepository,
             IRedisCache redisCache,
             IExecutionContext executionContext,
-            IDateService dateService,
             IServiceProvider serviceProvider,
             IStringLocalizer<Resources> localizer
         )
         {
-            _repository = repository;
-            _configuration = configuration;
+            _authRepository = repository;
+            _actionReadRepository = actionReadRepository;
             _redisCache = redisCache;
             _executionContext = executionContext;
-            _dateService = dateService;
             _serviceProvider = serviceProvider;
             _localizer = localizer;
         }
@@ -92,45 +96,47 @@ namespace Hospital.Application.Services.Impls.Auth
             return false;
         }
 
-        public async Task<string> GenerateAccessTokenAsync(User user, string permission, IEnumerable<Role> roles, long selectedBranchId = default, CancellationToken cancellationToken = default)
+        public async Task<string> GenerateAccessTokenAsync(GenTokenPayload payload, CancellationToken cancellationToken = default)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>();
-            var secretKey = Encoding.UTF8.GetBytes(_configuration["Auth:JwtSettings:Key"]);
+            var secretKey = Encoding.UTF8.GetBytes(JwtSettingsConfig.SecretKey);
             var symmetricSecurityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(secretKey);
             var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(symmetricSecurityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
-            var roleStrings = JsonConvert.SerializeObject(roles.Select(r => new { r.Code, r.Name }), new JsonSerializerSettings
+            var roleStrings = JsonConvert.SerializeObject(payload.Roles.Select(r => new { r.Code, r.Name }), new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
-            var isCustomer = roles.Any(r => r.Code == RoleCodeConstant.CUSTOMER);
-            var accountType = isCustomer ? AccountType.Customer : AccountType.Employee;
-            var now = _dateService.GetClientTime();
+            var accountType = payload.User is Customer ? AccountType.Customer : AccountType.Employee;
+            var now = DateTime.Now;
 
             // add claims
-            if (user.IsCustomer == true)
+            if (payload.User is Customer)
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, "false"));
             }
-            else
+            else if (payload.User is Employee employee)
             {
-                claims.Add(new Claim(ClaimConstant.IS_SA, (roles.Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN)).ToString()));
+                claims.Add(new Claim(ClaimConstant.IS_SA, (payload.Roles.Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN)).ToString()));
             }
 
-            claims.Add(new Claim(ClaimConstant.USER_ID, user.Id.ToString()));
-            claims.Add(new Claim(ClaimConstant.USERNAME, user.Username ?? ""));
-            claims.Add(new Claim(ClaimConstant.FULL_NAME, user.Name ?? ""));
+            claims.Add(new Claim(ClaimConstant.USER_ID, payload.User.Id.ToString()));
+            claims.Add(new Claim(ClaimConstant.EMAIL, payload.User.Email));
+            claims.Add(new Claim(ClaimConstant.FULL_NAME, payload.User.Name ?? ""));
+            claims.Add(new Claim(ClaimConstant.PHONE, payload.User.Phone ?? ""));
+            //claims.Add(new Claim(ClaimConstant.SHARDING, payload.User.Shard.ToString()));
             claims.Add(new Claim(ClaimConstant.ROLES, roleStrings));
-            claims.Add(new Claim(ClaimConstant.PERMISSION, permission));
+            claims.Add(new Claim(ClaimConstant.PERMISSION, payload.Permission));
             claims.Add(new Claim(ClaimConstant.ACCOUNT_TYPE, ((int)accountType).ToString()));
             claims.Add(new Claim(ClaimConstant.IP_ADDRESS, AuthUtility.TryGetIP(_executionContext.HttpContext.Request)));
             claims.Add(new Claim(ClaimConstant.CREATE_AT, now.ToString()));
-            claims.Add(new Claim(ClaimConstant.AUTHORS_MESSAGE, "Contact for work: 0859-26-1203; Facebook: https://www.facebook.com/tam.tung.92754")); 
+            claims.Add(new Claim(ClaimConstant.AUTHORS_MESSAGE, "Contact for work: 0847-88-4444; Facebook: https://facebook.com/cuongnguyen.ftdev"));
 
-            var expires = now.AddSeconds(AuthConfig.TokenTime);
+            var validSeconds = payload.ValidSeconds > 0 ? payload.ValidSeconds : AuthConfig.TokenTime;
+            var expires = now.AddSeconds(validSeconds);
             var securityToken = new JwtSecurityToken(
-                    issuer: _configuration["Auth:JwtSettings:Issuer"],
-                    audience: _configuration["Auth:JwtSettings:Issuer"],
+                    issuer: JwtSettingsConfig.Issuer,
+                    audience: JwtSettingsConfig.Audience,
                     claims: claims,
                     expires: expires,
                     signingCredentials: credentials
@@ -138,13 +144,7 @@ namespace Hospital.Application.Services.Impls.Auth
 
             var accessToken = tokenHandler.WriteToken(securityToken);
 
-            /**
-             * Save token vào redis
-             * Nếu chỉ cho phép online trên 1 thiết bị: revoke token cũ, save token mới
-             * Nếu cho phép online trên nhiều thiết bị: update token
-             */
-            List<AppToken> tokens;
-
+            var tokens = await GetLiveAccessTokensOfUserAsync(payload.User.Id, cancellationToken);
             var appToken = new AppToken
             {
                 Value = accessToken,
@@ -152,30 +152,38 @@ namespace Hospital.Application.Services.Impls.Auth
                 Status = TokenStatus.Ok
             };
 
-            if (InfrastructureConfiguration.IsSingleDevice)
+            if (ApplicationConfig.IsSingleDevice)
             {
                 tokens = new List<AppToken> { appToken };
             }
             else
             {
-                tokens = await GetLiveAccessTokensOfUserAsync(user.Id, cancellationToken);
-                tokens = tokens.Where(x => x.Expires >= now).ToList();
                 tokens.Add(appToken);
             }
 
-            await StoreAccessTokensAsync(user.Id, tokens, cancellationToken);
+            await StoreAccessTokensAsync(payload.User.Id, tokens, cancellationToken);
 
             return accessToken;
         }
 
-        public string GenerateRefreshToken()
+        public string GenerateRefreshToken(int expire)
         {
-            return Utility.RandomString(128);
+            var obj = new
+            {
+                Value = Guid.NewGuid(),
+                Created = DateTime.Now,
+                Expires = DateTime.Now.AddSeconds(expire),
+            };
+
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            }).ToBase64Encode();
         }
 
-        public async Task<RefreshToken> GetRefreshTokenAsync(string value, long ownerId, CancellationToken cancellationToken)
+        public Task<RefreshToken> GetRefreshTokenAsync(string value, long ownerId, CancellationToken cancellationToken)
         {
-            return await _repository.GetRefreshTokenAsync(value, ownerId, cancellationToken);
+            return _authRepository.GetRefreshTokenAsync(value, ownerId, cancellationToken);
         }
 
         public async Task RevokeAccessTokenAsync(long userId, string accessToken, CancellationToken cancellationToken)
@@ -206,13 +214,31 @@ namespace Hospital.Application.Services.Impls.Auth
             }
             await StoreAccessTokensAsync(userId, tokens, cancellationToken);
 
-            //var socketService = _serviceProvider.GetRequiredService<ISocketService>();
-            //await socketService.ForceLogout(userId, _localizer["account_has_been_forced_to_logout"], cancellationToken);
+            var socketService = _serviceProvider.GetRequiredService<ISocketService>();
+            await socketService.ForceLogout(userId, _localizer["Account.HasBeenForcedToLogout"], cancellationToken);
         }
 
-        public string GetPermission(User user)
+        public async Task FetchNewTokenAsync(long userId, string message, CancellationToken cancellationToken)
         {
-            var roles = user.UserRoles.Select(u => u.Role);
+            var tokens = await GetLiveAccessTokensOfUserAsync(userId, cancellationToken);
+            if (!tokens.Any())
+            {
+                return;
+            }
+
+            foreach (var token in tokens)
+            {
+                token.Status = TokenStatus.FetchNew;
+            }
+            await StoreAccessTokensAsync(userId, tokens, cancellationToken);
+
+            var socketService = _serviceProvider.GetRequiredService<ISocketService>();
+            await socketService.AskReload(userId, message, cancellationToken);
+        }
+
+        public string GetPermission(Employee employee, List<ActionWithExcludeValue> actions)
+        {
+            var roles = employee.EmployeeRoles.Select(u => u.Role);
             var sa = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.SUPER_ADMIN));
             var admin = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.ADMIN));
 
@@ -227,11 +253,7 @@ namespace Hospital.Application.Services.Impls.Auth
                 return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
             }
 
-            var exponents = new List<int>();
-            foreach (var role in roles)
-            {
-                exponents.AddRange(role.RoleActions.Select(x => x.Action.Exponent));
-            }
+            var exponents = actions.Select(a => a.Exponent);
 
             return AuthUtility.CalculateToTalPermision(exponents.Distinct());
         }
@@ -251,34 +273,34 @@ namespace Hospital.Application.Services.Impls.Auth
                 {
                     case PasswordLevel.Weak:
                         html = $@"<div>
-                                    <p><strong>{_localizer["account_password_must_include_the_following_elements"]}:</strong></p>
-                                    <p class='{(result.ValidLength ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{string.Format(_localizer["account_password_contains_at_least_n_characters"], minLength)}</p>
+                                    <p><strong>{_localizer["Account.PasswordMustIncludeTheFollowingElements"]}:</strong></p>
+                                    <p class='{(result.ValidLength ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{string.Format(_localizer["Account.PasswordContainsAtLeastNCharacters"], minLength)}</p>
                                  </div>";
                         break;
                     case PasswordLevel.Medium:
                         html = $@"<div>
-                                    <p><strong>{_localizer["account_password_must_include_the_following_elements"]}:</strong></p>
-                                    <p class='{(result.ValidLength ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{string.Format(_localizer["account_password_contains_at_least_n_characters"], minLength)}</p>
+                                    <p><strong>{_localizer["Account.PasswordMustIncludeTheFollowingElements"]}:</strong></p>
+                                    <p class='{(result.ValidLength ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{string.Format(_localizer["Account.PasswordContainsAtLeastNCharacters"], minLength)}</p>
                                     <p><strong>Và thỏa mãn ít nhất 2 điều kiện sau: </strong></p>
-                                    <p class='{(result.HasLowerCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_lowercase_letter"]}</p>
-                                    <p class='{(result.HasUpperCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_uppercase_letter"]}</p>
-                                    <p class='{(result.HasNumber ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_number"]}</p>
-                                    <p class='{(result.HasSpecialChar ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_special_character"]}</p>
+                                    <p class='{(result.HasLowerCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1LowercaseLetter"]}</p>
+                                    <p class='{(result.HasUpperCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1UppercaseLetter"]}</p>
+                                    <p class='{(result.HasNumber ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1Number"]}</p>
+                                    <p class='{(result.HasSpecialChar ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1SpecialCharacter"]}</p>
                                  </div>";
                         break;
                     case PasswordLevel.Strong:
                         html = $@"<div>
-                                    <p><strong>{_localizer["account_password_must_include_the_following_elements"]}:</strong></p>
-                                    <p class='{(result.ValidLength ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{string.Format(_localizer["account_password_contains_at_least_n_characters"], minLength)}</p>
-                                    <p class='{(result.HasLowerCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_lowercase_letter"]}</p>
-                                    <p class='{(result.HasUpperCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_uppercase_letter"]}</p>
-                                    <p class='{(result.HasNumber ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_number"]}</p>
-                                    <p class='{(result.HasSpecialChar ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["account_password_has_at_least_1_special_character"]}</p>
+                                    <p><strong>{_localizer["Account.PasswordMustIncludeTheFollowingElements"]}:</strong></p>
+                                    <p class='{(result.ValidLength ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{string.Format(_localizer["Account.PasswordContainsAtLeastNCharacters"], minLength)}</p>
+                                    <p class='{(result.HasLowerCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1LowercaseLetter"]}</p>
+                                    <p class='{(result.HasUpperCase ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1UppercaseLetter"]}</p>
+                                    <p class='{(result.HasNumber ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1Number"]}</p>
+                                    <p class='{(result.HasSpecialChar ? "msg-success" : "msg-failed")}'> <span class='icon bg-contain'></span>{_localizer["Account.PasswordHasAtLeast1SpecialCharacter"]}</p>
                                  </div>";
                         break;
                 }
 
-                throw new BadRequestException(ErrorCodeConstant.PWD_NOT_VALID, html);
+                throw new BadRequestException(ErrorCode.PWD_NOT_VALID, html);
             }
         }
 
@@ -291,7 +313,7 @@ namespace Hospital.Application.Services.Impls.Auth
             var factory = _executionContext.HttpContext.RequestServices.GetRequiredService<IHttpClientFactory>();
             var client = factory.CreateClient();
             var policy = Policy.Handle<Exception>()
-            .WaitAndRetryAsync(
+                               .WaitAndRetryAsync(
                                    retryCount: 1,
                                    sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.PI),
                                    onRetry: (exception, timespan, context) =>
@@ -319,24 +341,31 @@ namespace Hospital.Application.Services.Impls.Auth
             return GetIpInformationAsync(AuthUtility.TryGetIP(httpContext.Request), cancellationToken);
         }
 
-        public async Task<LoginResult> GetLoginResultAsync(long userId, CancellationToken cancellationToken)
+        public async Task<LoginResult> GetLoginResultAsync(long customerId, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetUserByIdAsync(userId, cancellationToken);
-            return await GetLoginResultAsync(user, cancellationToken);
+            var customerReadRepository = _serviceProvider.GetRequiredService<ICustomerReadRepository>();
+            var customer = await customerReadRepository.GetByIdAsync(customerId, cancellationToken: cancellationToken);
+
+            return await GetLoginResultAsync(customer, cancellationToken);
         }
 
-        public async Task<LoginResult> GetLoginResultAsync(User user, CancellationToken cancellationToken)
+        public async Task<LoginResult> GetLoginResultAsync(BaseUser user, CancellationToken cancellationToken)
         {
-            var roles = user.UserRoles.Select(x => x.Role);
-            var result = new LoginResult
-            {
-                AccessToken = await GenerateAccessTokenAsync(user, GetPermission(user), roles, cancellationToken: cancellationToken),
-                RefreshToken = GenerateRefreshToken(),
-            };
+            var roles = user is Customer ? new List<Role>() : (user as Employee).EmployeeRoles.Select(x => x.Role);
+            var actions = user is Customer ? new List<ActionWithExcludeValue>() : await _actionReadRepository.GetActionsByEmployeeIdAsync(user.Id, cancellationToken);
+            var permission = user is Customer ? "15" : GetPermission(user as Employee, actions);
+            var payload = new GenTokenPayload { User = user, Permission = permission, Roles = roles };
+            var accessToken = await GenerateAccessTokenAsync(payload, cancellationToken);
 
-            _executionContext.UpdateContext(result.AccessToken);
+            _executionContext.UpdateContext(accessToken);
 
             var sc = await GetSystemConfigurationAsync(cancellationToken);
+            var result = new LoginResult
+            {
+                AccessToken = accessToken,
+                RefreshToken = GenerateRefreshToken(sc.Session ?? AuthConfig.RefreshTokenTime),
+                IsPasswordChangeRequired = user.IsPasswordChangeRequired
+            };
 
             // Save refresh token
             var refreshToken = new RefreshToken
@@ -346,84 +375,90 @@ namespace Hospital.Application.Services.Impls.Auth
                 ExpiryDate = DateTime.Now.AddSeconds(sc.Session ?? AuthConfig.RefreshTokenTime),
             };
 
-            _repository.UnitOfWork.BeginTransaction();
-            _repository.AddRefreshToken(refreshToken);
-            await _repository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+            var requestContext = _executionContext.HttpContext.Request;
+            var origin = requestContext.Headers[HeaderNames.Origin];
+            var loginHistory = new LoginHistory
+            {
+                UserId = user.Id,
+                Ip = AuthUtility.TryGetIP(requestContext),
+                Timestamp = DateTime.Now,
+                UA = requestContext.Headers[HeaderNames.UserAgent],
+                Origin = !string.IsNullOrEmpty(origin) ? origin : ""
+            };
+
+            _authRepository.UnitOfWork.BeginTransaction();
+
+            await _authRepository.AddRefreshTokenAsync(refreshToken, cancellationToken);
+            await _authRepository.AddLoginHistoryAsync(loginHistory, cancellationToken);
+            await _authRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
             return result;
         }
 
         public async Task<List<AppToken>> GetLiveAccessTokensOfUserAsync(long userId, CancellationToken cancellationToken = default)
         {
-            var key = BaseCacheKeys.GetAccessTokenKey(userId);
-            return await _redisCache.GetAsync<List<AppToken>>(key, cancellationToken) ?? new();
+            var cacheEntry = CacheManager.GetAccessTokenCacheEntry(userId);
+            var tokens = await _redisCache.GetAsync<List<AppToken>>(cacheEntry.Key, cancellationToken) ?? new();
+
+            return tokens.Where(x => x.Expires >= DateTime.Now).ToList();
         }
 
         private async Task StoreAccessTokensAsync(long userId, List<AppToken> tokens, CancellationToken cancellationToken = default)
         {
-            var key = BaseCacheKeys.GetAccessTokenKey(userId);
-            tokens = tokens.Where(x => x.Expires >= _dateService.GetClientTime()).ToList();
+            var cacheEntry = CacheManager.GetAccessTokenCacheEntry(userId);
+            tokens = tokens.Where(x => x.Expires > DateTime.Now).ToList();
 
-            await _redisCache.SetAsync(key, tokens, TimeSpan.FromSeconds(AuthConfig.TokenTime), cancellationToken: cancellationToken);
+            await _redisCache.SetAsync(cacheEntry.Key, tokens, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
 
-        private async Task<SystemConfiguration> GetSystemConfigurationAsync(CancellationToken cancellationToken = default)
+        private Task<SystemConfiguration> GetSystemConfigurationAsync(CancellationToken cancellationToken = default)
         {
             var systemConfigurationRepository = _serviceProvider.GetRequiredService<ISystemConfigurationReadRepository>();
-            return await systemConfigurationRepository.GetAsync(cancellationToken);
+            return systemConfigurationRepository.GetAsync(cancellationToken);
         }
 
-        public async Task ValidateAccessAndThrowAsync(User user, CancellationToken cancellationToken)
+        public async Task ValidateAccessAndThrowAsync(BaseUser user, CancellationToken cancellationToken)
         {
             if (user == null)
             {
-                throw new BadRequestException(_localizer["account_not_found"]);
+                throw new BadRequestException(_localizer["Account.NotFound"]);
             }
 
             if (user.Status == AccountStatus.Inactive)
             {
-                throw new BadRequestException(_localizer["account_is_inactive"]);
+                throw new BadRequestException(_localizer["Account.IsInactive"]);
             }
 
             if (user.Status == AccountStatus.Blocked)
             {
-                throw new BadRequestException(_localizer["account_is_banned"]);
+                throw new BadRequestException(_localizer["Account.IsBanned"]);
             }
 
-            var sc = await GetSystemConfigurationAsync(cancellationToken);
-            if (sc.IsEnabledVerifiedAccount == true && user.Status == AccountStatus.UnConfirm)
-            {
-                throw new BadRequestException(_localizer["auth_account_has_not_been_verified"]);
-            }
+            await Task.Yield();
+            //var sc = await GetSystemConfigurationAsync(cancellationToken);
+            //if (sc.IsEnabledVerifiedAccount == true && user.Status == AccountStatus.UnConfirm)
+            //{
+            //    throw new BadRequestException(_localizer["Authentication.AccountHasNotBeenVerified"]);
+            //}
         }
 
-        public void ValidateStateAndThrow(User user)
+        public void ValidateStateAndThrow(BaseUser user)
         {
             if (user == null)
             {
-                throw new BadRequestException(_localizer["account_not_found"]);
+                throw new BadRequestException(_localizer["Account.NotFound"]);
             }
 
             if (user.Status == AccountStatus.Inactive)
             {
-                throw new BadRequestException(_localizer["account_is_inactive"]);
+                throw new BadRequestException(_localizer["Account.IsInactive"]);
             }
 
             if (user.Status == AccountStatus.Blocked)
             {
-                throw new BadRequestException(_localizer["account_is_banned"]);
+                throw new BadRequestException(_localizer["Account.IsBanned"]);
             }
 
-        }
-
-        public void ValidateStateIncludeActiveAndThrow(User user)
-        {
-            ValidateStateAndThrow(user);
-
-            if (user.Status == AccountStatus.Active)
-            {
-                throw new BadRequestException(_localizer["account_already_actived"]);
-            }
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.HealthFacilities
 {
-    public class GetHealthFacilityPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthFacilityPagingQuery, PagingResult<HealthFacilityDto>>
+    public class GetHealthFacilityPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthFacilityPagingQuery, PaginationResult<HealthFacilityDto>>
     {
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;   
         
@@ -26,13 +26,13 @@ namespace Hospital.Application.Queries.HealthFacilities
             _healthFacilityReadRepository = healthFacilityReadRepository;
         }
 
-        public async Task<PagingResult<HealthFacilityDto>> Handle(GetHealthFacilityPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<HealthFacilityDto>> Handle(GetHealthFacilityPagingQuery request, CancellationToken cancellationToken)
         {
             var facilities = await _healthFacilityReadRepository.GetPagingWithFilterAsync(request.Pagination, request.TypeId, request.Status, cancellationToken);
             
             var facilitieDtos = _mapper.Map<List< HealthFacilityDto>>(facilities.Data);
             
-            return new PagingResult<HealthFacilityDto>(facilitieDtos, facilities.Total );
+            return new PaginationResult<HealthFacilityDto>(facilitieDtos, facilities.Total );
         }
     }
 }

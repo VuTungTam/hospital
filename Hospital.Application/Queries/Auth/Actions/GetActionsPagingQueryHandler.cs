@@ -10,7 +10,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Auth.Actions
 {
-    public class GetActionsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetActionsPagingQuery, PagingResult<ActionDto>>
+    public class GetActionsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetActionsPagingQuery, PaginationResult<ActionDto>>
     {
         private readonly IActionReadRepository _actionReadRepository;
 
@@ -24,12 +24,12 @@ namespace Hospital.Application.Queries.Auth.Actions
             _actionReadRepository = actionReadRepository;
         }
 
-        public async Task<PagingResult<ActionDto>> Handle(GetActionsPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<ActionDto>> Handle(GetActionsPagingQuery request, CancellationToken cancellationToken)
         {
             var pagination = await _actionReadRepository.GetPagingAsync(request.Pagination, spec:null, _actionReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             var dtos = _mapper.Map<List<ActionDto>>(pagination.Data);
 
-            return new PagingResult<ActionDto>(dtos, pagination.Total);
+            return new PaginationResult<ActionDto>(dtos, pagination.Total);
         }
     }
 }
