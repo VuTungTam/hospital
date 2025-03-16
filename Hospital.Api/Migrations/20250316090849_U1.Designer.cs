@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250304085532_U14")]
-    partial class U14
+    [Migration("20250316090849_U1")]
+    partial class U1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,102 @@ namespace Hospital.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Articles.Article", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool?>("IsHighlight")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PostDate")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(1048)");
+
+                    b.Property<short>("Status")
+                        .HasColumnType("SMALLINT");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("SummaryEn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(1024)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(1024)");
+
+                    b.Property<string>("TitleSeo")
+                        .HasColumnType("NVARCHAR(1024)");
+
+                    b.Property<string>("Toc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TocEn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Title");
+
+                    b.ToTable("tbl_articles");
+                });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
                 {
@@ -36,18 +132,18 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(32)");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("DATETIME");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
@@ -56,10 +152,13 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("HealthProfileId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Order")
@@ -89,7 +188,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("tbl_bookings");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.BookingSymptom", b =>
@@ -103,10 +202,10 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("BookingId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<long>("SymptomId")
@@ -118,10 +217,10 @@ namespace Hospital.Api.Migrations
 
                     b.HasIndex("SymptomId");
 
-                    b.ToTable("BookingSymptom");
+                    b.ToTable("tbl_booking_symptom");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.FacilityCategory", b =>
+            modelBuilder.Entity("Hospital.Domain.Entities.Distances.Distance", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,15 +228,204 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("DestinationLatitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DestinationLongitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DistanceMeter")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SourceLatitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SourceLongitude")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_distances");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Doctors.Doctor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("AliasLogin")
+                        .HasColumnType("NVARCHAR(128)");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(32)");
+
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<string>("Degree")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<int>("Did")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Dname")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<DateTime?>("Dob")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<int>("DoctorStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Expertise")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<bool>("IsDefaultPassword")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPasswordChangeRequired")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Json")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastSeen")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<decimal>("MaxFee")
+                        .HasColumnType("DECIMAL(18,2)");
+
+                    b.Property<decimal>("MinFee")
+                        .HasColumnType("DECIMAL(18,2)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("NVARCHAR(50)");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<int>("Pid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Pname")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("NVARCHAR(20)");
+
+                    b.Property<int>("Shard")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("StarPoint")
+                        .HasColumnType("DECIMAL(1,1)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TrainingProcess")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<int>("Wid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Wname")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("WorkExperience")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("ZaloId")
+                        .HasColumnType("NVARCHAR(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("Phone");
+
+                    b.ToTable("mcs_doctors");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.FacilityTypes.FacilityType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
@@ -151,6 +439,9 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NameEn")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(512)");
@@ -161,7 +452,73 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FacilityCategories", (string)null);
+                    b.ToTable("tbl_facility_types");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Feedbacks.Feedback", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)");
+
+                    b.Property<long>("ReferId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("INT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_feedbacks");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.FacilityTypeMapping", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("tbl_facility_type_mappings");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.HealthFacility", b =>
@@ -175,18 +532,15 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR(512)");
 
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
@@ -213,16 +567,19 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("NVARCHAR(255)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("Latitude")
                         .HasColumnType("DECIMAL(9,6)");
 
                     b.Property<decimal>("Longtitude")
                         .HasColumnType("DECIMAL(9,6)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("NameEn")
@@ -257,9 +614,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("HealthFacilities", (string)null);
+                    b.ToTable("tbl_health_facilities");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthProfiles.HealthProfile", b =>
@@ -277,15 +632,15 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(15)");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
@@ -309,10 +664,13 @@ namespace Hospital.Api.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -340,7 +698,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HealthProfiles");
+                    b.ToTable("tbl_health_profiles");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.HealthService", b =>
@@ -351,15 +709,15 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
@@ -376,10 +734,13 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("FacilitySpecialtyId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("NameEn")
@@ -405,7 +766,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("HealthServices", (string)null);
+                    b.ToTable("tbl_health_services");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.ServiceType", b =>
@@ -416,24 +777,27 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("NameEn")
@@ -446,121 +810,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceTypes", (string)null);
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.Newses.News", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContentEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<long?>("Creator")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<bool?>("IsHighlight")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIT")
-                        .HasDefaultValue(false);
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("Modifier")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("PostDate")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(1048)");
-
-                    b.Property<short>("Status")
-                        .HasColumnType("SMALLINT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(1024)");
-
-                    b.Property<string>("TitleEn")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(1024)");
-
-                    b.Property<string>("TitleSeo")
-                        .HasColumnType("NVARCHAR(1024)");
-
-                    b.Property<string>("Toc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TocEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Title");
-
-                    b.ToTable("News");
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.QueueItems.QueueItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("BookingId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<long?>("Creator")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
-
-                    b.Property<int>("State")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.ToTable("QueueItems", (string)null);
+                    b.ToTable("tbl_service_types");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
@@ -571,16 +821,16 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("DeletedBy")
@@ -592,13 +842,16 @@ namespace Hospital.Api.Migrations
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("time");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MaxPatients")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ServiceId")
@@ -617,7 +870,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceTimeRules");
+                    b.ToTable("tbl_service_time_rules");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.SocialNetworks.SocialNetwork", b =>
@@ -628,19 +881,22 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Link")
                         .IsRequired()
@@ -650,10 +906,10 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -665,7 +921,42 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SocialNetworks", (string)null);
+                    b.ToTable("tbl_social_networks");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Specialties.DoctorSpecialty", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DoctorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SpecialtyId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.ToTable("tbl_doctor_specialty");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.FacilitySpecialty", b =>
@@ -676,13 +967,13 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("DeletedBy")
@@ -690,6 +981,9 @@ namespace Hospital.Api.Migrations
 
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<long>("SpecialtyId")
                         .HasColumnType("bigint");
@@ -700,7 +994,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasIndex("SpecialtyId");
 
-                    b.ToTable("FacilitySpecialty");
+                    b.ToTable("tbl_facility_specialty");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.Specialty", b =>
@@ -711,24 +1005,27 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("NameEn")
@@ -741,7 +1038,7 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Specialties", (string)null);
+                    b.ToTable("tbl_specialties");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Symptoms.Symptom", b =>
@@ -752,24 +1049,27 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("NameEn")
@@ -782,10 +1082,10 @@ namespace Hospital.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Symptoms", (string)null);
+                    b.ToTable("tbl_symptoms");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.Action", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.Action", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -794,10 +1094,12 @@ namespace Hospital.Api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(32)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(1024)");
 
                     b.Property<int>("Exponent")
                         .HasColumnType("int");
@@ -806,14 +1108,23 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("NameEn")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code");
 
                     b.ToTable("perm_actions");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.RefreshToken", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.LoginHistory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -821,16 +1132,47 @@ namespace Hospital.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Creator")
+                    b.Property<string>("Ip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Origin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("mcs_login_histories");
+                });
+
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.RefreshToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("CurrentAccessToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("DeletedBy")
@@ -839,10 +1181,13 @@ namespace Hospital.Api.Migrations
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<long>("OwnerId")
@@ -856,7 +1201,7 @@ namespace Hospital.Api.Migrations
                     b.ToTable("mcs_refresh_tokens");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.Role", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.Role", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -865,17 +1210,24 @@ namespace Hospital.Api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(32)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("NameEn")
+                        .HasColumnType("NVARCHAR(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code");
 
                     b.ToTable("perm_roles");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.RoleAction", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.RoleAction", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -898,85 +1250,7 @@ namespace Hospital.Api.Migrations
                     b.ToTable("perm_roles_actions");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.UserRole", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("Creator")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("Modifier")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("perm_users_roles");
-                });
-
-            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Systems.SystemConfiguration", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool?>("IsEnabledVerifiedAccount")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MaxNumberOfSmsPerDay")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("Modifier")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("PasswordMinLength")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("PreventCopying")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RequiresPasswordLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Session")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("mcs_system_configurations");
-                });
-
-            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Users.User", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Customers.Customer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -987,6 +1261,9 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR(512)");
 
+                    b.Property<string>("AliasLogin")
+                        .HasColumnType("NVARCHAR(128)");
+
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
 
@@ -994,15 +1271,15 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(32)");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<long?>("Creator")
+                    b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("Deleted")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
@@ -1024,11 +1301,20 @@ namespace Hospital.Api.Migrations
                     b.Property<bool>("EmailVerified")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsCustomer")
-                        .IsRequired()
+                    b.Property<bool>("IsDefaultPassword")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("BIT")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPasswordChangeRequired")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Json")
                         .HasColumnType("TEXT");
@@ -1036,10 +1322,13 @@ namespace Hospital.Api.Migrations
                     b.Property<DateTime?>("LastPurchase")
                         .HasColumnType("DATETIME");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime?>("LastSeen")
                         .HasColumnType("DATETIME");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -1069,9 +1358,6 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Provider")
                         .HasColumnType("NVARCHAR(20)");
 
-                    b.Property<string>("Salt")
-                        .HasColumnType("NVARCHAR(8)");
-
                     b.Property<int>("Shard")
                         .HasColumnType("int");
 
@@ -1080,10 +1366,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<decimal>("TotalSpending")
                         .HasColumnType("DECIMAL(19,2)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
 
                     b.Property<int>("Wid")
                         .HasColumnType("int");
@@ -1103,13 +1385,261 @@ namespace Hospital.Api.Migrations
 
                     b.HasIndex("Name");
 
-                    b.HasIndex("PasswordHash");
+                    b.HasIndex("Phone");
+
+                    b.ToTable("mcs_customers");
+                });
+
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.Employee", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("AliasLogin")
+                        .HasColumnType("NVARCHAR(128)");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(32)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Did")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Dname")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<DateTime?>("Dob")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<bool>("IsDefaultPassword")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPasswordChangeRequired")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Json")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastSeen")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("NVARCHAR(50)");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<int>("Pid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Pname")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("NVARCHAR(20)");
+
+                    b.Property<string>("ScheduleColor")
+                        .HasColumnType("VARCHAR(7)");
+
+                    b.Property<int>("Shard")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Wid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Wname")
+                        .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<string>("ZaloId")
+                        .HasColumnType("NVARCHAR(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("Name");
 
                     b.HasIndex("Phone");
 
-                    b.HasIndex("Username");
+                    b.ToTable("mcs_employees");
+                });
 
-                    b.ToTable("Users");
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeAction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ActionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsExclude")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValueSql("b'0'");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("perm_employee_action_map");
+                });
+
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeRole", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("perm_employee_role_map");
+                });
+
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Systems.SystemConfiguration", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool?>("IsEnabledVerifiedAccount")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxNumberOfSmsPerDay")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("PasswordMinLength")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("PreventCopying")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RequiresPasswordLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Session")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("mcs_system_configurations");
                 });
 
             modelBuilder.Entity("Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites.District", b =>
@@ -1189,10 +1719,10 @@ namespace Hospital.Api.Migrations
                     b.Property<int>("Length")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Modifier")
+                    b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Prefix")
@@ -1250,15 +1780,23 @@ namespace Hospital.Api.Migrations
                     b.Navigation("Symptom");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.HealthFacility", b =>
+            modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.FacilityTypeMapping", b =>
                 {
-                    b.HasOne("Hospital.Domain.Entities.HealthFacilities.FacilityCategory", "Category")
-                        .WithMany("Facilities")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("Hospital.Domain.Entities.HealthFacilities.HealthFacility", "Facility")
+                        .WithMany("FacilityTypeMappings")
+                        .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.HasOne("Hospital.Domain.Entities.FacilityTypes.FacilityType", "Type")
+                        .WithMany("FacilityTypeMappings")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Facility");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.HealthService", b =>
@@ -1280,17 +1818,6 @@ namespace Hospital.Api.Migrations
                     b.Navigation("ServiceType");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entities.QueueItems.QueueItem", b =>
-                {
-                    b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
-                        .WithMany()
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-                });
-
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", "Service")
@@ -1300,6 +1827,25 @@ namespace Hospital.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Specialties.DoctorSpecialty", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.Doctors.Doctor", "Doctor")
+                        .WithMany("DoctorSpecialties")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Domain.Entities.Specialties.Specialty", "Specialty")
+                        .WithMany()
+                        .HasForeignKey("SpecialtyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Specialty");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.FacilitySpecialty", b =>
@@ -1321,15 +1867,15 @@ namespace Hospital.Api.Migrations
                     b.Navigation("Specialty");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.RoleAction", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.RoleAction", b =>
                 {
-                    b.HasOne("Hospital.SharedKernel.Application.Services.Auth.Entities.Action", "Action")
+                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Auths.Action", "Action")
                         .WithMany("RoleActions")
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hospital.SharedKernel.Application.Services.Auth.Entities.Role", "Role")
+                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Auths.Role", "Role")
                         .WithMany("RoleActions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1340,23 +1886,40 @@ namespace Hospital.Api.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.UserRole", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeAction", b =>
                 {
-                    b.HasOne("Hospital.SharedKernel.Application.Services.Auth.Entities.Role", "Role")
+                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Auths.Action", "Action")
+                        .WithMany()
+                        .HasForeignKey("ActionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Employees.Employee", null)
+                        .WithMany("EmployeeActions")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Action");
+                });
+
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeRole", b =>
+                {
+                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Employees.Employee", "Employee")
+                        .WithMany("EmployeeRoles")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Auths.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Users.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Employee");
 
                     b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
@@ -1364,14 +1927,21 @@ namespace Hospital.Api.Migrations
                     b.Navigation("BookingSymptoms");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.FacilityCategory", b =>
+            modelBuilder.Entity("Hospital.Domain.Entities.Doctors.Doctor", b =>
                 {
-                    b.Navigation("Facilities");
+                    b.Navigation("DoctorSpecialties");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.FacilityTypes.FacilityType", b =>
+                {
+                    b.Navigation("FacilityTypeMappings");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthFacilities.HealthFacility", b =>
                 {
                     b.Navigation("FacilitySpecialties");
+
+                    b.Navigation("FacilityTypeMappings");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthProfiles.HealthProfile", b =>
@@ -1406,21 +1976,23 @@ namespace Hospital.Api.Migrations
                     b.Navigation("BookingSymptom");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.Action", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.Action", b =>
                 {
                     b.Navigation("RoleActions");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Application.Services.Auth.Entities.Role", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.Role", b =>
                 {
                     b.Navigation("RoleActions");
 
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Users.User", b =>
+            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.Employee", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.Navigation("EmployeeActions");
+
+                    b.Navigation("EmployeeRoles");
                 });
 #pragma warning restore 612, 618
         }

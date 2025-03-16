@@ -16,7 +16,7 @@ namespace Hospital.Api
 
             //PowerfulSetting.DelayProcessMilliSeconds = string.IsNullOrEmpty(delayProcessMilliseconds) ? 0 : int.Parse(delayProcessMilliseconds);
 
-            //JwtSettingsConfig.Set(configuration);
+            JwtSettingsConfig.Set(configuration);
 
             FeatureConfig.Set(configuration);
 
