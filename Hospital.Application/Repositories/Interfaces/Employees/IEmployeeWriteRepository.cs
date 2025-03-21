@@ -1,4 +1,5 @@
-﻿using Hospital.SharedKernel.Application.Repositories.Interface;
+﻿using Hospital.Application.Models;
+using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 
 namespace Hospital.Application.Repositories.Interfaces.Employees
@@ -11,7 +12,7 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
 
         Task SetActionAsDefaultAsync(long employeeId, CancellationToken cancellationToken);
 
-        //Task SetAdditionalActionsAsync(long employeeId, List<AdditionalAction> actions, CancellationToken cancellationToken);
+        Task SetAdditionalActionsAsync(long employeeId, List<AdditionalAction> actions, CancellationToken cancellationToken);
 
         Task UpdateRolesAsync(long employeeId, IEnumerable<long> roleIds, CancellationToken cancellationToken);
 

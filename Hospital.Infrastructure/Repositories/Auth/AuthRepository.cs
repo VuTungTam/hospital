@@ -1,7 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Auths;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Microsoft.EntityFrameworkCore;

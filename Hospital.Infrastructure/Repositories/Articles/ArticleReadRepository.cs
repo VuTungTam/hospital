@@ -4,7 +4,6 @@ using Hospital.Domain.Entities.Articles;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Articles;
-using Hospital.Infra.Repositories;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;

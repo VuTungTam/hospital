@@ -70,17 +70,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.WorkExperience)
                    .HasColumnType("NVARCHAR(255)");
 
-            builder.Property(x => x.MinFee)
-                   .IsRequired()
-                   .HasColumnType("DECIMAL(18,2)");
-
-            builder.Property(x => x.MaxFee)
-                   .IsRequired()
-                   .HasColumnType("DECIMAL(18,2)");
-
-            builder.Property(x => x.StarPoint)
-                   .HasColumnType("DECIMAL(1,1)");
-
             builder.Property(x => x.LastSeen)
                    .HasColumnType("DATETIME");
 

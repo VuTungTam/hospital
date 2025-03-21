@@ -60,7 +60,7 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
             return new CacheEntry(key, expires);
         }
 
-        public static CacheEntry GetLockUpdateCacheEntry<T>(long id) where T : BaseEntity => new CacheEntry($"updating_lock_{typeof(T)}_{id}", 60);
+        public static CacheEntry GetLockUpdateCacheEntry<T>(long id) where T : BaseEntity => new CacheEntry($"updating_lock_{typeof(T)}_{id}", 600);
 
         public static CacheEntry GetExcelCacheEntry(string name) => new CacheEntry(name, 1800);
 
@@ -87,6 +87,10 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
         public static CacheEntry GetBlockSendForgotPwdCacheEntry(string email) => new CacheEntry($"block-send-forgot-pwd:{email}", 300);
 
         public static CacheEntry GetShortUrlCacheEntry(string code) => new CacheEntry($"short-rul:{code}", 7776000);
+
+        public static CacheEntry GetMaxOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"max-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
+        
+        public static CacheEntry GetCurrentOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"current-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
 
         public static CacheEntry DbSystemIdCacheEntry<T>(long id) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:{GetTableName<T>()}:{id}", 3600);

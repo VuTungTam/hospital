@@ -1,5 +1,4 @@
-﻿using Hospital.Infra.Repositories;
-using Hospital.Resource.Properties;
+﻿using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Infrastructure.Databases.Dapper;

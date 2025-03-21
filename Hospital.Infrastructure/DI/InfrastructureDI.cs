@@ -6,6 +6,7 @@ using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.Distances;
 using Hospital.Application.Repositories.Interfaces.Employees;
+using Hospital.Application.Repositories.Interfaces.Feedbacks;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
@@ -14,9 +15,11 @@ using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Application.Repositories.Interfaces.Users;
 using Hospital.Infra.EFConfigurations;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Infrastructure.Events.Dispatchers;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Infrastructure.Repositories.AppConfigs;
 using Hospital.Infrastructure.Repositories.Articles;
 using Hospital.Infrastructure.Repositories.Auth;
@@ -24,6 +27,7 @@ using Hospital.Infrastructure.Repositories.Bookings;
 using Hospital.Infrastructure.Repositories.Customers;
 using Hospital.Infrastructure.Repositories.Distances;
 using Hospital.Infrastructure.Repositories.Employees;
+using Hospital.Infrastructure.Repositories.Feedbacks;
 using Hospital.Infrastructure.Repositories.HealthFacilities;
 using Hospital.Infrastructure.Repositories.HealthProfiles;
 using Hospital.Infrastructure.Repositories.HealthServices;
@@ -33,6 +37,7 @@ using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
 using Hospital.Infrastructure.Repositories.Specilities;
 using Hospital.Infrastructure.Repositories.Symptoms;
+using Hospital.Infrastructure.Repositories.Users;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
@@ -43,6 +48,8 @@ using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
+using Hospital.Infrastructure.Repositories.TimeSlots;
 
 namespace Hospital.Infrastructure.DI
 {
@@ -108,6 +115,10 @@ namespace Hospital.Infrastructure.DI
             services.AddScoped<IServiceTimeRuleReadRepository, ServiceTimeRuleReadRepository>();
             services.AddScoped<IServiceTimeRuleWriteRepository, ServiceTimeRuleWriteRepository>();
 
+            //Time Slot
+            services.AddScoped<ITimeSlotReadRepository, TimeSlotReadRepository>();
+            services.AddScoped<ITimeSlotWriteRepository, TimeSlotWriteRepository>();
+
             //HealthProfile
             services.AddScoped<IHealthProfileReadRepository, HealthProfileReadRepository>();
             services.AddScoped<IHealthProfileWriteRepository, HealthProfileWriteRepository>();
@@ -128,7 +139,7 @@ namespace Hospital.Infrastructure.DI
             services.AddScoped<IActionReadRepository, ActionReadRepository>();
 
             // Users
-
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // Employees
             services.AddScoped<IEmployeeReadRepository, EmployeeReadRepository>();
@@ -141,6 +152,12 @@ namespace Hospital.Infrastructure.DI
             // Distances
             services.AddScoped<IDistanceRepository, DistanceRepository>();
 
+            //Login History
+            services.AddScoped<ILoginHistoryReadRepository, LoginHistoryReadRepository>();
+
+            //Feedback 
+            services.AddScoped<IFeedbackReadRepository, FeedbackReadRepository>();
+            services.AddScoped<IFeedbackWriteRepository, FeedbackWriteRepository>();
             return services;
         }
     }

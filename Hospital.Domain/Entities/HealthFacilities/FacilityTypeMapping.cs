@@ -7,11 +7,7 @@ namespace Hospital.Domain.Entities.HealthFacilities
 {
     [Table("tbl_facility_type_mappings")]
     public class FacilityTypeMapping :
-        BaseEntity,
-        ICreatedAt,
-        ICreatedBy,
-        ISoftDelete,
-        IDeletedBy
+        BaseEntity
     {
         public long FacilityId { get; set; }
 
@@ -20,13 +16,5 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public HealthFacility Facility { get; set; }
 
         public FacilityType Type { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public long? CreatedBy { get; set; }
-
-        public DateTime? DeletedAt { get; set; }
-
-        public long? DeletedBy { get; set; }
     }
 }

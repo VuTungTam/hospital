@@ -2,7 +2,6 @@
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications.HealthServices;
-using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;

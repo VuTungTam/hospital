@@ -1,6 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Symptoms;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Microsoft.Extensions.Localization;

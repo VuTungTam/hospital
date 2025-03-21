@@ -23,7 +23,7 @@ namespace Hospital.Application.Queries.Bookings
 
         public async Task<int> Handle(GetCurrentOrderQuery request, CancellationToken cancellationToken)
         {
-            return await _bookingReadRepository.GetCurrentAsync(request.ServiceId, cancellationToken);
+            return await _bookingReadRepository.GetCurrentAsync(request.ServiceId, request.TimeSlotId, cancellationToken);
         }
     }
 }

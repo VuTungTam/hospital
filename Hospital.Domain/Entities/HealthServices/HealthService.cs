@@ -38,7 +38,15 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public List<Booking> Bookings { get; set; }
 
+        public List<ServiceDoctor> ServiceDoctors { get; set; }
+
         public decimal Price { get; set; }
+
+        public float StarPoint { get; set; }
+
+        public int TotalStars { get; set; }
+
+        public int TotalFeedback { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
@@ -55,5 +63,11 @@ namespace Hospital.Domain.Entities.HealthServices
         public long? DeletedBy { get; set; }
 
         public List<ServiceTimeRule> TimeRules { get; set; }
+
+        public void getStar()
+        {
+            StarPoint = TotalStars / TotalFeedback;
+        }
+
     }
 }

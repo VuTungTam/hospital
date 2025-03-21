@@ -1,4 +1,5 @@
 ﻿using Hospital.SharedKernel.Domain.Entities.Base;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 
 namespace Hospital.SharedKernel.Application.Repositories.Interface
@@ -15,6 +16,8 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 
         void AddRange(IEnumerable<T> entities);
 
+        void UpdateRange(IEnumerable<T> entities);
+
         Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
 
         void Update(T entity);
@@ -26,5 +29,16 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
         Task DeleteAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
 
         Task RollbackAsync(CancellationToken cancellationToken);
+
+        Task<CacheEntry> SetBlockUpdateCacheAsync(long id, CancellationToken cancellationToken);
+
+        Task<List<CacheEntry>> SetBlockUpdateRangeCacheAsync(List<long> ids, CancellationToken cancellationToken);
+
+        Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken);
+
+        Task RemoveCacheWhenUpdateAsync(long id, CancellationToken cancellationToken);
+
+        Task RemoveCacheWhenDeleteAsync(CancellationToken cancellationToken);
+
     }
 }

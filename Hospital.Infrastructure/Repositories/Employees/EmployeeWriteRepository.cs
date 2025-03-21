@@ -1,5 +1,6 @@
-﻿using Hospital.Application.Repositories.Interfaces.Employees;
-using Hospital.Infra.Repositories;
+﻿using Hospital.Application.Models;
+using Hospital.Application.Repositories.Interfaces.Employees;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Infrastructure.Redis;
@@ -19,6 +20,11 @@ namespace Hospital.Infrastructure.Repositories.Employees
         }
 
         public Task SetActionAsDefaultAsync(long employeeId, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetAdditionalActionsAsync(long employeeId, List<AdditionalAction> actions, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

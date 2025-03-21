@@ -1,6 +1,5 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Domain.Specifications.Actions;
-using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Employees;

@@ -27,7 +27,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
 
         public async Task<List<TResponse>> Handle(GetAllQuery<T, TResponse> request, CancellationToken cancellationToken)
         {
-            var entities = await _readRepository.GetAsync(null,_readRepository.DefaultQueryOption,cancellationToken: cancellationToken);
+            var entities = await _readRepository.GetAsync(cancellationToken: cancellationToken);
             return _mapper.Map<List<TResponse>>(entities);
         }
     }

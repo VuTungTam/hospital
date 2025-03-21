@@ -12,7 +12,7 @@ using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Hospital.Infra.Repositories
+namespace Hospital.Infrastructure.Repositories
 {
     public class OrmRepository : IOrmRepository
     {
@@ -50,6 +50,8 @@ namespace Hospital.Infra.Repositories
 
         public virtual async Task<T> FindBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity
         {
+            option ??= new QueryOption();
+
             var dbSet = _dbContext.Set<T>();
             var query = dbSet.AsNoTracking();
 
@@ -65,6 +67,8 @@ namespace Hospital.Infra.Repositories
 
         public virtual async Task<List<T>> GetBySpecificationAsync<T>(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default) where T : BaseEntity
         {
+            option ??= new QueryOption();
+
             var dbSet = _dbContext.Set<T>();
             var query = dbSet.AsNoTracking();
 

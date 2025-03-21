@@ -3,6 +3,7 @@ using Hospital.Application.Dtos.Auth;
 using Hospital.Application.Dtos.Bookings;
 using Hospital.Application.Dtos.Customers;
 using Hospital.Application.Dtos.Employee;
+using Hospital.Application.Dtos.Feedbacks;
 using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.Application.Dtos.HealthServices;
@@ -14,6 +15,7 @@ using Hospital.Application.Dtos.Symptoms;
 using Hospital.Application.Models.Auth;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.FacilityTypes;
+using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
@@ -34,16 +36,35 @@ namespace Hospital.Application.Mappings
         public MappingProfile()
         {
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
+
+            //Social network
             CreateMap<SocialNetwork, SocialNetworkDto>().ReverseMap();
+
+            //Symptom
             CreateMap<Symptom, SymptomDto>().ReverseMap();
+
+            //ServiceType
             CreateMap<ServiceType, ServiceTypeDto>().ReverseMap();
-            CreateMap<HealthServiceDto, HealthService>().ReverseMap();
+
+            //HealthService
+            CreateMap<HealthService, HealthServiceDto>().ReverseMap();
+
+            //ServiceTimeRule
             CreateMap<ServiceTimeRule, ServiceTimeRuleDto>().ReverseMap();
-            //CreateMap<HealthService, HealthServiceDto>()
-            //.ForMember(dest => dest.TimeSlots, opt => opt.MapFrom(src => src.ServiceTimeRule.GenerateTimeSlots()));
+
+            //Feedback
+            CreateMap<Feedback, FeedbackDto>().ReverseMap();
+
+            //HealthFacility
             CreateMap<HealthFacility, HealthFacilityDto>().ReverseMap();
-            CreateMap<FacilityType, FacilityCategoryDto>().ReverseMap();
+
+            //FacilityType
+            CreateMap<FacilityType, FacilityTypeDto>().ReverseMap();
+
+            //HealthProfile
             CreateMap<HealthProfile, HealthProfileDto>().ReverseMap();
+
+            //Specialty
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
             // Booking
             CreateMap<Booking, BookingResponseDto>()

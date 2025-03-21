@@ -10,6 +10,9 @@ namespace Hospital.SharedKernel.Domain.Entities.Base
     {
         private List<DomainEvent> _domainEvents;
         [Key]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public long Id { get; set; }
 
         [NotMapped, JsonIgnore]

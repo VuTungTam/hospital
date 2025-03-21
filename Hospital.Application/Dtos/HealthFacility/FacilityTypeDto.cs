@@ -5,14 +5,14 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Dtos.HealthFacility
 {
-    public class FacilityCategoryDto : BaseDto
+    public class FacilityTypeDto : BaseDto
     {
         public string NameVn { get; set; }
         public string NameEn { get; set; }
         public string DescriptionVn { get; set; }
         public string DescriptionEn { get; set; }
     }
-    public class FacilityCategoryValidator : BaseAbstractValidator<FacilityCategoryDto>
+    public class FacilityCategoryValidator : BaseAbstractValidator<FacilityTypeDto>
     {
         public FacilityCategoryValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {

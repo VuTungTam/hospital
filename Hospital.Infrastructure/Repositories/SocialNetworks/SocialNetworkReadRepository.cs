@@ -1,7 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.SocialNetworks;
-using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;

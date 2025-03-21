@@ -1,5 +1,5 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth.Roles;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Infrastructure.Redis;

@@ -1,7 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Articles;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.Articles;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Microsoft.EntityFrameworkCore;

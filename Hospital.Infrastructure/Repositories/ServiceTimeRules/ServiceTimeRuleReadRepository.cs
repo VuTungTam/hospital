@@ -4,7 +4,6 @@ using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications.HealthServices;
 using Hospital.Domain.Specifications.ServiceTimeRules;
-using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -16,6 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using Hospital.Infrastructure.Extensions;
+using Hospital.SharedKernel.Specifications;
+using Hospital.Domain.Specifications.Customers;
+using Hospital.SharedKernel.Domain.Entities.Customers;
+using Hospital.SharedKernel.Domain.Enums;
 
 namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
 {
@@ -38,28 +41,26 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
             return rule.MaxPatients;
         }
 
-        public async Task<PaginationResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination,long? serviceId, DayOfWeek? dayOfWeek, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination, long serviceId, DayOfWeek? dayOfWeek, CancellationToken cancellationToken = default)
         {
-            ISpecification<ServiceTimeRule> spec = null; 
-                
-            if (serviceId.HasValue && serviceId.Value > 0)
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
+
+            var spec = new GetServiceTimeRuleByServiceIdSpecification(serviceId);
+
+            if(dayOfWeek.HasValue)
             {
-                spec = spec.And(new GetServiceTimeRuleByServiceIdSpecification(serviceId.Value));
+                spec.And(new GetServiceTimeRuleByDayOfWeekSpecification(dayOfWeek.Value));
             }
 
-            if (dayOfWeek.HasValue && dayOfWeek.Value > 0)
-            {
-                spec = spec.And(new GetServiceTimeRuleByDayOfWeekSpecification(dayOfWeek.Value));
-            }
-            QueryOption option = new QueryOption();
-            var guardExpression = GuardDataAccess(spec, option).GetExpression();
-            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
-                         .Where(guardExpression)
-                         .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
+            query = query.Where(spec.GetExpression());
 
-            var data = await query.BuildLimit(pagination.Offset, pagination.Size)
-                                  .ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
+
+            query = query.Skip(pagination.Offset)
+                         .Take(pagination.Size)
+                         .BuildOrderBy(pagination.Sorts);
+
+            var data = await query.ToListAsync(cancellationToken);
 
             return new PaginationResult<ServiceTimeRule>(data, count);
         }

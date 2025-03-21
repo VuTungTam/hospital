@@ -64,7 +64,7 @@ namespace Hospital.Application.Commands.Bookings
 
             var spec = new GetBookingsByDateSpecification(cancelBooking.Date)
                 .And(new GetBookingsByServiceIdSpecification(cancelBooking.ServiceId))
-                .And(new GetBookingsByTimeRangeSpecification(cancelBooking.ServiceStartTime, cancelBooking.ServiceEndTime))
+                .And(new GetBookingsByTimeSlotSpecification(cancelBooking.TimeSlotId))
                 .And(new GetBookingNextOrderSpecification(cancelOrder));
 
             var option = new QueryOption
@@ -82,8 +82,6 @@ namespace Hospital.Application.Commands.Bookings
                     _bookingWriteRepository.Update(booking);
                 }
             }
-
-            await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
             await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 

@@ -1,7 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Domain.Models.Admin;
 using Hospital.Domain.Specifications.Customers;
-using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;

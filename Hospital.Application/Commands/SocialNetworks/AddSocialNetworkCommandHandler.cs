@@ -31,7 +31,7 @@ namespace Hospital.Application.Commands.SocialNetworks
         {
             var entity = _mapper.Map<SocialNetwork>(request.SocialNetworkDto);
 
-            var existSocials = _socialNetworkReadRepository.GetAsync(null,_socialNetworkReadRepository.DefaultQueryOption,cancellationToken);
+            var existSocials = _socialNetworkReadRepository.GetAsync(cancellationToken: cancellationToken);
 
             //foreach (var existSocial in existSocials) {
 

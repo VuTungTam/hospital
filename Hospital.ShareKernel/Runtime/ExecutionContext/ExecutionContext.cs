@@ -5,8 +5,6 @@ using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Hospital.SharedKernel.Runtime.ExecutionContext

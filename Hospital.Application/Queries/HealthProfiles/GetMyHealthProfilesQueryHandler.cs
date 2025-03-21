@@ -32,7 +32,7 @@ namespace Hospital.Application.Queries.HealthProfiles
                 IgnoreOwner = false,
             };
 
-            var profiles = await _healthProfileReadRepository.GetAsync(null, option, cancellationToken);
+            var profiles = await _healthProfileReadRepository.GetAsync(option: option, cancellationToken:cancellationToken);
 
             var profileDtos = _mapper.Map<List<HealthProfileDto>>(profiles);
 

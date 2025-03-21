@@ -205,7 +205,7 @@ namespace Hospital.SharedKernel.Configures
                 jwtOptions.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateAudience = true,
-                    ValidAudience = Configuration["Auth:JwtSettings:Issuer"],
+                    ValidAudience = Configuration["Auth:JwtSettings:Audience"],
                     ValidateIssuer = true,
                     ValidIssuer = Configuration["Auth:JwtSettings:Issuer"],
                     ValidateIssuerSigningKey = true,
@@ -233,7 +233,7 @@ namespace Hospital.SharedKernel.Configures
         }
         public static IServiceCollection AddCoreLocalization(this IServiceCollection services)
         {
-            var supportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("vi-VN") };
+            var supportedCultures = new List<CultureInfo> { new("en-US"), new("vi-VN") };
             services.AddLocalization();
             services.Configure<RequestLocalizationOptions>(options =>
             {

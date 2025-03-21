@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.Specialties;
+﻿using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Constants;
 using Hospital.SharedKernel.Domain.Entities.Users;
@@ -14,17 +15,12 @@ namespace Hospital.Domain.Entities.Doctors
         public string Expertise { get; set; }
         public List<DoctorSpecialty> DoctorSpecialties { get; set; }
 
+        public List<ServiceDoctor> ServiceDoctors { get; set; }
         public string Description { get; set; }
 
         public string TrainingProcess { get; set; }
 
         public string WorkExperience { get; set; }
-
-        public decimal MinFee { get; set; }
-
-        public decimal MaxFee { get; set; }
-
-        public decimal StarPoint { get; set; }
 
         public DoctorStatus DoctorStatus { get; set; }
     }

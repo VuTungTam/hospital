@@ -12,11 +12,11 @@ namespace Hospital.SharedKernel.Infrastructure.Services.Emails.Models
 
         public static void Set(IConfiguration configuration)
         {
-            //Host = configuration.GetRequiredSection("EmailSettings:Host").Value;
-            //AppPassword = configuration.GetRequiredSection("EmailSettings:AppPassword").Value;
-            //Port = int.Parse(configuration.GetRequiredSection("EmailSettings:Port").Value);
-            //Sender = configuration.GetRequiredSection("EmailSettings:Sender").Value;
-            //DisplayName = configuration.GetRequiredSection("EmailSettings:DisplayName").Value;
+            Host = configuration.GetRequiredSection("EmailSettings:Host").Value;
+            AppPassword = configuration.GetRequiredSection("EmailSettings:AppPassword").Value;
+            Port = int.Parse(configuration.GetRequiredSection("EmailSettings:Port").Value);
+            Sender = configuration.GetRequiredSection("EmailSettings:Sender").Value;
+            DisplayName = configuration.GetRequiredSection("EmailSettings:DisplayName").Value;
         }
     }
 }

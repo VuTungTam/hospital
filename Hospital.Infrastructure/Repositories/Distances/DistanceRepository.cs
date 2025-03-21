@@ -1,7 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Distances;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.Distances;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps;

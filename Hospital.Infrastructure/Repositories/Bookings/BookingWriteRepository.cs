@@ -1,6 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Domain.Entities.Bookings;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Infrastructure.Redis;
@@ -22,7 +22,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
 
         public async Task AddBookingCodeAsync(Booking booking, CancellationToken cancellationToken)
         {
-            var table = "booking";
+            var table = new Booking().GetTableName();
             var sequenceRepository = _serviceProvider.GetRequiredService<ISequenceRepository>();
             var code = await sequenceRepository.GetSequenceAsync(table, cancellationToken);
 

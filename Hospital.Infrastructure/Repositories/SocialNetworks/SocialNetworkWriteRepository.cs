@@ -1,6 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Domain.Entities.SocialNetworks;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Infrastructure.Redis;

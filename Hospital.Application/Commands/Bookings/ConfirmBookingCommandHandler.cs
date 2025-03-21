@@ -2,18 +2,18 @@
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
-using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
+using Ocelot.Values;
 
 namespace Hospital.Application.Commands.Bookings
 {
@@ -65,7 +65,7 @@ namespace Hospital.Application.Commands.Bookings
             }
 
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date,
-                booking.ServiceStartTime, booking.ServiceEndTime, cancellationToken);
+                booking.TimeSlotId, cancellationToken);
 
             var maxSlot = await _serviceTimeRuleReadRepository.GetMaxSlotAsync(booking.ServiceId, booking.Date, cancellationToken);
 
@@ -79,6 +79,10 @@ namespace Hospital.Application.Commands.Bookings
             booking.Order = maxOrder + 1;
 
             await _bookingWriteRepository.UpdateAsync(booking, cancellationToken: cancellationToken);
+
+            var cacheEntry = CacheManager.GetMaxOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
+
+            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

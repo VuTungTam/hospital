@@ -25,7 +25,7 @@ namespace Hospital.Application.Queries.Auth.Roles
 
         public async Task<List<RoleDto>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
-            var roles = await _roleReadRepository.GetAsync(null,_roleReadRepository.DefaultQueryOption,cancellationToken:  cancellationToken);
+            var roles = await _roleReadRepository.GetAsync(cancellationToken: cancellationToken);
             roles = roles.Where(x => x.Code != RoleCodeConstant.CUSTOMER).ToList();
 
             return _mapper.Map<List<RoleDto>>(roles);

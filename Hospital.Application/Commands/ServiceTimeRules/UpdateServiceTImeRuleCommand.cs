@@ -3,9 +3,9 @@ using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 
 namespace Hospital.Application.Commands.ServiceTimeRules
 {
-    public class UpdateServiceTImeRuleCommand : BaseCommand
+    public class UpdateServiceTimeRuleCommand : BaseCommand
     {
-        public UpdateServiceTImeRuleCommand(ServiceTimeRuleDto dto)
+        public UpdateServiceTimeRuleCommand(ServiceTimeRuleDto dto)
         {
             Dto = dto;
         }

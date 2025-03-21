@@ -1,10 +1,14 @@
 ﻿using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.Specialties;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Services.Date;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Libraries.Attributes;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
+using Hospital.SharedKernel.Runtime.Exceptions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

@@ -14,9 +14,7 @@ namespace Hospital.Application.Dtos.Bookings
 
         public string ServiceId { get; set; }
 
-        public TimeSpan ServiceStartTime { get; set; }
-
-        public TimeSpan ServiceEndTime { get; set; }
+        public long TimeSlotId { get; set; }
 
         public string OwnerId { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.TimeSlots;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,6 +32,8 @@ namespace Hospital.Domain.Entities.ServiceTimeRules
 
         public int MaxPatients { get; set; }
 
+        public List<TimeSlot> TimeSlots { get; set; }
+
         public DayOfWeek DayOfWeek { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -46,10 +49,6 @@ namespace Hospital.Domain.Entities.ServiceTimeRules
         public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
-
-
-
-
 
     }
 }

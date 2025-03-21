@@ -6,6 +6,11 @@
 
         public int ExpiriesInSeconds { get; set; }
 
+        public CacheEntry()
+        {
+            
+        }
+
         public CacheEntry(string key, int expiriesInSeconds)
         {
             Key = key;

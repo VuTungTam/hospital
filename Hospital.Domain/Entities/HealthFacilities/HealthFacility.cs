@@ -56,6 +56,12 @@ namespace Hospital.Domain.Entities.HealthFacilities
 
         public decimal Longtitude { get; set; }
 
+        public float StarPoint { get; set; }
+
+        public int TotalStars { get; set; }
+
+        public int TotalFeedback { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public long? CreatedBy { get; set; }

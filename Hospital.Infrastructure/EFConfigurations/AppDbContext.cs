@@ -21,6 +21,14 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Hospital.Infrastructure.Persistences.EF.EntityTypeConfigurations;
 using Hospital.Domain.Entities.Articles;
 using Hospital.Domain.Entities.Distances;
+using Hospital.Domain.Entities.Doctors;
+using Hospital.Domain.Entities.Feedbacks;
+using Hospital.Domain.Entities.HealthFacilities;
+using Hospital.Domain.Entities.ServiceTimeRules;
+using Hospital.Domain.Entities.TimeSlots;
+using Hospital.SharedKernel.Libraries.Utils;
+using MassTransit.Internals;
+using System.Linq.Expressions;
 
 namespace Hospital.Infra.EFConfigurations
 {
@@ -60,7 +68,27 @@ namespace Hospital.Infra.EFConfigurations
             modelBuilder.ApplyConfiguration(new ArticleEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new DoctorEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FeedbackEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TimeSlotEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                ParameterExpression parameter = Expression.Parameter(entityType.ClrType);
+                BinaryExpression combineExpression = null;
+
+                if (entityType.ClrType.HasInterface<ISoftDelete>())
+                {
+                    var isDeletedProperty = Expression.Property(parameter, nameof(ISoftDelete.IsDeleted));
+                    var isDeletedExpression = Expression.Equal(isDeletedProperty, Expression.Constant(false));
+
+                    combineExpression = isDeletedExpression;
+                }
+
+                if (combineExpression != null)
+                {
+                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(Expression.Lambda(combineExpression, parameter));
+                }
+            }
         }
 
         public IDbContextTransaction BeginTransaction()
@@ -74,13 +102,18 @@ namespace Hospital.Infra.EFConfigurations
 
             foreach (var entry in entries)
             {
+                if ((entry.Entity is IBaseEntity e) && e.Id == -1 && entry.State == EntityState.Modified)
+                {
+                    entry.State = EntityState.Added;
+                }
+
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        //if (entry.Entity is IBaseEntity)
-                        //{
-                        //    (entry.Entity as IBaseEntity).Id = AuthUtility.GenerateSnowflakeId();
-                        //}
+                        if (entry.Entity is IBaseEntity)
+                        {
+                            (entry.Entity as IBaseEntity).Id = AuthUtility.GenerateSnowflakeId();
+                        }
 
                         if (entry.Entity is ICreatedAt)
                         {
@@ -209,9 +242,19 @@ namespace Hospital.Infra.EFConfigurations
 
         public DbSet<FacilitySpecialty> BrancSpecialties { get; set; }
 
+        public DbSet<HealthFacility> HealthFacilities { get; set; }
+
+        public DbSet<ServiceTimeRule> ServiceTimeRules { get; set; }
+
+        public DbSet<TimeSlot> TimeSlots { get; set; }
+
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<EmployeeAction> EmployeesActions { get; set; }
+
+        public DbSet<EmployeeRole> EmployeesRoles { get; set; }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
@@ -226,5 +269,9 @@ namespace Hospital.Infra.EFConfigurations
         public DbSet<Article> Articles { get; set; }
 
         public DbSet<Distance> Distances { get; set; }
+
+        public DbSet<Feedback> Feedbacks { get; set; }
+
+        public DbSet<Doctor> Doctors { get; set; }
     }
 }

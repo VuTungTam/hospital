@@ -15,7 +15,7 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 
         Task<List<T>> GetByIdsAsync(IList<long> id, QueryOption option = default, CancellationToken cancellationToken = default);
 
-        Task<List<T>> GetAsync(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
+        Task<List<T>> GetAsync(ISpecification<T> spec = null, QueryOption option = default, CancellationToken cancellationToken = default);
 
         Task<PaginationResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
 

@@ -8,8 +8,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Feedback> builder)
         {
-            builder.Property(x => x.ReferId)
-                   .IsRequired();
 
             builder.Property(x => x.Message)
                    .IsRequired()
@@ -22,6 +20,18 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("DATETIME")
                    .HasDefaultValueSql("GETDATE()");
+
+            builder.Property(x => x.ModifiedAt)
+                   .HasColumnType("DATETIME");
+
+            builder.Property(x => x.BookingCode)
+                   .IsRequired()
+                   .HasColumnType("VARCHAR(32)");
+
+            builder.HasOne(f => f.Booking)
+                   .WithOne(b => b.Feedback)
+                   .HasForeignKey<Feedback>(f => f.BookingId) 
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

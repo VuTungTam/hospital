@@ -1,25 +1,20 @@
-﻿using MassTransit.Internals;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
-using Microsoft.Extensions.Localization;
-using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Infrastructure.Redis;
-using Hospital.SharedKernel.Application.Consts;
-using Hospital.Domain.Constants;
-using Hospital.Domain.Specifications;
-using IdGen;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
+using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Libraries.Attributes;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Runtime.Exceptions;
-using StackExchange.Redis;
-using Hospital.SharedKernel.Libraries.Attributes;
+using MassTransit.Internals;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
-namespace Hospital.Infra.Repositories
+namespace Hospital.Infrastructure.Repositories
 {
     public class WriteRepository<T> : OrmRepository, IWriteRepository<T>, IDisposable where T : BaseEntity
     {
@@ -48,7 +43,7 @@ namespace Hospital.Infra.Repositories
         }
         public virtual void Add(T entity)
         {
-            entity.Id = 0;
+            //entity.Id = 0;
             _dbSet.Add(entity);
         }
 
@@ -62,6 +57,11 @@ namespace Hospital.Infra.Repositories
         public virtual void AddRange(IEnumerable<T> entities)
         {
             _dbSet.AddRange(entities);
+        }
+
+        public virtual void UpdateRange(IEnumerable<T> entities)
+        {
+            _dbSet.UpdateRange(entities);
         }
 
         public virtual async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken)
@@ -78,6 +78,7 @@ namespace Hospital.Infra.Repositories
                 var dateService = _serviceProvider.GetRequiredService<IDateService>();
                 foreach( var entity in entities)
                 {
+                    (entity as ISoftDelete).IsDeleted = true;
                     (entity as ISoftDelete).DeletedAt = dateService.GetClientTime();
                 }
                 _dbSet.UpdateRange(entities);
@@ -158,6 +159,52 @@ namespace Hospital.Infra.Repositories
            await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
         }
 
+        public virtual async Task<CacheEntry> SetBlockUpdateCacheAsync(long id, CancellationToken cancellationToken)
+        {
+            var cacheEntry = CacheManager.GetLockUpdateCacheEntry<T>(id);
+            var locked = await _redisCache.GetAsync<string>(cacheEntry.Key, cancellationToken);
+            if (!string.IsNullOrEmpty(locked))
+            {
+                throw new BadRequestException(_localizer["CommonMessage.RecordIsUpdating"]);
+            }
+            await _redisCache.SetAsync(cacheEntry.Key, "locked", TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
+            return cacheEntry;
+        }
+
+        public virtual async Task<List<CacheEntry>> SetBlockUpdateRangeCacheAsync(List<long> ids, CancellationToken cancellationToken)
+        {
+            var cacheEntries = new List<CacheEntry>();
+            var getTasks = new List<Task<string>>();
+
+            foreach (var id in ids)
+            {
+                var cacheEntry = CacheManager.GetLockUpdateCacheEntry<T>(id);
+                cacheEntries.Add(cacheEntry);
+                getTasks.Add(_redisCache.GetAsync<string>(cacheEntry.Key, cancellationToken));
+            }
+
+            var lockedValues = await Task.WhenAll(getTasks);
+
+            if (lockedValues.Any(value => !string.IsNullOrEmpty(value)))
+            {
+                throw new BadRequestException(_localizer["CommonMessage.RecordIsUpdating"]);
+            }
+
+            var setTasks = new List<Task>();
+
+            foreach (var cacheEntry in cacheEntries)
+            {
+                setTasks.Add(_redisCache.SetAsync(cacheEntry.Key, "locked",
+                    TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds),
+                    cancellationToken: cancellationToken));
+            }
+
+            await Task.WhenAll(setTasks);
+
+            return cacheEntries;
+        }
+
+
         #region Remove Cache
         protected virtual async Task RemoveOneRecordCacheAsync(long id, CancellationToken cancellationToken)
         {
@@ -183,13 +230,13 @@ namespace Hospital.Infra.Repositories
             await _redisCache.RemoveAsync(key, cancellationToken);
         }
 
-        protected virtual async Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken)
+        public virtual async Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken)
         {
             await RemoveAllRecordsCacheAsync(cancellationToken);
             await RemovePaginationCacheAsync(cancellationToken);
         }
 
-        protected virtual async Task RemoveCacheWhenUpdateAsync(long id, CancellationToken cancellationToken)
+        public virtual async Task RemoveCacheWhenUpdateAsync(long id, CancellationToken cancellationToken)
         {
             var tasks = new List<Task>
                 {
@@ -200,7 +247,7 @@ namespace Hospital.Infra.Repositories
             await Task.WhenAll(tasks);
         }
 
-        protected virtual async Task RemoveCacheWhenDeleteAsync(CancellationToken cancellationToken)
+        public virtual async Task RemoveCacheWhenDeleteAsync(CancellationToken cancellationToken)
         {
             await RemoveAllRecordsCacheAsync(cancellationToken);
             await RemovePaginationCacheAsync(cancellationToken);

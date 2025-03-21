@@ -10,7 +10,10 @@ namespace Hospital.SharedKernel.Specifications
         {
             Expression = expression;
         }
-
+        public ExpressionSpecification()
+        {
+            
+        }
         public override Expression<Func<T, bool>> GetExpression() => Expression;
     }
 }

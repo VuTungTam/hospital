@@ -33,12 +33,10 @@ namespace Hospital.Application.Commands.Bookings
             {
                 booking.Status = BookingStatus.Waiting;
             }
-
+            //Kiểm tra xem đặt lịch này chưa
             await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 
             await _bookingWriteRepository.AddAsync(booking, cancellationToken);
-
-            await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
             return booking.Id.ToString();
         }

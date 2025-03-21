@@ -1,5 +1,5 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Customers;
-using Hospital.Infra.Repositories;
+using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Enums;

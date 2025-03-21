@@ -3,6 +3,7 @@ using Hospital.Application.Dtos.Symptoms;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Dtos.Bookings
@@ -14,6 +15,8 @@ namespace Hospital.Application.Dtos.Bookings
         public string HealthProfileId { get; set; }
 
         public BookingStatus Status { get; set; }
+
+        public string StatusDescription => Status.GetDescription();
 
         public DateTime Date { get; set; }
 

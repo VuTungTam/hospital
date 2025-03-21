@@ -7,11 +7,7 @@ namespace Hospital.Domain.Entities.Specialties
 {
     [Table("tbl_doctor_specialty")]
     public class DoctorSpecialty :
-        BaseEntity,
-        ICreatedAt,
-        ICreatedBy,
-        ISoftDelete,
-        IDeletedBy
+        BaseEntity
     {
         public long DoctorId { get; set; }
 
@@ -20,13 +16,5 @@ namespace Hospital.Domain.Entities.Specialties
         public Doctor Doctor { get; set; }
 
         public Specialty Specialty { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public long? CreatedBy { get; set; }
-
-        public DateTime? DeletedAt { get; set; }
-
-        public long? DeletedBy { get; set; }
     }
 }

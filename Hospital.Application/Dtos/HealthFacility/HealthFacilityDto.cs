@@ -13,25 +13,50 @@ namespace Hospital.Application.Dtos.HealthFacility
     public class HealthFacilityDto : BaseDto
     {
         public string NameVn { get; set; }
+
         public string NameEn { get; set; }
+
         public string DescriptionVn { get; set; }
+
         public string DescriptionEn { get; set; }
+
         public string ImageUrl { get; set; }
+
         public string Phone { get; set; }
+
         public string Email { get; set; }
+
         public string Website { get; set; }
+
         public long CategoryId { get; set; }
+
         public HealthFacilityStatus Status { get; set; }
+
         public string StatusText => Status.GetDescription();
+
         public string Pid { get; set; }
+
         public string Pname { get; set; }
+
         public string Did { get; set; }
+
         public string Dname { get; set; }
+
         public string Wid { get; set; }
+
         public string Wname { get; set; }
+
         public string Address { get; set; }
+
         public decimal Latitude { get; set; }
+
         public decimal Longtitude { get; set; }
+
+        public float StarPoint { get; set; }
+
+        public int TotalStars { get; set; }
+
+        public int TotalFeedback { get; set; }
     }
     public class HealthFacilityValidator : BaseAbstractValidator<HealthFacilityDto>
     {

@@ -2,7 +2,8 @@
 
 namespace Hospital.Application.Commands.Customers
 {
-    public class SendVerifyCustomerAccountWithEmailCommand : BaseCommand
+    //Sửa
+    public class SendVerifyCustomerAccountWithEmailCommand : BaseAllowAnonymousCommand
     {
         public SendVerifyCustomerAccountWithEmailCommand(string email)
         {

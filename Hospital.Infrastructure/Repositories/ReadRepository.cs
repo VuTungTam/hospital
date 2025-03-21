@@ -22,7 +22,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Hospital.Infrastructure.Extensions;
 
-namespace Hospital.Infra.Repositories
+
+namespace Hospital.Infrastructure.Repositories
 {
     public class ReadRepository<T> : OrmRepository, IReadRepository<T> where T : BaseEntity
     {
@@ -52,6 +53,7 @@ namespace Hospital.Infra.Repositories
         #region Paging
         public virtual async Task<PaginationResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default)
         {
+            option ??= new QueryOption();
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
@@ -148,6 +150,7 @@ namespace Hospital.Infra.Repositories
 
         public virtual async Task<T> GetByIdAsync(long id, QueryOption option = default, CancellationToken cancellationToken = default)
         {
+            option ??= new QueryOption();
             if (option.Includes != null && option.Includes.Any())
             {
                 return await FindBySpecificationAsync(new GetByIdSpecification<T>(id), option, cancellationToken);
@@ -163,12 +166,6 @@ namespace Hospital.Infra.Repositories
                     await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
                 }
             }
-
-            if (data == null)
-            {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
-            }
-
             return data;
         }
 
@@ -177,16 +174,17 @@ namespace Hospital.Infra.Repositories
 
         public virtual async Task<List<T>> GetAsync(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default)
         {
+            option ??= new QueryOption();
             if (option.Includes != null && option.Includes.Any())
             {
-                return await GetBySpecificationAsync<T>(spec, option, cancellationToken);
+                return await GetBySpecificationAsync(spec, option, cancellationToken);
             }
 
             var cacheEntry = GetCacheEntry(type: "all");
             var data = await _redisCache.GetAsync<List<T>>(cacheEntry.Key, cancellationToken: cancellationToken);
             if (data == null)
             {
-                data = await GetBySpecificationAsync<T>(spec, option, cancellationToken);
+                data = await GetBySpecificationAsync(spec, option, cancellationToken);
                 if (data != null && data.Any())
                 {
                     await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.Records), cancellationToken: cancellationToken);
@@ -224,6 +222,6 @@ namespace Hospital.Infra.Repositories
             return CacheManager.DbSystemIdCacheEntry<T>(id);
         }
 
-        
+
     }
 }

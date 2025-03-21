@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
+using Hospital.Domain.Specifications.TimeSlots;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -14,17 +16,23 @@ namespace Hospital.Application.Commands.ServiceTimeRules
     {
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
+        private readonly ITimeSlotReadRepository _timeSlotReadRepository;
+        private readonly ITimeSlotWriteRepository _timeSlotWriteRepository;
         public DeleteServiceTimeRuleCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
-            IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository
+            IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository,
+            ITimeSlotReadRepository timeSlotReadRepository,
+            ITimeSlotWriteRepository timeSlotWriteRepository
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
+            _timeSlotReadRepository = timeSlotReadRepository;
+            _timeSlotWriteRepository = timeSlotWriteRepository;
         }
 
         public async Task<Unit> Handle(DeleteServiceTimeRuleCommand request, CancellationToken cancellationToken)
@@ -34,11 +42,27 @@ namespace Hospital.Application.Commands.ServiceTimeRules
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var rules = await _serviceTimeRuleReadRepository.GetByIdsAsync(request.Ids, _serviceTimeRuleReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var rules = await _serviceTimeRuleReadRepository.GetByIdsAsync(request.Ids, cancellationToken: cancellationToken);
             if (rules.Any())
             {
-                await _serviceTimeRuleWriteRepository.DeleteAsync(rules, cancellationToken);
+                _serviceTimeRuleWriteRepository.Delete(rules);
+
+                foreach (var rule in rules)
+                {
+                    var spec = new GetTimeSlotByTimeRuleIdSpecification(rule.Id);
+                    var timeSlots = await _timeSlotReadRepository.GetAsync(spec, cancellationToken:cancellationToken);
+                    if (timeSlots.Any())
+                    {
+                        _timeSlotWriteRepository.Delete(timeSlots);
+                    }
+                }
             }
+
+            await _serviceTimeRuleWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+
+            await _serviceTimeRuleWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken: cancellationToken);
+
+            await _timeSlotWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

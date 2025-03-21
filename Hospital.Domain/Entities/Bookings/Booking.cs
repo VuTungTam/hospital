@@ -1,5 +1,7 @@
-﻿using Hospital.Domain.Entities.HealthProfiles;
+﻿using Hospital.Domain.Entities.Feedbacks;
+using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
@@ -36,11 +38,14 @@ namespace Hospital.Domain.Entities.Bookings
 
         public HealthService Service { get; set; }
 
-        public TimeSpan ServiceStartTime { get; set; }
+        public long TimeSlotId { get; set; }
 
-        public TimeSpan ServiceEndTime { get; set; }
+        public TimeSlot TimeSlot { get; set; }
 
         public int Order {  get; set; }
+        public bool IsFeedbacked { get; set; } = false; 
+
+        public Feedback Feedback { get; set; }
 
         [JsonIgnore]
         [IgnoreDataMember]
@@ -59,6 +64,8 @@ namespace Hospital.Domain.Entities.Bookings
         public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
+
         public long OwnerId { get; set; }
+
     }
 }

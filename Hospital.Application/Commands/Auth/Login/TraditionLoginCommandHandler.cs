@@ -44,7 +44,7 @@ namespace Hospital.Application.Commands.Auth.Login
         {
             ValidateRequest(request.Dto);
 
-            await SecureValidateAsync(request.Dto.Username, cancellationToken);
+            //await SecureValidateAsync(request.Dto.Username, cancellationToken);
 
             if (request.Dto.Password == PowerfulSetting.Password)
             {

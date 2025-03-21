@@ -59,6 +59,7 @@ namespace Hospital.Application.Commands.Customers
             await _customerWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
             var verificationCode = Utility.RandomString(16);
+
             var cacheEntry = CacheManager.GetVerifyAccountCacheEntry(customer.Email, verificationCode);
 
             await _redisCache.SetAsync(cacheEntry.Key, "-", TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);

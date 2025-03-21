@@ -1,7 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Specifications.HealthProfiles;
-using Hospital.Infra.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;

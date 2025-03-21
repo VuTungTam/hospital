@@ -8,6 +8,7 @@ using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -62,13 +63,15 @@ namespace Hospital.Application.Commands.Specialties
                 throw new BadRequestException("Chuyên khoa đã tồn tại");
             }
 
-            var specialty = await _specialtyReadRepository.GetByIdAsync(request.SpecialtyId,_specialtyReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var specialty = await _specialtyReadRepository.GetByIdAsync(request.SpecialtyId, cancellationToken: cancellationToken);
             if (specialty == null)
             {
                 throw new BadRequestException("Chuyên khoa không tồn tại");
             }
-            facility.FacilitySpecialties.Add(new FacilitySpecialty { FacilityId = request.FacilityId, SpecialtyId = request.SpecialtyId });
+            facility.FacilitySpecialties.Add(new FacilitySpecialty { Id = -1, FacilityId = request.FacilityId, SpecialtyId = request.SpecialtyId });
+
             await _healthFacilityWriteRepository.UpdateAsync(facility, cancellationToken: cancellationToken);
+
             return Unit.Value;
         }
     }

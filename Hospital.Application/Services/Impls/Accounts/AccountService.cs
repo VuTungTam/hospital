@@ -39,7 +39,7 @@ namespace Hospital.Application.Services.Impls.Accounts
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
-              <p>Cảm ơn bạn đã tạo tài khoản tại <strong>Pet5H</strong>, vui lòng bấm vào nút bên dưới để xác thực tài khoản của bạn</p>
+              <p>Cảm ơn bạn đã tạo tài khoản tại <strong>HealthMate</strong>, vui lòng bấm vào nút bên dưới để xác thực tài khoản của bạn</p>
               <div style='display: flex; justify-content: center; margin: 24px 0;'>
                 <a href='{ClientInfoConfig.Url}/xac-thuc-tai-khoan?e={user.Email.ToBase64Encode()}&c={code}' target='_blank' style='display: block; padding: 12px 16px; margin: 0 auto; border-radius: 4px; background-color: #f0923a; color: #fff; text-decoration: none'>
                   Xác minh tài khoản
@@ -47,9 +47,9 @@ namespace Hospital.Application.Services.Impls.Accounts
               </div>
               <div style='margin-bottom: 24px;'>Nếu bạn cho rằng đây là sự nhầm lẫn, hãy bỏ qua email này.</div>
             ";
-            var message = GetFrameMessage("Xác minh tài khoản Pet5H", content);
+            var message = GetFrameMessage("Xác minh tài khoản HealthMate", content);
 
-            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "Xác nhận tài khoản Pet5H" }, cancellationToken);
+            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "Xác nhận tài khoản HealthMate" }, cancellationToken);
         }
 
         public async Task SendVerifyEmailWithPasswordAsync(BaseUser user, string code, CancellationToken cancellationToken)
@@ -132,15 +132,7 @@ namespace Hospital.Application.Services.Impls.Accounts
                               <div style='font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:14px;color:rgba(0,0,0,0.87);line-height:20px;padding-top:20px;text-align:left'>
                                 {content}
                                 <div>Thanks,</div>
-                                <div>The Pet5H Developer Team</div>
-                              </div>
-                            </div>
-                            <div style='text-align:left'>
-                              <div
-                                style='font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.54);font-size:12px;line-height:18px;padding-top:6px;text-align:center'>
-                                <div style='font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.54);font-size:12px;line-height:18px;padding-top:6px;text-align:center'>
-                                  Nhà phát triển phần mềm: cuongnguyen.ftdev@gmail.com
-                                </div>
+                                <div>HealthMate</div>
                               </div>
                             </div>
                           </td>

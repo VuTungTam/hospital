@@ -18,13 +18,9 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
 
         Task<List<Employee>> GetSuperAdminsAsync(CancellationToken cancellationToken);
 
-        Task<List<Employee>> GetAssigneesAsync(CancellationToken cancellationToken);
-
         Task<Employee> GetByIdIncludedRolesAsync(long id, CancellationToken cancellationToken = default);
 
-        Task<Employee> GetByIdIncludedBranchesAsync(long id, CancellationToken cancellationToken = default);
-
-        Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, long branchId = 0, AccountStatus status = AccountStatus.None, long roleId = 0, bool includeBranches = false, CancellationToken cancellationToken = default);
+        Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long roleId = 0, CancellationToken cancellationToken = default);
 
         Task<bool> IsEmployeeCustomizePermissionAsync(long employeeId, CancellationToken cancellationToken);
     }

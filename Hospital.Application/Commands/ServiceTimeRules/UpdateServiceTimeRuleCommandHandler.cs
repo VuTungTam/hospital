@@ -1,18 +1,29 @@
 ﻿using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Domain.Entities.ServiceTimeRules;
+using Hospital.Domain.Entities.TimeSlots;
+using Hospital.Domain.Specifications.TimeSlots;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
+using Ocelot.Values;
+using System.Linq;
 
 namespace Hospital.Application.Commands.ServiceTimeRules
 {
-    public class UpdateServiceTimeRuleCommandHandler : BaseCommandHandler, IRequestHandler<UpdateServiceTImeRuleCommand>
+    public class UpdateServiceTimeRuleCommandHandler : BaseCommandHandler, IRequestHandler<UpdateServiceTimeRuleCommand>
     {
+        private readonly IRedisCache _redisCache;
+        private readonly ITimeSlotReadRepository _timeSlotReadRepository;
+        private readonly ITimeSlotWriteRepository _timeSlotWriteRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
         public UpdateServiceTimeRuleCommandHandler(
@@ -20,32 +31,70 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             IAuthService authService, 
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
+            IRedisCache redisCache,
+            ITimeSlotReadRepository timeSlotReadRepository,
+            ITimeSlotWriteRepository timeSlotWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
+            _timeSlotReadRepository = timeSlotReadRepository;
+            _timeSlotWriteRepository = timeSlotWriteRepository;
+            _redisCache = redisCache;
         }
 
-        public async Task<Unit> Handle(UpdateServiceTImeRuleCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateServiceTimeRuleCommand request, CancellationToken cancellationToken)
         {
             if (!long.TryParse(request.Dto.Id, out var id) || id <= 0)
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var timeRule = await _serviceTimeRuleReadRepository.GetByIdAsync(id, _serviceTimeRuleReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var timeRule = await _serviceTimeRuleReadRepository.GetByIdAsync(id, _serviceTimeRuleReadRepository.DefaultQueryOption, cancellationToken);
             if (timeRule == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
             }
+
             var entity = _mapper.Map<ServiceTimeRule>(request.Dto);
 
-            await _serviceTimeRuleWriteRepository.UpdateAsync(entity, cancellationToken: cancellationToken);
+            var cacheEntry = await _serviceTimeRuleWriteRepository.SetBlockUpdateCacheAsync(timeRule.Id, cancellationToken);
+
+            _serviceTimeRuleWriteRepository.Update(entity);
+
+            var newTimeSlots = _serviceTimeRuleWriteRepository.GenerateTimeSlots(entity);
+
+            var spec = new GetTimeSlotByTimeRuleIdSpecification(timeRule.Id);
+
+            var oldTimeSlots = await _timeSlotReadRepository.GetAsync(spec, cancellationToken: cancellationToken);
+
+            var comparer = new TimeSlotEqualityComparer();
+
+            var oldTimeSlotSet = new HashSet<TimeSlot>(oldTimeSlots, comparer);
+            var newTimeSlotSet = new HashSet<TimeSlot>(newTimeSlots, comparer);
+
+            var deleteTimeSlots = oldTimeSlots.Where(slot => !newTimeSlotSet.Contains(slot, comparer)).ToList();
+
+            var addTimeSlots = newTimeSlots
+                .Where(slot => !oldTimeSlotSet.Contains(slot, comparer))
+                .ToList();
+
+            _timeSlotWriteRepository.Delete(deleteTimeSlots);
+
+            _timeSlotWriteRepository.AddRange(addTimeSlots);
+
+            await _timeSlotWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+
+            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
+
+            await _serviceTimeRuleWriteRepository.RemoveCacheWhenUpdateAsync(timeRule.Id, cancellationToken);
+
+            await _timeSlotWriteRepository.RemoveCacheWhenAddAsync(cancellationToken);
 
             return Unit.Value;
-
         }
+
     }
 }

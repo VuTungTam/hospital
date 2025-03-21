@@ -51,6 +51,15 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("DECIMAL(9,6)");
 
+            builder.Property(x => x.TotalStars)
+                   .HasColumnType("INT");
+
+            builder.Property(x => x.TotalFeedback)
+                   .HasColumnType("INT");
+
+            builder.Property(x => x.StarPoint)
+                   .HasColumnType("float");
+
             builder.Property(x => x.CreatedAt)
                    .IsRequired()
                    .HasColumnType("DATETIME")

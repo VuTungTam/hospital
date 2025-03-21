@@ -22,11 +22,19 @@ namespace Hospital.Application.Dtos.HealthServices
 
         public decimal Price { get; set; }
 
+        public int TotalStars { get; set; }
+
+        public int TotalFeedback { get; set; }
+
+        public float StarPoint { get; set; }
+
         public HealthServiceStatus Status { get; set; }
 
         public string StatusText => Status.GetDescription();
 
         public long FacilitySpecialtyId { get; set; }
+
+
 
         public List<TimeFrame> TimeSlots ;
     }
