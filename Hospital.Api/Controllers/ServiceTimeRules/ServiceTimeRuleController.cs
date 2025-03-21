@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hospital.Api.Controllers.HealthServices
+namespace Hospital.Api.Controllers.ServiceTimeRules
 {
     public class ServiceTimeRuleController : ApiBaseController
     {
@@ -16,38 +16,43 @@ namespace Hospital.Api.Controllers.HealthServices
         {
         }
 
-        [HttpGet("pagination"), AllowAnonymous]
-        public virtual async Task<IActionResult> GetPaging(
+        [HttpGet("{serviceId}/pagination"), AllowAnonymous]
+        public async Task<IActionResult> GetPagination(
+            long serviceId,
             int page,
             int size,
             string search = "",
             string asc = "",
             string desc = "",
-            long serviceId = 0,
-            DayOfWeek dayOfWeek = default,
-            DateTime date = default,
+            DayOfWeek? dayOfWeek = null,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetServiceTimeRulePagingQuery(pagination, serviceId, dayOfWeek, date);
+            var query = new GetServiceTimeRulePagingQuery(pagination, serviceId, dayOfWeek);
             var result = await _mediator.Send(query, cancellationToken);
-
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpPost]
-        public virtual async Task<IActionResult> Add(ServiceTimeRuleDto timeRule , CancellationToken cancellationToken = default)
+        [HttpGet("{id}")]
+        public virtual async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
         {
-            var command = new AddServiceTimeRuleCommand(timeRule);
+            var query = new GetServiceTimeRuleByIdQuery(id);
+            var user = await _mediator.Send(query, cancellationToken);
 
-            return Ok(new SimpleDataResult { Data = await _mediator.Send(command) });
+            return Ok(new SimpleDataResult { Data = user });
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> Add(ServiceTimeRuleDto timeRuleDto, CancellationToken cancellationToken = default)
+        {
+            var command = new AddServiceTimeRuleCommand(timeRuleDto);
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
         [HttpPut]
-        public virtual async Task<IActionResult> Update(ServiceTimeRuleDto timeRule, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Update(ServiceTimeRuleDto timeRuleDto, CancellationToken cancellationToken = default)
         {
-            await _mediator.Send(new UpdateServiceTImeRuleCommand(timeRule), cancellationToken);
-
+            await _mediator.Send(new UpdateServiceTimeRuleCommand(timeRuleDto), cancellationToken);
             return Ok(new BaseResponse());
         }
 
@@ -55,9 +60,7 @@ namespace Hospital.Api.Controllers.HealthServices
         public virtual async Task<IActionResult> Delete(List<long> ids, CancellationToken cancellationToken = default)
         {
             await _mediator.Send(new DeleteServiceTimeRuleCommand(ids), cancellationToken);
-
             return Ok(new BaseResponse());
         }
-
     }
 }

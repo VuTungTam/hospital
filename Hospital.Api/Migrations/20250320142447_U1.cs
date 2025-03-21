@@ -13,8 +13,7 @@ namespace Hospital.Api.Migrations
                 name: "location_districts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     ProvinceId = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false)
@@ -28,8 +27,7 @@ namespace Hospital.Api.Migrations
                 name: "location_provinces",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false)
@@ -43,8 +41,7 @@ namespace Hospital.Api.Migrations
                 name: "location_wards",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     DistrictId = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false)
@@ -58,8 +55,7 @@ namespace Hospital.Api.Migrations
                 name: "mcs_customers",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     PhoneVerified = table.Column<bool>(type: "bit", nullable: false),
                     EmailVerified = table.Column<bool>(type: "bit", nullable: false),
                     LastPurchase = table.Column<DateTime>(type: "DATETIME", nullable: true),
@@ -106,16 +102,12 @@ namespace Hospital.Api.Migrations
                 name: "mcs_doctors",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Degree = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Expertise = table.Column<string>(type: "NVARCHAR(255)", nullable: true),
                     Description = table.Column<string>(type: "NVARCHAR(255)", nullable: true),
                     TrainingProcess = table.Column<string>(type: "NVARCHAR(255)", nullable: true),
                     WorkExperience = table.Column<string>(type: "NVARCHAR(255)", nullable: true),
-                    MinFee = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
-                    MaxFee = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
-                    StarPoint = table.Column<decimal>(type: "DECIMAL(1,1)", nullable: false),
                     DoctorStatus = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "NVARCHAR(32)", nullable: false),
                     AliasLogin = table.Column<string>(type: "NVARCHAR(128)", nullable: true),
@@ -159,8 +151,7 @@ namespace Hospital.Api.Migrations
                 name: "mcs_employees",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     ScheduleColor = table.Column<string>(type: "VARCHAR(7)", nullable: true),
                     Code = table.Column<string>(type: "NVARCHAR(32)", nullable: false),
                     AliasLogin = table.Column<string>(type: "NVARCHAR(128)", nullable: true),
@@ -204,8 +195,7 @@ namespace Hospital.Api.Migrations
                 name: "mcs_login_histories",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Ip = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -222,8 +212,7 @@ namespace Hospital.Api.Migrations
                 name: "mcs_refresh_tokens",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     RefreshTokenValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CurrentAccessToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -245,8 +234,7 @@ namespace Hospital.Api.Migrations
                 name: "mcs_sequences",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Table = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Prefix = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Suffix = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -264,8 +252,7 @@ namespace Hospital.Api.Migrations
                 name: "mcs_system_configurations",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     RequiresPasswordLevel = table.Column<int>(type: "int", nullable: false),
                     IsEnabledVerifiedAccount = table.Column<bool>(type: "bit", nullable: true),
                     Session = table.Column<int>(type: "int", nullable: true),
@@ -284,8 +271,7 @@ namespace Hospital.Api.Migrations
                 name: "perm_actions",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "NVARCHAR(32)", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(255)", nullable: true),
@@ -303,8 +289,7 @@ namespace Hospital.Api.Migrations
                 name: "perm_roles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "NVARCHAR(32)", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(255)", nullable: true)
@@ -318,8 +303,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_articles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Image = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
                     Slug = table.Column<string>(type: "NVARCHAR(1048)", nullable: false),
                     TitleSeo = table.Column<string>(type: "NVARCHAR(1024)", nullable: true),
@@ -352,8 +336,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_distances",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     SourceLatitude = table.Column<double>(type: "float", nullable: false),
                     SourceLongitude = table.Column<double>(type: "float", nullable: false),
                     DestinationLatitude = table.Column<double>(type: "float", nullable: false),
@@ -371,8 +354,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_facility_types",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NameVn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     DescriptionVn = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
@@ -389,28 +371,10 @@ namespace Hospital.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbl_feedbacks",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReferId = table.Column<long>(type: "bigint", nullable: false),
-                    Stars = table.Column<int>(type: "INT", nullable: false),
-                    Message = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tbl_feedbacks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tbl_health_facilities",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NameVn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     DescriptionVn = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
@@ -429,6 +393,9 @@ namespace Hospital.Api.Migrations
                     Address = table.Column<string>(type: "NVARCHAR(512)", nullable: true),
                     Latitude = table.Column<decimal>(type: "DECIMAL(9,6)", nullable: false),
                     Longtitude = table.Column<decimal>(type: "DECIMAL(9,6)", nullable: false),
+                    StarPoint = table.Column<double>(type: "float", nullable: false),
+                    TotalStars = table.Column<int>(type: "INT", nullable: false),
+                    TotalFeedback = table.Column<int>(type: "INT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
@@ -446,8 +413,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_health_profiles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     CICode = table.Column<string>(type: "NVARCHAR(15)", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
                     Phone = table.Column<string>(type: "NVARCHAR(12)", nullable: false),
@@ -480,8 +446,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_service_types",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NameVn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
@@ -501,8 +466,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_social_networks",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     Link = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
                     Logo = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
@@ -524,8 +488,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_specialties",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NameVn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
@@ -545,8 +508,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_symptoms",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NameVn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
@@ -566,8 +528,7 @@ namespace Hospital.Api.Migrations
                 name: "perm_employee_action_map",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     EmployeeId = table.Column<long>(type: "bigint", nullable: false),
                     ActionId = table.Column<long>(type: "bigint", nullable: false),
                     IsExclude = table.Column<bool>(type: "BIT", nullable: false, defaultValueSql: "0"),
@@ -595,8 +556,7 @@ namespace Hospital.Api.Migrations
                 name: "perm_employee_role_map",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     RoleId = table.Column<long>(type: "bigint", nullable: false),
                     EmployeeId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
@@ -628,8 +588,7 @@ namespace Hospital.Api.Migrations
                 name: "perm_roles_actions",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     RoleId = table.Column<long>(type: "bigint", nullable: false),
                     ActionId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -654,8 +613,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_facility_type_mappings",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     FacilityId = table.Column<long>(type: "bigint", nullable: false),
                     TypeId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -684,8 +642,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_doctor_specialty",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     DoctorId = table.Column<long>(type: "bigint", nullable: false),
                     SpecialtyId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -714,8 +671,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_facility_specialty",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     FacilityId = table.Column<long>(type: "bigint", nullable: false),
                     SpecialtyId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -745,8 +701,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_health_services",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NameVn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     NameEn = table.Column<string>(type: "NVARCHAR(512)", nullable: false),
                     DescriptionVn = table.Column<string>(type: "NVARCHAR(255)", nullable: false),
@@ -755,6 +710,9 @@ namespace Hospital.Api.Migrations
                     FacilitySpecialtyId = table.Column<long>(type: "bigint", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    StarPoint = table.Column<double>(type: "float", nullable: false),
+                    TotalStars = table.Column<int>(type: "INT", nullable: false),
+                    TotalFeedback = table.Column<int>(type: "INT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
@@ -781,39 +739,28 @@ namespace Hospital.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tbl_bookings",
+                name: "tbl_service_doctor",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "NVARCHAR(32)", nullable: false),
-                    HealthProfileId = table.Column<long>(type: "bigint", nullable: false),
-                    Date = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    Status = table.Column<short>(type: "SMALLINT", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     ServiceId = table.Column<long>(type: "bigint", nullable: false),
-                    ServiceStartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    ServiceEndTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
+                    DoctorId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
-                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
-                    OwnerId = table.Column<long>(type: "bigint", nullable: false)
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbl_bookings", x => x.Id);
+                    table.PrimaryKey("PK_tbl_service_doctor", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tbl_bookings_tbl_health_profiles_HealthProfileId",
-                        column: x => x.HealthProfileId,
-                        principalTable: "tbl_health_profiles",
+                        name: "FK_tbl_service_doctor_mcs_doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "mcs_doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tbl_bookings_tbl_health_services_ServiceId",
+                        name: "FK_tbl_service_doctor_tbl_health_services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "tbl_health_services",
                         principalColumn: "Id",
@@ -824,8 +771,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_service_time_rules",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     ServiceId = table.Column<long>(type: "bigint", nullable: false),
                     StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     StartBreakTime = table.Column<TimeSpan>(type: "time", nullable: false),
@@ -854,11 +800,79 @@ namespace Hospital.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tbl_time_slots",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Start = table.Column<TimeSpan>(type: "time", nullable: false),
+                    End = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TimeRuleId = table.Column<long>(type: "bigint", nullable: false),
+                    ServiceTimeRuleId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_time_slots", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tbl_time_slots_tbl_service_time_rules_ServiceTimeRuleId",
+                        column: x => x.ServiceTimeRuleId,
+                        principalTable: "tbl_service_time_rules",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_bookings",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "NVARCHAR(32)", nullable: false),
+                    HealthProfileId = table.Column<long>(type: "bigint", nullable: false),
+                    Date = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Status = table.Column<short>(type: "SMALLINT", nullable: false),
+                    ServiceId = table.Column<long>(type: "bigint", nullable: false),
+                    TimeSlotId = table.Column<long>(type: "bigint", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    IsFeedbacked = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
+                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
+                    OwnerId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tbl_bookings_tbl_health_profiles_HealthProfileId",
+                        column: x => x.HealthProfileId,
+                        principalTable: "tbl_health_profiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tbl_bookings_tbl_health_services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "tbl_health_services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tbl_bookings_tbl_time_slots_TimeSlotId",
+                        column: x => x.TimeSlotId,
+                        principalTable: "tbl_time_slots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tbl_booking_symptom",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     BookingId = table.Column<long>(type: "bigint", nullable: false),
                     SymptomId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -877,6 +891,32 @@ namespace Hospital.Api.Migrations
                         name: "FK_tbl_booking_symptom_tbl_symptoms_SymptomId",
                         column: x => x.SymptomId,
                         principalTable: "tbl_symptoms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_feedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Stars = table.Column<int>(type: "INT", nullable: false),
+                    Message = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    BookingId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false, defaultValueSql: "GETDATE()"),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    OwnerId = table.Column<long>(type: "bigint", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
+                    ModifiedBy = table.Column<long>(type: "bigint", nullable: true),
+                    BookingCode = table.Column<string>(type: "VARCHAR(32)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_feedbacks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tbl_feedbacks_tbl_bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "tbl_bookings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1016,6 +1056,11 @@ namespace Hospital.Api.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_bookings_TimeSlotId",
+                table: "tbl_bookings",
+                column: "TimeSlotId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_doctor_specialty_DoctorId",
                 table: "tbl_doctor_specialty",
                 column: "DoctorId");
@@ -1046,6 +1091,12 @@ namespace Hospital.Api.Migrations
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_feedbacks_BookingId",
+                table: "tbl_feedbacks",
+                column: "BookingId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_health_services_FacilitySpecialtyId",
                 table: "tbl_health_services",
                 column: "FacilitySpecialtyId");
@@ -1056,9 +1107,24 @@ namespace Hospital.Api.Migrations
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tbl_service_doctor_DoctorId",
+                table: "tbl_service_doctor",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tbl_service_doctor_ServiceId",
+                table: "tbl_service_doctor",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tbl_service_time_rules_ServiceId",
                 table: "tbl_service_time_rules",
                 column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tbl_time_slots_ServiceTimeRuleId",
+                table: "tbl_time_slots",
+                column: "ServiceTimeRuleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1115,7 +1181,7 @@ namespace Hospital.Api.Migrations
                 name: "tbl_feedbacks");
 
             migrationBuilder.DropTable(
-                name: "tbl_service_time_rules");
+                name: "tbl_service_doctor");
 
             migrationBuilder.DropTable(
                 name: "tbl_social_networks");
@@ -1130,19 +1196,25 @@ namespace Hospital.Api.Migrations
                 name: "perm_roles");
 
             migrationBuilder.DropTable(
-                name: "tbl_bookings");
-
-            migrationBuilder.DropTable(
                 name: "tbl_symptoms");
-
-            migrationBuilder.DropTable(
-                name: "mcs_doctors");
 
             migrationBuilder.DropTable(
                 name: "tbl_facility_types");
 
             migrationBuilder.DropTable(
+                name: "tbl_bookings");
+
+            migrationBuilder.DropTable(
+                name: "mcs_doctors");
+
+            migrationBuilder.DropTable(
                 name: "tbl_health_profiles");
+
+            migrationBuilder.DropTable(
+                name: "tbl_time_slots");
+
+            migrationBuilder.DropTable(
+                name: "tbl_service_time_rules");
 
             migrationBuilder.DropTable(
                 name: "tbl_health_services");

@@ -33,13 +33,6 @@ namespace Hospital.Api.Controllers.Auth
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
-        [HttpPost("login/with-phone"), AllowAnonymous]
-        public async Task<IActionResult> LoginWithPhone(TraditionLoginRequest dto, CancellationToken cancellationToken = default)
-        {
-            var command = new TraditionLoginCommand(dto);
-            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
-        }
-
         [HttpPost("refresh-token"), AllowAnonymous]
         public async Task<IActionResult> RefreshToken(RefreshTokenRequestDto request, CancellationToken cancellationToken = default)
         {

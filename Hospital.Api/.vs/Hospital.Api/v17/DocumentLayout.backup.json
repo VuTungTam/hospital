@@ -3,60 +3,33 @@
   "WorkspaceRootPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\healthfacilities\\healthfacility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\timeslots\\gettimeslotspaginationqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\healthfacilities\\facilitytypemapping.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\controllers\\timeslots\\timeslotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\timeslots\\timeslotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\specialties\\facilityspecialty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\controllers\\servicetimerules\\servicetimerulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\servicetimerules\\servicetimerulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\facilitytypes\\facilitytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\servicetimerules\\servicetimerulereadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\migrations\\20250316042222_u27.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:migrations\\20250316042222_u27.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\repositories\\interfaces\\servicetimerules\\iservicetimerulereadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\servicetimerules\\getservicetimerulepagingqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\migrations\\20250316041242_u26.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:migrations\\20250316041242_u26.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\servicetimerules\\getservicetimerulepagingquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\efconfigurations\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\customers\\customerreadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\feedbacks\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\migrations\\20250316041201_u25.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:migrations\\20250316041201_u25.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\migrations\\20250316040548_u23.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:migrations\\20250316040548_u23.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\efconfigurations\\entitytypeconfigurations\\feedbackentitytypeconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\doctors\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\efconfigurations\\entitytypeconfigurations\\doctorentitytypeconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\efconfigurations\\entitytypeconfigurations\\healthfacilityentitytypeconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\entities\\bookings\\bookingsymptom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\efconfigurations\\entitytypeconfigurations\\bookingentitytypeconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\customers\\getcustomerspaginationqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,7 +39,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,223 +47,119 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FacilityTypeMapping.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\HealthFacilities\\FacilityTypeMapping.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\HealthFacilities\\FacilityTypeMapping.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\HealthFacilities\\FacilityTypeMapping.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\HealthFacilities\\FacilityTypeMapping.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T08:42:28.976Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FacilityType.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\FacilityTypes\\FacilityType.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\FacilityTypes\\FacilityType.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\FacilityTypes\\FacilityType.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\FacilityTypes\\FacilityType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T08:35:47.791Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "HealthFacility.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\HealthFacilities\\HealthFacility.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\HealthFacilities\\HealthFacility.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\HealthFacilities\\HealthFacility.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\HealthFacilities\\HealthFacility.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAQwBwAAAAyAAAAAAAAAA==",
+              "Title": "GetTimeSlotsPaginationQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs*",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs*",
+              "ViewState": "AgIAABMAAAAAAAAAAAAzwB8AAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T08:34:42.186Z",
+              "WhenOpened": "2025-03-21T15:47:44.681Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "20250316042222_U27.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316042222_U27.cs",
-              "RelativeDocumentMoniker": "Migrations\\20250316042222_U27.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316042222_U27.cs",
-              "RelativeToolTip": "Migrations\\20250316042222_U27.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABkAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "TimeSlotController.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\TimeSlots\\TimeSlotController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TimeSlots\\TimeSlotController.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\TimeSlots\\TimeSlotController.cs",
+              "RelativeToolTip": "Controllers\\TimeSlots\\TimeSlotController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T04:22:25.768Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "20250316041242_U26.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316041242_U26.cs",
-              "RelativeDocumentMoniker": "Migrations\\20250316041242_U26.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316041242_U26.cs",
-              "RelativeToolTip": "Migrations\\20250316041242_U26.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T04:12:44.853Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "20250316041201_U25.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316041201_U25.cs",
-              "RelativeDocumentMoniker": "Migrations\\20250316041201_U25.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316041201_U25.cs",
-              "RelativeToolTip": "Migrations\\20250316041201_U25.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T04:12:05.042Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "20250316040548_U23.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316040548_U23.cs",
-              "RelativeDocumentMoniker": "Migrations\\20250316040548_U23.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\20250316040548_U23.cs",
-              "RelativeToolTip": "Migrations\\20250316040548_U23.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAQwFkAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T04:05:53.809Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Feedback.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Feedbacks\\Feedback.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\Feedbacks\\Feedback.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Feedbacks\\Feedback.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\Feedbacks\\Feedback.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T04:04:01.406Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "FeedbackEntityTypeConfiguration.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\FeedbackEntityTypeConfiguration.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\FeedbackEntityTypeConfiguration.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\FeedbackEntityTypeConfiguration.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\FeedbackEntityTypeConfiguration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:51:04.371Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AppDbContextModelSnapshot.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\AppDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Migrations\\AppDbContextModelSnapshot.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Migrations\\AppDbContextModelSnapshot.cs",
-              "RelativeToolTip": "Migrations\\AppDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAIEHAAAAAAAAAAAWwJsHAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:44:42.41Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\EFConfigurations\\AppDbContext.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAAwD0AAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:32:45.554Z",
+              "WhenOpened": "2025-03-21T15:45:26.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "FacilitySpecialty.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Specialties\\FacilitySpecialty.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\Specialties\\FacilitySpecialty.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Specialties\\FacilitySpecialty.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\Specialties\\FacilitySpecialty.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA4AAAASAAAAAAAAAA==",
+              "Title": "ServiceTimeRuleController.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
+              "RelativeToolTip": "Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAApwBoAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:26:21.957Z",
+              "WhenOpened": "2025-03-21T15:37:46.692Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "BookingSymptom.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Bookings\\BookingSymptom.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\Bookings\\BookingSymptom.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Bookings\\BookingSymptom.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\Bookings\\BookingSymptom.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAUAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "GetServiceTimeRulePagingQuery.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:22:35.101Z",
+              "WhenOpened": "2025-03-21T15:36:46.783Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "BookingEntityTypeConfiguration.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\BookingEntityTypeConfiguration.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\BookingEntityTypeConfiguration.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\BookingEntityTypeConfiguration.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\BookingEntityTypeConfiguration.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ServiceTimeRuleReadRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAIA/wCsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:22:10.158Z",
+              "WhenOpened": "2025-03-21T15:27:59.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "HealthFacilityEntityTypeConfiguration.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\HealthFacilityEntityTypeConfiguration.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\HealthFacilityEntityTypeConfiguration.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\HealthFacilityEntityTypeConfiguration.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\HealthFacilityEntityTypeConfiguration.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAQwEgAAAA1AAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "CustomerReadRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAD4v1EAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:20:45.319Z",
+              "WhenOpened": "2025-03-21T15:25:27.673Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Doctor.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Doctors\\Doctor.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Entities\\Doctors\\Doctor.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Entities\\Doctors\\Doctor.cs",
-              "RelativeToolTip": "..\\Hospital.Domain\\Entities\\Doctors\\Doctor.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBoAAAAWAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "GetCustomersPaginationQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T03:20:27.167Z",
+              "WhenOpened": "2025-03-21T15:25:12.392Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "DoctorEntityTypeConfiguration.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\DoctorEntityTypeConfiguration.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\DoctorEntityTypeConfiguration.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\DoctorEntityTypeConfiguration.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\EFConfigurations\\EntityTypeConfigurations\\DoctorEntityTypeConfiguration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABSAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "IServiceTimeRuleReadRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T15:01:05.59Z",
+              "WhenOpened": "2025-03-21T15:22:26.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GetServiceTimeRulePagingQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAApwB0AAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T15:20:59.197Z",
               "EditorCaption": ""
             }
           ]

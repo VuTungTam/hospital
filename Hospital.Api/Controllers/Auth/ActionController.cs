@@ -19,8 +19,8 @@ namespace Hospital.Api.Controllers.Auth
             return Ok(new ServiceResult { Data = result, Total = result.Count });
         }
 
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetPaging(int page = 0, int size = 20, CancellationToken cancellationToken = default)
+        [HttpGet("pagination")]
+        public async Task<IActionResult> GetPagination(int page = 0, int size = 20, CancellationToken cancellationToken = default)
         {
             var query = new GetActionsPagingQuery(new Pagination(page, size));
             var result = await _mediator.Send(query, cancellationToken);    

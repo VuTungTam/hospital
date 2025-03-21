@@ -31,9 +31,9 @@ namespace Hospital.Api.Controllers.HealthFacilities
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllFacilityType(CancellationToken cancellationToken = default)
         {
-            var types = await _facilityCategoryReadRepository.GetAsync(null, _facilityCategoryReadRepository.DefaultQueryOption,cancellationToken: cancellationToken);
+            var types = await _facilityCategoryReadRepository.GetAsync(cancellationToken: cancellationToken);
 
-            var dtos = _mapper.Map<List<FacilityCategoryDto>>(types);
+            var dtos = _mapper.Map<List<FacilityTypeDto>>(types);
 
             return Ok(new SimpleDataResult { Data = dtos });
         }

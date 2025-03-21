@@ -7,7 +7,7 @@ namespace Hospital.Api.Controllers.HealthFacilities
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FacilityCategoryController : CrudController<FacilityType, FacilityCategoryDto>
+    public class FacilityCategoryController : CrudController<FacilityType, FacilityTypeDto>
     {
         public FacilityCategoryController(IMediator mediator) : base(mediator)
         {

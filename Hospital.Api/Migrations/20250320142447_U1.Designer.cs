@@ -4,6 +4,7 @@ using Hospital.Infra.EFConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250320142447_U1")]
+    partial class U1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -477,6 +479,18 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
@@ -754,6 +768,18 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("DoctorId")
                         .HasColumnType("bigint");
 
@@ -920,6 +946,18 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("DoctorId")
                         .HasColumnType("bigint");
 
@@ -1058,36 +1096,32 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("DATETIME");
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
 
                     b.Property<TimeSpan>("End")
-                        .HasColumnType("TIME");
+                        .HasColumnType("time");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIT")
-                        .HasDefaultValue(false);
+                    b.Property<long?>("ServiceTimeRuleId")
+                        .HasColumnType("bigint");
 
                     b.Property<TimeSpan>("Start")
-                        .HasColumnType("TIME");
+                        .HasColumnType("time");
 
                     b.Property<long>("TimeRuleId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TimeRuleId");
+                    b.HasIndex("ServiceTimeRuleId");
 
                     b.ToTable("tbl_time_slots");
                 });
@@ -1873,10 +1907,8 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.TimeSlots.TimeSlot", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", "ServiceTimeRule")
-                        .WithMany("TimeSlots")
-                        .HasForeignKey("TimeRuleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ServiceTimeRuleId");
 
                     b.Navigation("ServiceTimeRule");
                 });
@@ -1979,11 +2011,6 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.ServiceType", b =>
                 {
                     b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
-                {
-                    b.Navigation("TimeSlots");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.FacilitySpecialty", b =>

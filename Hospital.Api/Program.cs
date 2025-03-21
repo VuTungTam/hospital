@@ -46,8 +46,9 @@ namespace Hospital.Api
             var app = builder.Build();
 
             app.UseCoreCors(builder.Configuration);
-
+            
             app.UseCoreConfigure(app.Environment);
+            
 
             await app.RunAsync();
         }

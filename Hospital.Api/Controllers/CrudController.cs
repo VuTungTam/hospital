@@ -31,7 +31,7 @@ namespace Hospital.Api.Controllers
             var query = new GetByIdQuery<TEntity, TDto>(id);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
-        [HttpGet("paging")]
+        [HttpGet("pagination")]
         public virtual async Task<IActionResult> GetPaging(int page, int size, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
