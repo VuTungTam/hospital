@@ -1,7 +1,7 @@
 ﻿using Hospital.Domain.Constants;
 using Hospital.Domain.Specifications;
+using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -12,7 +12,6 @@ using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Libraries.Attributes;
-using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,6 @@ using Microsoft.Extensions.Localization;
 using Serilog;
 using System.Linq.Expressions;
 using System.Reflection;
-using Hospital.Infrastructure.Extensions;
 
 
 namespace Hospital.Infrastructure.Repositories

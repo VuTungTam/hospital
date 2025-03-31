@@ -33,8 +33,11 @@ namespace Hospital.Application.Dtos.Bookings
         public int Order { get; set; }
 
         public string OwnerId { get; set; }
+
         public List<string> SymptomIds { get; set; } 
+
         public List<string> SymptomNameVns { get; set; }
+
         public List<string> SymptomNameEns { get; set; }
     }
     public class BookingValidator : BaseAbstractValidator<BookingResponseDto>

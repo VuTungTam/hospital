@@ -7,6 +7,8 @@ namespace Hospital.Application.Repositories.Interfaces.HealthProfiles
 {
     public interface IHealthProfileReadRepository : IReadRepository<HealthProfile>
     {
+        Task<HealthProfile> GetProfileById(long id, CancellationToken cancellationToken);
+
         Task<PaginationResult<HealthProfile>> GetPagingWithFilterAsync(Pagination pagination, long userId, CancellationToken cancellationToken = default);
     }
 }

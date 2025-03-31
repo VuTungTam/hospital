@@ -17,6 +17,10 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
         long Identity { get; }
 
+        long FacilityId { get; }
+
+        long ZoneId { get; }
+
         bool IsAnonymous { get; }
 
         bool IsSA { get; }

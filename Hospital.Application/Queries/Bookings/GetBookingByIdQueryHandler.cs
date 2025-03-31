@@ -42,7 +42,10 @@ namespace Hospital.Application.Queries.Bookings
 
             var option = new QueryOption
             {
-                IgnoreOwner = true,
+                IgnoreOwner = true,  
+                IgnoreDoctor = false, 
+                IgnoreFacility = false, 
+                IgnoreZone = false, 
                 Includes = new string[] { nameof(Booking.BookingSymptoms) }
             };
 
@@ -58,7 +61,7 @@ namespace Hospital.Application.Queries.Bookings
             if (bookingDto != null)
             {
                 var serviceId = _mapper.Map<long>(bookingDto.ServiceId);
-                var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, _healthServiceReadRepository.DefaultQueryOption, cancellationToken);
+                var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, cancellationToken:cancellationToken);
                 if (service != null)
                 {
                     bookingDto.ServiceNameVn = service.NameVn;
@@ -68,7 +71,7 @@ namespace Hospital.Application.Queries.Bookings
                 var symptomIds = _mapper.Map<List<long>>(bookingDto.SymptomIds);
                 if (symptomIds?.Any() == true)
                 {
-                    var symptoms = await _symptomReadRepository.GetByIdsAsync(symptomIds, _symptomReadRepository.DefaultQueryOption, cancellationToken);
+                    var symptoms = await _symptomReadRepository.GetByIdsAsync(symptomIds, cancellationToken: cancellationToken);
                     if (symptoms?.Any() == true)
                     {
                         bookingDto.SymptomNameVns = symptoms.Select(x => x.NameVn).ToList();

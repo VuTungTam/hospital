@@ -31,6 +31,10 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
         public HttpContext HttpContext { get; private set; }
 
+        public long FacilityId { get; private set; }
+
+        public long ZoneId { get; private set; }
+
         public ExecutionContext(IHttpContextAccessor accessor)
         {
             HttpContext = accessor.HttpContext;
@@ -82,6 +86,8 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
                 AccessToken = accessToken;
                 Identity = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.USER_ID).Value);
+                FacilityId = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.FACILITY_ID).Value);
+                ZoneId = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.ZONE_ID).Value);
                 Email = claims.First(c => c.Type == ClaimConstant.EMAIL).Value;
                 Permission = claims.First(c => c.Type == ClaimConstant.PERMISSION).Value;
                 AccountType = (AccountType)Convert.ToInt32(claims.First(c => c.Type == ClaimConstant.ACCOUNT_TYPE).Value);

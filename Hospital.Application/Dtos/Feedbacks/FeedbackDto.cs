@@ -11,10 +11,6 @@ namespace Hospital.Application.Dtos.Feedbacks
 
         public long BookingId { get; set; }
 
-        public long? CreatedBy { get; set; }
-
-        public long? ModifiedBy { get; set; }
-
         public long OwnerId { get; set; }
 
         public string BookingCode { get; set; }

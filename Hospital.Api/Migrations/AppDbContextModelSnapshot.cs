@@ -141,6 +141,12 @@ namespace Hospital.Api.Migrations
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("DoctorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("HealthProfileId")
                         .HasColumnType("bigint");
 
@@ -169,6 +175,9 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("SMALLINT");
 
                     b.Property<long>("TimeSlotId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ZoneId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -268,9 +277,6 @@ namespace Hospital.Api.Migrations
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Degree")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
 
@@ -289,7 +295,13 @@ namespace Hospital.Api.Migrations
                     b.Property<DateTime?>("Dob")
                         .HasColumnType("DATETIME");
 
-                    b.Property<int>("DoctorStatus")
+                    b.Property<int>("DoctorDegree")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorRank")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorTitle")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -298,6 +310,9 @@ namespace Hospital.Api.Migrations
 
                     b.Property<string>("Expertise")
                         .HasColumnType("NVARCHAR(255)");
+
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDefaultPassword")
                         .ValueGeneratedOnAdd()
@@ -446,6 +461,9 @@ namespace Hospital.Api.Migrations
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Message")
@@ -702,7 +720,13 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
-                    b.Property<long>("FacilitySpecialtyId")
+                    b.Property<long>("DoctorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("FacilitySpecialtyId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
@@ -725,6 +749,9 @@ namespace Hospital.Api.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("DECIMAL(18,2)");
 
+                    b.Property<long>("SpecialtyId")
+                        .HasColumnType("bigint");
+
                     b.Property<double>("StarPoint")
                         .HasColumnType("float");
 
@@ -740,6 +767,9 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("TypeId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ZoneId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FacilitySpecialtyId");
@@ -747,26 +777,6 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("TypeId");
 
                     b.ToTable("tbl_health_services");
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.ServiceDoctor", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("DoctorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ServiceId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("tbl_service_doctor");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.ServiceType", b =>
@@ -1424,6 +1434,9 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDefaultPassword")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1492,6 +1505,9 @@ namespace Hospital.Api.Migrations
 
                     b.Property<string>("ZaloId")
                         .HasColumnType("NVARCHAR(20)");
+
+                    b.Property<long>("ZoneId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -1785,11 +1801,9 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.HealthService", b =>
                 {
-                    b.HasOne("Hospital.Domain.Entities.Specialties.FacilitySpecialty", "FacilitySpecialty")
+                    b.HasOne("Hospital.Domain.Entities.Specialties.FacilitySpecialty", null)
                         .WithMany("Services")
-                        .HasForeignKey("FacilitySpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacilitySpecialtyId");
 
                     b.HasOne("Hospital.Domain.Entities.HealthServices.ServiceType", "ServiceType")
                         .WithMany("Services")
@@ -1797,28 +1811,7 @@ namespace Hospital.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FacilitySpecialty");
-
                     b.Navigation("ServiceType");
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.ServiceDoctor", b =>
-                {
-                    b.HasOne("Hospital.Domain.Entities.Doctors.Doctor", "Doctor")
-                        .WithMany("ServiceDoctors")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", "Service")
-                        .WithMany("ServiceDoctors")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
@@ -1946,8 +1939,6 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.Doctors.Doctor", b =>
                 {
                     b.Navigation("DoctorSpecialties");
-
-                    b.Navigation("ServiceDoctors");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.FacilityTypes.FacilityType", b =>
@@ -1970,8 +1961,6 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.HealthService", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("ServiceDoctors");
 
                     b.Navigation("TimeRules");
                 });

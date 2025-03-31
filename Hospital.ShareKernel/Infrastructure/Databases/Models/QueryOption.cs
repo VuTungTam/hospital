@@ -6,6 +6,11 @@
 
         public bool IgnoreOwner { get; set; }
 
+        public bool IgnoreFacility { get; set; }
+
+        public bool IgnoreZone { get; set; }
+
+        public bool IgnoreDoctor { get; set; }
         public QueryOption()
         {
         }

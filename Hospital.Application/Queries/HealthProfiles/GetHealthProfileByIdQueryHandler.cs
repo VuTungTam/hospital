@@ -7,6 +7,7 @@ using Hospital.Domain.Entities.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -32,8 +33,8 @@ namespace Hospital.Application.Queries.HealthProfiles
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
-            
-            var profile = await _healthProfileReadRepository.GetByIdAsync(request.Id, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+
+            var profile = await _healthProfileReadRepository.GetProfileById(request.Id, cancellationToken: cancellationToken);
 
             if (profile == null)
             {

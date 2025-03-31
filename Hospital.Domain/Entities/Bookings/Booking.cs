@@ -20,7 +20,10 @@ namespace Hospital.Domain.Entities.Bookings
         IModifiedBy,
         ISoftDelete,
         IDeletedBy,
-        IOwnedEntity
+        IOwnedEntity,
+        IFacility,
+        IZone,
+        IDoctor
     {
         [Filterable("Mã lịch khám")]
         [Immutable]
@@ -66,6 +69,8 @@ namespace Hospital.Domain.Entities.Bookings
         public long? DeletedBy { get; set; }
 
         public long OwnerId { get; set; }
-
+        public long FacilityId { get; set; }
+        public long ZoneId { get; set; }
+        public long DoctorId { get ; set ; }
     }
 }

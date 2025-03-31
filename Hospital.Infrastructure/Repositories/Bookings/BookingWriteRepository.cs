@@ -1,8 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Domain.Entities.Bookings;
-using Hospital.Infrastructure.Repositories;
+using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,5 +30,21 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             await sequenceRepository.IncreaseValueAsync(table, cancellationToken);
         }
 
+        public async Task ChangeStatusAsync(long bookingId, BookingStatus status, CancellationToken cancellationToken)
+        {
+            var cacheKey = await SetBlockUpdateCacheAsync(bookingId, cancellationToken);
+
+            var booking = new Booking { Id = bookingId, Status = status };
+
+            _dbContext.Attach(booking);
+
+            _dbContext.Entry(booking).Property(x => x.Status).IsModified = true;
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            await _redisCache.RemoveAsync(cacheKey.Key, cancellationToken: cancellationToken);
+
+            await RemoveCacheWhenUpdateAsync(bookingId, cancellationToken);
+        }
     }
 }

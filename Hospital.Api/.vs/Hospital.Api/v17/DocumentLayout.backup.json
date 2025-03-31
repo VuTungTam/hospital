@@ -3,33 +3,7 @@
   "WorkspaceRootPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\timeslots\\gettimeslotspaginationqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\controllers\\timeslots\\timeslotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\timeslots\\timeslotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\controllers\\servicetimerules\\servicetimerulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\servicetimerules\\servicetimerulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\servicetimerules\\servicetimerulereadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\repositories\\interfaces\\servicetimerules\\iservicetimerulereadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\servicetimerules\\getservicetimerulepagingqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\servicetimerules\\getservicetimerulepagingquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\customers\\customerreadrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\customers\\getcustomerspaginationqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\doctors\\getpublicdoctorbyidqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,128 +13,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GetTimeSlotsPaginationQueryHandler.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs*",
-              "RelativeToolTip": "..\\Hospital.Application\\Queries\\TimeSlots\\GetTimeSlotsPaginationQueryHandler.cs*",
-              "ViewState": "AgIAABMAAAAAAAAAAAAzwB8AAABTAAAAAAAAAA==",
+              "Title": "GetPublicDoctorByIdQueryHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABwAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:47:44.681Z",
+              "WhenOpened": "2025-03-31T09:49:17.615Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TimeSlotController.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\TimeSlots\\TimeSlotController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TimeSlots\\TimeSlotController.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\TimeSlots\\TimeSlotController.cs",
-              "RelativeToolTip": "Controllers\\TimeSlots\\TimeSlotController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:45:26.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ServiceTimeRuleController.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
-              "RelativeToolTip": "Controllers\\ServiceTimeRules\\ServiceTimeRuleController.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAApwBoAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:37:46.692Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "GetServiceTimeRulePagingQuery.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
-              "RelativeToolTip": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQuery.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:36:46.783Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ServiceTimeRuleReadRepository.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\ServiceTimeRules\\ServiceTimeRuleReadRepository.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAIA/wCsAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:27:59.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CustomerReadRepository.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
-              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\Customers\\CustomerReadRepository.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAD4v1EAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:25:27.673Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "GetCustomersPaginationQueryHandler.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
-              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Customers\\GetCustomersPaginationQueryHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAABcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:25:12.392Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IServiceTimeRuleReadRepository.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
-              "RelativeToolTip": "..\\Hospital.Application\\Repositories\\Interfaces\\ServiceTimeRules\\IServiceTimeRuleReadRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:22:26.052Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "GetServiceTimeRulePagingQueryHandler.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
-              "RelativeToolTip": "..\\Hospital.Application\\Queries\\ServiceTimeRules\\GetServiceTimeRulePagingQueryHandler.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAApwB0AAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:20:59.197Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             }
           ]
         }

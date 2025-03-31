@@ -1,6 +1,8 @@
-﻿using Hospital.Domain.Specifications;
+﻿using Hospital.Domain.Entities.HealthProfiles;
+using Hospital.Domain.Specifications;
 using Hospital.Infra.EFConfigurations;
 using Hospital.Infrastructure.Extensions;
+using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
@@ -38,6 +40,26 @@ namespace Hospital.Infrastructure.Repositories
             if (_executionContext.IsAnonymous || typeof(T).HasInterface<ISystemEntity>())
             {
                 return spec;
+            }
+            if (!option.IgnoreFacility && typeof(T).HasInterface<IFacility>())
+            {
+                spec = spec.And(new LimitByFacilityIdSpecification<T>(_executionContext.FacilityId));
+
+            }
+            if (!option.IgnoreZone && typeof(T).HasInterface<IZone>())
+            {
+                if(_executionContext.ZoneId == 0)
+                {
+                    spec = spec.And(new LimitByFacilityIdSpecification<T>(_executionContext.FacilityId));
+                }
+                else
+                {
+                    spec = spec.And(new LimitByZoneIdSpecification<T>(_executionContext.ZoneId));
+                }
+            }
+            if (!option.IgnoreDoctor && typeof(T).HasInterface<IDoctor>())
+            {
+                spec = spec.And(new LimitByDoctorIdSpecification<T>(_executionContext.Identity));
             }
 
             if (!option.IgnoreOwner && typeof(T).HasInterface<IOwnedEntity>())

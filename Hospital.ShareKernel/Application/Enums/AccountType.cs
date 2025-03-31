@@ -10,6 +10,9 @@ namespace Hospital.SharedKernel.Application.Enums
         [Description("Nhân viên hệ thống")]
         Employee = 2,
 
+        [Description("Bác sĩ")]
+        Doctor = 3,
+
         [Description("Khách vãng lai")]
         Anonymous = 10,
     }

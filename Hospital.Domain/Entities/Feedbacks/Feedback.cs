@@ -13,7 +13,8 @@ namespace Hospital.Domain.Entities.Feedbacks
         ICreatedBy,
         IModifiedAt,
         IModifiedBy,
-        IOwnedEntity
+        IOwnedEntity,
+        IFacility
     {
 
         public int Stars { get; set; }
@@ -36,6 +37,7 @@ namespace Hospital.Domain.Entities.Feedbacks
         [Filterable("Mã lịch khám")]
         [Immutable]
         public string BookingCode { get; set; }
-        
+
+        public long FacilityId { get; set; }
     }
 }

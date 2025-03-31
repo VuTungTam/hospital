@@ -8,13 +8,13 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Date;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using Hospital.Infrastructure.Extensions;
-using Hospital.SharedKernel.Infrastructure.Caching.Models;
 
 namespace Hospital.Infrastructure.Repositories.Bookings
 {
@@ -35,7 +35,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
         {
             var cacheEntry = CacheManager.GetMaxOrderCacheEntry(serviceId, date, timeSlotId);
 
-            var valueFactory = async () =>
+            async Task<int> valueFactory()
             {
                 var bookings = await _dbSet.AsNoTracking()
                     .Where(x => x.ServiceId == serviceId && x.Date == date
@@ -46,7 +46,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
                     return 0;
                 }
                 return bookings.Max(x => x.Order);
-            };
+            }
             return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
 
@@ -56,29 +56,30 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             var now = _dateService.GetClientTime();
 
             var cacheKey = CacheManager.GetCurrentOrderCacheEntry(serviceId, now, timeSlotId);
-
-            var spec = new GetBookingsByDateSpecification(now);
-
-            spec.And(new GetBookingsByServiceIdSpecification(serviceId));
-
-            spec.And(new GetBookingsByTimeSlotSpecification(timeSlotId));
-
-            spec.And(new GetBookingsByStatusSpecification(BookingStatus.Doing));
-
-            QueryOption option = new QueryOption
+            async Task<int> ValueFactory()
             {
-                IgnoreOwner = true,
-            };
-            
-            var booking = await FindBySpecificationAsync(spec, option, cancellationToken);
+                QueryOption option = new() { IgnoreOwner = true };
 
-            async Task<int> valueFactory()
-            {
-                await FindBySpecificationAsync(spec, option, cancellationToken);
-                return booking.Order;
+                var spec = new GetBookingsByDateSpecification(now)
+                    .And(new GetBookingsByServiceIdSpecification(serviceId))
+                    .And(new GetBookingsByTimeSlotSpecification(timeSlotId));
+
+                var bookings = await GetBySpecificationAsync(spec, option, cancellationToken);
+
+                var currentBooking = bookings.FirstOrDefault(b => b.Status == BookingStatus.Doing);
+
+                currentBooking ??= bookings.Where(b => b.Status == BookingStatus.Confirmed)
+                                           .OrderBy(b => b.Order)
+                                           .FirstOrDefault();
+
+                if (currentBooking == null)
+                    throw new BadRequestException("Khong the lay so thu tu hien tai");
+
+                return currentBooking.Order;
             }
 
-            return await _redisCache.GetOrSetAsync<int>(cacheKey.Key, valueFactory, TimeSpan.FromSeconds(cacheKey.ExpiriesInSeconds), cancellationToken: cancellationToken);
+            return await _redisCache.GetOrSetAsync(cacheKey.Key, ValueFactory,
+                TimeSpan.FromSeconds(cacheKey.ExpiriesInSeconds), cancellationToken);
         }
         public async Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default)
         {
@@ -94,7 +95,6 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             }
             QueryOption option = new QueryOption
             {
-                IgnoreOwner = false,
                 Includes = new string[] { nameof(Booking.BookingSymptoms) }
             };
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
@@ -128,9 +128,12 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             {
                 spec = spec.Not(new GetByIdSpecification<Booking>(excludeId));
             }
-            QueryOption option = new QueryOption
+            var option = new QueryOption
             {
                 IgnoreOwner = true,
+                IgnoreDoctor = false,
+                IgnoreFacility = false,
+                IgnoreZone = false,
                 Includes = new string[] { nameof(Booking.BookingSymptoms) }
             };
             var guardExpression = GuardDataAccess(spec, option).GetExpression();

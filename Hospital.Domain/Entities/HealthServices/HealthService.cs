@@ -16,7 +16,10 @@ namespace Hospital.Domain.Entities.HealthServices
         ICreatedAt,
         ICreatedBy,
         ISoftDelete,
-        IDeletedBy
+        IDeletedBy,
+        IFacility,
+        IZone,
+        IDoctor
     {
         public string NameVn { get; set; }
 
@@ -30,15 +33,13 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public ServiceType ServiceType { get; set; }
 
-        public long FacilitySpecialtyId { get; set; }
+        public long FacilityId { get; set; }
 
-        public FacilitySpecialty FacilitySpecialty { get; set; }
+        public long SpecialtyId { get; set; }
 
         public HealthServiceStatus Status { get; set; }
 
         public List<Booking> Bookings { get; set; }
-
-        public List<ServiceDoctor> ServiceDoctors { get; set; }
 
         public decimal Price { get; set; }
 
@@ -63,6 +64,8 @@ namespace Hospital.Domain.Entities.HealthServices
         public long? DeletedBy { get; set; }
 
         public List<ServiceTimeRule> TimeRules { get; set; }
+        public long ZoneId { get ; set ; }
+        public long DoctorId { get ; set ; }
 
         public void getStar()
         {

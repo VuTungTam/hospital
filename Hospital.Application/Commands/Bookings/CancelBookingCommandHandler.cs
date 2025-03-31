@@ -5,14 +5,12 @@ using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications.Bookings;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
-using Hospital.SharedKernel.Specifications.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -41,52 +39,72 @@ namespace Hospital.Application.Commands.Bookings
         public async Task<Unit> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
         {
             if (request.Id <= 0)
-            {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
-            }
 
-            var cancelBooking = await _bookingReadRepository.GetByIdAsync(request.Id, _bookingReadRepository.DefaultQueryOption, cancellationToken);
+            var cancelBooking = await _bookingReadRepository.GetByIdAsync(
+                request.Id, _bookingReadRepository.DefaultQueryOption, cancellationToken);
+
             if (cancelBooking == null)
-            {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
-            }
-            if (cancelBooking.Status == BookingStatus.Completed)
-            {
-                throw new BadRequestException(_localizer["Khong huy duoc lich da thuc hien"]);
-            }
 
+            switch (cancelBooking.Status)
+            {
+                case BookingStatus.Completed:
+                case BookingStatus.Doing:
+                    throw new BadRequestException(_localizer["Khong huy duoc lich "]);
+
+                case BookingStatus.Waiting:
+                    return await CancelBookingAsync(cancelBooking, cancellationToken);
+
+                case BookingStatus.Confirmed:
+                    return await CancelAndReorderAsync(cancelBooking, cancellationToken);
+
+                default:
+                    return Unit.Value;
+            }
+        }
+
+        private async Task<Unit> CancelBookingAsync(Booking cancelBooking, CancellationToken cancellationToken)
+        {
             cancelBooking.Status = BookingStatus.Cancel;
-            var cancelOrder = cancelBooking.Order;
+            await _bookingWriteRepository.UpdateAsync(cancelBooking, cancellationToken: cancellationToken);
+            return Unit.Value;
+        }
+
+        private async Task<Unit> CancelAndReorderAsync(Booking cancelBooking, CancellationToken cancellationToken)
+        {
+            cancelBooking.Status = BookingStatus.Cancel;
+            var canceledOrder = cancelBooking.Order;
             cancelBooking.Order = -1;
 
             _bookingWriteRepository.Update(cancelBooking);
             await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
-            var spec = new GetBookingsByDateSpecification(cancelBooking.Date)
-                .And(new GetBookingsByServiceIdSpecification(cancelBooking.ServiceId))
-                .And(new GetBookingsByTimeSlotSpecification(cancelBooking.TimeSlotId))
-                .And(new GetBookingNextOrderSpecification(cancelOrder));
-
-            var option = new QueryOption
+            var bookingsToUpdate = await GetBookingsToReorder(cancelBooking, canceledOrder, cancellationToken);
+            if (bookingsToUpdate.Any())
             {
-                IgnoreOwner = true,
-            };
-
-            var bookings = await _bookingReadRepository.GetAsync(spec, option, cancellationToken);
-
-            foreach (var booking in bookings)
-            {
-                if (booking.Order > cancelOrder)
+                foreach (var booking in bookingsToUpdate)
                 {
-                    booking.Order = booking.Order - 1;
+                    booking.Order -= 1;
                     _bookingWriteRepository.Update(booking);
                 }
+                await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
             }
 
-            await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
-
+            await _bookingWriteRepository.RemoveCacheWhenUpdateAsync(cancelBooking.Id, cancellationToken);
             return Unit.Value;
         }
 
+        private async Task<List<Booking>> GetBookingsToReorder(Booking cancelBooking, int canceledOrder, CancellationToken cancellationToken)
+        {
+            var spec = new GetBookingsByDateSpecification(cancelBooking.Date)
+                .And(new GetBookingsByServiceIdSpecification(cancelBooking.ServiceId))
+                .And(new GetBookingsByTimeSlotSpecification(cancelBooking.TimeSlotId))
+                .And(new GetBookingNextOrderSpecification(canceledOrder));
+
+            var option = new QueryOption { IgnoreOwner = true };
+
+            return await _bookingReadRepository.GetAsync(spec, option, cancellationToken);
+        }
     }
 }

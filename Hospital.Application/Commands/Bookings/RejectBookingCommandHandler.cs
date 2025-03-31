@@ -37,7 +37,7 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, _bookingReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
             if (booking == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);

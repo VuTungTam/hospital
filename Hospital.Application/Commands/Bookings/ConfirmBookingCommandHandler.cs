@@ -84,6 +84,8 @@ namespace Hospital.Application.Commands.Bookings
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
 
+            await _redisCache.SetAsync(cacheEntry.Key, booking.Order, cancellationToken: cancellationToken);
+
             return Unit.Value;
         }
     }

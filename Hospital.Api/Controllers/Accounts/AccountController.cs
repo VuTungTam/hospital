@@ -1,10 +1,12 @@
 ﻿using Hospital.Application.Commands.Accounts;
 using Hospital.Application.Commands.Accounts.Passwords;
 using Hospital.Application.Commands.Customers;
+using Hospital.Application.Commands.Doctors;
 using Hospital.Application.Commands.Employees;
 using Hospital.Application.Models;
 using Hospital.Application.Models.Auth;
 using Hospital.Application.Queries.Customers;
+using Hospital.Application.Queries.Doctors;
 using Hospital.Application.Queries.Employees;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Enums;
@@ -46,6 +48,10 @@ namespace Hospital.Api.Controllers.Accounts
             if (_executionContext.AccountType == AccountType.Employee)
             {
                 return Ok(new SimpleDataResult { Data = await _mediator.Send(new GetEmployeeProfileQuery(includeRole), cancellationToken) });
+            }
+            if (_executionContext.AccountType == AccountType.Doctor)
+            {
+                return Ok(new SimpleDataResult { Data = await _mediator.Send(new GetDoctorProfileQuery(), cancellationToken) });
             }
             return Ok(new SimpleDataResult { Data = await _mediator.Send(new GetCustomerProfileQuery(), cancellationToken) });
         }
@@ -102,6 +108,13 @@ namespace Hospital.Api.Controllers.Accounts
                 var command = new UpdateEmployeeProfileCommand(model);
                 await _mediator.Send(command, cancellationToken);
             }
+
+            else if (_executionContext.AccountType == AccountType.Doctor)
+            {
+                var command = new UpdateDoctorProfileCommand(model);
+                await _mediator.Send(command, cancellationToken);
+            }
+
             else
             {
                 var command = new UpdateCustomerProfileCommand(model);
@@ -119,6 +132,13 @@ namespace Hospital.Api.Controllers.Accounts
                 var command = new ChangeEmployeePasswordCommand(dto);
                 await _mediator.Send(command, cancellationToken);
             }
+
+            else if (_executionContext.AccountType == AccountType.Doctor)
+            {
+                var command = new ChangeDoctorPasswordCommand(dto);
+                await _mediator.Send(command, cancellationToken);
+            }
+
             else
             {
                 var command = new ChangeCustomerPasswordCommand(dto);

@@ -5,7 +5,7 @@ namespace Hospital.Domain.Specifications.HealthServices
 {
     public class GetHealthServicesBySpecialtyIdSpecification : ExpressionSpecification<HealthService>
     {
-        public GetHealthServicesBySpecialtyIdSpecification(long specialtyId) : base(x => (x.FacilitySpecialty.SpecialtyId == specialtyId))
+        public GetHealthServicesBySpecialtyIdSpecification(long specialtyId) : base(x => (x.SpecialtyId == specialtyId))
         {
         }
     }

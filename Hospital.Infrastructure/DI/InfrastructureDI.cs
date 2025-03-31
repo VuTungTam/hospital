@@ -50,6 +50,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Infrastructure.Repositories.TimeSlots;
+using Hospital.Application.Repositories.Interfaces.Doctors;
+using Hospital.Infrastructure.Repositories.Doctors;
 
 namespace Hospital.Infrastructure.DI
 {
@@ -158,6 +160,10 @@ namespace Hospital.Infrastructure.DI
             //Feedback 
             services.AddScoped<IFeedbackReadRepository, FeedbackReadRepository>();
             services.AddScoped<IFeedbackWriteRepository, FeedbackWriteRepository>();
+
+            //Doctor 
+            services.AddScoped<IDoctorReadRepository, DoctorReadRepository>();
+            services.AddScoped<IDoctorWriteRepository, DoctorWriteRepository>();
             return services;
         }
     }

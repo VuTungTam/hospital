@@ -107,17 +107,35 @@ namespace Hospital.Application.Services.Impls.Auth
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
-            var accountType = payload.User is Customer ? AccountType.Customer : AccountType.Employee;
+
+            var accountType = AccountType.Anonymous;
+
+            if (payload.User is Customer)
+            {
+                accountType = AccountType.Customer;
+            }
+            else if(payload.User is Employee)
+            {
+                accountType = AccountType.Employee;
+            }
+            else
+            {
+                accountType = AccountType.Doctor;
+            }
             var now = DateTime.Now;
 
             // add claims
             if (payload.User is Customer)
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, "false"));
+                claims.Add(new Claim(ClaimConstant.ZONE_ID, (0).ToString()));
+                claims.Add(new Claim(ClaimConstant.FACILITY_ID, (0).ToString()));
             }
             else if (payload.User is Employee employee)
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, (payload.Roles.Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN)).ToString()));
+                claims.Add(new Claim(ClaimConstant.ZONE_ID, (employee.ZoneId).ToString()));
+                claims.Add(new Claim(ClaimConstant.FACILITY_ID, (employee.FacilityId).ToString()));
             }
 
             claims.Add(new Claim(ClaimConstant.USER_ID, payload.User.Id.ToString()));
@@ -130,7 +148,6 @@ namespace Hospital.Application.Services.Impls.Auth
             claims.Add(new Claim(ClaimConstant.ACCOUNT_TYPE, ((int)accountType).ToString()));
             claims.Add(new Claim(ClaimConstant.IP_ADDRESS, AuthUtility.TryGetIP(_executionContext.HttpContext.Request)));
             claims.Add(new Claim(ClaimConstant.CREATE_AT, now.ToString()));
-            claims.Add(new Claim(ClaimConstant.AUTHORS_MESSAGE, "Contact for work: 0847-88-4444; Facebook: https://facebook.com/cuongnguyen.ftdev"));
 
             var validSeconds = payload.ValidSeconds > 0 ? payload.ValidSeconds : AuthConfig.TokenTime;
             var expires = now.AddSeconds(validSeconds);

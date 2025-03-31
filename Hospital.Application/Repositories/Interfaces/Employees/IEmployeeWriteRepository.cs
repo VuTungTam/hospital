@@ -1,6 +1,7 @@
 ﻿using Hospital.Application.Models;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Domain.Entities.Employees;
+using Hospital.SharedKernel.Domain.Enums;
 
 namespace Hospital.Application.Repositories.Interfaces.Employees
 {
@@ -16,9 +17,9 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
 
         Task UpdateRolesAsync(long employeeId, IEnumerable<long> roleIds, CancellationToken cancellationToken);
 
-        Task UpdateBranchesAsync(long employeeId, IEnumerable<long> branchIds, CancellationToken cancellationToken);
+        //Task UpdateBranchesAsync(long employeeId, IEnumerable<long> branchIds, CancellationToken cancellationToken);
 
-        Task UpdateStatusAsync(Employee employee, CancellationToken cancellationToken);
+        Task UpdateStatusAsync(long employeeId, AccountStatus status, CancellationToken cancellationToken);
 
         Task UpdateLastSeenAsync(CancellationToken cancellationToken = default);
     }

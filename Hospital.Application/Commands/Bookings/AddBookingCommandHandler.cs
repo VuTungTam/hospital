@@ -29,11 +29,9 @@ namespace Hospital.Application.Commands.Bookings
         public async Task<string> Handle(AddBookingCommand request, CancellationToken cancellationToken)
         {
             var booking = _mapper.Map<Booking>(request.Booking);
-            if (booking.Status == BookingStatus.None)
-            {
-                booking.Status = BookingStatus.Waiting;
-            }
-            //Kiểm tra xem đặt lịch này chưa
+
+            booking.Status = BookingStatus.Waiting;
+
             await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 
             await _bookingWriteRepository.AddAsync(booking, cancellationToken);

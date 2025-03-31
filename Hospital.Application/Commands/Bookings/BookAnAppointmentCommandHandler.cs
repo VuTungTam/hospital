@@ -15,37 +15,29 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Commands.Bookings
 {
+    //Le tan booking
     public class BookAnAppointmentCommandHandler : BaseCommandHandler, IRequestHandler<BookAnAppointmentCommand, string>
     {
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IBookingReadRepository _bookingReadRepository;
-        private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
-        private readonly ISymptomReadRepository _symptomReadRepository;
-        private readonly IRedisCache _redisCache;
         public BookAnAppointmentCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
-            IRedisCache redisCache,
             IBookingWriteRepository bookingWriteRepository,
-            IBookingReadRepository bookingReadRepository,
-            IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
-            ISymptomReadRepository symptomReadRepository
+            IBookingReadRepository bookingReadRepository
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;
-            _symptomReadRepository = symptomReadRepository;
-            _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
-            _redisCache = redisCache;
         }
 
         public async Task<string> Handle(BookAnAppointmentCommand request, CancellationToken cancellationToken)
         {
             var booking = _mapper.Map<Booking>(request.Booking);
 
-            booking.Status = BookingStatus.Waiting;
+            booking.Status = BookingStatus.Completed;
 
             await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 

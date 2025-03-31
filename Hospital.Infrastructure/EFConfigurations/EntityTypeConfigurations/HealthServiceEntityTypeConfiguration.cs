@@ -43,10 +43,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .WithMany(x => x.Services)
                    .HasForeignKey(x => x.TypeId);
 
-            builder.HasOne(x => x.FacilitySpecialty)
-                   .WithMany(x => x.Services)
-                   .HasForeignKey(x => x.FacilitySpecialtyId);
-
             builder.Property(x => x.TotalStars)
                    .HasColumnType("INT");
 

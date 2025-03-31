@@ -13,6 +13,7 @@ using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -62,6 +63,7 @@ namespace Hospital.Application.Commands.Employees
 
                 employee.EmployeeRoles.Add(new EmployeeRole
                 {
+                    Id = AuthUtility.GenerateSnowflakeId(),
                     RoleId = roleDb.Id,
                 });
             }

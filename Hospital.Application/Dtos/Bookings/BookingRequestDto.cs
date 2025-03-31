@@ -8,8 +8,6 @@ namespace Hospital.Application.Dtos.Bookings
 
         public string HealthProfileId { get; set; }
 
-        public BookingStatus Status { get; set; }
-
         public DateTime Date { get; set; }
 
         public string ServiceId { get; set; }

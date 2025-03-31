@@ -5,6 +5,8 @@
         public const string IS_SA = "is_sa";
         public const string SHARDING = "sharding_group";
         public const string USER_ID = "user_id";
+        public const string FACILITY_ID = "facility_id";
+        public const string ZONE_ID = "zone_id";
         public const string USERNAME = "username";
         public const string ROLES = "roles";
         public const string PERMISSION = "permission";

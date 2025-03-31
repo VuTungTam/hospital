@@ -95,11 +95,16 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
         public static CacheEntry DbSystemIdCacheEntry<T>(long id) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:{GetTableName<T>()}:{id}", 3600);
 
+        public static CacheEntry DbSystemPublicIdCacheEntry<T>(long id) where T : BaseEntity
+            => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:public-{GetTableName<T>()}:{id}", 3600);
+
         public static CacheEntry DbOwnerIdCacheEntry<T>(long recordId, long ownerId) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:row-id:{GetTableName<T>()}:{recordId}:{ownerId}", 600);
 
         public static CacheEntry DbSystemAllCacheEntry<T>() where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-rows:{GetTableName<T>()}", 3600);
+        public static CacheEntry DbSystemPublicAllCacheEntry<T>() where T : BaseEntity
+            => new CacheEntry($"{typeof(T).Name.ToLower()}:s-rows:public-{GetTableName<T>()}", 3600);
 
         public static CacheEntry DbOwnerAllCacheEntry<T>(long ownerId) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:rows:{GetTableName<T>()}:{ownerId}", 600);

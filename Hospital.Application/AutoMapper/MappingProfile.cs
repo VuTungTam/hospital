@@ -2,6 +2,7 @@
 using Hospital.Application.Dtos.Auth;
 using Hospital.Application.Dtos.Bookings;
 using Hospital.Application.Dtos.Customers;
+using Hospital.Application.Dtos.Doctors;
 using Hospital.Application.Dtos.Employee;
 using Hospital.Application.Dtos.Feedbacks;
 using Hospital.Application.Dtos.HealthFacility;
@@ -14,6 +15,7 @@ using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Symptoms;
 using Hospital.Application.Models.Auth;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthFacilities;
@@ -89,6 +91,14 @@ namespace Hospital.Application.Mappings
                 .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.EmployeeRoles != null ? src.EmployeeRoles.Select(x => x.Role).ToList() : new()))
                 .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.EmployeeActions != null ? src.EmployeeActions.Select(x => x.Action).ToList() : new()))
                 .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
+
+            CreateMap<DoctorDto, Doctor>();
+
+            CreateMap<Doctor, DoctorDto>()
+                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? src.DoctorSpecialties.Select(x => x.Specialty).ToList() : new()));
+
+            CreateMap<Doctor, PublicDoctorDto>()
+                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameVn)) : string.Empty));
 
             CreateMap<CustomerDto, Customer>();
 
