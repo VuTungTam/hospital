@@ -1,9 +1,10 @@
 ﻿using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.Services.Auth.Enums;
 using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Articles
 {
-    //[RequiredPermission(ActionExponent.ArticleManagement)]
+    [RequiredPermission(ActionExponent.ArticleManagement)]
     public class PostOrHiddenArticleCommand : BaseCommand
     {
         public PostOrHiddenArticleCommand(long id, bool isPost)

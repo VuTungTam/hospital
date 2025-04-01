@@ -23,7 +23,7 @@ namespace Hospital.Application.Services.Impls.Accounts
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
-              <div style='margin-bottom: 4px'>Chúng tôi gửi thông báo này để xác nhận rằng bạn đã thay đổi mật khẩu tại <strong>Pet5H</strong>, với thông tin như sau:</div>
+              <div style='margin-bottom: 4px'>Chúng tôi gửi thông báo này để xác nhận rằng bạn đã thay đổi mật khẩu tại <strong>HealthMate</strong>, với thông tin như sau:</div>
               <div>Địa chỉ truy cập: <strong>{requestInfo.Ip}</strong></div>
               <div>Trình duyệt: <strong>{requestInfo.Browser}</strong></div>
               <div style='margin-bottom: 8px'>Hệ điều hành: <strong>{requestInfo.OS}</strong></div>
@@ -56,7 +56,7 @@ namespace Hospital.Application.Services.Impls.Accounts
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
-              <p>Cảm ơn bạn đã tạo tài khoản tại <strong>Pet5H</strong>, vui lòng bấm vào nút bên dưới để xác thực tài khoản của bạn</p>
+              <p>Cảm ơn bạn đã tạo tài khoản tại <strong>HealthMate</strong>, vui lòng bấm vào nút bên dưới để xác thực tài khoản của bạn</p>
               <div style='display: flex; justify-content: center; margin: 24px 0;'>
                 <a href='{ClientInfoConfig.Url}/xac-thuc-tai-khoan?e={user.Email.ToBase64Encode()}&c={code}' target='_blank' style='display: block; padding: 12px 16px; margin: 0 auto; border-radius: 4px; background-color: #f0923a; color: #fff; text-decoration: none'>
                   Xác minh tài khoản
@@ -69,9 +69,9 @@ namespace Hospital.Application.Services.Impls.Accounts
               </div>
               <div style='margin-bottom: 24px;'>Nếu bạn cho rằng đây là sự nhầm lẫn, hãy bỏ qua email này.</div>
             ";
-            var message = GetFrameMessage("Xác minh tài khoản Pet5H", content);
+            var message = GetFrameMessage("Xác minh tài khoản HealthMate", content);
 
-            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "Xác nhận tài khoản Pet5H" }, cancellationToken);
+            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "Xác nhận tài khoản HealthMate" }, cancellationToken);
         }
 
         public async Task SendForgotPwdAsync(BaseUser user, string code, CancellationToken cancellationToken)
@@ -86,21 +86,21 @@ namespace Hospital.Application.Services.Impls.Accounts
             ";
             var message = GetFrameMessage("Quên mật khẩu", content);
 
-            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "[Quan trọng] Quên mật khẩu Pet5H" }, cancellationToken);
+            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "[Quan trọng] Quên mật khẩu HealthMate" }, cancellationToken);
         }
 
         public async Task SendPasswordForUserAsync(BaseUser user, CancellationToken cancellationToken)
         {
             var content = $@"
               <p>Xin chào <strong>{user.Name}</strong>,</p>
-              <p>Mật khẩu cho tài khoản tại Pet5H của bạn là:</p>
+              <p>Mật khẩu cho tài khoản tại HealthMate của bạn là:</p>
               <div style='display: flex; padding: 16px 24px; margin: 16px 24px; border-radius: 4px; background-color: #f1f1f1; text-align: center;'>
                 <span style='display: inline-block; margin: 0 auto; font-weight: 700;'>{user.Password}</span>
               </div>
             ";
-            var message = GetFrameMessage("Tài khoản tại Pet5H", content);
+            var message = GetFrameMessage("Tài khoản tại HealthMate", content);
 
-            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "[Quan trọng] Tài khoản tại Pet5H" }, cancellationToken);
+            await _emailService.SendAsync(new EmailOptionRequest { To = user.Email, Body = message, Subject = "[Quan trọng] Tài khoản tại HealthMate" }, cancellationToken);
         }
 
         #region Frame
@@ -123,7 +123,7 @@ namespace Hospital.Application.Services.Impls.Accounts
                               style='border-style:solid;border-width:thin;border-color:#dadce0;border-radius:8px;padding:28px 20px'
                               align='center' class='m_-82709585843158686mdv2rw'><img
                                 src='https://cdn.oapi.vn/lg-20240628153441.png?token=cvh6685467'
-                                width='140px' height='96' aria-hidden='true' style='margin-bottom:8px' alt='Pet5H' class='CToWUd'
+                                width='140px' height='96' aria-hidden='true' style='margin-bottom:8px' alt='HealthMate' class='CToWUd'
                                 data-bit='iit'>
                               <div
                                 style='font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;border-bottom:thin solid #dadce0;color:rgba(0,0,0,0.87);line-height:32px;padding-bottom:24px;text-align:center;word-break:break-word'>

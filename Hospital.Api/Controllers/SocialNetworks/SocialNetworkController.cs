@@ -29,7 +29,7 @@ namespace Hospital.Api.Controllers.SocialNetworks
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
 
-            var query = new GetAllSocialNetworkPagingQuery(pagination);
+            var query = new GetSocialNetworksPagingQuery(pagination);
 
             var result = await _mediator.Send(query, cancellationToken);
 

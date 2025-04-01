@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Hospital.Infrastructure.Persistences.EF.EntityTypeConfigurations
+namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
 {
     public class EmployeeActionEntityTypeConfiguration : IEntityTypeConfiguration<EmployeeAction>
     {

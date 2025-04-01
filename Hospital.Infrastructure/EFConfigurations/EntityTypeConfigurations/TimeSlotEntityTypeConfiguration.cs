@@ -1,12 +1,6 @@
-﻿using Hospital.Domain.Entities.Symptoms;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Hospital.Domain.Entities.TimeSlots;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hospital.Domain.Entities.TimeSlots;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
 {

@@ -3,11 +3,14 @@ using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Application.Services.Auth.Enums;
 using Hospital.SharedKernel.Domain.Enums;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Queries.Doctors
 {
-    public class GetDoctorsPaginationQuery : BaseAllowAnonymousQuery<PaginationResult<DoctorDto>>
+    [RequiredPermission(ActionExponent.ViewDoctor)]
+    public class GetDoctorsPaginationQuery : BaseQuery<PaginationResult<DoctorDto>>
     {
         public GetDoctorsPaginationQuery(Pagination pagination, List<long> specialtyIds, AccountStatus state, DoctorDegree degree, DoctorTitle title, DoctorRank rank)
         {

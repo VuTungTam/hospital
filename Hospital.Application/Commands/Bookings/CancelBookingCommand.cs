@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Bookings
 {
-    [RequiredPermission(ActionExponent.Update)]
+    [RequiredPermission(ActionExponent.CancelBooking)]
     public class CancelBookingCommand : BaseCommand
     {
         public CancelBookingCommand(long id)

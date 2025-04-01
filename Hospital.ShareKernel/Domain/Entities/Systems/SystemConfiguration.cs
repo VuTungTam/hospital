@@ -24,6 +24,10 @@ namespace Hospital.SharedKernel.Domain.Entities.Systems
 
         public bool? PreventCopying { get; set; }
 
+        public string BookingNotificationEmail { get; set; }
+
+        public string BookingNotificationBccEmails { get; set; }
+
         public DateTime? ModifiedAt { get; set; }
 
         public long? ModifiedBy { get; set; }

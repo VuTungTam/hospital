@@ -1,8 +1,6 @@
-﻿using Hospital.Domain.Entities.HealthProfiles;
-using Hospital.Domain.Specifications;
-using Hospital.Infra.EFConfigurations;
+﻿using Hospital.Domain.Specifications;
+using Hospital.Infrastructure.EFConfigurations;
 using Hospital.Infrastructure.Extensions;
-using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;

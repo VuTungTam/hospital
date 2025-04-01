@@ -2855,6 +2855,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Hospital.Api.Controllers.SystemConfigurations.SystemConfigurationController",
+    "Method": "Get",
+    "RelativePath": "api/systemconfiguration",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.SystemConfigurations.SystemConfigurationController",
+    "Method": "Update",
+    "RelativePath": "api/systemconfiguration/save",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "config",
+        "Type": "Hospital.Application.Dtos.SystemConfigurations.SystemConfigurationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Hospital.Api.Controllers.TimeSlots.TimeSlotController",
     "Method": "GetById",
     "RelativePath": "api/timeslot/{id}",

@@ -3,7 +3,69 @@
   "WorkspaceRootPath": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\doctors\\getpublicdoctorbyidqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.sharekernel\\configures\\coreconfigure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.sharekernel\\infrastructure\\behaviors\\authorizationbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78B9442C-46F5-45A4-AE28-26CE753CFE69}|..\\Hospital.ShareKernel\\Hospital.SharedKernel.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.sharekernel\\infrastructure\\behaviors\\validationbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\queries\\employees\\getemployeespaginationquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\ormrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\controllers\\employees\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\employees\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\accounts\\passwords\\forgotpasswordstep3commandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\accounts\\passwords\\forgotpasswordstep3command.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.api\\controllers\\accounts\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F9DB6A-8A5C-4772-8980-9533E7B1479A}|Hospital.Api.csproj|solutionrelative:controllers\\accounts\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\accounts\\passwords\\forgotpasswordstep2commandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\accounts\\passwords\\forgotpasswordstep1commandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\accounts\\passwords\\forgotpasswordstep1command.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\services\\impls\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A7C5F57-09E5-4B51-920E-3ED5BD404C10}|..\\Hospital.Domain\\Hospital.Domain.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.domain\\constants\\rolecodeconstant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\bookings\\addsymptomsforbookingcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\bookings\\bookanappointmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\bookings\\addbookingcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\bookings\\updatebookingcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\commands\\doctors\\updatedoctorcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4535A6FD-D4B3-447D-AEBF-19FD0EF06B11}|..\\Hospital.Application\\Hospital.Application.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.application\\repositories\\interfaces\\bookings\\ibookingwriterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6EB81B7-0E2F-404F-A7A0-626142E641B9}|..\\Hospital.Infrastructure\\Hospital.Infrastructure.csproj|d:\\apps\\visual studio\\projects\\hos\\hospital.infrastructure\\repositories\\bookings\\bookingwriterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,24 +75,284 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GetPublicDoctorByIdQueryHandler.cs",
-              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
-              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
-              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
-              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Doctors\\GetPublicDoctorByIdQueryHandler.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABwAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T09:49:17.615Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthorizationBehavior.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\AuthorizationBehavior.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\AuthorizationBehavior.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\AuthorizationBehavior.cs",
+              "RelativeToolTip": "..\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\AuthorizationBehavior.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:57:52.711Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CoreConfigure.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
+              "RelativeToolTip": "..\\Hospital.ShareKernel\\Configures\\CoreConfigure.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAewFQAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:57:20.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ValidationBehavior.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\ValidationBehavior.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\ValidationBehavior.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\ValidationBehavior.cs",
+              "RelativeToolTip": "..\\Hospital.ShareKernel\\Infrastructure\\Behaviors\\ValidationBehavior.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:55:07.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrmRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\OrmRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\OrmRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\OrmRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\OrmRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:50:05.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\Employees\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Employees\\EmployeeController.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\Employees\\EmployeeController.cs",
+              "RelativeToolTip": "Controllers\\Employees\\EmployeeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:46:44.263Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GetEmployeesPaginationQuery.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Employees\\GetEmployeesPaginationQuery.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Queries\\Employees\\GetEmployeesPaginationQuery.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Queries\\Employees\\GetEmployeesPaginationQuery.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Queries\\Employees\\GetEmployeesPaginationQuery.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:46:30.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ForgotPasswordStep3CommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3CommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3CommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3CommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3CommandHandler.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAvwDcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:36:51.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ForgotPasswordStep2CommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep2CommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep2CommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep2CommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep2CommandHandler.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:36:39.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ForgotPasswordStep1CommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1CommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1CommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1CommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1CommandHandler.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:34:53.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ForgotPasswordStep3Command.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3Command.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3Command.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3Command.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep3Command.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:33:54.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\Accounts\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Accounts\\AccountController.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Api\\Controllers\\Accounts\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\Accounts\\AccountController.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAArwJkAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:33:45.606Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ForgotPasswordStep1Command.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1Command.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1Command.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1Command.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Accounts\\Passwords\\ForgotPasswordStep1Command.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:33:40.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RoleCodeConstant.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Constants\\RoleCodeConstant.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Domain\\Constants\\RoleCodeConstant.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Domain\\Constants\\RoleCodeConstant.cs",
+              "RelativeToolTip": "..\\Hospital.Domain\\Constants\\RoleCodeConstant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:15:21.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Services\\Impls\\Auth\\AuthService.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Services\\Impls\\Auth\\AuthService.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Services\\Impls\\Auth\\AuthService.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Services\\Impls\\Auth\\AuthService.cs",
+              "ViewState": "AgIAAPcAAAAAAAAAAADwvw0BAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T07:11:10.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AddSymptomsForBookingCommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\AddSymptomsForBookingCommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Bookings\\AddSymptomsForBookingCommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\AddSymptomsForBookingCommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Bookings\\AddSymptomsForBookingCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:52:59.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "BookAnAppointmentCommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Bookings\\BookAnAppointmentCommandHandler.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAQwCsAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:51:41.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AddBookingCommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\AddBookingCommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Bookings\\AddBookingCommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\AddBookingCommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Bookings\\AddBookingCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:51:02.517Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UpdateDoctorCommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Doctors\\UpdateDoctorCommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Doctors\\UpdateDoctorCommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Doctors\\UpdateDoctorCommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Doctors\\UpdateDoctorCommandHandler.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAYwGMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:48:49.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "UpdateBookingCommandHandler.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\UpdateBookingCommandHandler.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Commands\\Bookings\\UpdateBookingCommandHandler.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Commands\\Bookings\\UpdateBookingCommandHandler.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Commands\\Bookings\\UpdateBookingCommandHandler.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAQwD4AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:48:20.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "IBookingWriteRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Repositories\\Interfaces\\Bookings\\IBookingWriteRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Application\\Repositories\\Interfaces\\Bookings\\IBookingWriteRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Application\\Repositories\\Interfaces\\Bookings\\IBookingWriteRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Application\\Repositories\\Interfaces\\Bookings\\IBookingWriteRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAB0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:47:38.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "BookingWriteRepository.cs",
+              "DocumentMoniker": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Bookings\\BookingWriteRepository.cs",
+              "RelativeDocumentMoniker": "..\\Hospital.Infrastructure\\Repositories\\Bookings\\BookingWriteRepository.cs",
+              "ToolTip": "D:\\Apps\\Visual Studio\\Projects\\hos\\Hospital.Infrastructure\\Repositories\\Bookings\\BookingWriteRepository.cs",
+              "RelativeToolTip": "..\\Hospital.Infrastructure\\Repositories\\Bookings\\BookingWriteRepository.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAwAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T03:44:25.369Z",
+              "EditorCaption": ""
             }
           ]
         }

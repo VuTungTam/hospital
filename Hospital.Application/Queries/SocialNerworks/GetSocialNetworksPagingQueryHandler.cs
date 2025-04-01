@@ -10,10 +10,10 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.SocialNerworks
 {
-    public class GetAllSocialNetworkPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetAllSocialNetworkPagingQuery, PaginationResult<SocialNetworkDto>>
+    public class GetSocialNetworksPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetSocialNetworksPagingQuery, PaginationResult<SocialNetworkDto>>
     {
         private readonly ISocialNetworkReadRepository _socialNetworkReadRepository;
-        public GetAllSocialNetworkPagingQueryHandler(
+        public GetSocialNetworksPagingQueryHandler(
             IAuthService authService, 
             IMapper mapper, 
             IStringLocalizer<Resources> localizer,
@@ -23,7 +23,7 @@ namespace Hospital.Application.Queries.SocialNerworks
             _socialNetworkReadRepository = socialNetworkReadRepository;
         }
 
-        public async Task<PaginationResult<SocialNetworkDto>> Handle(GetAllSocialNetworkPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<SocialNetworkDto>> Handle(GetSocialNetworksPagingQuery request, CancellationToken cancellationToken)
         {
             var paging = await _socialNetworkReadRepository.GetPagingAsync(request.Pagination, spec:null, _socialNetworkReadRepository.DefaultQueryOption, cancellationToken);
             

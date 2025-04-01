@@ -1,4 +1,6 @@
-﻿using Hospital.Domain.Enums;
+﻿using Hospital.Application.Dtos.Specialties;
+using Hospital.Application.Dtos.Symptoms;
+using Hospital.Domain.Enums;
 
 namespace Hospital.Application.Dtos.Bookings
 {
@@ -15,5 +17,7 @@ namespace Hospital.Application.Dtos.Bookings
         public long TimeSlotId { get; set; }
 
         public string OwnerId { get; set; }
+
+        public List<SymptomDto> Symptoms { get; set; }
     }
 }

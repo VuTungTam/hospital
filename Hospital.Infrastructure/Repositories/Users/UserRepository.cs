@@ -2,7 +2,7 @@
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Customers;
 using Hospital.Domain.Specifications.Employees;
-using Hospital.Infra.EFConfigurations;
+using Hospital.Infrastructure.EFConfigurations;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Specifications.Interfaces;

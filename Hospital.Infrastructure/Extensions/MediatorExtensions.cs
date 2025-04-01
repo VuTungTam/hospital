@@ -1,6 +1,6 @@
-﻿using MediatR;
-using Hospital.Infra.EFConfigurations;
+﻿using Hospital.Infrastructure.EFConfigurations;
 using Hospital.SharedKernel.Domain.Entities.Base;
+using MediatR;
 
 namespace Hospital.Infra.Extensions
 {

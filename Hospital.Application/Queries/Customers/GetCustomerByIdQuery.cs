@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Application.Services.Auth.Enums;
 
 namespace Hospital.Application.Queries.Customers
 {
-    //[RequiredPermission(ActionExponent.ViewCustomer)]
+    [RequiredPermission(ActionExponent.ViewCustomer)]
     public class GetCustomerByIdQuery : BaseQuery<CustomerDto>
     {
         public GetCustomerByIdQuery(long id)

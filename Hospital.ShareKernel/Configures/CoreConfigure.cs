@@ -254,7 +254,7 @@ namespace Hospital.SharedKernel.Configures
 
         public static IServiceCollection AddCoreBehaviors(this IServiceCollection services)
         {
-            return services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            return services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
         }
         #region Middlewares
         #endregion

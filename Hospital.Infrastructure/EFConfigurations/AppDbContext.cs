@@ -1,8 +1,15 @@
-﻿using Hospital.Domain.Entities.Bookings;
+﻿using Hospital.Domain.Entities.Articles;
+using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.Distances;
+using Hospital.Domain.Entities.Doctors;
+using Hospital.Domain.Entities.Feedbacks;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthProfiles;
+using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
+using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Entities.Auths;
@@ -15,22 +22,14 @@ using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
+using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Hospital.Infrastructure.Persistences.EF.EntityTypeConfigurations;
-using Hospital.Domain.Entities.Articles;
-using Hospital.Domain.Entities.Distances;
-using Hospital.Domain.Entities.Doctors;
-using Hospital.Domain.Entities.Feedbacks;
-using Hospital.Domain.Entities.HealthFacilities;
-using Hospital.Domain.Entities.ServiceTimeRules;
-using Hospital.Domain.Entities.TimeSlots;
-using Hospital.SharedKernel.Libraries.Utils;
-using MassTransit.Internals;
 using System.Linq.Expressions;
 
-namespace Hospital.Infra.EFConfigurations
+namespace Hospital.Infrastructure.EFConfigurations
 {
     public class AppDbContext : DbContext, IUnitOfWork
     {
@@ -69,6 +68,7 @@ namespace Hospital.Infra.EFConfigurations
             modelBuilder.ApplyConfiguration(new DoctorEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FeedbackEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TimeSlotEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new SystemConfigurationEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

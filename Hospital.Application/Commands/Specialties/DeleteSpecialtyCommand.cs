@@ -4,7 +4,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Specialties
 {
-    [RequiredPermission(ActionExponent.Master)]
+    [RequiredPermission(ActionExponent.SpecialtyManagement)]
     public class DeleteSpecialtyCommand : BaseCommand
     {
         public DeleteSpecialtyCommand(List<long> ids) 

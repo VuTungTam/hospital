@@ -1,8 +1,10 @@
 ﻿using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.Services.Auth.Enums;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Employees
 {
-    //[RequiredPermission(ActionExponent.Master)]
+    [RequiredPermission(ActionExponent.ChangeRole)]
     public class ChangeRolesForEmployeeCommand : BaseCommand
     {
         public ChangeRolesForEmployeeCommand(long userId, List<long> roleIds)

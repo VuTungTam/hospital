@@ -1,6 +1,5 @@
 ﻿using Hospital.Domain.Constants;
-using Hospital.Infra.EFConfigurations;
-using Hospital.SharedKernel.Application.Consts;
+using Hospital.Infrastructure.EFConfigurations;
 using Hospital.SharedKernel.Caching.In_Memory;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Entities;

@@ -1,8 +1,10 @@
 ﻿using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.Services.Auth.Enums;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Customers
 {
-    //Sửa
+    [RequiredPermission(ActionExponent.UpdateCustomer)]
     public class SendVerifyCustomerAccountWithEmailCommand : BaseAllowAnonymousCommand
     {
         public SendVerifyCustomerAccountWithEmailCommand(string email)

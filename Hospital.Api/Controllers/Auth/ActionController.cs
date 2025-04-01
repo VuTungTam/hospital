@@ -22,7 +22,7 @@ namespace Hospital.Api.Controllers.Auth
         [HttpGet("pagination")]
         public async Task<IActionResult> GetPagination(int page = 0, int size = 20, CancellationToken cancellationToken = default)
         {
-            var query = new GetActionsPagingQuery(new Pagination(page, size));
+            var query = new GetActionsPaginationQuery(new Pagination(page, size));
             var result = await _mediator.Send(query, cancellationToken);    
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }

@@ -4,7 +4,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Bookings
 {
-    [RequiredPermission(ActionExponent.BookingManagement)]
+    [RequiredPermission(ActionExponent.ConfirmBooking)]
     public class ConfirmBookingCommand : BaseCommand
     {
         public ConfirmBookingCommand(long id)

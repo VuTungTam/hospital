@@ -256,19 +256,19 @@ namespace Hospital.Application.Services.Impls.Auth
         public string GetPermission(Employee employee, List<ActionWithExcludeValue> actions)
         {
             var roles = employee.EmployeeRoles.Select(u => u.Role);
-            var sa = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.SUPER_ADMIN));
-            var admin = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.ADMIN));
+            //var sa = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.SUPER_ADMIN));
+            //var admin = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.ADMIN));
 
-            if (sa != null)
-            {
-                var exponent = sa.RoleActions.First(x => x.Role.Code.Equals(RoleCodeConstant.SUPER_ADMIN)).Action.Exponent;
-                return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
-            }
-            else if (admin != null)
-            {
-                var exponent = admin.RoleActions.First(x => x.Role.Code.Equals(RoleCodeConstant.ADMIN)).Action.Exponent;
-                return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
-            }
+            //if (sa != null)
+            //{
+            //    var exponent = sa.RoleActions.First(x => x.Role.Code.Equals(RoleCodeConstant.SUPER_ADMIN)).Action.Exponent;
+            //    return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
+            //}
+            //else if (admin != null)
+            //{
+            //    var exponent = admin.RoleActions.First(x => x.Role.Code.Equals(RoleCodeConstant.ADMIN)).Action.Exponent;
+            //    return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
+            //}
 
             var exponents = actions.Select(a => a.Exponent);
 

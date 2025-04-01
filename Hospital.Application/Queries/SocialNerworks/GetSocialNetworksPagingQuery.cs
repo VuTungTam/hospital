@@ -5,9 +5,9 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.SocialNerworks
 {
-    public class GetAllSocialNetworkPagingQuery : BaseAllowAnonymousQuery<PaginationResult<SocialNetworkDto>>
+    public class GetSocialNetworksPagingQuery : BaseAllowAnonymousQuery<PaginationResult<SocialNetworkDto>>
     {
-        public GetAllSocialNetworkPagingQuery(Pagination pagination)
+        public GetSocialNetworksPagingQuery(Pagination pagination)
         {
             Pagination = pagination;
         }

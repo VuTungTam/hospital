@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    [RequiredPermission(ActionExponent.BookingManagement)]
+    [RequiredPermission(ActionExponent.ViewBooking)]
     public class GetBookingByIdQuery : BaseQuery<BookingResponseDto>
     {
         public GetBookingByIdQuery(long id)

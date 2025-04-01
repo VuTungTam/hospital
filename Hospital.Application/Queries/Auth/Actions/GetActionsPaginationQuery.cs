@@ -8,9 +8,9 @@ using Hospital.SharedKernel.Libraries.Attributes;
 namespace Hospital.Application.Queries.Auth.Actions
 {
     [RequiredPermission(ActionExponent.Master)]
-    public class GetActionsPagingQuery : BaseQuery<PaginationResult<ActionDto>>
+    public class GetActionsPaginationQuery : BaseQuery<PaginationResult<ActionDto>>
     {
-        public GetActionsPagingQuery(Pagination pagination)
+        public GetActionsPaginationQuery(Pagination pagination)
         {
             Pagination = pagination;
         }

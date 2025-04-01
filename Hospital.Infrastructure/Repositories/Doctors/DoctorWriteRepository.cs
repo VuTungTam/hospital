@@ -57,7 +57,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             var sql = $"DELETE FROM {new DoctorSpecialty().GetTableName()} WHERE {nameof(DoctorSpecialty.DoctorId)} = {doctorId}; ";
             foreach (var specialtyId in specialtyIds)
             {
-                sql += $"INSERT INTO {new DoctorSpecialty().GetTableName()}(RoleId, {nameof(DoctorSpecialty.DoctorId)}, CreatedBy, CreatedAt) VALUES ({specialtyId}, {doctorId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
+                sql += $"INSERT INTO {new DoctorSpecialty().GetTableName()}(SpecialtyId, {nameof(DoctorSpecialty.DoctorId)}, CreatedBy, CreatedAt) VALUES ({specialtyId}, {doctorId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
             }
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, cancellationToken: cancellationToken);

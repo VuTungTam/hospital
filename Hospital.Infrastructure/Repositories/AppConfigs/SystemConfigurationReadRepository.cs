@@ -1,4 +1,4 @@
-﻿using Hospital.Infra.EFConfigurations;
+﻿using Hospital.Infrastructure.EFConfigurations;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Entities.Systems;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;

@@ -4,7 +4,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Commands.Bookings
 {
-    [RequiredPermission(ActionExponent.BookingManagement)]
+    [RequiredPermission(ActionExponent.DeleteBooking)]
     public class DeleteBookingsCommand : BaseCommand
     {
         public DeleteBookingsCommand(List<long> ids)

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -50,6 +52,16 @@ namespace Hospital.Application.Commands.Bookings
             }
 
             var entity = _mapper.Map<Booking>(request.Booking);
+
+            var newSymptomIds = request.Booking.Symptoms.Select(x => long.Parse(x.Id));
+
+            var oldSymptomIds = booking.BookingSymptoms.Select(x => x.SymptomId);
+
+            bool areEqual = new HashSet<long>(oldSymptomIds).SetEquals(newSymptomIds);
+            if (areEqual)
+            {
+                await _bookingWriteRepository.UpdateSymptomsAsync(booking.Id, newSymptomIds, cancellationToken: cancellationToken);
+            }
 
             await _bookingWriteRepository.UpdateAsync(entity, cancellationToken: cancellationToken);
 

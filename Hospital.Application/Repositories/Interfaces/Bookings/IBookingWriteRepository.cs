@@ -9,5 +9,7 @@ namespace Hospital.Application.Repositories.Interfaces.Bookings
         Task AddBookingCodeAsync(Booking booking, CancellationToken cancellationToken);
 
         Task ChangeStatusAsync(long bookingId, BookingStatus status, CancellationToken cancellationToken);
+
+        Task UpdateSymptomsAsync(long bookingId, IEnumerable<long> symptomIds, CancellationToken cancellationToken);
     }
 }
