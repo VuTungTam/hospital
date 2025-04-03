@@ -12,6 +12,7 @@ using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
+using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -31,7 +32,23 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             _dateService = dateService;
         }
 
-        public async Task<int> GetMaxOrderAsync(long serviceId, DateTime date, long timeSlotId , CancellationToken cancellationToken)
+        public override ISpecification<Booking> GuardDataAccess<Booking>(ISpecification<Booking> spec, QueryOption option = default)
+        {
+            option ??= new QueryOption();
+
+            spec ??= new ExpressionSpecification<Booking>(x => true);
+
+            spec = spec.And(base.GuardDataAccess(spec, option));
+
+            if (!option.IgnoreDoctor)
+            {
+                spec = spec.And(new LimitByDoctorIdSpecification<Booking>(_executionContext.Identity));
+
+            }
+            return spec;
+        }
+
+        public async Task<int> GetMaxOrderAsync(long serviceId, DateTime date, long timeSlotId, CancellationToken cancellationToken)
         {
             var cacheEntry = CacheManager.GetMaxOrderCacheEntry(serviceId, date, timeSlotId);
 
@@ -49,7 +66,6 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             }
             return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
-
 
         public async Task<int> GetCurrentAsync(long serviceId, long timeSlotId, CancellationToken cancellationToken)
         {
@@ -107,7 +123,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
-            
+
             return new PaginationResult<Booking>(data, count);
         }
 
@@ -150,42 +166,42 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             return new PaginationResult<Booking>(data, count);
         }
 
-    //    public async Task<int> GetBookingQuantity(
-    //long? serviceId, DateTime? date, TimeSpan? start, TimeSpan? end, List<BookingStatus>? status, CancellationToken cancellationToken)
-    //    {
-    //        var specs = new List<ISpecification<Booking>>();
+        //    public async Task<int> GetBookingQuantity(
+        //long? serviceId, DateTime? date, TimeSpan? start, TimeSpan? end, List<BookingStatus>? status, CancellationToken cancellationToken)
+        //    {
+        //        var specs = new List<ISpecification<Booking>>();
 
-    //        if (status?.Any() == true)
-    //        {
-    //            foreach (var item in status)
-    //            {
-    //                specs.Add(new GetBookingsByStatusSpecification(item));
-    //            }
-    //        }
+        //        if (status?.Any() == true)
+        //        {
+        //            foreach (var item in status)
+        //            {
+        //                specs.Add(new GetBookingsByStatusSpecification(item));
+        //            }
+        //        }
 
-    //        if (serviceId.HasValue && serviceId.Value > 0)
-    //        {
-    //            specs.Add(new GetBookingsByServiceIdSpecification(serviceId.Value));
-    //        }
+        //        if (serviceId.HasValue && serviceId.Value > 0)
+        //        {
+        //            specs.Add(new GetBookingsByServiceIdSpecification(serviceId.Value));
+        //        }
 
-    //        if (date.HasValue)
-    //        {
-    //            specs.Add(new GetBookingsByDateSpecification(date.Value));
-    //        }
+        //        if (date.HasValue)
+        //        {
+        //            specs.Add(new GetBookingsByDateSpecification(date.Value));
+        //        }
 
-    //        if (start.HasValue && end.HasValue)
-    //        {
-    //            specs.Add(new GetBookingsByTimeSlotSpecification(start.Value, end.Value));
-    //        }
+        //        if (start.HasValue && end.HasValue)
+        //        {
+        //            specs.Add(new GetBookingsByTimeSlotSpecification(start.Value, end.Value));
+        //        }
 
-    //        var combinedSpec = specs.Aggregate((spec1, spec2) => spec1.And(spec2));
-    //        QueryOption option = new QueryOption();
-    //        var guardExpression = GuardDataAccess(combinedSpec,option).GetExpression();
+        //        var combinedSpec = specs.Aggregate((spec1, spec2) => spec1.And(spec2));
+        //        QueryOption option = new QueryOption();
+        //        var guardExpression = GuardDataAccess(combinedSpec,option).GetExpression();
 
-    //        return await _dbSet.AsNoTracking()
-    //                           .Where(guardExpression)
-    //                           .CountAsync(cancellationToken);
-    //    }
+        //        return await _dbSet.AsNoTracking()
+        //                           .Where(guardExpression)
+        //                           .CountAsync(cancellationToken);
+        //    }
 
     }
 }

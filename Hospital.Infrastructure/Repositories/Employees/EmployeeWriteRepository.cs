@@ -1,13 +1,19 @@
 ﻿using Hospital.Application.Models;
 using Hospital.Application.Repositories.Interfaces.Employees;
+using Hospital.Domain.Constants;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
+using Hospital.SharedKernel.Libraries.Utils;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 
 namespace Hospital.Infrastructure.Repositories.Employees
 {
@@ -55,6 +61,63 @@ namespace Hospital.Infrastructure.Repositories.Employees
             await _dbSet.AddAsync(employee, cancellationToken);
         }
 
+        public async Task AddFacilityAdminAsync(Employee employee, long facilityId, CancellationToken cancellationToken)
+        {
+            var sequenceRepository = _serviceProvider.GetRequiredService<ISequenceRepository>();
+            var table = "admin";
+            var code = await sequenceRepository.GetSequenceAsync(table, cancellationToken);
+
+            if (string.IsNullOrEmpty(employee.Password))
+            {
+                var random = new Random();
+                employee.Password = DefaultRandomPassword[random.Next(0, DefaultRandomPassword.Count)];
+                employee.IsDefaultPassword = true;
+                employee.IsPasswordChangeRequired = true;
+            }
+
+
+            employee.Code = code.ValueString;
+            employee.HashPassword();
+            employee.FacilityId = facilityId;
+            employee.LastSeen = null;
+
+            await _dbSet.AddAsync(employee, cancellationToken);
+        }
+
+        public async Task AddBookingNotificationForCoordinatorAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken)
+        {
+            var query = _dbSet.AsNoTracking()
+                .Include(x => x.EmployeeRoles)
+                .Where(x => x.EmployeeRoles.Any(er => er.Role.Code == RoleCodeConstant.COORDINATOR));
+
+            if (zoneId != 0)
+            {
+                query.Where(x => x.ZoneId == zoneId);
+            }
+            else
+            {
+                query.Where(x => x.FacilityId == facilityId);
+            }
+
+            var employeeReadRepository = _serviceProvider.GetRequiredService<IEmployeeReadRepository>();
+            var notificationWriteRepository = _serviceProvider.GetRequiredService<INotificationWriteRepository>();
+
+            var employees = await query.ToListAsync(cancellationToken);
+
+            var removeCacheTasks = new List<Task>();
+            foreach (var employee in employees)
+            {
+                var noti = JsonConvert.DeserializeObject<Notification>(JsonConvert.SerializeObject(notification));
+
+                noti.OwnerId = employee.Id;
+                notificationWriteRepository.Add(noti);
+
+                removeCacheTasks.Add(notificationWriteRepository.RemovePaginationCacheByUserIdAsync(employee.Id, cancellationToken));
+            }
+
+            callbackWrapper.Callback = () => Task.WhenAll(removeCacheTasks);
+        }
+
         public async Task SetActionAsDefaultAsync(long employeeId, CancellationToken cancellationToken)
         {
             await _dbContext.Database.ExecuteSqlRawAsync($"DELETE FROM {new EmployeeAction().GetTableName()} WHERE {nameof(EmployeeAction.EmployeeId)} = {employeeId}");
@@ -77,7 +140,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
             var sql = $"DELETE FROM {new EmployeeRole().GetTableName()} WHERE {nameof(EmployeeRole.EmployeeId)} = {employeeId}; ";
             foreach (var roleId in roleIds)
             {
-                sql += $"INSERT INTO {new EmployeeRole().GetTableName()}(RoleId, {nameof(EmployeeRole.EmployeeId)}, CreatedBy, CreatedAt) VALUES ({roleId}, {employeeId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
+                sql += $"INSERT INTO {new EmployeeRole().GetTableName()}(Id, RoleId, {nameof(EmployeeRole.EmployeeId)}, CreatedBy, CreatedAt) VALUES ({AuthUtility.GenerateSnowflakeId()},{roleId}, {employeeId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
             }
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, cancellationToken: cancellationToken);

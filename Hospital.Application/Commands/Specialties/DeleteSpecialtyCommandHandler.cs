@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Specialities;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -35,7 +34,7 @@ namespace Hospital.Application.Commands.Specialties
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var symptoms = await _specialtyReadRepository.GetByIdsAsync(request.Ids, _specialtyReadRepository.DefaultQueryOption,cancellationToken);
+            var symptoms = await _specialtyReadRepository.GetByIdsAsync(request.Ids, _specialtyReadRepository.DefaultQueryOption, cancellationToken);
             if (symptoms.Any())
             {
                 await _specialtyWriteRepository.DeleteAsync(symptoms, cancellationToken);

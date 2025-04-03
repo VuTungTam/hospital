@@ -30,6 +30,10 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.HasMany(x => x.FacilitySpecialties)
                    .WithOne(x => x.Specialty)
                    .HasForeignKey(x => x.SpecialtyId);
+
+            builder.HasMany(x => x.HealthServices)
+                   .WithOne(x => x.Specialty)
+                   .HasForeignKey(x => x.SpecialtyId);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Models.Admin;
+using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Employees;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
@@ -10,8 +11,11 @@ using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Libraries.Security;
+using Hospital.SharedKernel.Specifications;
+using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -19,8 +23,47 @@ namespace Hospital.Infrastructure.Repositories.Employees
 {
     public class EmployeeReadRepository : ReadRepository<Employee>, IEmployeeReadRepository
     {
-        public EmployeeReadRepository(IServiceProvider serviceProvider, IStringLocalizer<Resources> localizer, IRedisCache redisCache) : base(serviceProvider, localizer, redisCache)
+        public EmployeeReadRepository(
+            IServiceProvider serviceProvider,
+            IStringLocalizer<Resources> localizer,
+            IRedisCache redisCache
+            ) : base(serviceProvider, localizer, redisCache)
         {
+        }
+
+        public override ISpecification<Employee> GuardDataAccess<Employee>(ISpecification<Employee> spec, QueryOption option = default)
+        {
+            option ??= new QueryOption();
+
+            spec ??= new ExpressionSpecification<Employee>(x => true);
+
+            spec = spec.And(base.GuardDataAccess(spec, option));
+
+            if (_executionContext.IsSA)
+            {
+                var adminSpec = new GetFacilityAdminSpecification();
+                var selfSpec = new IdEqualsSpecification<Employee>(_executionContext.Identity);
+
+                spec = selfSpec.Or((ISpecification<Employee>)adminSpec);
+
+                return spec;
+            }
+
+            spec = spec.And(new LimitByFacilityIdSpecification<Employee>(_executionContext.FacilityId));
+
+            if (!option.IgnoreZone)
+            {
+                if (_executionContext.ZoneId == 0)
+                {
+                    spec = spec.And(new LimitByFacilityIdSpecification<Employee>(_executionContext.FacilityId));
+                }
+                else
+                {
+                    spec = spec.And(new LimitByZoneIdSpecification<Employee>(_executionContext.ZoneId));
+                }
+            }
+
+            return spec;
         }
 
         public async Task<Employee> GetLoginByEmailAsync(string email, string password, bool checkPassword = true, CancellationToken cancellationToken = default)
@@ -73,7 +116,15 @@ namespace Hospital.Infrastructure.Repositories.Employees
 
         public async Task<Employee> GetByIdIncludedRolesAsync(long id, CancellationToken cancellationToken = default)
         {
+            ISpecification<Employee> spec = new ExpressionSpecification<Employee>(x => true);
+
+            if (id != _executionContext.Identity)
+            {
+                spec = GuardDataAccess(spec);
+            }
+
             var employee = await _dbSet.AsNoTracking()
+                                       .Where(spec.GetExpression())
                                        .Include(x => x.EmployeeRoles)
                                        .ThenInclude(x => x.Role)
                                        .ThenInclude(x => x.RoleActions)
@@ -106,18 +157,30 @@ namespace Hospital.Infrastructure.Repositories.Employees
             return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
 
-        public async Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long roleId = 0, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0, CancellationToken cancellationToken = default)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
 
             var includable = query.Include(x => x.EmployeeRoles)
                                   .ThenInclude(x => x.Role);
 
+            ISpecification<Employee> spec = new ExpressionSpecification<Employee>(x => true);
+
             if (status != AccountStatus.None)
             {
-                var spec = new EmployeeByStatusEqualsSpecification(status);
-                query = query.Where(spec.GetExpression());
+                spec = spec.And(new EmployeeByStatusEqualsSpecification(status));
             }
+
+            var option = new QueryOption();
+
+            if (zoneId == 0)
+            {
+                option.IgnoreZone = true;
+            }
+
+            spec = GuardDataAccess(spec, option);
+
+            query = query.Where(spec.GetExpression());
 
             query = query.BuildOrderBy(pagination.Sorts);
 

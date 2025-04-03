@@ -69,7 +69,7 @@ namespace Hospital.Api.Controllers.Delarations
         {
             var command = new UpdateHealthProfileCommand(HealthProfileDto);
             await _mediator.Send(command, cancellationToken);
-            return Ok(new BaseResponse {  });
+            return Ok(new BaseResponse { });
         }
 
         [HttpDelete]

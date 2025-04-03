@@ -24,7 +24,7 @@ namespace Hospital.Application.Commands.HealthFacilities
             IMapper mapper
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
-            _healthFacilityReadRepository = healthFacilityReadRepository;   
+            _healthFacilityReadRepository = healthFacilityReadRepository;
             _healthFacilityWriteRepository = healthFacilityWriteRepository;
         }
 

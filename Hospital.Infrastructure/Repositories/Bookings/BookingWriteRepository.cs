@@ -4,6 +4,7 @@ using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
+using Hospital.SharedKernel.Libraries.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -48,12 +49,17 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             await RemoveCacheWhenUpdateAsync(bookingId, cancellationToken);
         }
 
+        public Task ActionAfterAddAsync(CancellationToken cancellationToken)
+        {
+            return base.RemoveCacheWhenAddAsync(cancellationToken);
+        }
+
         public async Task UpdateSymptomsAsync(long bookingId, IEnumerable<long> symptomIds, CancellationToken cancellationToken)
         {
             var sql = $"DELETE FROM {new BookingSymptom().GetTableName()} WHERE {nameof(BookingSymptom.BookingId)} = {bookingId}; ";
             foreach (var symptomId in symptomIds)
             {
-                sql += $"INSERT INTO {new BookingSymptom().GetTableName()}(SymptomId, {nameof(BookingSymptom.BookingId)}, CreatedBy, CreatedAt) VALUES ({symptomId}, {bookingId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
+                sql += $"INSERT INTO {new BookingSymptom().GetTableName()}(Id, SymptomId, {nameof(BookingSymptom.BookingId)}, CreatedBy, CreatedAt) VALUES ({AuthUtility.GenerateSnowflakeId()},{symptomId}, {bookingId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
             }
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, cancellationToken: cancellationToken);

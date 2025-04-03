@@ -10,6 +10,7 @@ using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
 using Hospital.Domain.Entities.TimeSlots;
+using Hospital.Domain.Entities.Zones;
 using Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Entities.Auths;
@@ -69,6 +70,8 @@ namespace Hospital.Infrastructure.EFConfigurations
             modelBuilder.ApplyConfiguration(new FeedbackEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TimeSlotEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SystemConfigurationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ZoneEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -273,5 +276,7 @@ namespace Hospital.Infrastructure.EFConfigurations
         public DbSet<Feedback> Feedbacks { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
+
+        public DbSet<ZoneSpecialty> ZoneSpecialties { get; set; }
     }
 }

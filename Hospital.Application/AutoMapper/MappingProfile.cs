@@ -13,6 +13,8 @@ using Hospital.Application.Dtos.ServiceTimeRules;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Symptoms;
+using Hospital.Application.Dtos.SystemConfigurations;
+using Hospital.Application.Dtos.Zones;
 using Hospital.Application.Models.Auth;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Doctors;
@@ -25,9 +27,12 @@ using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
+using Hospital.Domain.Entities.Zones;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Entities.Employees;
+using Hospital.SharedKernel.Domain.Entities.Systems;
+using Hospital.SharedKernel.Domain.Models.Auths;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
 using System.Reflection;
 using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
@@ -38,6 +43,59 @@ namespace Hospital.Application.Mappings
         public MappingProfile()
         {
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
+
+            // App configs
+            CreateMap<SystemConfigurationDto, SystemConfiguration>()
+                .ForMember(des => des.BookingNotificationBccEmails, opt => opt.MapFrom(src => string.Join(",", src.BookingNotificationBccEmails ?? new())));
+
+            CreateMap<SystemConfiguration, SystemConfigurationDto>()
+                .ForMember(des => des.BookingNotificationBccEmails, opt => opt.MapFrom(src => SplitToList(src.BookingNotificationBccEmails, ",")));
+
+            //LoginHistory
+            CreateMap<LoginHistory, LoginHistoryDto>();
+
+            // Roles
+            CreateMap<Action, ActionDto>();
+
+            CreateMap<ActionWithExcludeValue, ActionDto>();
+
+            CreateMap<Role, RoleDto>()
+                .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.RoleActions.Select(x => x.Action)));
+
+            CreateMap<RoleDto, Role>()
+                .ForMember(des => des.RoleActions, opt => opt.MapFrom(src => src.Actions.Select(x => new RoleAction { RoleId = long.Parse(src.Id), ActionId = long.Parse(x.Id) })));
+
+            // Locations
+            CreateMap<Province, ProvinceDto>().ReverseMap();
+            CreateMap<District, DistrictDto>().ReverseMap();
+            CreateMap<Ward, WardDto>().ReverseMap();
+
+            // Users
+            CreateMap<RegAccountRequest, Customer>();
+
+            CreateMap<EmployeeDto, Employee>();
+
+            CreateMap<AdminDto, Employee>();
+
+            CreateMap<Employee, EmployeeDto>()
+                .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.EmployeeRoles != null ? src.EmployeeRoles.Select(x => x.Role).ToList() : new()))
+                .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.EmployeeActions != null ? src.EmployeeActions.Select(x => x.Action).ToList() : new()))
+                .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
+
+            CreateMap<DoctorDto, Doctor>();
+
+            CreateMap<Doctor, DoctorDto>()
+                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? src.DoctorSpecialties.Select(x => x.Specialty).ToList() : new()));
+
+            CreateMap<Doctor, PublicDoctorDto>()
+                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameVn)) : string.Empty));
+
+            CreateMap<CustomerDto, Customer>();
+
+            CreateMap<Customer, CustomerDto>()
+                .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
+
+            CreateMap<Customer, CustomerNameDto>();
 
             //Social network
             CreateMap<SocialNetwork, SocialNetworkDto>().ReverseMap();
@@ -68,54 +126,34 @@ namespace Hospital.Application.Mappings
 
             //Specialty
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
+
             // Booking
-            CreateMap<Booking, BookingResponseDto>()
+            CreateMap<Booking, BookingDto>()
                 .ForMember(dest => dest.SymptomIds, opt => opt.MapFrom(src => src.BookingSymptoms != null
                     ? src.BookingSymptoms.Select(bs => bs.SymptomId.ToString()).ToList()
                     : new List<string>()));
 
-            CreateMap<BookingRequestDto, Booking>()
-                .ForMember(dest => dest.BookingSymptoms, opt => opt.Ignore());
+            CreateMap<BookingDto, Booking>()
+                .ForMember(des => des.BookingSymptoms, opt => opt.MapFrom(src => src.Symptoms.Select(x => new BookingSymptom { BookingId = long.Parse(src.Id), SymptomId = long.Parse(x.Id) })));
 
-            // Locations
-            CreateMap<Province, ProvinceDto>().ReverseMap();
-            CreateMap<District, DistrictDto>().ReverseMap();
-            CreateMap<Ward, WardDto>().ReverseMap();
+            //Zone
+            CreateMap<Zone, ZoneDto>()
+                .ForMember(des => des.Specialties, opt => opt.MapFrom(src => src.ZoneSpecialties.Select(x => x.Specialty)));
 
-            // Users
-            CreateMap<RegAccountRequest, Customer>();
-
-            CreateMap<EmployeeDto, Employee>();
-
-            CreateMap<Employee, EmployeeDto>()
-                .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.EmployeeRoles != null ? src.EmployeeRoles.Select(x => x.Role).ToList() : new()))
-                .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.EmployeeActions != null ? src.EmployeeActions.Select(x => x.Action).ToList() : new()))
-                .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
-
-            CreateMap<DoctorDto, Doctor>();
-
-            CreateMap<Doctor, DoctorDto>()
-                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? src.DoctorSpecialties.Select(x => x.Specialty).ToList() : new()));
-
-            CreateMap<Doctor, PublicDoctorDto>()
-                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameVn)) : string.Empty));
-
-            CreateMap<CustomerDto, Customer>();
-
-            CreateMap<Customer, CustomerDto>()
-                .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
-
-            CreateMap<Customer, CustomerNameDto>();
-            // Roles
-            CreateMap<Action, ActionDto>();
-
-            CreateMap<Role, RoleDto>()
-                .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.RoleActions.Select(x => x.Action)));
-
-            CreateMap<RoleDto, Role>()
-                .ForMember(des => des.RoleActions, opt => opt.MapFrom(src => src.Actions.Select(x => new RoleAction { RoleId = long.Parse(src.Id), ActionId = long.Parse(x.Id) })));
-        }
+            CreateMap<ZoneDto, Zone>();
+        }     
         private static long StringToInt64(string str) => long.TryParse(str, out var id) ? id : 0;
+
+        private static List<string> SplitToList(string input, string separator)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return new();
+            }
+
+            return input.Split(separator).ToList();
+        }
+
         private void ApplyMappingFromAssembly(Assembly assembly)
         {
             var mapFromType = typeof(IMapFrom<>);

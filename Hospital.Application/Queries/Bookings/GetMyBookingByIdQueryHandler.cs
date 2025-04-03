@@ -13,7 +13,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetMyBookingByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingByIdQuery, BookingResponseDto>
+    public class GetMyBookingByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingByIdQuery, BookingDto>
     {
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly ISymptomReadRepository _symptomReadRepository;
@@ -33,7 +33,7 @@ namespace Hospital.Application.Queries.Bookings
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
-        public async Task<BookingResponseDto> Handle(GetBookingByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BookingDto> Handle(GetBookingByIdQuery request, CancellationToken cancellationToken)
         {
             if (request.Id <= 0)
             {
@@ -52,7 +52,7 @@ namespace Hospital.Application.Queries.Bookings
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
-            var bookingDto = _mapper.Map<BookingResponseDto>(booking);
+            var bookingDto = _mapper.Map<BookingDto>(booking);
 
             if (bookingDto != null)
             {

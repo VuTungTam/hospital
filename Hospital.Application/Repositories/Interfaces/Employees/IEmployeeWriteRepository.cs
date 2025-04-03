@@ -1,7 +1,9 @@
 ﻿using Hospital.Application.Models;
+using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Enums;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
 
 namespace Hospital.Application.Repositories.Interfaces.Employees
 {
@@ -9,7 +11,9 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
     {
         Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken);
 
-        //Task AddBookingNotificationForEmployeesAsync(Notification notification, long branchId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
+        Task AddFacilityAdminAsync(Employee employee, long facilityId,CancellationToken cancellationToken);
+
+        Task AddBookingNotificationForCoordinatorAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
 
         Task SetActionAsDefaultAsync(long employeeId, CancellationToken cancellationToken);
 

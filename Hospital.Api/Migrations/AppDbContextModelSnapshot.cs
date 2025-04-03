@@ -133,7 +133,7 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("DATETIME");
+                        .HasColumnType("DATE");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("DATETIME");
@@ -143,6 +143,9 @@ namespace Hospital.Api.Migrations
 
                     b.Property<long>("DoctorId")
                         .HasColumnType("bigint");
+
+                    b.Property<TimeSpan>("EndBooking")
+                        .HasColumnType("TIME");
 
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
@@ -170,6 +173,9 @@ namespace Hospital.Api.Migrations
 
                     b.Property<long>("ServiceId")
                         .HasColumnType("bigint");
+
+                    b.Property<TimeSpan>("StartBooking")
+                        .HasColumnType("TIME");
 
                     b.Property<short>("Status")
                         .HasColumnType("SMALLINT");
@@ -726,9 +732,6 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("FacilitySpecialtyId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -767,12 +770,13 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("TypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ZoneId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("FacilitySpecialtyId");
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("FacilityId");
+
+                    b.HasIndex("SpecialtyId");
 
                     b.HasIndex("TypeId");
 
@@ -1100,6 +1104,72 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("TimeRuleId");
 
                     b.ToTable("tbl_time_slots");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Zones.Zone", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("NameVn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
+
+                    b.ToTable("tbl_zones");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Zones.ZoneSpecialty", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SpecialtyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ZoneId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.HasIndex("ZoneId");
+
+                    b.ToTable("tbl_zone_specialty");
                 });
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.Action", b =>
@@ -1732,6 +1802,62 @@ namespace Hospital.Api.Migrations
                     b.ToTable("mcs_sequences");
                 });
 
+            modelBuilder.Entity("Hospital.SharedKernel.Modules.Notifications.Entities.Notification", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsUnread")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("TINYINT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("mcs_notifications");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.HealthProfiles.HealthProfile", "HealthProfile")
@@ -1810,9 +1936,23 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.HealthService", b =>
                 {
-                    b.HasOne("Hospital.Domain.Entities.Specialties.FacilitySpecialty", null)
-                        .WithMany("Services")
-                        .HasForeignKey("FacilitySpecialtyId");
+                    b.HasOne("Hospital.Domain.Entities.Doctors.Doctor", "Doctor")
+                        .WithMany("HealthServices")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Domain.Entities.HealthFacilities.HealthFacility", "HealthFacility")
+                        .WithMany("HealthServices")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Domain.Entities.Specialties.Specialty", "Specialty")
+                        .WithMany("HealthServices")
+                        .HasForeignKey("SpecialtyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Hospital.Domain.Entities.HealthServices.ServiceType", "ServiceType")
                         .WithMany("Services")
@@ -1820,7 +1960,13 @@ namespace Hospital.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Doctor");
+
+                    b.Navigation("HealthFacility");
+
                     b.Navigation("ServiceType");
+
+                    b.Navigation("Specialty");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
@@ -1881,6 +2027,36 @@ namespace Hospital.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("ServiceTimeRule");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Zones.Zone", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.HealthFacilities.HealthFacility", "HealthFacility")
+                        .WithMany("Zones")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HealthFacility");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Zones.ZoneSpecialty", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.Specialties.Specialty", "Specialty")
+                        .WithMany("ZoneSpecialties")
+                        .HasForeignKey("SpecialtyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Domain.Entities.Zones.Zone", "Zone")
+                        .WithMany("ZoneSpecialties")
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Specialty");
+
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.RoleAction", b =>
@@ -1948,6 +2124,8 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.Doctors.Doctor", b =>
                 {
                     b.Navigation("DoctorSpecialties");
+
+                    b.Navigation("HealthServices");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.FacilityTypes.FacilityType", b =>
@@ -1960,6 +2138,10 @@ namespace Hospital.Api.Migrations
                     b.Navigation("FacilitySpecialties");
 
                     b.Navigation("FacilityTypeMappings");
+
+                    b.Navigation("HealthServices");
+
+                    b.Navigation("Zones");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthProfiles.HealthProfile", b =>
@@ -1984,19 +2166,23 @@ namespace Hospital.Api.Migrations
                     b.Navigation("TimeSlots");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entities.Specialties.FacilitySpecialty", b =>
-                {
-                    b.Navigation("Services");
-                });
-
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.Specialty", b =>
                 {
                     b.Navigation("FacilitySpecialties");
+
+                    b.Navigation("HealthServices");
+
+                    b.Navigation("ZoneSpecialties");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Symptoms.Symptom", b =>
                 {
                     b.Navigation("BookingSymptom");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Zones.Zone", b =>
+                {
+                    b.Navigation("ZoneSpecialties");
                 });
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Auths.Action", b =>

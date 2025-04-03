@@ -18,7 +18,7 @@ namespace Hospital.Application.DI
         {
             services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            
+
             // Email
             EmailServiceExtensions.AddEmailService(services, configuration);
 
@@ -31,7 +31,7 @@ namespace Hospital.Application.DI
             //Socket
             services.AddScoped<ISocketService, SocketService>();
 
-            
+
             return services;
         }
     }

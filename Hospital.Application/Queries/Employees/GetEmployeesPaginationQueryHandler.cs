@@ -27,7 +27,7 @@ namespace Hospital.Application.Queries.Employees
 
         public async Task<PaginationResult<EmployeeDto>> Handle(GetEmployeesPaginationQuery request, CancellationToken cancellationToken)
         {
-            var pagination = await _employeeReadRepository.GetEmployeesPaginationResultAsync(request.Pagination, request.State, request.RoleId, cancellationToken);
+            var pagination = await _employeeReadRepository.GetEmployeesPaginationResultAsync(request.Pagination, request.State, request.ZoneId, request.RoleId, cancellationToken);
             var dtos = _mapper.Map<List<EmployeeDto>>(pagination.Data);
 
             return new PaginationResult<EmployeeDto>(dtos, pagination.Total);

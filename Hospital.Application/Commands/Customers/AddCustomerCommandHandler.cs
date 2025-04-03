@@ -11,7 +11,6 @@ using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
-using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
@@ -48,9 +47,9 @@ namespace Hospital.Application.Commands.Customers
 
             var customer = _mapper.Map<Customer>(request.Customer);
 
-            customer.Wname =await _locationReadRepository.GetNameByIdAsync(customer.Wid, "ward", cancellationToken);
-            customer.Dname =await _locationReadRepository.GetNameByIdAsync(customer.Did, "district", cancellationToken);
-            customer.Pname =await _locationReadRepository.GetNameByIdAsync(customer.Pid, "province", cancellationToken);
+            customer.Wname = await _locationReadRepository.GetNameByIdAsync(customer.Wid, "ward", cancellationToken);
+            customer.Dname = await _locationReadRepository.GetNameByIdAsync(customer.Did, "district", cancellationToken);
+            customer.Pname = await _locationReadRepository.GetNameByIdAsync(customer.Pid, "province", cancellationToken);
 
             await _customerWriteRepository.AddCustomerAsync(customer, externalFlow: false, cancellationToken);
 

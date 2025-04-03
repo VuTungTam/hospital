@@ -1,6 +1,5 @@
 ﻿using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Domain.Entities.HealthServices;
-using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Microsoft.Extensions.Localization;

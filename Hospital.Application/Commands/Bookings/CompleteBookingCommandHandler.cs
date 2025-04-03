@@ -6,6 +6,7 @@ using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
@@ -21,6 +22,7 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly IRedisCache _redisCache;
+        private readonly IDateService _dateService;
         public CompleteBookingCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -29,13 +31,15 @@ namespace Hospital.Application.Commands.Bookings
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
-            IRedisCache redisCache
+            IRedisCache redisCache,
+            IDateService dateService
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _redisCache = redisCache;
+            _dateService = dateService;
         }
 
         public async Task<Unit> Handle(CompleteBookingCommand request, CancellationToken cancellationToken)
@@ -55,6 +59,8 @@ namespace Hospital.Application.Commands.Bookings
             {
                 throw new BadRequestException(_localizer["booking_status_is_not_confirmed"]);
             }
+
+            booking.EndBooking = _dateService.GetClientTime().TimeOfDay;
 
             await _bookingWriteRepository.ChangeStatusAsync(request.Id, BookingStatus.Completed, cancellationToken);
 

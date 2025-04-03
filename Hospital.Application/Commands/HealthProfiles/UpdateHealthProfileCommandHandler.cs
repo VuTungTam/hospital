@@ -40,7 +40,7 @@ namespace Hospital.Application.Commands.HealhProfiles
 
             var profile = _healthProfileReadRepository.GetByIdAsync(id, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
 
-            if (profile == null) 
+            if (profile == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
             }

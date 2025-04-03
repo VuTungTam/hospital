@@ -1,4 +1,6 @@
-﻿using Hospital.SharedKernel.Domain.Entities.Base;
+﻿using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.Zones;
+using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,8 +17,15 @@ namespace Hospital.Domain.Entities.Specialties
         IDeletedBy
     {
         public string NameVn { get; set; }
+
         public string NameEn { get; set; }
+
+        public List<HealthService> HealthServices { get; set; }
+
         public List<FacilitySpecialty> FacilitySpecialties { get; set; }
+
+        public List<ZoneSpecialty> ZoneSpecialties { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public long? CreatedBy { get; set; }

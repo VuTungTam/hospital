@@ -45,13 +45,13 @@ namespace Hospital.Api.Controllers.Location
         {
             var query = new GetProvinceIdByNameQuery(name);
             var result = await _mediator.Send(query, cancellationToken);
-            return Ok(new SimpleDataResult { Data = result});
+            return Ok(new SimpleDataResult { Data = result });
         }
 
         [HttpGet("district/{name}/province/{pid}")]
-        public async Task<IActionResult> GetDid(string name ,int pid, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetDid(string name, int pid, CancellationToken cancellationToken = default)
         {
-            var query = new GetDistrictIdByNameQuery(name,pid);
+            var query = new GetDistrictIdByNameQuery(name, pid);
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new SimpleDataResult { Data = result });
         }

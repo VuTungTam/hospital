@@ -6,6 +6,8 @@ namespace Hospital.Application.Repositories.Interfaces.Bookings
 {
     public interface IBookingWriteRepository : IWriteRepository<Booking>
     {
+        Task ActionAfterAddAsync(CancellationToken cancellationToken);
+
         Task AddBookingCodeAsync(Booking booking, CancellationToken cancellationToken);
 
         Task ChangeStatusAsync(long bookingId, BookingStatus status, CancellationToken cancellationToken);

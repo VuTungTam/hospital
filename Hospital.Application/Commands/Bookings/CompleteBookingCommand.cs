@@ -8,7 +8,7 @@ namespace Hospital.Application.Commands.Bookings
 
     public class CompleteBookingCommand : BaseCommand
     {
-        public CompleteBookingCommand(long id) 
+        public CompleteBookingCommand(long id)
         {
             Id = id;
         }

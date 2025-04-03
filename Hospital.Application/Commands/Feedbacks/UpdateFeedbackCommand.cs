@@ -8,7 +8,7 @@ namespace Hospital.Application.Commands.Feedbacks
     [RequiredPermission(ActionExponent.UpdateFeedback)]
     public class UpdateFeedbackCommand : BaseCommand
     {
-        public UpdateFeedbackCommand(FeedbackDto feedback) 
+        public UpdateFeedbackCommand(FeedbackDto feedback)
         {
             Feedback = feedback;
         }

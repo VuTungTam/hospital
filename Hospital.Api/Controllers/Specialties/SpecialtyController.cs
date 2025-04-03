@@ -17,12 +17,12 @@ namespace Hospital.Api.Controllers.Specialties
         }
         [HttpGet("pagination"), AllowAnonymous]
         public async Task<IActionResult> GetPagination(
-            int page, 
-            int size, 
-            string search = "", 
-            string asc = "", 
-            string desc = "", 
-            long facilityId = 0, 
+            int page,
+            int size,
+            string search = "",
+            string asc = "",
+            string desc = "",
+            long facilityId = 0,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
@@ -32,7 +32,7 @@ namespace Hospital.Api.Controllers.Specialties
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(SpecialtyDto specialty,CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Add(SpecialtyDto specialty, CancellationToken cancellationToken = default)
         {
             var command = new AddSpecialtyCommand(specialty);
 

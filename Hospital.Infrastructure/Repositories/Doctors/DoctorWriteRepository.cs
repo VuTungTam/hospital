@@ -4,6 +4,7 @@ using Hospital.Domain.Entities.Specialties;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
+using Hospital.SharedKernel.Libraries.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -57,11 +58,11 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             var sql = $"DELETE FROM {new DoctorSpecialty().GetTableName()} WHERE {nameof(DoctorSpecialty.DoctorId)} = {doctorId}; ";
             foreach (var specialtyId in specialtyIds)
             {
-                sql += $"INSERT INTO {new DoctorSpecialty().GetTableName()}(SpecialtyId, {nameof(DoctorSpecialty.DoctorId)}, CreatedBy, CreatedAt) VALUES ({specialtyId}, {doctorId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
+                sql += $"INSERT INTO {new DoctorSpecialty().GetTableName()}(Id,SpecialtyId, {nameof(DoctorSpecialty.DoctorId)}, CreatedBy, CreatedAt) VALUES ({AuthUtility.GenerateSnowflakeId()},{specialtyId}, {doctorId}, {_executionContext.Identity}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'); ";
             }
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, cancellationToken: cancellationToken);
         }
     }
-    
+
 }

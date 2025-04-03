@@ -18,8 +18,13 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
 
             builder.Property(x => x.Date)
                    .IsRequired()
-                   .HasColumnType("DATETIME");
+                   .HasColumnType("DATE");
 
+            builder.Property(x => x.StartBooking)
+                   .HasColumnType("TIME");
+
+            builder.Property(x => x.EndBooking)
+                   .HasColumnType("TIME");
 
             builder.Property(x => x.CreatedAt)
                    .IsRequired()

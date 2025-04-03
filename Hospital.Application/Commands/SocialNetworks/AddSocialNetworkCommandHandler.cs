@@ -5,6 +5,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -15,8 +16,8 @@ namespace Hospital.Application.Commands.SocialNetworks
         private readonly ISocialNetworkReadRepository _socialNetworkReadRepository;
         private readonly ISocialNetworkWriteRepository _socialNetworkWriteRepository;
         public AddSocialNetworkCommandHandler(
-            IEventDispatcher eventDispatcher, 
-            IAuthService authService, 
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             ISocialNetworkReadRepository socialNetworkReadRepository,
@@ -31,12 +32,14 @@ namespace Hospital.Application.Commands.SocialNetworks
         {
             var entity = _mapper.Map<SocialNetwork>(request.SocialNetworkDto);
 
-            var existSocials = _socialNetworkReadRepository.GetAsync(cancellationToken: cancellationToken);
+            var existSocials = await _socialNetworkReadRepository.GetAsync(cancellationToken: cancellationToken);
 
-            //foreach (var existSocial in existSocials) {
+            if (existSocials.Select(x => x.Name == entity.Name).Any())
+            {
+                throw new BadRequestException("Mạng xã hội đã tồn tại");
+            }
 
-            //}
-            await _socialNetworkWriteRepository.AddAsync(entity,cancellationToken);
+            await _socialNetworkWriteRepository.AddAsync(entity, cancellationToken);
 
             return entity.Id.ToString();
         }

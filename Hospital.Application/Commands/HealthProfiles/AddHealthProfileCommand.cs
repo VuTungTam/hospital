@@ -11,7 +11,7 @@ namespace Hospital.Application.Commands.HealthProfiles
         public AddHealthProfileCommand(HealthProfileDto dto)
         {
             Dto = dto;
-            
+
         }
         public HealthProfileDto Dto { get; set; }
     }

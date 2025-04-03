@@ -11,15 +11,17 @@ namespace Hospital.Application.Queries.Employees
     [RequiredPermission(ActionExponent.ViewEmployee)]
     public class GetEmployeesPaginationQuery : BaseQuery<PaginationResult<EmployeeDto>>
     {
-        public GetEmployeesPaginationQuery(Pagination pagination, AccountStatus state, long roleId)
+        public GetEmployeesPaginationQuery(Pagination pagination, AccountStatus state, long zoneId, long roleId)
         {
             Pagination = pagination;
             State = state;
             RoleId = roleId;
+            ZoneId = zoneId;
         }
 
         public Pagination Pagination { get; }
         public AccountStatus State { get; }
+        public long ZoneId { get; }
         public long RoleId { get; }
     }
 }

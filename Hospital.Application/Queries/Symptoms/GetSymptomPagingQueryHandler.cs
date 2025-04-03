@@ -26,7 +26,7 @@ namespace Hospital.Application.Queries.Symptoms
 
         public async Task<PaginationResult<SymptomDto>> Handle(GetSymptomPagingQuery request, CancellationToken cancellationToken)
         {
-            var paging = await _symptomReadRepository.GetPagingAsync(request.Pagination,spec:null, _symptomReadRepository.DefaultQueryOption ,cancellationToken);
+            var paging = await _symptomReadRepository.GetPaginationAsync(request.Pagination,spec:null, _symptomReadRepository.DefaultQueryOption ,cancellationToken);
 
             var symptoms = _mapper.Map<List<SymptomDto>>(paging.Data);
 

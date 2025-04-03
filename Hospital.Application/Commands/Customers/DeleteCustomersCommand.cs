@@ -8,10 +8,10 @@ namespace Hospital.Application.Commands.Customers
 
     public class DeleteCustomersCommand : BaseCommand
     {
-        public DeleteCustomersCommand(List<long> ids) 
+        public DeleteCustomersCommand(List<long> ids)
         {
             Ids = ids;
         }
-        public List<long> Ids { get;}
+        public List<long> Ids { get; }
     }
 }

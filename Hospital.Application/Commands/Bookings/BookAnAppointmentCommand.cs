@@ -8,11 +8,11 @@ namespace Hospital.Application.Commands.Bookings
     [RequiredPermission(ActionExponent.BookingAppointment)]
     public class BookAnAppointmentCommand : BaseAllowAnonymousCommand<string>
     {
-        public BookAnAppointmentCommand(BookingRequestDto booking)
+        public BookAnAppointmentCommand(BookingDto booking)
         {
             Booking = booking;
         }
 
-        public BookingRequestDto Booking { get; }
+        public BookingDto Booking { get; }
     }
 }

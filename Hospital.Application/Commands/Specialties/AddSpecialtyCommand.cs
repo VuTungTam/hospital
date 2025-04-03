@@ -8,8 +8,8 @@ namespace Hospital.Application.Commands.Specialties
     [RequiredPermission(ActionExponent.SpecialtyManagement)]
     public class AddSpecialtyCommand : BaseCommand<string>
     {
-        public AddSpecialtyCommand(SpecialtyDto specialty) 
-        { 
+        public AddSpecialtyCommand(SpecialtyDto specialty)
+        {
             Specialty = specialty;
         }
         public SpecialtyDto Specialty { get; set; }

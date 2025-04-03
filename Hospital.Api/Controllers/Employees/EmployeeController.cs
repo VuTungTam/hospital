@@ -62,10 +62,12 @@ namespace Hospital.Api.Controllers.Employees
         }
 
         [HttpGet("pagination")]
-        public async Task<IActionResult> GetEmployeePagination(int page, int size, int state, long roleId, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetEmployeePagination(
+            int page, int size, int state, long zoneId, long roleId,
+            string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetEmployeesPaginationQuery(pagination, (AccountStatus)state, roleId);
+            var query = new GetEmployeesPaginationQuery(pagination, (AccountStatus)state, zoneId, roleId);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
@@ -82,6 +84,13 @@ namespace Hospital.Api.Controllers.Employees
         public async Task<IActionResult> Add(EmployeeDto employee, CancellationToken cancellationToken = default)
         {
             var command = new AddEmployeeCommand(employee);
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
+        }
+
+        [HttpPost("admin/{facilityId}")]
+        public async Task<IActionResult> Add(AdminDto admin, long facilityId, CancellationToken cancellationToken = default)
+        {
+            var command = new AddFacilityAdminCommand(admin, facilityId);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 

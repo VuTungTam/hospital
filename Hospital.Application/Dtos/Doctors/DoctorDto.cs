@@ -1,5 +1,4 @@
-﻿using Hospital.Application.Dtos.HealthServices;
-using Hospital.Application.Dtos.Specialties;
+﻿using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Users;
 using Hospital.Domain.Enums;
 

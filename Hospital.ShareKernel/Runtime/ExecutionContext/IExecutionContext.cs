@@ -25,6 +25,8 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
         bool IsSA { get; }
 
+        bool IsFA { get; }
+
         AccountType AccountType { get; }
 
         HttpContext HttpContext { get; }

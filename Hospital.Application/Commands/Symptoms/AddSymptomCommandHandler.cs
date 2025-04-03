@@ -7,7 +7,6 @@ using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using System.Runtime.CompilerServices;
 
 namespace Hospital.Application.Commands.Symptoms
 {

@@ -8,7 +8,6 @@ using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
-using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;

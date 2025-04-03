@@ -11,7 +11,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetMyListBookingsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetMyListBookingsPagingQuery, PaginationResult<BookingResponseDto>>
+    public class GetMyListBookingsPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetMyListBookingsPagingQuery, PaginationResult<BookingDto>>
     {
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly ISymptomReadRepository _symptomReadRepository;
@@ -31,10 +31,10 @@ namespace Hospital.Application.Queries.Bookings
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
-        public async Task<PaginationResult<BookingResponseDto>> Handle(GetMyListBookingsPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<BookingDto>> Handle(GetMyListBookingsPagingQuery request, CancellationToken cancellationToken)
         {
             var bookings = await _bookingReadRepository.GetMyListPagingWithFilterAsync(request.Pagination, request.Status, request.ServiceId, request.Date, cancellationToken);
-            var bookingDtos = _mapper.Map<List<BookingResponseDto>>(bookings.Data);
+            var bookingDtos = _mapper.Map<List<BookingDto>>(bookings.Data);
             if (bookingDtos != null && bookingDtos.Any())
             {
                 foreach (var bookingDto in bookingDtos)
@@ -60,7 +60,7 @@ namespace Hospital.Application.Queries.Bookings
                 }
             }
 
-            return new PaginationResult<BookingResponseDto>(bookingDtos, bookings.Total);
+            return new PaginationResult<BookingDto>(bookingDtos, bookings.Total);
         }
     }
 }

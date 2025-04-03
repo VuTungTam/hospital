@@ -3,12 +3,14 @@ using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Enums;
+using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Doctors;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Domain.Enums;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
@@ -30,9 +32,25 @@ namespace Hospital.Infrastructure.Repositories.Doctors
         {
         }
 
-        public async Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination, List<long> specialtyIds, 
-            AccountStatus status = AccountStatus.None, 
-            DoctorDegree degree = DoctorDegree.None, DoctorTitle title = DoctorTitle.None, 
+        public override ISpecification<Doctor> GuardDataAccess<Doctor>(ISpecification<Doctor> spec, QueryOption option = default)
+        {
+            option ??= new QueryOption();
+
+            spec ??= new ExpressionSpecification<Doctor>(x => true);
+
+            spec = spec.And(base.GuardDataAccess(spec, option));
+
+            if (!option.IgnoreFacility)
+            {
+                spec = spec.And(new LimitByFacilityIdSpecification<Doctor>(_executionContext.FacilityId));
+
+            }
+            return spec;
+        }
+
+        public async Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination, List<long> specialtyIds,
+            AccountStatus status = AccountStatus.None,
+            DoctorDegree degree = DoctorDegree.None, DoctorTitle title = DoctorTitle.None,
             DoctorRank rank = DoctorRank.None, CancellationToken cancellationToken = default)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
@@ -44,7 +62,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
 
             if (status != AccountStatus.None)
             {
-                spec = spec.And( new DoctorByStatusEqualsSpecification(status));
+                spec = spec.And(new DoctorByStatusEqualsSpecification(status));
             }
 
             if (specialtyIds.Any())
@@ -67,12 +85,14 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                 spec = spec.And(new DoctorByRankEqualsSpecification(rank));
             }
 
+            spec = GuardDataAccess(spec);
+
             query = query.Where(spec.GetExpression());
 
             query = query.BuildOrderBy(pagination.Sorts);
 
             var data = await query.ToListAsync(cancellationToken);
-            
+
 
             var count = data.Count;
 
@@ -119,6 +139,8 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             {
                 spec = spec.And(new DoctorByRankEqualsSpecification(rank));
             }
+
+            spec = GuardDataAccess(spec);
 
             query = query.Where(spec.GetExpression());
 
@@ -176,7 +198,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                     SpecialtyId = ds.SpecialtyId
                 }).ToList()
             })
-            
+
             .FirstOrDefaultAsync(cancellationToken);
 
             return doctor;

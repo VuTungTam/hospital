@@ -165,7 +165,7 @@ namespace Hospital.Application.Dtos.Users
     {
         public BaseUserDtoDtoValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            RuleFor(x => x.Code).NotEmpty().WithMessage("Mã không được để trống");
+            //RuleFor(x => x.Code).NotEmpty().WithMessage("Mã không được để trống");
             RuleFor(x => x.Name).NotEmpty().WithMessage("Tên không được để trống");
             //RuleFor(x => x.Dob).Must(x => x != default && x < DateTime.Now && x > new DateTime(1950, 1, 1)).WithMessage("Ngày sinh không hợp lệ");
             RuleFor(x => x.Phone).Must(x => SmsUtility.IsVietnamesePhone(x)).WithMessage("Số điện thoại không hợp lệ");

@@ -12,6 +12,6 @@ namespace Hospital.Application.Commands.ServiceTimeRules
         {
             TimeRule = timeRule;
         }
-        public ServiceTimeRuleDto TimeRule { get;  }
+        public ServiceTimeRuleDto TimeRule { get; }
     }
 }

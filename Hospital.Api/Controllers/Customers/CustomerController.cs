@@ -1,5 +1,4 @@
-﻿using CloudinaryDotNet;
-using Hospital.Application.Commands.Customers;
+﻿using Hospital.Application.Commands.Customers;
 using Hospital.Application.Dtos.Customers;
 using Hospital.Application.Models;
 using Hospital.Application.Queries.Customers;
@@ -12,7 +11,6 @@ using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.Customers

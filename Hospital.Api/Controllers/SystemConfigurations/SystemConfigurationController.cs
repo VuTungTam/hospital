@@ -1,11 +1,11 @@
 ﻿using Hospital.Application.Commands.SystemConfigurations;
 using Hospital.Application.Dtos.SystemConfigurations;
+using Hospital.Application.Queries.SystemConfigurations;
 using Hospital.Domain.Configs;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Hospital.Application.Queries.SystemConfigurations;
 
 namespace Hospital.Api.Controllers.SystemConfigurations
 {

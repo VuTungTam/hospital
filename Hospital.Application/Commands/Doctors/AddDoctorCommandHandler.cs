@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.Doctors;
-using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Users;

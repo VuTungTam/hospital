@@ -8,7 +8,7 @@ namespace Hospital.Application.Commands.HealthProfiles
     [RequiredPermission(ActionExponent.UpdateProfile)]
     public class UpdateHealthProfileCommand : BaseCommand
     {
-        public UpdateHealthProfileCommand(HealthProfileDto healthProfile) 
+        public UpdateHealthProfileCommand(HealthProfileDto healthProfile)
         {
             HealthProfile = healthProfile;
         }

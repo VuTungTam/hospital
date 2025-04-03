@@ -52,7 +52,8 @@ namespace Hospital.Application.Commands.Feedbacks
         {
             var feedback = _mapper.Map<Feedback>(request.Dto);
             var booking = await _bookingReadRepository.GetByIdAsync(feedback.BookingId, cancellationToken: cancellationToken);
-            if (booking == null) {
+            if (booking == null)
+            {
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
@@ -92,7 +93,7 @@ namespace Hospital.Application.Commands.Feedbacks
 
             await _feedbackWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
-            
+
             if (service != null)
             {
                 await _redisCache.RemoveAsync(serviceCacheEntry.Key, cancellationToken);
@@ -108,7 +109,7 @@ namespace Hospital.Application.Commands.Feedbacks
 
             return feedback.Id.ToString();
         }
-        
+
     }
-    
+
 }

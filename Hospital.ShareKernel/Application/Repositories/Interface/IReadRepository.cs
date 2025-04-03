@@ -17,7 +17,7 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 
         Task<List<T>> GetAsync(ISpecification<T> spec = null, QueryOption option = default, CancellationToken cancellationToken = default);
 
-        Task<PaginationResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
+        Task<PaginationResult<T>> GetPaginationAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
 
         Task<int> GetCountAsync(Expression<Func<T, bool>> predicate = null, CancellationToken cancellationToken = default);
 

@@ -46,7 +46,7 @@ namespace Hospital.Application.Queries.TimeSlots
                 spec.And(new GetTimeSlotsAtNightShiftSpecification());
             }
 
-            var result = await _timeSlotReadRepository.GetPagingAsync(request.Pagination, spec, cancellationToken: cancellationToken);
+            var result = await _timeSlotReadRepository.GetPaginationAsync(request.Pagination, spec, cancellationToken: cancellationToken);
 
             var slots = _mapper.Map<List<TimeSlotDto>>(result.Data);
 

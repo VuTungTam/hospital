@@ -107,6 +107,10 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.HasIndex(x => x.Phone);
 
             builder.HasIndex(x => x.Name);
+
+            builder.HasMany(x => x.HealthServices)
+                   .WithOne(x => x.Doctor)
+                   .HasForeignKey(x => x.DoctorId);
         }
     }
 }

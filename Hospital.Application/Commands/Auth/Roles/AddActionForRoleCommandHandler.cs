@@ -8,6 +8,7 @@ using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -80,7 +81,7 @@ namespace Hospital.Application.Commands.Auth.Roles
                 throw new BadRequestException("Chức năng không tồn tại");
             }
 
-            role.RoleActions.Add(new RoleAction { ActionId = request.ActionId, RoleId = request.RoleId });
+            role.RoleActions.Add(new RoleAction { Id = AuthUtility.GenerateSnowflakeId(), ActionId = request.ActionId, RoleId = request.RoleId });
 
             await _roleWriteRepository.UpdateAsync(role, cancellationToken: cancellationToken);
 

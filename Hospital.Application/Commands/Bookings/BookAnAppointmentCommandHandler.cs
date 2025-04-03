@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Entities.Bookings;
-using Hospital.Domain.Entities.Symptoms;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -26,6 +27,8 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly ISymptomReadRepository _symptomReadRepository;
         private readonly IRedisCache _redisCache;
+        private readonly IHealthServiceReadRepository _healthServiceReadRepository;
+        private readonly IZoneReadRepository _zoneReadRepository;
         public BookAnAppointmentCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -35,7 +38,9 @@ namespace Hospital.Application.Commands.Bookings
             IBookingReadRepository bookingReadRepository,
             IRedisCache redisCache,
             ISymptomReadRepository symptomReadRepository,
-            IServiceTimeRuleReadRepository serviceTimeRuleReadRepository
+            IZoneReadRepository zoneReadRepository,
+            IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
+            IHealthServiceReadRepository healthServiceReadRepository
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingReadRepository = bookingReadRepository;
@@ -43,10 +48,23 @@ namespace Hospital.Application.Commands.Bookings
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _symptomReadRepository = symptomReadRepository;
             _redisCache = redisCache;
+            _zoneReadRepository = zoneReadRepository;
+            _healthServiceReadRepository = healthServiceReadRepository;
         }
 
         public async Task<string> Handle(BookAnAppointmentCommand request, CancellationToken cancellationToken)
         {
+            if (!long.TryParse(request.Booking.ServiceId, out var serviceId) || serviceId <= 0)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
+            }
+
+            var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, cancellationToken: cancellationToken);
+            if (service == null)
+            {
+                throw new BadRequestException("Booking.ServiceNotFound");
+            }
+
             var booking = _mapper.Map<Booking>(request.Booking);
 
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, booking.TimeSlotId, cancellationToken);
@@ -77,9 +95,24 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.Status = BookingStatus.Completed;
 
+            booking.FacilityId = service.FacilityId;
+
+            var zones = await _zoneReadRepository.GetAsync(cancellationToken: cancellationToken);
+
+            if (zones == null)
+            {
+                booking.ZoneId = 0;
+            }
+            else
+            {
+                var zone = zones.Where(x => x.ZoneSpecialties.Any(s => s.SpecialtyId == service.SpecialtyId)).FirstOrDefault();
+
+                booking.ZoneId = zone.Id;
+            }
+
             await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 
-            await _bookingWriteRepository.AddAsync(booking,cancellationToken);
+            await _bookingWriteRepository.AddAsync(booking, cancellationToken);
 
             var cacheEntry = CacheManager.GetMaxOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
 

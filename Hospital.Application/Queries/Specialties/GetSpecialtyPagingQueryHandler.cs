@@ -34,7 +34,7 @@ namespace Hospital.Application.Queries.Specialties
                 spec = new GetSpecialtiesByFacilityIdSpecification(request.FacilityId);
             }
 
-            var result = await _specialtyReadRepository.GetPagingAsync(request.Pagination, spec, _specialtyReadRepository.DefaultQueryOption, cancellationToken);
+            var result = await _specialtyReadRepository.GetPaginationAsync(request.Pagination, spec, cancellationToken: cancellationToken);
 
             var specialties = _mapper.Map<List<SpecialtyDto>>(result.Data);
 

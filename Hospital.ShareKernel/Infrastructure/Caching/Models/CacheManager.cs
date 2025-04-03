@@ -42,7 +42,7 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
 
         public static CacheEntry GetLoginSecure(string uid) => new CacheEntry($"login-secure:{uid}", 180);
 
-        public static CacheEntry GetPaginationCacheEntry<T>(Pagination pagination, long ownerId) where T : BaseEntity
+        public static CacheEntry GetPaginationCacheEntry<T>(Pagination pagination, long ownerId, long facilityId) where T : BaseEntity
         {
             var typeofT = typeof(T);
             var key = $"pagination:{GetTableName<T>()}";
@@ -53,6 +53,11 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
             if (!isSystem && typeofT.HasInterface<IOwnedEntity>())
             {
                 key = $"{key}:{ownerId}";
+            }
+
+            if (!isSystem && typeofT.HasInterface<IFacility>())
+            {
+                key = $"{key}:{facilityId}";
             }
 
             key = $"{key}:{suffix}";

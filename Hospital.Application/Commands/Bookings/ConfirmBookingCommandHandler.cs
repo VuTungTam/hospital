@@ -13,7 +13,6 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Ocelot.Values;
 
 namespace Hospital.Application.Commands.Bookings
 {
@@ -53,7 +52,7 @@ namespace Hospital.Application.Commands.Bookings
             };
 
             var booking = await _bookingReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
-            
+
             if (booking == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);

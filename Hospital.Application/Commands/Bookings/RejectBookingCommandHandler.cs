@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
-using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
@@ -19,7 +18,7 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingWriteRepository _bookingWriteRepository;
         public RejectBookingCommandHandler(
             IEventDispatcher eventDispatcher,
-            IAuthService authService, 
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IBookingReadRepository bookingReadRepository,

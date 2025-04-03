@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
-using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Domain.Entities.HealthFacilities;
-using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -18,8 +16,8 @@ namespace Hospital.Application.Commands.HealthFacilities
         private readonly IHealthFacilityWriteRepository _healthFacilityWriteRepository;
         private readonly IHealthFacilityReadRepository _healthFacilitReadRepository;
         public UpdateHealthFacilityCommandHandler(
-            IEventDispatcher eventDispatcher, 
-            IAuthService authService, 
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IHealthFacilityWriteRepository healthFacilityWriteRepository,
@@ -37,7 +35,7 @@ namespace Hospital.Application.Commands.HealthFacilities
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var facility = _healthFacilitReadRepository.GetByIdAsync(id,_healthFacilitReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var facility = _healthFacilitReadRepository.GetByIdAsync(id, _healthFacilitReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
 
             if (facility == null)
             {

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Domain.Entities.ServiceTimeRules;
@@ -9,13 +8,10 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
-using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Ocelot.Values;
-using System.Linq;
 
 namespace Hospital.Application.Commands.ServiceTimeRules
 {
@@ -28,7 +24,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
         public UpdateServiceTimeRuleCommandHandler(
             IEventDispatcher eventDispatcher,
-            IAuthService authService, 
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IRedisCache redisCache,

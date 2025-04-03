@@ -6,7 +6,6 @@ using Hospital.Domain.Specifications.ServiceTimeRules;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
-using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -19,8 +18,8 @@ namespace Hospital.Application.Commands.ServiceTimeRules
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly ITimeSlotWriteRepository _timeSlotWriteRepository;
         public AddServiceTimeRuleCommandHandler(
-            IAuthService authService, 
-            IMapper mapper, 
+            IAuthService authService,
+            IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
@@ -38,11 +37,12 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
             var spec = new GetServiceTimeRuleByDayOfWeekSpecification(timeRule.DayOfWeek);
 
-            spec.And (new GetServiceTimeRuleByServiceIdSpecification(timeRule.ServiceId));
+            spec.And(new GetServiceTimeRuleByServiceIdSpecification(timeRule.ServiceId));
 
-            var existTimeRule = await _serviceTimeRuleReadRepository.GetAsync(spec, cancellationToken:cancellationToken);
+            var existTimeRule = await _serviceTimeRuleReadRepository.GetAsync(spec, cancellationToken: cancellationToken);
 
-            if (existTimeRule.Any()) {
+            if (existTimeRule.Any())
+            {
                 throw new BadRequestException("Time rule đã được thêm");
             }
 

@@ -20,7 +20,11 @@ namespace Hospital.Domain.Entities.Doctors
         public DoctorRank DoctorRank { get; set; }
 
         public string Expertise { get; set; }
+
         public List<DoctorSpecialty> DoctorSpecialties { get; set; }
+
+        public List<HealthService> HealthServices { get; set; }
+
 
         public string Description { get; set; }
 

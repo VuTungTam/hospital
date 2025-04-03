@@ -41,8 +41,16 @@ namespace Hospital.Application.Repositories.Interfaces.Sequences
 
         public async Task IncreaseValueAsync(string table, CancellationToken cancellationToken)
         {
-            var sql = $"UPDATE {new Sequence().GetTableName()} SET Value = Value + 1 WHERE [{nameof(Sequence.Table)}] = {{0}}";
-
+            string sql;
+            if (table == "admin")
+            {
+                sql = $"UPDATE {new Sequence().GetTableName()} SET Value = Value + 1 WHERE [{nameof(Sequence.Table)}] = 'admin'";
+            }
+            else
+            {
+                sql = $"UPDATE {new Sequence().GetTableName()} SET Value = Value + 1 WHERE [{nameof(Sequence.Table)}] = {{0}}";
+            }
+            
             await _dbContext.Database.ExecuteSqlRawAsync(sql, table);
 
             var cacheEntry = CacheManager.GetSequenceCacheEntry(table);

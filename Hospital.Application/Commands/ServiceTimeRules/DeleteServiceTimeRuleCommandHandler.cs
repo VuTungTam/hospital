@@ -50,7 +50,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
                 foreach (var rule in rules)
                 {
                     var spec = new GetTimeSlotByTimeRuleIdSpecification(rule.Id);
-                    var timeSlots = await _timeSlotReadRepository.GetAsync(spec, cancellationToken:cancellationToken);
+                    var timeSlots = await _timeSlotReadRepository.GetAsync(spec, cancellationToken: cancellationToken);
                     if (timeSlots.Any())
                     {
                         _timeSlotWriteRepository.Delete(timeSlots);

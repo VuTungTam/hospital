@@ -8,7 +8,7 @@ namespace Hospital.Application.Commands.HealthFacilities
     [RequiredPermission(ActionExponent.UpdateFacility)]
     public class UpdateHealthFacilityCommand : BaseCommand
     {
-        public UpdateHealthFacilityCommand(HealthFacilityDto healthFacility) 
+        public UpdateHealthFacilityCommand(HealthFacilityDto healthFacility)
         {
             HealthFacility = healthFacility;
         }

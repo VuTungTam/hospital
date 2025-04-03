@@ -3,6 +3,7 @@ using Hospital.Application.Dtos.Employee;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Application.Repositories.Interfaces.Users;
+using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Constants;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -11,6 +12,7 @@ using Hospital.SharedKernel.Domain.Constants;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Libraries.Utils;
@@ -27,7 +29,7 @@ namespace Hospital.Application.Commands.Employees
         private readonly IRoleReadRepository _roleReadRepository;
         private readonly ISequenceRepository _sequenceRepository;
         private readonly ILocationReadRepository _locationReadRepository;
-
+        private readonly IZoneReadRepository _zoneReadRepository;
         public AddEmployeeCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -37,7 +39,8 @@ namespace Hospital.Application.Commands.Employees
             IEmployeeWriteRepository employeeWriteRepository,
             IRoleReadRepository roleReadRepository,
             ISequenceRepository sequenceRepository,
-            ILocationReadRepository locationReadRepository
+            ILocationReadRepository locationReadRepository,
+            IZoneReadRepository zoneReadRepository
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _userRepository = userRepository;
@@ -45,6 +48,7 @@ namespace Hospital.Application.Commands.Employees
             _roleReadRepository = roleReadRepository;
             _sequenceRepository = sequenceRepository;
             _locationReadRepository = locationReadRepository;
+            _zoneReadRepository = zoneReadRepository;
         }
 
         public async Task<string> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
@@ -69,7 +73,9 @@ namespace Hospital.Application.Commands.Employees
             }
 
             employee.Pname = await _locationReadRepository.GetNameByIdAsync(employee.Pid, "province", cancellationToken);
+
             employee.Dname = await _locationReadRepository.GetNameByIdAsync(employee.Did, "district", cancellationToken);
+
             employee.Wname = await _locationReadRepository.GetNameByIdAsync(employee.Wid, "ward", cancellationToken);
 
             await _employeeWriteRepository.AddEmployeeAsync(employee, cancellationToken);
@@ -85,6 +91,21 @@ namespace Hospital.Application.Commands.Employees
 
         public async Task ValidateAndThrowAsync(EmployeeDto employee, List<Role> roles, CancellationToken cancellationToken)
         {
+            if (!long.TryParse(employee.ZoneId, out var zoneId) || zoneId > 0)
+            {
+                var option = new QueryOption
+                {
+                    IgnoreFacility = false
+                };
+
+                var zones = await _zoneReadRepository.GetAsync(option: option, cancellationToken: cancellationToken);
+
+                if (!zones.Select(x => x.Id == zoneId).Any())
+                {
+                    throw new BadRequestException(_localizer["Không có zone nào hợp lệ"]);
+                }
+            }
+
             var codeExist = await _userRepository.CodeExistAsync(employee.Code, cancellationToken: cancellationToken);
             if (codeExist)
             {

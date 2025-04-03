@@ -71,9 +71,13 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.DeletedAt)
                    .HasColumnType("DATETIME");
 
-            //builder.HasMany(x => x.FacilitySpecialties)
-            //       .WithOne(x => x.Facility)
-            //       .HasForeignKey(x => x.FacilityId);
+            builder.HasMany(x => x.HealthServices)
+                   .WithOne(x => x.HealthFacility)
+                   .HasForeignKey(x => x.FacilityId);
+
+            builder.HasMany(x => x.Zones)
+                   .WithOne(x => x.HealthFacility)
+                   .HasForeignKey(x => x.FacilityId);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Hospital.Application.Dtos.Specialties;
-using Hospital.Domain.Enums;
+﻿using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Configures.Models;
 
 namespace Hospital.Application.Dtos.Doctors

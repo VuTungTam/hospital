@@ -25,7 +25,7 @@ namespace Hospital.Application.Queries.SocialNerworks
 
         public async Task<PaginationResult<SocialNetworkDto>> Handle(GetSocialNetworksPagingQuery request, CancellationToken cancellationToken)
         {
-            var paging = await _socialNetworkReadRepository.GetPagingAsync(request.Pagination, spec:null, _socialNetworkReadRepository.DefaultQueryOption, cancellationToken);
+            var paging = await _socialNetworkReadRepository.GetPaginationAsync(request.Pagination, spec:null, _socialNetworkReadRepository.DefaultQueryOption, cancellationToken);
             
             var socialNetworks = _mapper.Map<List<SocialNetworkDto>>(paging.Data);
 

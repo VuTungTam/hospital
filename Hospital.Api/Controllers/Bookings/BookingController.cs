@@ -79,7 +79,7 @@ namespace Hospital.Api.Controllers.Bookings
         }
 
         [HttpPost("book-an-appointment"), AllowAnonymous]
-        public virtual async Task<IActionResult> BookAnAppointment(BookingRequestDto dto, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> BookAnAppointment(BookingDto dto, CancellationToken cancellationToken = default)
         {
             var command = new BookAnAppointmentCommand(dto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
@@ -94,14 +94,14 @@ namespace Hospital.Api.Controllers.Bookings
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Add(BookingRequestDto dto, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Add(BookingDto dto, CancellationToken cancellationToken = default)
         {
             var command = new AddBookingCommand(dto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
         [HttpPut]
-        public virtual async Task<IActionResult> Update(BookingRequestDto dto, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> Update(BookingDto dto, CancellationToken cancellationToken = default)
         {
             await _mediator.Send(new UpdateBookingCommand(dto), cancellationToken);
             return Ok(new BaseResponse());
@@ -145,7 +145,7 @@ namespace Hospital.Api.Controllers.Bookings
         //    DateTime date, 
         //    TimeSpan serviceStartTime, 
         //    TimeSpan serviceEndTime, 
-            
+
         //    CancellationToken cancellationToken = default)
         //{
         //    var query = new GetCurrentOrderQuery(serviceId, serviceStartTime, serviceEndTime);

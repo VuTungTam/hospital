@@ -10,6 +10,9 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Enums
         [Description("Quản trị hệ thống")]
         Master = 100,
 
+        [Description("Quản trị cơ sở")]
+        FacilityAdmin = 100,
+
         [Description("Xem")]
         View = 0,
 
@@ -201,5 +204,11 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Enums
 
         [Description("Thay đổi quyền")]
         ChangeRole = 63,
+
+        [Description("Thêm quản trị cơ sở")]
+        AddAdmin = 64,
+
+        [Description("Quản lý khu vực")]
+        ZoneManagement = 65,
     }
 }

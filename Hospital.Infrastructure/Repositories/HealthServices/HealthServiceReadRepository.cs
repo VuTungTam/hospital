@@ -1,7 +1,10 @@
 ﻿using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
+using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.HealthServices;
+using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -10,14 +13,29 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.HealthServices
 {
     public class HealthServiceReadRepository : ReadRepository<HealthService>, IHealthServiceReadRepository
     {
-        public HealthServiceReadRepository(IServiceProvider serviceProvider, IStringLocalizer<Resources> localizer, IRedisCache redisCache) : base(serviceProvider, localizer, redisCache)
+        public HealthServiceReadRepository(
+            IServiceProvider serviceProvider,
+            IStringLocalizer<Resources> localizer, 
+            IRedisCache redisCache
+            ) : base(serviceProvider, localizer, redisCache)
         {
+        }
+
+        public override ISpecification<HealthService> GuardDataAccess<HealthService>(ISpecification<HealthService> spec, QueryOption option = default)
+        {
+            spec = base.GuardDataAccess(spec, option);
+
+            if (!option.IgnoreFacility)
+            {
+                spec = spec.And(new LimitByFacilityIdSpecification<HealthService>(_executionContext.FacilityId));
+
+            }
+            return spec;
         }
 
         public async Task<PaginationResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long? serviceTypeId = null, long? facilityId = null, long? specialtyId = null, CancellationToken cancellationToken = default)
@@ -37,8 +55,7 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
             {
                 spec = spec.And(new GetHealthServicesBySpecialtyIdSpecification(specialtyId.Value));
             }
-            QueryOption option = new QueryOption();
-            var guardExpression = GuardDataAccess(spec, option).GetExpression();
+            var guardExpression = GuardDataAccess(spec).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);

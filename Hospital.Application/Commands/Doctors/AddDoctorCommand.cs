@@ -8,7 +8,7 @@ namespace Hospital.Application.Commands.Doctors
     [RequiredPermission(ActionExponent.AddDoctor)]
     public class AddDoctorCommand : BaseCommand<string>
     {
-        public AddDoctorCommand(DoctorDto doctor) 
+        public AddDoctorCommand(DoctorDto doctor)
         {
             Doctor = doctor;
         }

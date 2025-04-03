@@ -7,7 +7,7 @@ namespace Hospital.Application.Commands.Specialties
     [RequiredPermission(ActionExponent.SpecialtyManagement)]
     public class DeleteSpecialtyCommand : BaseCommand
     {
-        public DeleteSpecialtyCommand(List<long> ids) 
+        public DeleteSpecialtyCommand(List<long> ids)
         {
             Ids = ids;
         }

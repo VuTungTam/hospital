@@ -43,7 +43,7 @@ namespace Hospital.Application.Queries.Feedbacks
                 spec.And(new GetFeedbackByStarSpecification(request.Star));
             }
 
-            var result = await _feedbackReadRepository.GetPagingAsync(request.Pagination, spec, cancellationToken: cancellationToken);
+            var result = await _feedbackReadRepository.GetPaginationAsync(request.Pagination, spec, cancellationToken: cancellationToken);
 
             var dto = _mapper.Map<List<FeedbackDto>>(result.Data);
 

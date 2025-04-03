@@ -17,7 +17,7 @@ namespace Hospital.Infrastructure.Repositories.Auth
         {
         }
 
-        public override async Task<PaginationResult<Role>> GetPagingAsync(Pagination pagination, ISpecification<Role> spec, QueryOption option, CancellationToken cancellationToken = default)
+        public override async Task<PaginationResult<Role>> GetPaginationAsync(Pagination pagination, ISpecification<Role> spec, QueryOption option, CancellationToken cancellationToken = default)
         {
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)

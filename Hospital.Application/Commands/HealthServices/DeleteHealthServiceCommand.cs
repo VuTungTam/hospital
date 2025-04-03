@@ -7,7 +7,7 @@ namespace Hospital.Application.Commands.HealthServices
     [RequiredPermission(ActionExponent.DeleteService)]
     public class DeleteHealthServiceCommand : BaseCommand
     {
-        public DeleteHealthServiceCommand(List<long> ids) 
+        public DeleteHealthServiceCommand(List<long> ids)
         {
             Ids = ids;
         }

@@ -1,15 +1,15 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Hospital.SharedKernel.Application.Enums;
-using Hospital.SharedKernel.Application.Models.Requests;
-using Hospital.SharedKernel.Application.Models.Responses;
-using Hospital.SharedKernel.Libraries.ExtensionMethods;
-using Hospital.Application.Commands.Articles;
+﻿using Hospital.Application.Commands.Articles;
 using Hospital.Application.Dtos.Articles;
 using Hospital.Application.Queries.Articles;
 using Hospital.Domain.Entities.Articles;
 using Hospital.Domain.Enums;
+using Hospital.SharedKernel.Application.Enums;
+using Hospital.SharedKernel.Application.Models.Requests;
+using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.Articles
 {

@@ -1,8 +1,7 @@
-﻿using Hospital.Resource.Properties;
+﻿using FluentValidation;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
 using Microsoft.Extensions.Localization;
-using FluentValidation;
-using System.Globalization;
 namespace Hospital.Application.Dtos.SocialNetworks
 {
     public class SocialNetworkDto : BaseDto

@@ -18,7 +18,7 @@ namespace Hospital.Application.Commands.HealhProfiles
         public DeleteHealthProfileCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
-            IStringLocalizer<Resources> localizer, 
+            IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IHealthProfileReadRepository healthProfileReadRepository,
             IHealthProfileWriteRepository healthProfileWriteRepository

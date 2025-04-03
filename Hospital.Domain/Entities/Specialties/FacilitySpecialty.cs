@@ -15,11 +15,13 @@ namespace Hospital.Domain.Entities.Specialties
         IDeletedBy
     {
         public long FacilityId { get; set; }
+
         public long SpecialtyId { get; set; }
+
         public HealthFacility Facility { get; set; }
+
         public Specialty Specialty { get; set; }
 
-        public List<HealthService> Services { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public long? CreatedBy { get; set; }

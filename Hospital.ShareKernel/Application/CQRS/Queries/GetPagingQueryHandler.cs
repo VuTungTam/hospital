@@ -26,7 +26,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
         }
         public async Task<PaginationResult<TResponse>> Handle(GetPagingQuery<T, TResponse> request, CancellationToken cancellationToken)
         {
-            var result = await _readRepository.GetPagingAsync(request.Pagination, spec:null, _readRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var result = await _readRepository.GetPaginationAsync(request.Pagination, spec:null, _readRepository.DefaultQueryOption, cancellationToken: cancellationToken);
             return new PaginationResult<TResponse>(_mapper.Map<List<TResponse>>(result.Data), result.Total);
         }
     }

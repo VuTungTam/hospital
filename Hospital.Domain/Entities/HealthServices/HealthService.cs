@@ -5,6 +5,8 @@ using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.HealthFacilities;
+using Hospital.Domain.Entities.Doctors;
 
 namespace Hospital.Domain.Entities.HealthServices
 {
@@ -18,7 +20,6 @@ namespace Hospital.Domain.Entities.HealthServices
         ISoftDelete,
         IDeletedBy,
         IFacility,
-        IZone,
         IDoctor
     {
         public string NameVn { get; set; }
@@ -35,7 +36,11 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public long FacilityId { get; set; }
 
+        public HealthFacility HealthFacility { get; set; }
+
         public long SpecialtyId { get; set; }
+
+        public Specialty Specialty { get; set; }
 
         public HealthServiceStatus Status { get; set; }
 
@@ -64,7 +69,9 @@ namespace Hospital.Domain.Entities.HealthServices
         public long? DeletedBy { get; set; }
 
         public List<ServiceTimeRule> TimeRules { get; set; }
-        public long ZoneId { get ; set ; }
+
+        public Doctor Doctor { get; set; }
+
         public long DoctorId { get ; set ; }
 
         public void getStar()

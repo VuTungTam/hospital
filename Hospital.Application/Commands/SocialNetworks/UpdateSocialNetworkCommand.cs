@@ -8,7 +8,7 @@ namespace Hospital.Application.Commands.SocialNetworks
     [RequiredPermission(ActionExponent.NetworksManagement)]
     public class UpdateSocialNetworkCommand : BaseCommand
     {
-        public UpdateSocialNetworkCommand(SocialNetworkDto socialNetworkDto) 
+        public UpdateSocialNetworkCommand(SocialNetworkDto socialNetworkDto)
         {
             SocialNetworkDto = socialNetworkDto;
         }

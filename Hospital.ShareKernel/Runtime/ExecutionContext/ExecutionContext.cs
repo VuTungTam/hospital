@@ -29,6 +29,8 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
 
         public bool IsSA { get; private set; }
 
+        public bool IsFA { get; private set; }
+
         public HttpContext HttpContext { get; private set; }
 
         public long FacilityId { get; private set; }
@@ -82,7 +84,8 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
                 var handler = new JwtSecurityTokenHandler();
                 var jwtSecurityToken = handler.ReadJwtToken(accessToken);
                 var claims = jwtSecurityToken.Claims;
-                var action = AuthUtility.FromExponentToPermission((int)ActionExponent.Master);
+                var master = AuthUtility.FromExponentToPermission((int)ActionExponent.Master);
+                var fa = AuthUtility.FromExponentToPermission((int)ActionExponent.FacilityAdmin);
 
                 AccessToken = accessToken;
                 Identity = Convert.ToInt64(claims.First(c => c.Type == ClaimConstant.USER_ID).Value);
@@ -92,7 +95,8 @@ namespace Hospital.SharedKernel.Runtime.ExecutionContext
                 Permission = claims.First(c => c.Type == ClaimConstant.PERMISSION).Value;
                 AccountType = (AccountType)Convert.ToInt32(claims.First(c => c.Type == ClaimConstant.ACCOUNT_TYPE).Value);
                 Uid = HttpContext?.Request.Headers[HeaderNamesExtension.Uid];
-                IsSA = AuthUtility.ComparePermissionAsString(Permission, action);
+                IsSA = AuthUtility.ComparePermissionAsString(Permission, master);
+                IsFA = AuthUtility.ComparePermissionAsString(Permission, fa);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Feedbacks;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
-using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
@@ -12,7 +11,6 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Ocelot.Values;
 
 namespace Hospital.Application.Commands.Feedbacks
 {
@@ -25,8 +23,8 @@ namespace Hospital.Application.Commands.Feedbacks
         private readonly IRedisCache _redisCache;
         public UpdateFeedbackCommandHandler(
             IEventDispatcher eventDispatcher,
-            IAuthService authService, 
-            IStringLocalizer<Resources> localizer, 
+            IAuthService authService,
+            IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IFeedbackReadRepository feedbackReadRepository,
             IFeedbackWriteRepository feedbackWriteRepository,
@@ -59,7 +57,7 @@ namespace Hospital.Application.Commands.Feedbacks
             {
                 throw new BadRequestException(_localizer["Feedback đã được chỉnh sửa"]);
             }
-            if ((DateTime.Now - feedback.CreatedAt).Days > 30 )
+            if ((DateTime.Now - feedback.CreatedAt).Days > 30)
             {
                 throw new BadRequestException(_localizer["Không được chỉnh sửa feedback quá 30 ngày"]);
             }
@@ -69,7 +67,8 @@ namespace Hospital.Application.Commands.Feedbacks
 
             var starChangeCacheEntry = new CacheEntry();
 
-            if (starChange) {
+            if (starChange)
+            {
                 var service = await _healthServiceReadRepository.GetByIdAsync(feedback.Booking.ServiceId, cancellationToken: cancellationToken);
 
                 if (service != null)

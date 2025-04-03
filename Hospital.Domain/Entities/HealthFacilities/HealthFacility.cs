@@ -1,8 +1,11 @@
 ﻿using Hospital.Domain.Entities.FacilityTypes;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Specialties;
+using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Ocelot.Values;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.HealthFacilities
@@ -36,6 +39,10 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public HealthFacilityStatus Status { get; set; }
 
         public List<FacilitySpecialty> FacilitySpecialties { get; set; }
+
+        public List<Zone> Zones { get; set; }
+
+        public List<HealthService> HealthServices { get; set; }
 
         public List<FacilityTypeMapping> FacilityTypeMappings { get; set; }
         public int Pid { get; set; }

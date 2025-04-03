@@ -18,6 +18,7 @@ using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Application.Repositories.Interfaces.Users;
+using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Infrastructure.EFConfigurations;
 using Hospital.Infrastructure.Events.Dispatchers;
 using Hospital.Infrastructure.Repositories;
@@ -34,6 +35,7 @@ using Hospital.Infrastructure.Repositories.HealthFacilities;
 using Hospital.Infrastructure.Repositories.HealthProfiles;
 using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
+using Hospital.Infrastructure.Repositories.Notifications;
 using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
@@ -41,6 +43,7 @@ using Hospital.Infrastructure.Repositories.Specilities;
 using Hospital.Infrastructure.Repositories.Symptoms;
 using Hospital.Infrastructure.Repositories.TimeSlots;
 using Hospital.Infrastructure.Repositories.Users;
+using Hospital.Infrastructure.Repositories.Zones;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
@@ -48,6 +51,7 @@ using Hospital.SharedKernel.Infrastructure.Databases.Extensions;
 using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
+using Hospital.SharedKernel.Modules.Notifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -167,6 +171,14 @@ namespace Hospital.Infrastructure.DI
             //Doctor 
             services.AddScoped<IDoctorReadRepository, DoctorReadRepository>();
             services.AddScoped<IDoctorWriteRepository, DoctorWriteRepository>();
+
+            //Zone 
+            services.AddScoped<IZoneReadRepository, ZoneReadRepository>();
+            services.AddScoped<IZoneWriteRepository, ZoneWriteRepository>();
+
+            // Notifications
+            services.AddScoped<INotificationReadRepository, NotificationReadRepository>();
+            services.AddScoped<INotificationWriteRepository, NotificationWriteRepository>();
             return services;
         }
     }

@@ -47,7 +47,7 @@ namespace Hospital.Application.Queries.Feedbacks
             }
             var option = new QueryOption { IgnoreOwner = true };
 
-            var result =await _feedbackReadRepository.GetPagingAsync(request.Pagination, spec, option, cancellationToken: cancellationToken);
+            var result =await _feedbackReadRepository.GetPaginationAsync(request.Pagination, spec, option, cancellationToken: cancellationToken);
 
             var dto = _mapper.Map<List<FeedbackDto>>(result.Data);
 

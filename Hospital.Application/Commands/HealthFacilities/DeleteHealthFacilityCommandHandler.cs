@@ -15,8 +15,8 @@ namespace Hospital.Application.Commands.HealthFacilities
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
         private readonly IHealthFacilityWriteRepository _healthFacilityWriteRepository;
         public DeleteHealthFacilityCommandHandler(
-            IEventDispatcher eventDispatcher, 
-            IAuthService authService, 
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             IHealthFacilityReadRepository healthFacilityReadRepository,
@@ -34,7 +34,7 @@ namespace Hospital.Application.Commands.HealthFacilities
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var facilities = await _healthFacilityReadRepository.GetByIdsAsync(request.Ids, _healthFacilityReadRepository.DefaultQueryOption,cancellationToken);
+            var facilities = await _healthFacilityReadRepository.GetByIdsAsync(request.Ids, _healthFacilityReadRepository.DefaultQueryOption, cancellationToken);
             if (facilities.Any())
             {
                 await _healthFacilityWriteRepository.DeleteAsync(facilities, cancellationToken);

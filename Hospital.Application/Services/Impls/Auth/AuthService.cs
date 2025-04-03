@@ -128,12 +128,14 @@ namespace Hospital.Application.Services.Impls.Auth
             if (payload.User is Customer)
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, "false"));
+                claims.Add(new Claim(ClaimConstant.IS_FA, "false"));
                 claims.Add(new Claim(ClaimConstant.ZONE_ID, (0).ToString()));
                 claims.Add(new Claim(ClaimConstant.FACILITY_ID, (0).ToString()));
             }
             else if (payload.User is Employee employee)
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, (payload.Roles.Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN)).ToString()));
+                claims.Add(new Claim(ClaimConstant.IS_FA, (payload.Roles.Any(r => r.Code == RoleCodeConstant.FACILITY_ADMIN)).ToString()));
                 claims.Add(new Claim(ClaimConstant.ZONE_ID, (employee.ZoneId).ToString()));
                 claims.Add(new Claim(ClaimConstant.FACILITY_ID, (employee.FacilityId).ToString()));
             }

@@ -32,8 +32,13 @@ namespace Hospital.Application.Dtos.HealthServices
 
         public string StatusText => Status.GetDescription();
 
-        public long FacilitySpecialtyId { get; set; }
+        public string ZoneId { get; set; }
 
+        public string DoctorId { get; set; }
+
+        public string FacilityId { get; set; }
+
+        public string SpecialtyId { get; set; }
 
 
         public List<TimeFrame> TimeSlots ;
@@ -48,6 +53,10 @@ namespace Hospital.Application.Dtos.HealthServices
             RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["health_service_description_en_is_not_empty"]);
             RuleFor(x => x.Price).NotEmpty().WithMessage(localizer["health_service_price_is_not_empty"]);
             RuleFor(x => x.Price).GreaterThan(0).WithMessage(localizer["health_service_price_must_be_greater_than_0"]);
+            RuleFor(x => x.ZoneId).Must(x => int.TryParse(x, out var id) && id >= 0).WithMessage(localizer["invalid_zone_id"]);
+            RuleFor(x => x.FacilityId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_facility_id"]);
+            RuleFor(x => x.DoctorId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_doctor_id"]);
+            RuleFor(x => x.SpecialtyId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_specialty_id"]);
         }
     }
 }

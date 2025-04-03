@@ -5,7 +5,6 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
-using Hospital.SharedKernel.Libraries.Attributes;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -15,8 +14,8 @@ namespace Hospital.Application.Commands.Specialties
     {
         private readonly ISpecialtyWriteRepository _writeSpecialtyRepository;
         public AddSpecialtyCommandHandler(
-            IEventDispatcher eventDispatcher, 
-            IAuthService authService, 
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
             ISpecialtyWriteRepository writeSpecialtyRepository

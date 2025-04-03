@@ -48,8 +48,14 @@ namespace Hospital.Infrastructure.Repositories
 
         public QueryOption DefaultQueryOption => QueryOption;
 
+        //public override ISpecification<T> GuardDataAccess<T>(ISpecification<T> spec, QueryOption option = default)
+        //{
+        //    return base.GuardDataAccess(spec, option);
+        //}
+
+
         #region Paging
-        public virtual async Task<PaginationResult<T>> GetPagingAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default)
+        public virtual async Task<PaginationResult<T>> GetPaginationAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default)
         {
             option ??= new QueryOption();
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
@@ -61,9 +67,9 @@ namespace Hospital.Infrastructure.Repositories
             var dataFactory = () => query2.ToListAsync(cancellationToken);
             var countFactory = () => query.CountAsync(cancellationToken);
 
-            if (!option.IgnoreOwner)
+            if (!option.IgnoreOwner && !option.IgnoreFacility)
             {
-                var cacheEntry = CacheManager.GetPaginationCacheEntry<T>(pagination, _executionContext.Identity);
+                var cacheEntry = CacheManager.GetPaginationCacheEntry<T>(pagination, _executionContext.Identity, _executionContext.FacilityId);
                 var valueFactory = async () => new PaginationResult<T>(await dataFactory(), await countFactory());
 
                 return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);

@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Hospital.Infrastructure.Repositories
 {
-    public class OrmRepository : IOrmRepository
+    public abstract class OrmRepository : IOrmRepository
     {
         protected readonly IServiceProvider _serviceProvider;
 
@@ -39,22 +39,7 @@ namespace Hospital.Infrastructure.Repositories
             {
                 return spec;
             }
-            if (!option.IgnoreFacility && typeof(T).HasInterface<IFacility>())
-            {
-                spec = spec.And(new LimitByFacilityIdSpecification<T>(_executionContext.FacilityId));
 
-            }
-            if (!option.IgnoreZone && typeof(T).HasInterface<IZone>())
-            {
-                if(_executionContext.ZoneId == 0)
-                {
-                    spec = spec.And(new LimitByFacilityIdSpecification<T>(_executionContext.FacilityId));
-                }
-                else
-                {
-                    spec = spec.And(new LimitByZoneIdSpecification<T>(_executionContext.ZoneId));
-                }
-            }
             if (!option.IgnoreDoctor && typeof(T).HasInterface<IDoctor>())
             {
                 spec = spec.And(new LimitByDoctorIdSpecification<T>(_executionContext.Identity));

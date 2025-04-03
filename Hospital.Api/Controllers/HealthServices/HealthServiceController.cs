@@ -34,7 +34,7 @@ namespace Hospital.Api.Controllers.HealthServices
 
             var dtos = _mapper.Map<List<ServiceTypeDto>>(types);
 
-        return Ok(new SimpleDataResult { Data = dtos });
+            return Ok(new SimpleDataResult { Data = dtos });
         }
         [HttpGet("pagination")]
         public virtual async Task<IActionResult> GetPagination(
@@ -51,7 +51,7 @@ namespace Hospital.Api.Controllers.HealthServices
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
 
-            var query = new GetHealthServicePagingQuery(pagination, facilityId, typeId,specialtyId,status);
+            var query = new GetHealthServicePagingQuery(pagination, facilityId, typeId, specialtyId, status);
 
             var result = await _mediator.Send(query, cancellationToken);
 

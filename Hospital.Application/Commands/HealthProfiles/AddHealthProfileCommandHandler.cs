@@ -34,10 +34,11 @@ namespace Hospital.Application.Commands.HealthProfiles
             healthProfile.Pname = await _locationReadRepository.GetNameByIdAsync(healthProfile.Pid, "province", cancellationToken);
             healthProfile.Dname = await _locationReadRepository.GetNameByIdAsync(healthProfile.Did, "district", cancellationToken);
             healthProfile.Wname = await _locationReadRepository.GetNameByIdAsync(healthProfile.Wid, "ward", cancellationToken);
-            if (healthProfile.OwnerId == 0) { 
+            if (healthProfile.OwnerId == 0)
+            {
 
             }
-            
+
             await _HealthProfileWriteRepository.AddAsync(healthProfile, cancellationToken);
             long HealthProfileId = healthProfile.Id;
             return HealthProfileId;

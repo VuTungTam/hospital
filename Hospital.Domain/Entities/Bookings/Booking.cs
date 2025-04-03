@@ -43,6 +43,10 @@ namespace Hospital.Domain.Entities.Bookings
 
         public long TimeSlotId { get; set; }
 
+        public TimeSpan StartBooking {  get; set; }
+
+        public TimeSpan EndBooking {  get; set; }
+
         public TimeSlot TimeSlot { get; set; }
 
         public int Order {  get; set; }
@@ -50,8 +54,6 @@ namespace Hospital.Domain.Entities.Bookings
 
         public Feedback Feedback { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
         public List<BookingSymptom> BookingSymptoms { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -69,8 +71,11 @@ namespace Hospital.Domain.Entities.Bookings
         public long? DeletedBy { get; set; }
 
         public long OwnerId { get; set; }
+
         public long FacilityId { get; set; }
+
         public long ZoneId { get; set; }
+
         public long DoctorId { get ; set ; }
     }
 }

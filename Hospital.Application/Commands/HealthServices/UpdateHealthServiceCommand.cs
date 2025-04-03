@@ -8,10 +8,10 @@ namespace Hospital.Application.Commands.HealthServices
     [RequiredPermission(ActionExponent.UpdateService)]
     public class UpdateHealthServiceCommand : BaseCommand
     {
-        public UpdateHealthServiceCommand(HealthServiceDto healthService) 
+        public UpdateHealthServiceCommand(HealthServiceDto healthService)
         {
             HealthService = healthService;
         }
-        public HealthServiceDto HealthService { get;  }
+        public HealthServiceDto HealthService { get; }
     }
 }

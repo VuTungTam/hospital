@@ -16,8 +16,8 @@ namespace Hospital.Application.Commands.SocialNetworks
         private readonly ISocialNetworkReadRepository _socialNetworkReadRepository;
         private readonly ISocialNetworkWriteRepository _socialNetworkWriteRepository;
         public UpdateSocialNetworkCommandHandler(
-            IEventDispatcher eventDispatcher, 
-            IAuthService authService, 
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             ISocialNetworkReadRepository socialNetworkReadRepository,
             ISocialNetworkWriteRepository socialNetworkWriteRepository,
@@ -35,7 +35,8 @@ namespace Hospital.Application.Commands.SocialNetworks
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var socialNetwork = await _socialNetworkReadRepository.GetByIdAsync(id,_socialNetworkReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+            var socialNetwork = await _socialNetworkReadRepository.GetByIdAsync(id, cancellationToken: cancellationToken);
+
             if (socialNetwork == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
