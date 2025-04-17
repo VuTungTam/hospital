@@ -25,7 +25,7 @@ namespace Hospital.Api.Controllers.Feedbacks
             return Ok(new SimpleDataResult { Data = feedback });
         }
 
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetFeedbackPagination(int page, int size, long serviceId, int star, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);

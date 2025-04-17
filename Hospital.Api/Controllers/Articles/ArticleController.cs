@@ -59,7 +59,7 @@ namespace Hospital.Api.Controllers.Articles
             return Ok(new SimpleDataResult { Data = viewCount });
         }
 
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetPagination(
             int page,
             int size,

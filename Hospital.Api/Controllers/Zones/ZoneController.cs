@@ -15,7 +15,7 @@ namespace Hospital.Api.Controllers.Zones
         public ZoneController(IMediator mediator) : base(mediator)
         {
         }
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public virtual async Task<IActionResult> GetPagination(
             int page,
             int size,

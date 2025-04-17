@@ -12,7 +12,7 @@ namespace Hospital.Api.Controllers.Auth
         {
         }
 
-        [HttpGet("pagination")]
+        [HttpGet]
         public async Task<IActionResult> GetPagination(
             int page,
             int size,

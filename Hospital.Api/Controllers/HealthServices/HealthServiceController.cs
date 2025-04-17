@@ -36,7 +36,7 @@ namespace Hospital.Api.Controllers.HealthServices
 
             return Ok(new SimpleDataResult { Data = dtos });
         }
-        [HttpGet("pagination")]
+        [HttpGet]
         public virtual async Task<IActionResult> GetPagination(
             int page,
             int size,

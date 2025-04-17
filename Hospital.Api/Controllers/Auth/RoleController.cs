@@ -17,23 +17,16 @@ namespace Hospital.Api.Controllers.Auth
         {
             _localizer = localizer;
         }
-        [HttpGet]
+
+        [HttpGet("entire")]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
             var query = new GetRolesQuery();
             var data = await _mediator.Send(query, cancellationToken);
 
-            var currentCulture = Thread.CurrentThread.CurrentCulture;
-            if (currentCulture.Name == "en-US")
-            {
-                foreach (var role in data)
-                {
-                    role.Name = _localizer["role_" + role.Code];
-                }
-            }
-
             return Ok(new ServiceResult { Data = data, Total = data.Count });
         }
+
         [HttpPut("add-action/{roleId}/{actionId}")]
         public async Task<IActionResult> AddAction(long roleId, long actionId, CancellationToken cancellationToken = default)
         {

@@ -11,7 +11,7 @@ namespace Hospital.Api.Controllers.Auth
         public ActionController(IMediator mediator) : base(mediator)
         {
         }
-        [HttpGet]
+        [HttpGet("entire")]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
             var query = new GetActionsQuery();
@@ -19,7 +19,7 @@ namespace Hospital.Api.Controllers.Auth
             return Ok(new ServiceResult { Data = result, Total = result.Count });
         }
 
-        [HttpGet("pagination")]
+        [HttpGet]
         public async Task<IActionResult> GetPagination(int page = 0, int size = 20, CancellationToken cancellationToken = default)
         {
             var query = new GetActionsPaginationQuery(new Pagination(page, size));

@@ -16,7 +16,7 @@ namespace Hospital.Api.Controllers.Symptoms
         {
         }
 
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetSymptomPagingGetPaging(int page, int size, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);

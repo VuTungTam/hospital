@@ -187,18 +187,8 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Auth.ActionController",
-    "Method": "GetAll",
-    "RelativePath": "api/action",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Auth.ActionController",
     "Method": "GetPagination",
-    "RelativePath": "api/action/pagination",
+    "RelativePath": "api/action",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -211,6 +201,72 @@
       {
         "Name": "size",
         "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Auth.ActionController",
+    "Method": "GetAll",
+    "RelativePath": "api/action/entire",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Articles.ArticleController",
+    "Method": "GetPagination",
+    "RelativePath": "api/article",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "Hospital.Domain.Enums.ArticleStatus",
+        "IsRequired": false
+      },
+      {
+        "Name": "postDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "clientSort",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "excludeId",
+        "Type": "System.Int64",
         "IsRequired": false
       }
     ],
@@ -324,62 +380,6 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Articles.ArticleController",
-    "Method": "GetPagination",
-    "RelativePath": "api/article/pagination",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "asc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "desc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "status",
-        "Type": "Hospital.Domain.Enums.ArticleStatus",
-        "IsRequired": false
-      },
-      {
-        "Name": "postDate",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "clientSort",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      },
-      {
-        "Name": "excludeId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Articles.ArticleController",
     "Method": "Post",
     "RelativePath": "api/article/post",
     "HttpMethod": "PUT",
@@ -485,6 +485,62 @@
         "Name": "request",
         "Type": "Hospital.Application.Dtos.Auth.RefreshTokenRequestDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Bookings.BookingController",
+    "Method": "GetPaging",
+    "RelativePath": "api/booking",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "owner",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "date",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "Hospital.Domain.Enums.BookingStatus",
+        "IsRequired": false
+      },
+      {
+        "Name": "excludeId",
+        "Type": "System.Int64",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -656,7 +712,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Bookings.BookingController",
     "Method": "GetMyListPagination",
-    "RelativePath": "api/booking/myself/pagination",
+    "RelativePath": "api/booking/myself",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -706,8 +762,18 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Bookings.BookingController",
-    "Method": "GetPaging",
-    "RelativePath": "api/booking/pagination",
+    "Method": "GetSequence",
+    "RelativePath": "api/booking/sequence",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Customers.CustomerController",
+    "Method": "GetPagination",
+    "RelativePath": "api/customer",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -719,6 +785,11 @@
       },
       {
         "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "state",
         "Type": "System.Int32",
         "IsRequired": false
       },
@@ -736,38 +807,8 @@
         "Name": "desc",
         "Type": "System.String",
         "IsRequired": false
-      },
-      {
-        "Name": "owner",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "date",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "status",
-        "Type": "Hospital.Domain.Enums.BookingStatus",
-        "IsRequired": false
-      },
-      {
-        "Name": "excludeId",
-        "Type": "System.Int64",
-        "IsRequired": false
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Bookings.BookingController",
-    "Method": "GetSequence",
-    "RelativePath": "api/booking/sequence",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -884,47 +925,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Customers.CustomerController",
-    "Method": "GetPagination",
-    "RelativePath": "api/customer/pagination",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "state",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "asc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "desc",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
     "ReturnTypes": []
   },
   {
@@ -1253,6 +1253,62 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Employees.EmployeeController",
+    "Method": "GetEmployeePagination",
+    "RelativePath": "api/employee",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "state",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "zoneId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "roleId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "facilityId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Employees.EmployeeController",
     "Method": "Add",
     "RelativePath": "api/employee",
     "HttpMethod": "POST",
@@ -1302,7 +1358,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Employees.EmployeeController",
     "Method": "Add",
-    "RelativePath": "api/employee/admin/{facilityId}",
+    "RelativePath": "api/employee/admin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1310,11 +1366,6 @@
       {
         "Name": "admin",
         "Type": "Hospital.Application.Dtos.Employee.AdminDto",
-        "IsRequired": true
-      },
-      {
-        "Name": "facilityId",
-        "Type": "System.Int64",
         "IsRequired": true
       }
     ],
@@ -1422,63 +1473,18 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Employees.EmployeeController",
-    "Method": "GetEmployeePagination",
-    "RelativePath": "api/employee/pagination",
+    "Method": "GetSequence",
+    "RelativePath": "api/employee/sequence/{admin}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "state",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "zoneId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "roleId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "asc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "desc",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "admin",
+        "Type": "System.Boolean",
+        "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Employees.EmployeeController",
-    "Method": "GetSequence",
-    "RelativePath": "api/employee/sequence",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -1541,12 +1547,38 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.FacilityTypes.FacilityType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "GetAll",
+    "Method": "GetPaging",
     "RelativePath": "api/facilitycategory",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -1614,9 +1646,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.FacilityTypes.FacilityType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthFacility.FacilityTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "GetPaging",
-    "RelativePath": "api/facilitycategory/pagination",
+    "ContainingType": "Hospital.Api.Controllers.Feedbacks.FeedbackController",
+    "Method": "GetFeedbackPagination",
+    "RelativePath": "api/feedback",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1628,6 +1660,16 @@
       },
       {
         "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "serviceId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "star",
         "Type": "System.Int32",
         "IsRequired": false
       },
@@ -1744,9 +1786,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.Feedbacks.FeedbackController",
-    "Method": "GetFeedbackPagination",
-    "RelativePath": "api/feedback/pagination",
+    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
+    "Method": "GetPagination",
+    "RelativePath": "api/healthfacility",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1758,16 +1800,6 @@
       },
       {
         "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "serviceId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "star",
         "Type": "System.Int32",
         "IsRequired": false
       },
@@ -1784,6 +1816,16 @@
       {
         "Name": "desc",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "typeId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "Hospital.Domain.Enums.HealthFacilityStatus",
         "IsRequired": false
       }
     ],
@@ -1876,8 +1918,112 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
+    "Method": "GetByName",
+    "RelativePath": "api/healthfacility/name",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
+    "Method": "RemoveAction",
+    "RelativePath": "api/healthfacility/remove-specialty/{facilityId}/{specialtyId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "facilityId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "specialtyId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
+    "Method": "GetBySlug",
+    "RelativePath": "api/healthfacility/slug/{slug}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "slug",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "langs",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
+    "Method": "GetAllFacilityType",
+    "RelativePath": "api/healthfacility/type",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Delarations.HealthProfileController",
+    "Method": "Add",
+    "RelativePath": "api/healthprofile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "HealthProfileDto",
+        "Type": "Hospital.Application.Dtos.HealthProfiles.HealthProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Delarations.HealthProfileController",
     "Method": "GetPagination",
-    "RelativePath": "api/healthfacility/pagination",
+    "RelativePath": "api/healthprofile",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1908,61 +2054,9 @@
         "IsRequired": false
       },
       {
-        "Name": "typeId",
+        "Name": "userId",
         "Type": "System.Int64",
         "IsRequired": false
-      },
-      {
-        "Name": "status",
-        "Type": "Hospital.Domain.Enums.HealthFacilityStatus",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
-    "Method": "RemoveAction",
-    "RelativePath": "api/healthfacility/remove-specialty/{facilityId}/{specialtyId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "facilityId",
-        "Type": "System.Int64",
-        "IsRequired": true
-      },
-      {
-        "Name": "specialtyId",
-        "Type": "System.Int64",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.HealthFacilities.HealthFacilityController",
-    "Method": "GetAllFacilityType",
-    "RelativePath": "api/healthfacility/type",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Delarations.HealthProfileController",
-    "Method": "Add",
-    "RelativePath": "api/healthprofile",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "HealthProfileDto",
-        "Type": "Hospital.Application.Dtos.HealthProfiles.HealthProfileDto",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -2026,9 +2120,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.Delarations.HealthProfileController",
+    "ContainingType": "Hospital.Api.Controllers.HealthServices.HealthServiceController",
     "Method": "GetPagination",
-    "RelativePath": "api/healthprofile/pagination",
+    "RelativePath": "api/healthservice",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2059,8 +2153,23 @@
         "IsRequired": false
       },
       {
-        "Name": "userId",
+        "Name": "typeId",
         "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "facilityId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "specialtyId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "Hospital.Domain.Enums.HealthServiceStatus",
         "IsRequired": false
       }
     ],
@@ -2126,62 +2235,6 @@
         "Name": "id",
         "Type": "System.Int64",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.HealthServices.HealthServiceController",
-    "Method": "GetPagination",
-    "RelativePath": "api/healthservice/pagination",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "asc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "desc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "typeId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "facilityId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "specialtyId",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "status",
-        "Type": "Hospital.Domain.Enums.HealthServiceStatus",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2366,7 +2419,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Auth.LoginHistoryController",
     "Method": "GetPagination",
-    "RelativePath": "api/loginhistory/pagination",
+    "RelativePath": "api/loginhistory",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2384,6 +2437,84 @@
       {
         "Name": "owner",
         "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Metas.MetaController",
+    "Method": "Get",
+    "RelativePath": "api/meta/injector",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Metas.MetaController",
+    "Method": "GetTags",
+    "RelativePath": "api/meta/tags",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Metas.MetaController",
+    "Method": "UpdateScript",
+    "RelativePath": "api/meta/update-script",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "script",
+        "Type": "Hospital.Application.Dtos.Metas.ScriptDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Metas.MetaController",
+    "Method": "UpsertMeta",
+    "RelativePath": "api/meta/upsert-meta",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "meta",
+        "Type": "Hospital.Application.Dtos.Metas.MetaDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Notifications.NotificationController",
+    "Method": "GetPagination",
+    "RelativePath": "api/notification",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -2447,45 +2578,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.Notifications.NotificationController",
-    "Method": "GetPagination",
-    "RelativePath": "api/notification/pagination",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Hospital.Api.Controllers.Ping.PingController",
     "Method": "Ping",
     "RelativePath": "api/ping",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Auth.RoleController",
-    "Method": "GetAll",
-    "RelativePath": "api/role",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2511,6 +2606,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Auth.RoleController",
+    "Method": "GetAll",
+    "RelativePath": "api/role/entire",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -2646,12 +2751,38 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "GetAll",
+    "Method": "GetPaging",
     "RelativePath": "api/servicetype",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -2714,42 +2845,6 @@
         "Name": "id",
         "Type": "System.String",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.CrudController\u00602[[Hospital.Domain.Entities.HealthServices.ServiceType, Hospital.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Hospital.Application.Dtos.HealthServices.ServiceTypeDto, Hospital.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "GetPaging",
-    "RelativePath": "api/servicetype/pagination",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "asc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "desc",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2824,40 +2919,8 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Specialties.SpecialtyController",
-    "Method": "Add",
-    "RelativePath": "api/specialty",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "specialty",
-        "Type": "Hospital.Application.Dtos.Specialties.SpecialtyDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Specialties.SpecialtyController",
-    "Method": "Delete",
-    "RelativePath": "api/specialty",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ids",
-        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Specialties.SpecialtyController",
     "Method": "GetPagination",
-    "RelativePath": "api/specialty/pagination",
+    "RelativePath": "api/specialty",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2896,25 +2959,25 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.Symptoms.SymptomController",
-    "Method": "AddSymptom",
-    "RelativePath": "api/symptom",
+    "ContainingType": "Hospital.Api.Controllers.Specialties.SpecialtyController",
+    "Method": "Add",
+    "RelativePath": "api/specialty",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "symptom",
-        "Type": "Hospital.Application.Dtos.Symptoms.SymptomDto",
+        "Name": "specialty",
+        "Type": "Hospital.Application.Dtos.Specialties.SpecialtyDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Hospital.Api.Controllers.Symptoms.SymptomController",
+    "ContainingType": "Hospital.Api.Controllers.Specialties.SpecialtyController",
     "Method": "Delete",
-    "RelativePath": "api/symptom",
+    "RelativePath": "api/specialty",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -2930,7 +2993,7 @@
   {
     "ContainingType": "Hospital.Api.Controllers.Symptoms.SymptomController",
     "Method": "GetSymptomPagingGetPaging",
-    "RelativePath": "api/symptom/pagination",
+    "RelativePath": "api/symptom",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2959,6 +3022,38 @@
         "Name": "desc",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Symptoms.SymptomController",
+    "Method": "AddSymptom",
+    "RelativePath": "api/symptom",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "symptom",
+        "Type": "Hospital.Application.Dtos.Symptoms.SymptomDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Symptoms.SymptomController",
+    "Method": "Delete",
+    "RelativePath": "api/symptom",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int64, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -3053,6 +3148,42 @@
   },
   {
     "ContainingType": "Hospital.Api.Controllers.Zones.ZoneController",
+    "Method": "GetPagination",
+    "RelativePath": "api/zone",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "asc",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hospital.Api.Controllers.Zones.ZoneController",
     "Method": "Add",
     "RelativePath": "api/zone",
     "HttpMethod": "POST",
@@ -3111,42 +3242,6 @@
         "Name": "id",
         "Type": "System.Int64",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Hospital.Api.Controllers.Zones.ZoneController",
-    "Method": "GetPagination",
-    "RelativePath": "api/zone/pagination",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "size",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "asc",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "desc",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -2,6 +2,7 @@
 using Hospital.Application.Commands.HealthFacilities;
 using Hospital.Application.Commands.Specialties;
 using Hospital.Application.Dtos.HealthFacility;
+using Hospital.Application.Queries.FacilityTypes;
 using Hospital.Application.Queries.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Domain.Enums;
@@ -11,17 +12,19 @@ using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 
 namespace Hospital.Api.Controllers.HealthFacilities
 {
     public class HealthFacilityController : ApiBaseController
     {
         private IMapper _mapper;
-        private readonly IFacilityCategoryReadRepository _facilityCategoryReadRepository;
+        private readonly IFacilityTypeReadRepository _facilityCategoryReadRepository;
         public HealthFacilityController(
             IMediator mediator,
             IMapper mapper,
-            IFacilityCategoryReadRepository facilityCategoryReadRepository
+            IFacilityTypeReadRepository facilityCategoryReadRepository
             ) : base(mediator)
         {
             _mapper = mapper;
@@ -31,14 +34,14 @@ namespace Hospital.Api.Controllers.HealthFacilities
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllFacilityType(CancellationToken cancellationToken = default)
         {
-            var types = await _facilityCategoryReadRepository.GetAsync(cancellationToken: cancellationToken);
+            var query = new GetFacilityTypeQuery();
 
-            var dtos = _mapper.Map<List<FacilityTypeDto>>(types);
+            var result = await _mediator.Send(query, cancellationToken);
 
-            return Ok(new SimpleDataResult { Data = dtos });
+            return Ok(new SimpleDataResult { Data = result });
         }
 
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetPagination(
             int page,
             int size,
@@ -50,7 +53,7 @@ namespace Hospital.Api.Controllers.HealthFacilities
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetHealthFacilityPagingQuery(pagination, typeId, status);
+            var query = new GetHealthFacilityPaginationQuery(pagination, typeId, status);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
@@ -64,6 +67,40 @@ namespace Hospital.Api.Controllers.HealthFacilities
             return Ok(new SimpleDataResult { Data = result });
         }
 
+        [HttpGet("slug/{slug}"), AllowAnonymous]
+        public async Task<IActionResult> GetBySlug(string slug, [FromQuery] List<string> langs, CancellationToken cancellationToken = default)
+        {
+            if (langs == null || !langs.Any())
+            {
+                langs = new List<string>
+                {
+                    "vi-VN",
+                    "en-US"
+                };
+            }
+
+            var query = new GetFacilityBySlugQuery(slug, langs);
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
+        }
+
+        [HttpGet("name"), AllowAnonymous]
+        public async Task<IActionResult> GetByName(
+            int page,
+            int size,
+            string search = "",
+            string asc = "",
+            string desc = "",
+            CancellationToken cancellationToken = default
+            )
+        {
+            var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
+
+            var query = new GetFacilityNamePaginationQuery(pagination);
+
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
+        }
 
         [HttpPost]
         public virtual async Task<IActionResult> Add(HealthFacilityDto healthFacility, CancellationToken cancellationToken = default)

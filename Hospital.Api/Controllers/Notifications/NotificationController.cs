@@ -22,7 +22,7 @@ namespace Hospital.Api.Controllers.Notifications
             return Ok(new SimpleDataResult { Data = count });
         }
 
-        [HttpGet("pagination")]
+        [HttpGet]
         public async Task<IActionResult> GetPagination(int page = 0, int size = 20, string search = "", CancellationToken cancellationToken = default)
         {
             var query = new GetNotificationsPaginationQuery(new Pagination(page, size, search));

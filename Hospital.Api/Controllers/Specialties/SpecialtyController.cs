@@ -15,7 +15,7 @@ namespace Hospital.Api.Controllers.Specialties
         public SpecialtyController(IMediator mediator) : base(mediator)
         {
         }
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetPagination(
             int page,
             int size,

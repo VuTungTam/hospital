@@ -37,7 +37,7 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new SimpleDataResult { Data = user });
         }
 
-        [HttpGet("myself/pagination")]
+        [HttpGet("myself")]
         public async Task<IActionResult> GetMyListPagination(
             int page,
             int size,
@@ -57,7 +57,7 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet("pagination"), AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetPaging(
             int page,
             int size,

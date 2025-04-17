@@ -27,10 +27,14 @@ namespace Hospital.Api.Controllers.Employees
         [HttpGet("enums"), AllowAnonymous]
         public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption) });
 
-        [HttpGet("sequence")]
-        public async Task<IActionResult> GetSequence(CancellationToken cancellationToken = default)
+        [HttpGet("sequence/{admin}")]
+        public async Task<IActionResult> GetSequence(bool admin, CancellationToken cancellationToken = default)
         {
             var table = new Employee().GetTableName();
+            if (admin)
+            {
+                table = "admin";
+            }
             return Ok(new SimpleDataResult { Data = await _mediator.Send(new GetSequenceQuery(table), cancellationToken) });
         }
 
@@ -61,13 +65,13 @@ namespace Hospital.Api.Controllers.Employees
             return Ok(new SimpleDataResult { Data = employee });
         }
 
-        [HttpGet("pagination")]
+        [HttpGet]
         public async Task<IActionResult> GetEmployeePagination(
-            int page, int size, int state, long zoneId, long roleId,
+            int page, int size, int state, long zoneId, long roleId, long facilityId,
             string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetEmployeesPaginationQuery(pagination, (AccountStatus)state, zoneId, roleId);
+            var query = new GetEmployeesPaginationQuery(pagination, (AccountStatus)state, zoneId, roleId, facilityId);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
@@ -87,10 +91,10 @@ namespace Hospital.Api.Controllers.Employees
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
-        [HttpPost("admin/{facilityId}")]
-        public async Task<IActionResult> Add(AdminDto admin, long facilityId, CancellationToken cancellationToken = default)
+        [HttpPost("admin")]
+        public async Task<IActionResult> Add(AdminDto admin, CancellationToken cancellationToken = default)
         {
-            var command = new AddFacilityAdminCommand(admin, facilityId);
+            var command = new AddFacilityAdminCommand(admin);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 

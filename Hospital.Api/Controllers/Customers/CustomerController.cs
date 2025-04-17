@@ -50,7 +50,7 @@ namespace Hospital.Api.Controllers.Customers
             return Ok(new SimpleDataResult { Data = customer });
         }
 
-        [HttpGet("pagination")]
+        [HttpGet]
         public async Task<IActionResult> GetPagination(int page, int size, int state, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);

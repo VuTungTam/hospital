@@ -18,20 +18,13 @@ namespace Hospital.Api.Controllers
         }
         #region Get
 
-        [HttpGet]
-        public virtual async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
-        {
-            var query = new GetAllQuery<TEntity, TDto>();
-            return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
-        }
-
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> GetById(string id, CancellationToken cancellationToken = default)
         {
             var query = new GetByIdQuery<TEntity, TDto>(id);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
-        [HttpGet("pagination")]
+        [HttpGet]
         public virtual async Task<IActionResult> GetPaging(int page, int size, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
