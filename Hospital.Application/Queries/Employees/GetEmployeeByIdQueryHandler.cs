@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.Employee;
 using Hospital.Application.Repositories.Interfaces.Employees;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -14,14 +15,18 @@ namespace Hospital.Application.Queries.Employees
     {
         private readonly IEmployeeReadRepository _employeeReadRepository;
 
+        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
+
         public GetEmployeeByIdQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
-            IEmployeeReadRepository employeeReadRepository
+            IEmployeeReadRepository employeeReadRepository,
+            IHealthFacilityReadRepository healthFacilityReadRepository
         ) : base(authService, mapper, localizer)
         {
             _employeeReadRepository = employeeReadRepository;
+            _healthFacilityReadRepository = healthFacilityReadRepository;
         }
 
         public async Task<EmployeeDto> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
@@ -37,7 +42,24 @@ namespace Hospital.Application.Queries.Employees
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
-            return _mapper.Map<EmployeeDto>(employee);
+            var dto = _mapper.Map<EmployeeDto>(employee);
+
+            if (dto.FacilityId == "0")
+            {
+                dto.FacilityNameVn = "Hệ thống";
+
+                dto.FacilityNameEn = "System";
+            }
+            else
+            {
+                var facility = await _healthFacilityReadRepository.GetByIdAsync(long.Parse(dto.FacilityId), cancellationToken: cancellationToken);
+
+                dto.FacilityNameVn = facility.NameVn;
+
+                dto.FacilityNameEn = facility.NameEn;
+            }
+
+            return dto;
         }
     }
 }

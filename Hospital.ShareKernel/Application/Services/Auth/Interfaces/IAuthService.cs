@@ -9,7 +9,9 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Interfaces
 {
     public interface IAuthService
     {
-        string GetPermission(Employee employee, List<ActionWithExcludeValue> actions);
+        string GetPermission(List<ActionWithExcludeValue> actions);
+
+        Task<string> GetCustomerPermission(CancellationToken cancellationToken);
 
         bool CheckPermission(ActionExponent exponent);
 

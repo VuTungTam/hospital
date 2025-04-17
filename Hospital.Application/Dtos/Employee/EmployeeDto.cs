@@ -15,9 +15,16 @@ namespace Hospital.Application.Dtos.Employee
         public List<ActionDto> Actions { get; set; }
 
         public string ZoneId { get; set; }
+
         public string FacilityId { get; set; }
 
+        public string FacilityNameVn { get; set; }
+
+        public string FacilityNameEn { get; set; }
+
         public string RoleNames => string.Join(", ", Roles?.Select(x => x.Name) ?? new List<string>());
+
+        public string RoleNameEns => string.Join(", ", Roles?.Select(x => x.NameEn) ?? new List<string>());
 
     }
 
@@ -27,7 +34,7 @@ namespace Hospital.Application.Dtos.Employee
         {
             RuleFor(x => x).Must(x => x.Roles != null && x.Roles.Any()).WithMessage("Chưa chọn vai trò");
             RuleFor(x => x.ZoneId).Must(x => int.TryParse(x, out var id) && id >= 0).WithMessage(localizer["invalid_zone_id"]);
-            RuleFor(x => x.FacilityId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_facility_id"]);
+            RuleFor(x => x.FacilityId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_facility_id"]);
         }
     }
 }

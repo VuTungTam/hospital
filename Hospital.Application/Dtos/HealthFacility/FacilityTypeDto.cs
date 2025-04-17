@@ -8,9 +8,16 @@ namespace Hospital.Application.Dtos.HealthFacility
     public class FacilityTypeDto : BaseDto
     {
         public string NameVn { get; set; }
+
         public string NameEn { get; set; }
+
         public string DescriptionVn { get; set; }
+
         public string DescriptionEn { get; set; }
+
+        public string Slug { get; set; }
+
+        public int Total { get; set; }
     }
     public class FacilityCategoryValidator : BaseAbstractValidator<FacilityTypeDto>
     {

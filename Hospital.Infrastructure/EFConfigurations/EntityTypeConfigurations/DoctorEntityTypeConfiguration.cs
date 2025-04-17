@@ -62,7 +62,7 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .HasColumnType("NVARCHAR(255)");
 
             builder.Property(x => x.Description)
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
 
             builder.Property(x => x.TrainingProcess)
                    .HasColumnType("NVARCHAR(255)");

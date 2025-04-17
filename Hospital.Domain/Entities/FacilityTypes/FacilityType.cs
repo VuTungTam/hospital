@@ -21,6 +21,8 @@ namespace Hospital.Domain.Entities.FacilityTypes
 
         public string DescriptionEn { get; set; }
 
+        public string Slug { get; set; }
+
         public List<FacilityTypeMapping> FacilityTypeMappings { get; set; }
 
         public DateTime CreatedAt { get; set; }

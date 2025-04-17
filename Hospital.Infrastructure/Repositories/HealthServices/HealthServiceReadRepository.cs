@@ -28,6 +28,8 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
 
         public override ISpecification<HealthService> GuardDataAccess<HealthService>(ISpecification<HealthService> spec, QueryOption option = default)
         {
+            option = option ?? new QueryOption();
+
             spec = base.GuardDataAccess(spec, option);
 
             if (!option.IgnoreFacility)

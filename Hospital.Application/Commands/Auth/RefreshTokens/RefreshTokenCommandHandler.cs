@@ -65,7 +65,7 @@ namespace Hospital.Application.Commands.Auth.RefreshTokens
 
             var roles = isEmployee ? (account as Employee).EmployeeRoles.Select(x => x.Role) : new List<Role>();
             var actions = isEmployee ? await _actionReadRepository.GetActionsByEmployeeIdAsync(account.Id, cancellationToken) : new List<ActionWithExcludeValue>();
-            var permission = isEmployee ? _authService.GetPermission(account as Employee, actions) : "15";
+            var permission = isEmployee ? _authService.GetPermission(actions) : await _authService.GetCustomerPermission(cancellationToken);
             var payload = new GenTokenPayload { User = account, Permission = permission, Roles = roles };
             var accessToken = await _authService.GenerateAccessTokenAsync(payload, cancellationToken);
             var sc = await _systemConfigurationRepository.GetAsync(cancellationToken);

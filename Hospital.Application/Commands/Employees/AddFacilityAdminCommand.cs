@@ -8,12 +8,10 @@ namespace Hospital.Application.Commands.Employees
     [RequiredPermission(ActionExponent.AddAdmin)]
     public class AddFacilityAdminCommand : BaseCommand<string>
     {
-        public AddFacilityAdminCommand(AdminDto admin, long facilityId) 
+        public AddFacilityAdminCommand(AdminDto admin) 
         {
             Admin = admin;
-            FacilityId = facilityId;
         }
         public AdminDto Admin { get;}
-        public long FacilityId { get;}
     }
 }

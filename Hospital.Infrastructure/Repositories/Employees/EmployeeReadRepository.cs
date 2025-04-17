@@ -3,6 +3,7 @@ using Hospital.Domain.Constants;
 using Hospital.Domain.Models.Admin;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Employees;
+using Hospital.Domain.Specifications.Specialties;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
@@ -44,9 +45,9 @@ namespace Hospital.Infrastructure.Repositories.Employees
                 var adminSpec = new GetFacilityAdminSpecification();
                 var selfSpec = new IdEqualsSpecification<Employee>(_executionContext.Identity);
 
-                spec = selfSpec.Or((ISpecification<Employee>)adminSpec);
+                var spec2 = selfSpec.Or((ISpecification<Employee>)adminSpec);
 
-                return spec;
+                return spec.And(spec2);
             }
 
             spec = spec.And(new LimitByFacilityIdSpecification<Employee>(_executionContext.FacilityId));
@@ -157,18 +158,24 @@ namespace Hospital.Infrastructure.Repositories.Employees
             return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
 
-        public async Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0,long facilityId = 0, CancellationToken cancellationToken = default)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
 
             var includable = query.Include(x => x.EmployeeRoles)
                                   .ThenInclude(x => x.Role);
+            query = includable;
 
             ISpecification<Employee> spec = new ExpressionSpecification<Employee>(x => true);
 
             if (status != AccountStatus.None)
             {
                 spec = spec.And(new EmployeeByStatusEqualsSpecification(status));
+            }
+
+            if(facilityId > 0)
+            {
+                spec = spec.And(new EmployeeByFacilityIdEqualsSpecification(facilityId));
             }
 
             var option = new QueryOption();
@@ -185,6 +192,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
             query = query.BuildOrderBy(pagination.Sorts);
 
             var data = await query.ToListAsync(cancellationToken);
+
             if (roleId > 0)
             {
                 data = data.Where(x => x.EmployeeRoles.Exists(ur => ur.RoleId == roleId)).ToList();

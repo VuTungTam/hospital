@@ -97,6 +97,10 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
         
         public static CacheEntry GetCurrentOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"current-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
 
+        public static CacheEntry GetFacilityType() => new CacheEntry($"facility-types", 7776000);
+
+        public static CacheEntry GetCustomerPermission() => new CacheEntry($"customer-permission", 7776000);
+
         public static CacheEntry DbSystemIdCacheEntry<T>(long id) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:{GetTableName<T>()}:{id}", 3600);
 

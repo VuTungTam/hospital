@@ -11,6 +11,7 @@ using Hospital.Application.Repositories.Interfaces.Feedbacks;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Application.Repositories.Interfaces.Metas;
 using Hospital.Application.Repositories.Interfaces.Sequences;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
@@ -35,6 +36,7 @@ using Hospital.Infrastructure.Repositories.HealthFacilities;
 using Hospital.Infrastructure.Repositories.HealthProfiles;
 using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
+using Hospital.Infrastructure.Repositories.Metas;
 using Hospital.Infrastructure.Repositories.Notifications;
 using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
@@ -94,7 +96,7 @@ namespace Hospital.Infrastructure.DI
             // HealthFacility
             services.AddScoped<IHealthFacilityReadRepository, HealthFacilityReadRepository>();
             services.AddScoped<IHealthFacilityWriteRepository, HealthFacilityWriteRepository>();
-            services.AddScoped<IFacilityCategoryReadRepository, FacilityCategotyReadRepository>();
+            services.AddScoped<IFacilityTypeReadRepository, FacilityTypeReadRepository>();
 
             // HealthFacility
             services.AddScoped<IArticleReadRepository, ArticleReadRepository>();
@@ -179,6 +181,14 @@ namespace Hospital.Infrastructure.DI
             // Notifications
             services.AddScoped<INotificationReadRepository, NotificationReadRepository>();
             services.AddScoped<INotificationWriteRepository, NotificationWriteRepository>();
+
+            // Metas
+            services.AddScoped<IMetaReadRepository, MetaReadRepository>();
+            services.AddScoped<IMetaWriteRepository, MetaWriteRepository>();
+
+            // Scripts
+            services.AddScoped<IScriptReadRepository, ScriptReadRepository>();
+            services.AddScoped<IScriptWriteRepository, ScriptWriteRepository>();
             return services;
         }
     }

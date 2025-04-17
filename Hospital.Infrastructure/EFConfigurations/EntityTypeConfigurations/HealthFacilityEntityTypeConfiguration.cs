@@ -11,20 +11,32 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.NameVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
+
             builder.Property(x => x.NameEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
+
             builder.Property(x => x.DescriptionVn)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
+
+            builder.Property(x => x.SummaryEn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(MAX)");
+
+            builder.Property(x => x.SummaryVn)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(MAX)");
+
             builder.Property(x => x.DescriptionEn)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
+
             builder.Property(x => x.Email)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(255)");
 
-            builder.Property(x => x.ImageUrl)
+            builder.Property(x => x.Image)
                    .HasColumnType("NVARCHAR(255)");
 
             builder.Property(x => x.Phone)
@@ -47,9 +59,12 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                    .IsRequired()
                    .HasColumnType("DECIMAL(9,6)");
 
-            builder.Property(x => x.Longtitude)
+            builder.Property(x => x.Longitude)
                    .IsRequired()
                    .HasColumnType("DECIMAL(9,6)");
+
+            builder.Property(x => x.MapURL)
+                   .HasColumnType("NVARCHAR(MAX)");
 
             builder.Property(x => x.TotalStars)
                    .HasColumnType("INT");
@@ -78,6 +93,14 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.HasMany(x => x.Zones)
                    .WithOne(x => x.HealthFacility)
                    .HasForeignKey(x => x.FacilityId);
+
+            builder.HasMany(x => x.Images)
+                   .WithOne(x => x.HealthFacility)
+                   .HasForeignKey(x => x.FacilityId);
+
+            builder.Property(x => x.Slug)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(512)");
         }
     }
 }

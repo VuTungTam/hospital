@@ -18,11 +18,11 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
 
             builder.Property(x => x.DescriptionVn)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
 
             builder.Property(x => x.DescriptionEn)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
 
             builder.Property(x => x.Price)
                    .IsRequired()

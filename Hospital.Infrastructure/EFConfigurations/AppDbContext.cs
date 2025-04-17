@@ -2,9 +2,11 @@
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Distances;
 using Hospital.Domain.Entities.Doctors;
+using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthProfiles;
+using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
@@ -29,6 +31,7 @@ using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
+using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
 
 namespace Hospital.Infrastructure.EFConfigurations
 {
@@ -72,6 +75,9 @@ namespace Hospital.Infrastructure.EFConfigurations
             modelBuilder.ApplyConfiguration(new SystemConfigurationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ZoneEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MetaEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ScriptEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -278,5 +284,15 @@ namespace Hospital.Infrastructure.EFConfigurations
         public DbSet<Doctor> Doctors { get; set; }
 
         public DbSet<ZoneSpecialty> ZoneSpecialties { get; set; }
+
+        public DbSet<FacilityTypeMapping> FacilityTypeMappings { get; set; }
+
+        public DbSet<FacilityType> FacilityTypes { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Action> Actions { get; set; }
+
+        public DbSet<Image> Images { get; set; }
     }
 }

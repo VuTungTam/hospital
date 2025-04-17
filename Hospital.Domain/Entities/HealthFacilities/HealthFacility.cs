@@ -1,11 +1,10 @@
-﻿using Hospital.Domain.Entities.FacilityTypes;
-using Hospital.Domain.Entities.HealthServices;
+﻿using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using Ocelot.Values;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.HealthFacilities
@@ -28,7 +27,11 @@ namespace Hospital.Domain.Entities.HealthFacilities
 
         public string DescriptionEn { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string SummaryVn { get; set; }
+
+        public string SummaryEn { get; set; }
+
+        public string Image { get; set; }
 
         public string Phone { get; set; }
 
@@ -39,6 +42,8 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public HealthFacilityStatus Status { get; set; }
 
         public List<FacilitySpecialty> FacilitySpecialties { get; set; }
+
+        public List<Image> Images { get; set; }
 
         public List<Zone> Zones { get; set; }
 
@@ -61,7 +66,9 @@ namespace Hospital.Domain.Entities.HealthFacilities
 
         public decimal Latitude { get; set; }
 
-        public decimal Longtitude { get; set; }
+        public decimal Longitude { get; set; }
+
+        public string MapURL { get; set; }
 
         public float StarPoint { get; set; }
 
@@ -82,5 +89,7 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
+
+        public string Slug { get; set; }
     }
 }

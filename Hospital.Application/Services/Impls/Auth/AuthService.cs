@@ -1,5 +1,6 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Auth.Actions;
+using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Constants;
@@ -43,6 +44,7 @@ namespace Hospital.Application.Services.Impls.Auth
     {
         private readonly IAuthRepository _authRepository;
         private readonly IActionReadRepository _actionReadRepository;
+        private readonly IRoleReadRepository _roleReadRepository;
         private readonly IRedisCache _redisCache;
         private readonly IExecutionContext _executionContext;
         private readonly IServiceProvider _serviceProvider;
@@ -54,6 +56,7 @@ namespace Hospital.Application.Services.Impls.Auth
             IRedisCache redisCache,
             IExecutionContext executionContext,
             IServiceProvider serviceProvider,
+            IRoleReadRepository roleReadRepository,
             IStringLocalizer<Resources> localizer
         )
         {
@@ -62,6 +65,7 @@ namespace Hospital.Application.Services.Impls.Auth
             _redisCache = redisCache;
             _executionContext = executionContext;
             _serviceProvider = serviceProvider;
+            _roleReadRepository = roleReadRepository;
             _localizer = localizer;
         }
 
@@ -255,23 +259,17 @@ namespace Hospital.Application.Services.Impls.Auth
             await socketService.AskReload(userId, message, cancellationToken);
         }
 
-        public string GetPermission(Employee employee, List<ActionWithExcludeValue> actions)
+        public async Task<string> GetCustomerPermission(CancellationToken cancellationToken)
         {
-            var roles = employee.EmployeeRoles.Select(u => u.Role);
-            //var sa = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.SUPER_ADMIN));
-            //var admin = roles.FirstOrDefault(x => x.Code.Equals(RoleCodeConstant.ADMIN));
+            var actions = await _roleReadRepository.GetCustomerActions(cancellationToken);
 
-            //if (sa != null)
-            //{
-            //    var exponent = sa.RoleActions.First(x => x.Role.Code.Equals(RoleCodeConstant.SUPER_ADMIN)).Action.Exponent;
-            //    return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
-            //}
-            //else if (admin != null)
-            //{
-            //    var exponent = admin.RoleActions.First(x => x.Role.Code.Equals(RoleCodeConstant.ADMIN)).Action.Exponent;
-            //    return AuthUtility.CalculateToTalPermision(Enumerable.Range(0, exponent + 1));
-            //}
+            var exponents = actions.Select(a => a.Exponent);
 
+            return AuthUtility.CalculateToTalPermision(exponents.Distinct());
+        }
+
+        public string GetPermission(List<ActionWithExcludeValue> actions)
+        {
             var exponents = actions.Select(a => a.Exponent);
 
             return AuthUtility.CalculateToTalPermision(exponents.Distinct());
@@ -372,7 +370,7 @@ namespace Hospital.Application.Services.Impls.Auth
         {
             var roles = user is Customer ? new List<Role>() : (user as Employee).EmployeeRoles.Select(x => x.Role);
             var actions = user is Customer ? new List<ActionWithExcludeValue>() : await _actionReadRepository.GetActionsByEmployeeIdAsync(user.Id, cancellationToken);
-            var permission = user is Customer ? "15" : GetPermission(user as Employee, actions);
+            var permission = user is Customer ? await GetCustomerPermission(cancellationToken) : GetPermission(actions);
             var payload = new GenTokenPayload { User = user, Permission = permission, Roles = roles };
             var accessToken = await GenerateAccessTokenAsync(payload, cancellationToken);
 

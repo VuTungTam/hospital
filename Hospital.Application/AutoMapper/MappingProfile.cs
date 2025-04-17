@@ -8,7 +8,9 @@ using Hospital.Application.Dtos.Feedbacks;
 using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.Application.Dtos.HealthServices;
+using Hospital.Application.Dtos.Images;
 using Hospital.Application.Dtos.Locations;
+using Hospital.Application.Dtos.Metas;
 using Hospital.Application.Dtos.ServiceTimeRules;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
@@ -23,6 +25,8 @@ using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.Images;
+using Hospital.Domain.Entities.Metas;
 using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
@@ -117,6 +121,7 @@ namespace Hospital.Application.Mappings
 
             //HealthFacility
             CreateMap<HealthFacility, HealthFacilityDto>().ReverseMap();
+            CreateMap<HealthFacility, FacilityNameDto>();
 
             //FacilityType
             CreateMap<FacilityType, FacilityTypeDto>().ReverseMap();
@@ -141,7 +146,17 @@ namespace Hospital.Application.Mappings
                 .ForMember(des => des.Specialties, opt => opt.MapFrom(src => src.ZoneSpecialties.Select(x => x.Specialty)));
 
             CreateMap<ZoneDto, Zone>();
-        }     
+
+            // Scripts
+            CreateMap<Script, ScriptDto>().ReverseMap();
+
+            // Metas
+            CreateMap<Meta, MetaDto>().ReverseMap();
+
+            //Images
+            CreateMap<Image, ImageDto>().ReverseMap();
+
+        }
         private static long StringToInt64(string str) => long.TryParse(str, out var id) ? id : 0;
 
         private static List<string> SplitToList(string input, string separator)

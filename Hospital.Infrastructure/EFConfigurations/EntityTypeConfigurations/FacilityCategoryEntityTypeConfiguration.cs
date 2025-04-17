@@ -11,15 +11,19 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.NameVn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
+
             builder.Property(x => x.NameEn)
                    .IsRequired()
                    .HasColumnType("NVARCHAR(512)");
+
             builder.Property(x => x.DescriptionVn)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
+
             builder.Property(x => x.DescriptionEn)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR(255)");
+                   .HasColumnType("NVARCHAR(MAX)");
+
             builder.Property(x => x.CreatedAt)
                    .IsRequired()
                    .HasColumnType("DATETIME")
@@ -28,6 +32,9 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
             builder.Property(x => x.DeletedAt)
                    .HasColumnType("DATETIME");
 
+            builder.Property(x => x.Slug)
+                   .IsRequired()
+                   .HasColumnType("NVARCHAR(512)");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Enums
         Master = 100,
 
         [Description("Quản trị cơ sở")]
-        FacilityAdmin = 100,
+        FacilityAdmin = 99,
 
         [Description("Xem")]
         View = 0,

@@ -20,7 +20,7 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
 
         Task<Employee> GetByIdIncludedRolesAsync(long id, CancellationToken cancellationToken = default);
 
-        Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0, CancellationToken cancellationToken = default);
+        Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0, long facilityId = 0, CancellationToken cancellationToken = default);
 
         Task<bool> IsEmployeeCustomizePermissionAsync(long employeeId, CancellationToken cancellationToken);
     }

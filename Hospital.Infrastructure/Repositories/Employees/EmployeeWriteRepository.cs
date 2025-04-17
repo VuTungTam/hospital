@@ -63,9 +63,6 @@ namespace Hospital.Infrastructure.Repositories.Employees
 
         public async Task AddFacilityAdminAsync(Employee employee, long facilityId, CancellationToken cancellationToken)
         {
-            var sequenceRepository = _serviceProvider.GetRequiredService<ISequenceRepository>();
-            var table = "admin";
-            var code = await sequenceRepository.GetSequenceAsync(table, cancellationToken);
 
             if (string.IsNullOrEmpty(employee.Password))
             {
@@ -76,7 +73,6 @@ namespace Hospital.Infrastructure.Repositories.Employees
             }
 
 
-            employee.Code = code.ValueString;
             employee.HashPassword();
             employee.FacilityId = facilityId;
             employee.LastSeen = null;

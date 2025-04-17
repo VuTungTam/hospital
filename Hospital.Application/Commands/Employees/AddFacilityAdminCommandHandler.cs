@@ -52,7 +52,7 @@ namespace Hospital.Application.Commands.Employees
 
         public async Task<string> Handle(AddFacilityAdminCommand request, CancellationToken cancellationToken)
         {
-            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.FacilityId, cancellationToken: cancellationToken);
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(long.Parse(request.Admin.FacilityId), cancellationToken: cancellationToken);
 
             if (facility == null) {
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
@@ -78,7 +78,7 @@ namespace Hospital.Application.Commands.Employees
             facilityAdmin.Dname = await _locationReadRepository.GetNameByIdAsync(facilityAdmin.Did, "district", cancellationToken);
             facilityAdmin.Wname = await _locationReadRepository.GetNameByIdAsync(facilityAdmin.Wid, "ward", cancellationToken);
 
-            await _employeeWriteRepository.AddFacilityAdminAsync(facilityAdmin, request.FacilityId, cancellationToken);
+            await _employeeWriteRepository.AddFacilityAdminAsync(facilityAdmin, facilityAdmin.FacilityId, cancellationToken);
 
             await _sequenceRepository.IncreaseValueAsync("admin", cancellationToken);
 
@@ -91,6 +91,12 @@ namespace Hospital.Application.Commands.Employees
 
         public async Task ValidateAndThrowAsync(AdminDto admin, List<Role> roles, CancellationToken cancellationToken)
         {
+            var codeExist = await _userRepository.CodeExistAsync(admin.Code, cancellationToken: cancellationToken);
+            if (codeExist)
+            {
+                throw new BadRequestException(ErrorCode.CODE_EXISTED, _localizer["Account.CodeAlreadyExisted"]);
+            }
+
             var phoneExist = await _userRepository.PhoneExistAsync(admin.Phone, cancellationToken: cancellationToken);
             if (phoneExist)
             {

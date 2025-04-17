@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Hospital.Application.Dtos.Images;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
@@ -20,7 +21,11 @@ namespace Hospital.Application.Dtos.HealthFacility
 
         public string DescriptionEn { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string SummaryVn { get; set; }
+
+        public string SummaryEn { get; set; }
+
+        public string Image { get; set; }
 
         public string Phone { get; set; }
 
@@ -50,13 +55,19 @@ namespace Hospital.Application.Dtos.HealthFacility
 
         public decimal Latitude { get; set; }
 
-        public decimal Longtitude { get; set; }
+        public decimal Longitude { get; set; }
+
+        public string MapURL { get; set; }
 
         public float StarPoint { get; set; }
 
         public int TotalStars { get; set; }
 
         public int TotalFeedback { get; set; }
+
+        public string Slug { get; set; }
+
+        public List<ImageDto> Images { get; set; }
     }
     public class HealthFacilityValidator : BaseAbstractValidator<HealthFacilityDto>
     {

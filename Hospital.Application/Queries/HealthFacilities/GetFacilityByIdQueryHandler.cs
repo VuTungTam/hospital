@@ -2,9 +2,11 @@
 using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -30,7 +32,13 @@ namespace Hospital.Application.Queries.HealthFacilities
             {
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
-            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.Id, _healthFacilityReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
+
+            var option = new QueryOption
+            {
+                Includes = new string[] { nameof(HealthFacility.Images) }
+            };
+
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
 
             if (facility == null)
             {
