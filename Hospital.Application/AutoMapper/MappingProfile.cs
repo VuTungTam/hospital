@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using Hospital.Application.Dtos.Auth;
 using Hospital.Application.Dtos.Bookings;
 using Hospital.Application.Dtos.Customers;
@@ -32,13 +33,13 @@ using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Symptoms;
 using Hospital.Domain.Entities.Zones;
+using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Auths;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Entities.Systems;
 using Hospital.SharedKernel.Domain.Models.Auths;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
-using System.Reflection;
 using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
 namespace Hospital.Application.Mappings
 {
@@ -86,10 +87,12 @@ namespace Hospital.Application.Mappings
                 .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.EmployeeActions != null ? src.EmployeeActions.Select(x => x.Action).ToList() : new()))
                 .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
 
-            CreateMap<DoctorDto, Doctor>();
-
+            CreateMap<DoctorDto, Doctor>()
+                .ForMember(dest => dest.DoctorSpecialties, opt => opt.Ignore());
             CreateMap<Doctor, DoctorDto>()
-                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? src.DoctorSpecialties.Select(x => x.Specialty).ToList() : new()));
+                .ForMember(dest => dest.SpecialtyIds, opt => opt.MapFrom(src => src.DoctorSpecialties != null
+                        ? src.DoctorSpecialties.Select(bs => bs.SpecialtyId.ToString()).ToList()
+                        : new List<string>()));
 
             CreateMap<Doctor, PublicDoctorDto>()
                 .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameVn)) : string.Empty));
@@ -120,7 +123,15 @@ namespace Hospital.Application.Mappings
             CreateMap<Feedback, FeedbackDto>().ReverseMap();
 
             //HealthFacility
-            CreateMap<HealthFacility, HealthFacilityDto>().ReverseMap();
+            CreateMap<HealthFacility, HealthFacilityDto>()
+                .ForMember(dest => dest.SpecialtyIds, opt => opt.MapFrom(src => src.FacilitySpecialties != null
+                        ? src.FacilitySpecialties.Select(bs => bs.SpecialtyId.ToString()).ToList()
+                        : new List<string>()))
+                .ForMember(dest => dest.TypeIds, opt => opt.MapFrom(src => src.FacilityTypeMappings != null
+                        ? src.FacilityTypeMappings.Select(bs => bs.TypeId.ToString()).ToList()
+                        : new List<string>()));
+            CreateMap<HealthFacilityDto, HealthFacility>();
+
             CreateMap<HealthFacility, FacilityNameDto>();
 
             //FacilityType
@@ -143,10 +154,12 @@ namespace Hospital.Application.Mappings
 
             //Zone
             CreateMap<Zone, ZoneDto>()
-                .ForMember(des => des.Specialties, opt => opt.MapFrom(src => src.ZoneSpecialties.Select(x => x.Specialty)));
+                .ForMember(dest => dest.SpecialtyIds, opt => opt.MapFrom(src => src.ZoneSpecialties != null
+                        ? src.ZoneSpecialties.Select(bs => bs.SpecialtyId.ToString()).ToList()
+                        : new List<string>()));
 
-            CreateMap<ZoneDto, Zone>();
-
+            CreateMap<ZoneDto, Zone>()
+                .ForMember(dest => dest.ZoneSpecialties, opt => opt.Ignore());
             // Scripts
             CreateMap<Script, ScriptDto>().ReverseMap();
 

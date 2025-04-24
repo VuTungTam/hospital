@@ -34,5 +34,7 @@ namespace Hospital.Application.Dtos.Doctors
         public string TrainingProcess { get; set; }
 
         public string WorkExperience { get; set; }
+
+        public string ProfessionalLevel { get; set; }
     }
 }

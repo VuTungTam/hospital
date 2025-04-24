@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hospital.Application.Models.Doctors;
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.Specialties;
@@ -48,65 +49,9 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             return spec;
         }
 
-        public async Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination, List<long> specialtyIds,
-            AccountStatus status = AccountStatus.None,
-            DoctorDegree degree = DoctorDegree.None, DoctorTitle title = DoctorTitle.None,
-            DoctorRank rank = DoctorRank.None, CancellationToken cancellationToken = default)
-        {
-            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
-
-            var includable = query.Include(x => x.DoctorSpecialties)
-                                  .ThenInclude(x => x.Specialty);
-
-            ISpecification<Doctor> spec = new ExpressionSpecification<Doctor>(x => true); ;
-
-            if (status != AccountStatus.None)
-            {
-                spec = spec.And(new DoctorByStatusEqualsSpecification(status));
-            }
-
-            if (specialtyIds.Any())
-            {
-                spec = spec.And(new DoctorBySpecialtyIdsEqualsSpecification(specialtyIds));
-            }
-
-            if (degree != DoctorDegree.None)
-            {
-                spec = spec.And(new DoctorByDegreeEqualsSpecification(degree));
-            }
-
-            if (title != DoctorTitle.None)
-            {
-                spec = spec.And(new DoctorByTitleEqualsSpecification(title));
-            }
-
-            if (rank != DoctorRank.None)
-            {
-                spec = spec.And(new DoctorByRankEqualsSpecification(rank));
-            }
-
-            spec = GuardDataAccess(spec);
-
-            query = query.Where(spec.GetExpression());
-
-            query = query.BuildOrderBy(pagination.Sorts);
-
-            var data = await query.ToListAsync(cancellationToken);
-
-
-            var count = data.Count;
-
-            data = data.Skip(pagination.Offset)
-                       .Take(pagination.Size)
-                       .ToList();
-
-            return new PaginationResult<Doctor>(data, count);
-        }
-
-        public async Task<PaginationResult<Doctor>> GetPublicDoctorsPaginationResultAsync(Pagination pagination, List<long> specialtyIds,
-            AccountStatus status = AccountStatus.None,
-            DoctorDegree degree = DoctorDegree.None, DoctorTitle title = DoctorTitle.None,
-            DoctorRank rank = DoctorRank.None, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination,
+            FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
+            CancellationToken cancellationToken = default)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
 
@@ -120,24 +65,87 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                 spec = spec.And(new DoctorByStatusEqualsSpecification(status));
             }
 
-            if (specialtyIds.Any())
+            if (request.SpeIds.Any())
             {
-                spec = spec.And(new DoctorBySpecialtyIdsEqualsSpecification(specialtyIds));
+                spec = spec.And(new DoctorBySpecialtyIdsEqualsSpecification(request.SpeIds));
             }
 
-            if (degree != DoctorDegree.None)
+            if (request.Degrees.Any())
             {
-                spec = spec.And(new DoctorByDegreeEqualsSpecification(degree));
+                spec = spec.And(new DoctorByDegreeEqualsSpecification(request.Degrees));
             }
 
-            if (title != DoctorTitle.None)
+            if (request.Titles.Any())
             {
-                spec = spec.And(new DoctorByTitleEqualsSpecification(title));
+                spec = spec.And(new DoctorByTitleEqualsSpecification(request.Titles));
             }
 
-            if (rank != DoctorRank.None)
+            if (request.Ranks.Any())
             {
-                spec = spec.And(new DoctorByRankEqualsSpecification(rank));
+                spec = spec.And(new DoctorByRankEqualsSpecification(request.Ranks));
+            }
+
+            if (request.Genders.Any())
+            {
+                spec = spec.And(new DoctorByGenderEqualsSpecification(request.Genders));
+            }
+
+            spec = GuardDataAccess(spec);
+
+            query = query.Where(spec.GetExpression());
+
+            query = query.BuildOrderBy(pagination.Sorts);
+
+            var data = await query.ToListAsync(cancellationToken);
+
+            var count = data.Count;
+
+            data = data.Skip(pagination.Offset)
+                       .Take(pagination.Size)
+                       .ToList();
+
+            return new PaginationResult<Doctor>(data, count);
+        }
+
+        public async Task<PaginationResult<Doctor>> GetPublicDoctorsPaginationResultAsync(Pagination pagination,
+            FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
+            CancellationToken cancellationToken = default)
+        {
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
+
+            query = query.Include(x => x.DoctorSpecialties)
+                                  .ThenInclude(x => x.Specialty);
+
+            ISpecification<Doctor> spec = new ExpressionSpecification<Doctor>(x => true); ;
+
+            if (status != AccountStatus.None)
+            {
+                spec = spec.And(new DoctorByStatusEqualsSpecification(status));
+            }
+
+            if (request.SpeIds.Any())
+            {
+                spec = spec.And(new DoctorBySpecialtyIdsEqualsSpecification(request.SpeIds));
+            }
+
+            if (request.Degrees.Any())
+            {
+                spec = spec.And(new DoctorByDegreeEqualsSpecification(request.Degrees));
+            }
+
+            if (request.Titles.Any())
+            {
+                spec = spec.And(new DoctorByTitleEqualsSpecification(request.Titles));
+            }
+
+            if (request.Ranks.Any())
+            {
+                spec = spec.And(new DoctorByRankEqualsSpecification(request.Ranks));
+            }
+
+            if (request.Genders.Any())
+            {
+                spec = spec.And(new DoctorByGenderEqualsSpecification(request.Genders));
             }
 
             spec = GuardDataAccess(spec);

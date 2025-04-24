@@ -20,7 +20,7 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
     {
         public HealthServiceReadRepository(
             IServiceProvider serviceProvider,
-            IStringLocalizer<Resources> localizer, 
+            IStringLocalizer<Resources> localizer,
             IRedisCache redisCache
             ) : base(serviceProvider, localizer, redisCache)
         {
@@ -32,11 +32,11 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
 
             spec = base.GuardDataAccess(spec, option);
 
-            if (!option.IgnoreFacility)
-            {
-                spec = spec.And(new LimitByFacilityIdSpecification<HealthService>(_executionContext.FacilityId));
+            // if (!option.IgnoreFacility)
+            // {
+            //     spec = spec.And(new LimitByFacilityIdSpecification<HealthService>(_executionContext.FacilityId));
 
-            }
+            // }
             return spec;
         }
 

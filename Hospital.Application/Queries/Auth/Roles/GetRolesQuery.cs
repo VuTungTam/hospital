@@ -5,7 +5,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Queries.Auth.Roles
 {
-    [RequiredPermission(ActionExponent.Master)]
+    [RequiredPermission(ActionExponent.AccessAdminPage)]
     public class GetRolesQuery : BaseQuery<List<RoleDto>>
     {
     }

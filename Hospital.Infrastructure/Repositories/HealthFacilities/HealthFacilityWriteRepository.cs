@@ -1,14 +1,14 @@
-﻿using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+﻿using System.Text;
+using AutoMapper;
+using Hospital.Application.Dtos.HealthFacility;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Domain.Entities.HealthFacilities;
+using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.Specialties;
-using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Services.Date;
-using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
-using Hospital.SharedKernel.Libraries.Attributes;
-using Hospital.SharedKernel.Libraries.ExtensionMethods;
-using Hospital.SharedKernel.Runtime.Exceptions;
+using Hospital.SharedKernel.Libraries.Utils;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +18,15 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
 {
     public class HealthFacilityWriteRepository : WriteRepository<HealthFacility>, IHealthFacilityWriteRepository
     {
-        public HealthFacilityWriteRepository(IServiceProvider serviceProvider, IStringLocalizer<Resources> localizer, IRedisCache redisCache) : base(serviceProvider, localizer, redisCache)
+        private readonly IMapper _mapper;
+        public HealthFacilityWriteRepository(
+            IServiceProvider serviceProvider,
+            IStringLocalizer<Resources> localizer,
+            IRedisCache redisCache,
+            IMapper mapper
+            ) : base(serviceProvider, localizer, redisCache)
         {
+            _mapper = mapper;
         }
         public async Task RemoveFacilitySpecialtyAsync(FacilitySpecialty facilitySpecialty, CancellationToken cancellationToken)
         {
@@ -36,5 +43,62 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
                 cancellationToken: cancellationToken);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
         }
+
+        public async Task UpdateFacilityAsync(HealthFacility oldFacility, HealthFacilityDto newFacility, CancellationToken cancellationToken)
+        {
+            oldFacility.NameVn = newFacility.NameVn;
+
+            oldFacility.NameEn = newFacility.NameEn;
+
+            oldFacility.DescriptionVn = newFacility.DescriptionVn;
+
+            oldFacility.DescriptionEn = newFacility.DescriptionEn;
+
+            oldFacility.SummaryVn = newFacility.SummaryVn;
+
+            oldFacility.SummaryEn = newFacility.SummaryEn;
+
+            oldFacility.Logo = newFacility.Logo;
+
+            oldFacility.Phone = newFacility.Phone;
+
+            oldFacility.Email = newFacility.Email;
+
+            var oldImageNames = oldFacility.Images.Select(x => x.PublicId).ToList();
+            var newImageNames = newFacility.ImageNames;
+            var delImages = oldFacility.Images.Where(i => !newImageNames.Contains(i.PublicId)).ToList();
+            var addImages = newImageNames.Except(oldImageNames).ToList();
+
+            _dbContext.Images.RemoveRange(delImages);
+            foreach (var img in addImages)
+            {
+                _dbContext.Images.Add(new Image { Id = AuthUtility.GenerateSnowflakeId(), PublicId = img, FacilityId = oldFacility.Id });
+            }
+
+            var oldSpecs = oldFacility.FacilitySpecialties.Select(x => x.SpecialtyId.ToString()).ToList();
+            var newSpecs = newFacility.SpecialtyIds;
+            var delSpecs = oldFacility.FacilitySpecialties.Where(s => !newSpecs.Contains(s.SpecialtyId.ToString())).ToList();
+            var addSpecs = newSpecs.Except(oldSpecs).ToList();
+
+            _dbContext.FacilitySpecialties.RemoveRange(delSpecs);
+            foreach (var spec in addSpecs)
+            {
+                _dbContext.FacilitySpecialties.Add(new FacilitySpecialty { Id = AuthUtility.GenerateSnowflakeId(), FacilityId = oldFacility.Id, SpecialtyId = long.Parse(spec) });
+            }
+
+            var oldTypes = oldFacility.FacilityTypeMappings.Select(x => x.TypeId.ToString()).ToList();
+            var newTypes = newFacility.TypeIds;
+            var delTypes = oldFacility.FacilityTypeMappings.Where(t => !newTypes.Contains(t.TypeId.ToString())).ToList();
+            var addTypes = newTypes.Except(oldTypes).ToList();
+
+            _dbContext.FacilityTypeMappings.RemoveRange(delTypes);
+            foreach (var type in addTypes)
+            {
+                _dbContext.FacilityTypeMappings.Add(new FacilityTypeMapping { FacilityId = oldFacility.Id, TypeId = long.Parse(type) });
+            }
+
+            await UpdateAsync(oldFacility, cancellationToken: cancellationToken);
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Libraries.Attributes;
 using Hospital.SharedKernel.Libraries.Security;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace Hospital.SharedKernel.Domain.Entities.Users
 {
@@ -35,6 +36,8 @@ namespace Hospital.SharedKernel.Domain.Entities.Users
         public string Name { get; set; }
 
         public DateTime? Dob { get; set; }
+
+        public Gender Gender { get; set; }
 
         public int Pid { get; set; }
 

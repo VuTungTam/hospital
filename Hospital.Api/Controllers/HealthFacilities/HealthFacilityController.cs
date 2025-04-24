@@ -1,19 +1,21 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading;
+using AutoMapper;
 using Hospital.Application.Commands.HealthFacilities;
 using Hospital.Application.Commands.Specialties;
 using Hospital.Application.Dtos.HealthFacility;
 using Hospital.Application.Queries.FacilityTypes;
 using Hospital.Application.Queries.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading;
 
 namespace Hospital.Api.Controllers.HealthFacilities
 {
@@ -30,6 +32,13 @@ namespace Hospital.Api.Controllers.HealthFacilities
             _mapper = mapper;
             _facilityCategoryReadRepository = facilityCategoryReadRepository;
         }
+
+        [HttpGet("filterable")]
+        public IActionResult GetFilterable() => GetFilterable<HealthFacility>();
+
+
+        [HttpGet("enums"), AllowAnonymous]
+        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<HealthServiceStatus>(noneOption) });
 
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllFacilityType(CancellationToken cancellationToken = default)

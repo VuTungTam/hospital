@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.Doctors;
+﻿using Hospital.Application.Models.Doctors;
+using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -9,15 +10,13 @@ namespace Hospital.Application.Repositories.Interfaces.Doctors
 {
     public interface IDoctorReadRepository : IReadRepository<Doctor>
     {
-        Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination, 
-            List<long> specialtyIds,AccountStatus status = AccountStatus.None,
-            DoctorDegree degree = DoctorDegree.None, DoctorTitle title = DoctorTitle.None,
-            DoctorRank rank = DoctorRank.None, CancellationToken cancellationToken = default);
+        Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination,
+            FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
+            CancellationToken cancellationToken = default);
 
         Task<PaginationResult<Doctor>> GetPublicDoctorsPaginationResultAsync(Pagination pagination,
-            List<long> specialtyIds, AccountStatus status = AccountStatus.None,
-            DoctorDegree degree = DoctorDegree.None, DoctorTitle title = DoctorTitle.None,
-            DoctorRank rank = DoctorRank.None, CancellationToken cancellationToken = default);
+            FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
+            CancellationToken cancellationToken = default);
 
         Task<Doctor> GetPublicDoctorById(long id, CancellationToken cancellationToken);
     }

@@ -3,10 +3,12 @@ using Hospital.Application.Commands.HealthServices;
 using Hospital.Application.Dtos.HealthServices;
 using Hospital.Application.Queries.HealthServices;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,11 @@ namespace Hospital.Api.Controllers.HealthServices
             _serviceTypeReadRepository = serviceTypeReadRepository;
             _mapper = mapper;
         }
+        [HttpGet("filterable")]
+        public IActionResult GetFilterable() => base.GetFilterable<HealthService>();
+
+        [HttpGet("enums"), AllowAnonymous]
+        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<HealthServiceStatus>(noneOption) });
 
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllServiceType(CancellationToken cancellationToken = default)

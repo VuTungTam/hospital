@@ -40,10 +40,10 @@ namespace Hospital.Infrastructure.Repositories
                 return spec;
             }
 
-            if (!option.IgnoreDoctor && typeof(T).HasInterface<IDoctor>())
-            {
-                spec = spec.And(new LimitByDoctorIdSpecification<T>(_executionContext.Identity));
-            }
+            // if (!option.IgnoreDoctor && typeof(T).HasInterface<IDoctor>())
+            // {
+            //     spec = spec.And(new LimitByDoctorIdSpecification<T>(_executionContext.Identity));
+            // }
 
             if (!option.IgnoreOwner && typeof(T).HasInterface<IOwnedEntity>())
             {

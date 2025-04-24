@@ -14,8 +14,8 @@ namespace Hospital.Infrastructure.Repositories.Zones
     public class ZoneReadRepository : ReadRepository<Zone>, IZoneReadRepository
     {
         public ZoneReadRepository(
-            IServiceProvider serviceProvider, 
-            IStringLocalizer<Resources> localizer, 
+            IServiceProvider serviceProvider,
+            IStringLocalizer<Resources> localizer,
             IRedisCache redisCache
             ) : base(serviceProvider, localizer, redisCache)
         {
@@ -29,17 +29,7 @@ namespace Hospital.Infrastructure.Repositories.Zones
 
             spec = spec.And(base.GuardDataAccess(spec, option));
 
-            if (!option.IgnoreZone)
-            {
-                if (_executionContext.ZoneId == 0)
-                {
-                    spec = spec.And(new LimitByFacilityIdSpecification<Zone>(_executionContext.FacilityId));
-                }
-                else
-                {
-                    spec = spec.And(new LimitByZoneIdSpecification<Zone>(_executionContext.ZoneId));
-                }
-            }
+            spec = spec.And(new LimitByFacilityIdSpecification<Zone>(_executionContext.FacilityId));
 
             return spec;
         }

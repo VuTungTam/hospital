@@ -117,97 +117,370 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="blog_author_is_not_empty" xml:space="preserve">
-    <value>Tác giả bài viết không được để trống</value>
+  <data name="Account.RegSuccessedPleaseCheckEmail" xml:space="preserve">
+    <value>Đăng ký tài khoản thành công, vui lòng kiểm tra email. Nếu không thấy, hãy thử kiểm tra spam/thư rác</value>
   </data>
-  <data name="blog_description_is_not_empty" xml:space="preserve">
-    <value>Mô tả bài viết không được để trống</value>
+  <data name="Account.SendEmailSuccessed" xml:space="preserve">
+    <value>Đã gửi thành công, vui lòng kiểm tra email. Nếu không thấy, hãy thử kiểm tra spam/thư rác</value>
   </data>
-  <data name="blog_image_url_is_not_empty" xml:space="preserve">
-    <value>Hình ảnh bài viết không được để trống</value>
+  <data name="Account.VerificationCodeHasExpired" xml:space="preserve">
+    <value>Mã xác nhận đã hết hạn. Vui lòng liên hệ với quản trị viên để lấy mã mới!</value>
   </data>
-  <data name="blog_name_is_not_empty" xml:space="preserve">
-    <value>Tên bài viết không được để trống</value>
+  <data name="Account.VerificationInfomationIsNotValid" xml:space="preserve">
+    <value>Xác thực thất bại, thông tin không hợp lệ</value>
   </data>
-  <data name="facility_category_description_is_not_empty" xml:space="preserve">
-    <value>Mô tả loại cơ sở y tế không được để trống</value>
+  <data name="Authentication.AccountHasNotBeenVerified" xml:space="preserve">
+    <value>Tài khoản chưa được xác thực</value>
   </data>
-  <data name="facility_category_name_is_not_empty" xml:space="preserve">
-    <value>Tên loại cơ sở y tế không được để trống</value>
+  <data name="Account.IsBanned" xml:space="preserve">
+    <value>Tài khoản đã bị khóa</value>
   </data>
-  <data name="health_facility_address_is_not_empty" xml:space="preserve">
-    <value>Địa chỉ cơ sở y tế không được để trống</value>
+  <data name="Account.IsInactive" xml:space="preserve">
+    <value>Tài khoản đã ngừng hoạt động</value>
   </data>
-  <data name="health_facility_description_is_not_empty" xml:space="preserve">
-    <value>Mô tả cơ sở y tế không được để trống</value>
+  <data name="Authentication.AccountMustNotBeEmpty" xml:space="preserve">
+    <value>Tài khoản không được để trống</value>
   </data>
-  <data name="health_facility_name_is_not_empty" xml:space="preserve">
-    <value>Tên cơ sở y tế không được để trống</value>
+  <data name="Account.NotFound" xml:space="preserve">
+    <value>Không tìm thấy người dùng này</value>
   </data>
-  <data name="health_service_description_is_not_empty" xml:space="preserve">
-    <value>Mô tả dịch vụ y tế không được để trống</value>
-  </data>
-  <data name="health_service_name_is_not_empty" xml:space="preserve">
-    <value>Tên dịch vụ y tế không được để trống</value>
-  </data>
-  <data name="health_service_price_is_not_empty" xml:space="preserve">
-    <value>Giá dịch vụ y tế không được để trống</value>
-  </data>
-  <data name="health_service_price_must_be_greater_than_0" xml:space="preserve">
-    <value>Giá dịch vụ y tế phải lớn hơn 0</value>
-  </data>
-  <data name="invalid_birthyear" xml:space="preserve">
-    <value>Năm sinh không hợp lệ</value>
-  </data>
-  <data name="invalid_date_of_birth" xml:space="preserve">
+  <data name="Authentication.DateOfBirthIsNotValid" xml:space="preserve">
     <value>Ngày sinh không hợp lệ</value>
   </data>
-  <data name="invalid_district" xml:space="preserve">
-    <value>Huyện/ Phường không được để trống</value>
+  <data name="Authentication.DateOfBirthMustNotBeEmpty" xml:space="preserve">
+    <value>Ngày sinh không được để trống</value>
   </data>
-  <data name="invalid_email" xml:space="preserve">
+  <data name="Account.EmailAlreadyExists" xml:space="preserve">
+    <value>Email đã tồn tại trên hệ thống</value>
+  </data>
+  <data name="CommonMessage.EmailIsNotValid" xml:space="preserve">
     <value>Email không hợp lệ</value>
   </data>
-  <data name="invalid_phone_number" xml:space="preserve">
-    <value>Số điện thoại không hợp lệ</value>
+  <data name="Authentication.EmailMustNotBeEmpty" xml:space="preserve">
+    <value>Email không được để trống</value>
   </data>
-  <data name="invalid_province" xml:space="preserve">
-    <value>Tỉnh/ Thành phố không được để trống</value>
+  <data name="Authentication.FacebookInformationIsNotValid" xml:space="preserve">
+    <value>Thông tin đăng nhập facebook không hợp lệ</value>
   </data>
-  <data name="invalid_ward" xml:space="preserve">
-    <value>Xã/ Thị trấn không được để trống</value>
+  <data name="Authentication.FirstNameMustNotBeEmpty" xml:space="preserve">
+    <value>Tên không được để trống</value>
   </data>
-  <data name="invalid_website_url" xml:space="preserve">
-    <value>Đường dẫn website không hợp lệ</value>
+  <data name="Authentication.FullNameMustNotBeEmpty" xml:space="preserve">
+    <value>Họ và tên không được để trống</value>
   </data>
-  <data name="patient_birthyear_is_not_empty" xml:space="preserve">
-    <value>Năm sinh không được để trống</value>
+  <data name="Authentication.GithubInformationIsNotValid" xml:space="preserve">
+    <value>Thông tin Github không hợp lệ</value>
   </data>
-  <data name="patient_gender_is_not_empty" xml:space="preserve">
-    <value>Phải chọn giới tính</value>
+  <data name="Authentication.GoogleInformationIsNotValid" xml:space="preserve">
+    <value>Thông tin Google không hợp lệ</value>
   </data>
-  <data name="patient_name_is_not_empty" xml:space="preserve">
-    <value>Tên bệnh nhân không được để trống</value>
+  <data name="Authentication.LoginInformationIsIncorrect" xml:space="preserve">
+    <value>Thông tin đăng nhập không chính xác</value>
   </data>
-  <data name="patient_phone_is_not_empty" xml:space="preserve">
-    <value>Số điện thoại không được để trống</value>
+  <data name="Authentication.NotPermission" xml:space="preserve">
+    <value>Bạn không có quyền để thực hiện hành động này</value>
   </data>
-  <data name="service_type_name_is_not_empty" xml:space="preserve">
-    <value>Tên loại dịch vụ không được để trống</value>
+  <data name="Authentication.PasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Mật khẩu không được để trống</value>
   </data>
-  <data name="social_network_link_is_not_empty" xml:space="preserve">
+  <data name="Account.PhoneAlreadyExists" xml:space="preserve">
+    <value>SĐT đã tồn tại trên hệ thống</value>
+  </data>
+  <data name="Authentication.PhoneIsNotValid" xml:space="preserve">
+    <value>SĐT không hợp lệ</value>
+  </data>
+  <data name="Authentication.PhoneMustNotBeEmpty" xml:space="preserve">
+    <value>SĐT không được để trống</value>
+  </data>
+  <data name="Authentication.PasswordAndRepeatPasswordMustSame" xml:space="preserve">
+    <value>Mật khẩu và mật khẩu xác nhận phải giống nhau</value>
+  </data>
+  <data name="Authentication.RefreshTokenIsNotValid" xml:space="preserve">
+    <value>Refresh Token không hợp lệ</value>
+  </data>
+  <data name="Authentication.RefreshTokenMustNotBeEmpty" xml:space="preserve">
+    <value>RefreshToken không được để trống</value>
+  </data>
+  <data name="Authentication.RepeatPasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Mật khẩu xác nhận không được để trống</value>
+  </data>
+  <data name="Authentication.TenantNotFound" xml:space="preserve">
+    <value>Không tìm thấy tenant</value>
+  </data>
+  <data name="Authentication.Unauthorized" xml:space="preserve">
+    <value>Bạn chưa được xác thực vào hệ thống</value>
+  </data>
+  <data name="Authentication.UserIdMustNotBeEmpty" xml:space="preserve">
+    <value>UserId không được để trống</value>
+  </data>
+  <data name="Authentication.UserAlreadyExists" xml:space="preserve">
+    <value>Tài khoản đã tồn tại trên hệ thống</value>
+  </data>
+  <data name="Authentication.UserDoesNotExist" xml:space="preserve">
+    <value>Người dùng không tồn tại</value>
+  </data>
+  <data name="CommonMessage.BadQueryParameters" xml:space="preserve">
+    <value>Tham số không hơp lệ</value>
+  </data>
+  <data name="CommonMessage.DataDoesNotExistOrWasDeleted" xml:space="preserve">
+    <value>Bản ghi không tồn tại hoặc đã bị xóa</value>
+  </data>
+  <data name="CommonMessage.DataWasDeletedOrNotPermission" xml:space="preserve">
+    <value>Dữ liệu này đã bị xóa hoặc bạn không có quyền</value>
+  </data>
+  <data name="CommonMessage.RecordIsUpdating" xml:space="preserve">
+    <value>Dữ liệu đang được cập nhật bởi người khác. Vui lòng đợi và tải lại trang để thấy dữ liệu mới!</value>
+  </data>
+  <data name="CommonMessage.IdIsNotValid" xml:space="preserve">
+    <value>ID không hợp lệ</value>
+  </data>
+  <data name="CommonMessage.ListIdsMustNotBeEmpty" xml:space="preserve">
+    <value>Danh sách bản ghi cần xóa không được để trống</value>
+  </data>
+  <data name="CommonMessage.NotSupport3pTools" xml:space="preserve">
+    <value>Không hỗ trợ phần mềm thứ 3</value>
+  </data>
+  <data name="CommonMessage.PayloadIsNotValid" xml:space="preserve">
+    <value>Gói tin không hợp lệ</value>
+  </data>
+  <data name="CommonMessage.SystemErrorOccurred" xml:space="preserve">
+    <value>Lỗi hệ thống. Vui lòng thử lại sau ít phút</value>
+  </data>
+  <data name="SocialNetwork.LinkMustNotBeEmpty" xml:space="preserve">
     <value>Link mạng xã hội không được để trống</value>
   </data>
-  <data name="social_network_logo_is_not_empty" xml:space="preserve">
+  <data name="SocialNetwork.LogoMustNotBeEmpty" xml:space="preserve">
     <value>Logo mạng xã hội không được để trống</value>
   </data>
-  <data name="social_network_name_is_not_empty" xml:space="preserve">
+  <data name="SocialNetwork.NameMustNotBeEmpty" xml:space="preserve">
     <value>Tên mạng xã hội không được để trống</value>
   </data>
-  <data name="specialty_name_is_not_empty" xml:space="preserve">
-    <value>Tên chuyên khoa không được để trống</value>
+  <data name="Utilities.ImageIsNotValid" xml:space="preserve">
+    <value>Ảnh không hợp lệ</value>
   </data>
-  <data name="symptom_name_is_not_empty" xml:space="preserve">
-    <value>Tên triệu chứng không được để trống</value>
+  <data name="Account.PasswordContainsAtLeastNCharacters" xml:space="preserve">
+    <value>Chứa ít nhất {0} ký tự</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1LowercaseLetter" xml:space="preserve">
+    <value>Có ít nhất 1 chữ cái viết thường</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1Number" xml:space="preserve">
+    <value>Có ít nhất 1 số</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1SpecialCharacter" xml:space="preserve">
+    <value>Có ít nhất 1 ký tự đặc biệt</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1UppercaseLetter" xml:space="preserve">
+    <value>Có ít nhất 1 chữ cái viết hoa</value>
+  </data>
+  <data name="Account.PasswordIsNotStrongEnough" xml:space="preserve">
+    <value>Mật khẩu chưa đủ mạnh</value>
+  </data>
+  <data name="Account.PasswordMustIncludeTheFollowingElements" xml:space="preserve">
+    <value>Mật khẩu phải bao gồm các yếu tố sau</value>
+  </data>
+  <data name="Account.WasDeleted" xml:space="preserve">
+    <value>Tài khoản đã bị xóa</value>
+  </data>
+  <data name="Account.EmailHasBeenSentPreviously" xml:space="preserve">
+    <value>Đã gửi mã xác minh, vui lòng thử lại sau ít phút</value>
+  </data>
+  <data name="Account.NewPasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Mật khẩu mới không được để trống</value>
+  </data>
+  <data name="Account.OldPasswordIsIncorrect" xml:space="preserve">
+    <value>Mật khẩu cũ không chính xác</value>
+  </data>
+  <data name="Account.OldPasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Mật khẩu cũ không được để trống</value>
+  </data>
+  <data name="Account.PleaseWaitUntil" xml:space="preserve">
+    <value>Vui lòng chờ tới &lt;strong&gt;{0}&lt;/strong&gt; để có thể gửi lại</value>
+  </data>
+  <data name="Account.VerificationCodeIsExpired" xml:space="preserve">
+    <value>Mã xác nhận đã hết hạn</value>
+  </data>
+  <data name="Account.VerificationCodeIsNotValid" xml:space="preserve">
+    <value>Mã xác nhận không chính xác</value>
+  </data>
+  <data name="Account.VerificationCodeIsNotValidOrExpired" xml:space="preserve">
+    <value>Mã xác nhận không chính xác hoặc đã hết hạn</value>
+  </data>
+  <data name="Role.Receptionist" xml:space="preserve">
+    <value>Lễ tân</value>
+  </data>
+  <data name="Roles.Customer" xml:space="preserve">
+    <value>Khách hàng</value>
+  </data>
+  <data name="Roles.Doctor" xml:space="preserve">
+    <value>Bác sĩ</value>
+  </data>
+  <data name="Roles.SuperAdmin" xml:space="preserve">
+    <value>Quản trị hệ thống</value>
+  </data>
+  <data name="CommonMessage.OtpIsNotValidOrExpired" xml:space="preserve">
+    <value>OTP không hợp lệ hoặc đã hết hạn</value>
+  </data>
+  <data name="Account.EmailAlreadyVerified" xml:space="preserve">
+    <value>Email đã được xác thực rồi</value>
+  </data>
+  <data name="SmsLimitExceeded" xml:space="preserve">
+    <value>SMS limit exceeded. Please try again later.</value>
+  </data>
+  <data name="Account.HasBeenForcedToLogout" xml:space="preserve">
+    <value>Tài khoản bị buộc đăng xuất</value>
+  </data>
+  <data name="Account.CodeAlreadyExists" xml:space="preserve">
+    <value>Mã đã tồn tại trên hệ thống</value>
+  </data>
+  <data name="Roles.OneOrMoreRolesNotFound" xml:space="preserve">
+    <value>Tồn tại vai trò không có trong hệ thống. Vui lòng kiểm tra lại</value>
+  </data>
+  <data name="Roles.CannotExist" xml:space="preserve">
+    <value>Không thể có vai trò là {0}</value>
+  </data>
+  <data name="Account.CannotUpdateEmailVerified" xml:space="preserve">
+    <value>Không thể thay đổi email vì email đã được xác minh</value>
+  </data>
+  <data name="Account.CannotUpdatePhoneVerified" xml:space="preserve">
+    <value>Không thể thay đổi SĐT vì SĐT đã được xác minh</value>
+  </data>
+  <data name="Articles.ContentMustNotBeEmpty" xml:space="preserve">
+    <value>Nội dung không được để trống</value>
+  </data>
+  <data name="Articles.ImageMustNotBeEmpty" xml:space="preserve">
+    <value>Ảnh không được để trống</value>
+  </data>
+  <data name="Articles.TitleMustNotBeEmpty" xml:space="preserve">
+    <value>Tiêu đề không được để trống</value>
+  </data>
+  <data name="TeamInfo.ImagesMustNotBeEmpty" xml:space="preserve">
+    <value>Ảnh không được để trống</value>
+  </data>
+  <data name="Articles.PostDateIsNotValid" xml:space="preserve">
+    <value>Ngày đăng không hợp lệ</value>
+  </data>
+  <data name="Articles.IsNotActive" xml:space="preserve">
+    <value>Bài đăng không hoạt động</value>
+  </data>
+  <data name="Articles.Posted" xml:space="preserve">
+    <value>Bài đã đăng rồi</value>
+  </data>
+  <data name="Services.ContentMustNotBeEmpty" xml:space="preserve">
+    <value>Nội dung không được để trống</value>
+  </data>
+  <data name="Services.ImageIsNotValid" xml:space="preserve">
+    <value>Ảnh không hợp lệ</value>
+  </data>
+  <data name="Services.NameMustNotBeEmpty" xml:space="preserve">
+    <value>Tên dịch vụ không được để trống</value>
+  </data>
+  <data name="Services.StatusIsInThisStatusAlready" xml:space="preserve">
+    <value>Dịch vụ đang ở trạng thái này rồi</value>
+  </data>
+  <data name="WebImages.StatusIsInThisStatusAlready" xml:space="preserve">
+    <value>Ảnh đang ở trạng thái này rồi</value>
+  </data>
+  <data name="Articles.ContentEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Nội dung trong tiếng Anh không được để trống</value>
+  </data>
+  <data name="Articles.TitleEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Tiêu đề trong tiếng Anh không được để trống</value>
+  </data>
+  <data name="Services.ContentEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Nội dung trong tiếng Anh không được để trống</value>
+  </data>
+  <data name="Services.NameEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Tên dịch vụ trong tiếng Anh không được để trống</value>
+  </data>
+  <data name="Services.AnswerMustNotBeEmpty" xml:space="preserve">
+    <value>Câu trả lời số {0} không được để trống</value>
+  </data>
+  <data name="Services.questionMustNotBeEmpty" xml:space="preserve">
+    <value>Câu hỏi số {0} không được để trống</value>
+  </data>
+  <data name="Bookings.ContentMustNotBeEmpty" xml:space="preserve">
+    <value>Nội dung không được để trống</value>
+  </data>
+  <data name="Bookings.DateIsNotValid" xml:space="preserve">
+    <value>Thời gian không hợp lệ</value>
+  </data>
+  <data name="Bookings.NameMustNotBeEmpty" xml:space="preserve">
+    <value>Tên không được để trống</value>
+  </data>
+  <data name="Bookings.PhoneIsNotValid" xml:space="preserve">
+    <value>SĐT không hợp lệ</value>
+  </data>
+  <data name="Bookings.ServiceIsNotValid" xml:space="preserve">
+    <value>Dịch vụ không hợp lệ</value>
+  </data>
+  <data name="Bookings.StatusIsNotWaiting" xml:space="preserve">
+    <value>Trạng thái không phải đang chờ</value>
+  </data>
+  <data name="Contacts.EmailsContainNotValid" xml:space="preserve">
+    <value>Danh sách bao gồm email không hợp lệ</value>
+  </data>
+  <data name="Contacts.PhonesContainNotValid" xml:space="preserve">
+    <value>Danh sách bao gồm số điện thoại không hợp lệ</value>
+  </data>
+  <data name="Contacts.PhoneMustNotBeEmpty" xml:space="preserve">
+    <value>Số điện thoại không được để trống</value>
+  </data>
+  <data name="Contacts.DistrictIsNotValid" xml:space="preserve">
+    <value>Quận/huyện không hợp lệ</value>
+  </data>
+  <data name="Contacts.EmailMustNotBeEmpty" xml:space="preserve">
+    <value>Email không được để trống</value>
+  </data>
+  <data name="Contacts.ProvinceIsNotValid" xml:space="preserve">
+    <value>Tỉnh/thành không hợp lệ</value>
+  </data>
+  <data name="Contacts.WardIsNotValid" xml:space="preserve">
+    <value>Xã/phường không hợp lệ</value>
+  </data>
+  <data name="CommonMessage.SlugIsNotValid" xml:space="preserve">
+    <value>Slug không hợp lệ</value>
+  </data>
+  <data name="Gender.Female" xml:space="preserve">
+    <value>Nữ</value>
+  </data>
+  <data name="Gender.Male" xml:space="preserve">
+    <value>Nam</value>
+  </data>
+  <data name="Gender.None" xml:space="preserve">
+    <value>--Không xác định--</value>
+  </data>
+  <data name="DoctorTitle.Ths" xml:space="preserve">
+  <value>Thạc sĩ</value>
+</data>
+<data name="DoctorTitle.TS" xml:space="preserve">
+  <value>Tiến sĩ</value>
+</data>
+<data name="DoctorTitle.TSKH" xml:space="preserve">
+  <value>Tiến sĩ khoa học</value>
+</data>
+<data name="DoctorDegree.PSG" xml:space="preserve">
+  <value>Phó giáo sư</value>
+</data>
+<data name="DoctorDegree.GS" xml:space="preserve">
+  <value>Giáo sư</value>
+</data>
+<data name="DoctorRank.BS" xml:space="preserve">
+  <value>Bác sĩ</value>
+</data>
+<data name="DoctorRank.BSCKI" xml:space="preserve">
+  <value>Bác sĩ chuyên khoa I</value>
+</data>
+<data name="DoctorRank.BSNT" xml:space="preserve">
+  <value>Bác sĩ nội trú</value>
+</data>
+<data name="DoctorRank.BSCKII" xml:space="preserve">
+  <value>Bác sĩ chuyên khoa II</value>
+</data>
+<data name="Infor.None" xml:space="preserve">
+  <value>Chưa có thông tin</value>
+</data>
+<data name="CommonMessage.MapURLIsNotValid" xml:space="preserve">
+    <value>Map url is not valid</value>
   </data>
 </root>

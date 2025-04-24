@@ -1,11 +1,12 @@
-﻿using Hospital.Domain.Entities.HealthServices;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Domain.Entities.HealthFacilities
 {
@@ -19,8 +20,9 @@ namespace Hospital.Domain.Entities.HealthFacilities
         ISoftDelete,
         IDeletedBy
     {
+        [Filterable("Name VN")]
         public string NameVn { get; set; }
-
+        [Filterable("Name US")]
         public string NameEn { get; set; }
 
         public string DescriptionVn { get; set; }
@@ -31,25 +33,24 @@ namespace Hospital.Domain.Entities.HealthFacilities
 
         public string SummaryEn { get; set; }
 
-        public string Image { get; set; }
+        public string Logo { get; set; }
 
         public string Phone { get; set; }
 
         public string Email { get; set; }
 
-        public string Website { get; set; }
-
         public HealthFacilityStatus Status { get; set; }
 
-        public List<FacilitySpecialty> FacilitySpecialties { get; set; }
+        public List<FacilitySpecialty> FacilitySpecialties { get; set; } = new();
 
-        public List<Image> Images { get; set; }
+        public List<Image> Images { get; set; } = new();
 
-        public List<Zone> Zones { get; set; }
+        public List<Zone> Zones { get; set; } = new();
 
-        public List<HealthService> HealthServices { get; set; }
+        public List<HealthService> HealthServices { get; set; } = new();
 
-        public List<FacilityTypeMapping> FacilityTypeMappings { get; set; }
+        public List<FacilityTypeMapping> FacilityTypeMappings { get; set; } = new();
+
         public int Pid { get; set; }
 
         public string Pname { get; set; }

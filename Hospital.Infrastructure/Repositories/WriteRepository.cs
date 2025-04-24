@@ -8,6 +8,7 @@ using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Libraries.Attributes;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace Hospital.Infrastructure.Repositories
             if (_dbContext.Database.CurrentTransaction == null)
             {
                 _dbContext.Database.BeginTransaction();
-                
+
             }
         }
         public IUnitOfWork UnitOfWork => _dbContext;
@@ -43,7 +44,6 @@ namespace Hospital.Infrastructure.Repositories
         }
         public virtual void Add(T entity)
         {
-            //entity.Id = 0;
             _dbSet.Add(entity);
         }
 
@@ -76,7 +76,7 @@ namespace Hospital.Infrastructure.Repositories
             if (typeof(T).HasInterface<ISoftDelete>())
             {
                 var dateService = _serviceProvider.GetRequiredService<IDateService>();
-                foreach( var entity in entities)
+                foreach (var entity in entities)
                 {
                     (entity as ISoftDelete).IsDeleted = true;
                     (entity as ISoftDelete).DeletedAt = dateService.GetClientTime();
@@ -156,7 +156,7 @@ namespace Hospital.Infrastructure.Repositories
         #endregion
         public virtual async Task RollbackAsync(CancellationToken cancellationToken)
         {
-           await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
+            await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
         }
 
         public virtual async Task<CacheEntry> SetBlockUpdateCacheAsync(long id, CancellationToken cancellationToken)
@@ -226,8 +226,8 @@ namespace Hospital.Infrastructure.Repositories
 
         protected virtual async Task RemovePaginationCacheAsync(CancellationToken cancellationToken)
         {
-            var key = CacheManager.GetRemovePaginationPattern<T>(_executionContext.Identity);
-            await _redisCache.RemoveAsync(key, cancellationToken);
+            var key = CacheManager.GetRemovePaginationPattern<T>(_executionContext.Identity, _executionContext.FacilityId);
+            await _redisCache.RemoveByPatternAsync(key);
         }
 
         public virtual async Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken)

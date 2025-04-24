@@ -73,6 +73,8 @@ namespace Hospital.Application.Dtos.Users
 
         public DateTime? Dob { get; set; }
 
+        public int Gender { get; set; }
+
         public string Pid { get; set; }
 
         public string Pname { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Hospital.Application.Commands.Zones;
 using Hospital.Application.Dtos.Zones;
 using Hospital.Application.Queries.Zones;
+using Hospital.Domain.Entities.Zones;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -15,7 +16,9 @@ namespace Hospital.Api.Controllers.Zones
         public ZoneController(IMediator mediator) : base(mediator)
         {
         }
-        [HttpGet, AllowAnonymous]
+        [HttpGet("filterable")]
+        public IActionResult GetFilterable() => GetFilterable<Zone>();
+        [HttpGet]
         public virtual async Task<IActionResult> GetPagination(
             int page,
             int size,

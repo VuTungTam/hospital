@@ -117,97 +117,379 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="blog_author_is_not_empty" xml:space="preserve">
-    <value>Blog's author is not empty</value>
+  <data name="Account.RegSuccessedPleaseCheckEmail" xml:space="preserve">
+    <value>Account registration successful, please check your email, if not found, please check spam</value>
   </data>
-  <data name="blog_description_is_not_empty" xml:space="preserve">
-    <value>Blog's description is not empty</value>
+  <data name="Account.SendEmailSuccessed" xml:space="preserve">
+    <value>Email has been sent successfully, please check your email, if not found, please check spam</value>
   </data>
-  <data name="blog_image_url_is_not_empty" xml:space="preserve">
-    <value>Blog's image is not empty</value>
+  <data name="Account.VerificationCodeHasExpired" xml:space="preserve">
+    <value>Verification code has expired. Please contact the admin to receive the new code!</value>
   </data>
-  <data name="blog_name_is_not_empty" xml:space="preserve">
-    <value>Blog's name is not empty</value>
+  <data name="Account.VerificationInfomationIsNotValid" xml:space="preserve">
+    <value>Verify failed, the verify information is not valid</value>
   </data>
-  <data name="facility_category_description_is_not_empty" xml:space="preserve">
-    <value>Facility category's description is not empty</value>
+  <data name="Authentication.AccountHasNotBeenVerified" xml:space="preserve">
+    <value>The account has not been verified</value>
   </data>
-  <data name="facility_category_name_is_not_empty" xml:space="preserve">
-    <value>Facility category's name is not empty</value>
+  <data name="Account.IsBanned" xml:space="preserve">
+    <value>The account is banned</value>
   </data>
-  <data name="health_facility_address_is_not_empty" xml:space="preserve">
-    <value>Health facility's address is not empty</value>
+  <data name="Account.IsInactive" xml:space="preserve">
+    <value>The account is inactive</value>
   </data>
-  <data name="health_facility_description_is_not_empty" xml:space="preserve">
-    <value>Health facility's description is not empty</value>
+  <data name="Authentication.AccountMustNotBeEmpty" xml:space="preserve">
+    <value>Account must not be empty</value>
   </data>
-  <data name="health_facility_name_is_not_empty" xml:space="preserve">
-    <value>Health facility's name is not empty</value>
+  <data name="Account.NotFound" xml:space="preserve">
+    <value>Not found this user</value>
   </data>
-  <data name="health_service_description_is_not_empty" xml:space="preserve">
-    <value>Health service's description is not empty</value>
-  </data>
-  <data name="health_service_name_is_not_empty" xml:space="preserve">
-    <value>Health service's name is not empty</value>
-  </data>
-  <data name="health_service_price_is_not_empty" xml:space="preserve">
-    <value>Health service's price is not empty</value>
-  </data>
-  <data name="health_service_price_must_be_greater_than_0" xml:space="preserve">
-    <value>Health service's price must be greater than 0</value>
-  </data>
-  <data name="invalid_birthyear" xml:space="preserve">
-    <value>Birthyear is not valid</value>
-  </data>
-  <data name="invalid_date_of_birth" xml:space="preserve">
+  <data name="Authentication.DateOfBirthIsNotValid" xml:space="preserve">
     <value>Date of birth is not valid</value>
   </data>
-  <data name="invalid_district" xml:space="preserve">
-    <value>District is not valid</value>
+  <data name="Authentication.DateOfBirthMustNotBeEmpty" xml:space="preserve">
+    <value>Date of birth must not be empty</value>
   </data>
-  <data name="invalid_email" xml:space="preserve">
+  <data name="Account.EmailAlreadyExists" xml:space="preserve">
+    <value>This email already exist on our system. Please use another email and try again</value>
+  </data>
+  <data name="CommonMessage.EmailIsNotValid" xml:space="preserve">
     <value>Email is not valid</value>
   </data>
-  <data name="invalid_phone_number" xml:space="preserve">
-    <value>Phone number is not valid</value>
+  <data name="Authentication.EmailMustNotBeEmpty" xml:space="preserve">
+    <value>Email must not be empty</value>
   </data>
-  <data name="invalid_province" xml:space="preserve">
-    <value>Province is not valid</value>
+  <data name="Authentication.FacebookInformationIsNotValid" xml:space="preserve">
+    <value>Facebook authenticate information is not valid</value>
   </data>
-  <data name="invalid_ward" xml:space="preserve">
-    <value>Ward is not valid</value>
+  <data name="Authentication.FirstNameMustNotBeEmpty" xml:space="preserve">
+    <value>First name must not be empty</value>
   </data>
-  <data name="invalid_website_url" xml:space="preserve">
-    <value>Website's url is not valid</value>
+  <data name="Authentication.FullNameMustNotBeEmpty" xml:space="preserve">
+    <value>Full name must not be empty</value>
   </data>
-  <data name="patient_birthyear_is_not_empty" xml:space="preserve">
-    <value>Patient's birthyear is not empty</value>
+  <data name="Authentication.GithubInformationIsNotValid" xml:space="preserve">
+    <value>The Github information is not valid</value>
   </data>
-  <data name="patient_gender_is_not_empty" xml:space="preserve">
-    <value>Patient's gender must be choosen</value>
+  <data name="Authentication.GoogleInformationIsNotValid" xml:space="preserve">
+    <value>The Google information is not valid</value>
   </data>
-  <data name="patient_name_is_not_empty" xml:space="preserve">
-    <value>Patient's name is not empty</value>
+  <data name="Authentication.LoginInformationIsIncorrect" xml:space="preserve">
+    <value>The account or password you entered is incorrect</value>
   </data>
-  <data name="patient_phone_is_not_empty" xml:space="preserve">
-    <value>Patient's phone is not empty</value>
+  <data name="Authentication.NotPermission" xml:space="preserve">
+    <value>Not permission!</value>
   </data>
-  <data name="service_type_name_is_not_empty" xml:space="preserve">
-    <value>Service type's name is not empty</value>
+  <data name="Authentication.PasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Password must not be empty</value>
   </data>
-  <data name="social_network_link_is_not_empty" xml:space="preserve">
+  <data name="Account.PhoneAlreadyExists" xml:space="preserve">
+    <value>This phone number already exist on our system. Please use another phone number and try again</value>
+  </data>
+  <data name="Authentication.PhoneIsNotValid" xml:space="preserve">
+    <value>Phone is not valid</value>
+  </data>
+  <data name="Authentication.PhoneMustNotBeEmpty" xml:space="preserve">
+    <value>Phone must not be empty</value>
+  </data>
+  <data name="Authentication.PasswordAndRepeatPasswordMustSame" xml:space="preserve">
+    <value>Password and Confirm password must be the same</value>
+  </data>
+  <data name="Authentication.RefreshTokenIsNotValid" xml:space="preserve">
+    <value>Refresh Token is not valid</value>
+  </data>
+  <data name="Authentication.RefreshTokenMustNotBeEmpty" xml:space="preserve">
+    <value>RefreshToken must not be empty</value>
+  </data>
+  <data name="Authentication.RepeatPasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Repeat password must not be empty</value>
+  </data>
+  <data name="Authentication.TenantNotFound" xml:space="preserve">
+    <value>Tenant not found</value>
+  </data>
+  <data name="Authentication.Unauthorized" xml:space="preserve">
+    <value>You are not authorized!</value>
+  </data>
+  <data name="Authentication.UserIdMustNotBeEmpty" xml:space="preserve">
+    <value>UserId must not be empty</value>
+  </data>
+  <data name="Authentication.UserAlreadyExists" xml:space="preserve">
+    <value>This user name already exist on our system. Please choose another user name and try again</value>
+  </data>
+  <data name="Authentication.UserDoesNotExist" xml:space="preserve">
+    <value>User does not exist</value>
+  </data>
+  <data name="CommonMessage.BadQueryParameters" xml:space="preserve">
+    <value>Query params are not valid</value>
+  </data>
+  <data name="CommonMessage.DataDoesNotExistOrWasDeleted" xml:space="preserve">
+    <value>This data does not exist or was deleted</value>
+  </data>
+  <data name="CommonMessage.DataWasDeletedOrNotPermission" xml:space="preserve">
+    <value>This data has been deleted or you do not have permission</value>
+  </data>
+  <data name="CommonMessage.RecordIsUpdating" xml:space="preserve">
+    <value>This record is updating by other user. Please wait and reload to see new data!</value>
+  </data>
+  <data name="CommonMessage.IdIsNotValid" xml:space="preserve">
+    <value>Id is not valid</value>
+  </data>
+  <data name="CommonMessage.ListIdsMustNotBeEmpty" xml:space="preserve">
+    <value>List records need remove must not be empty</value>
+  </data>
+  <data name="CommonMessage.NotSupport3pTools" xml:space="preserve">
+    <value>Not support 3p tool</value>
+  </data>
+  <data name="CommonMessage.PayloadIsNotValid" xml:space="preserve">
+    <value>Request's payload is not valid</value>
+  </data>
+  <data name="CommonMessage.SystemErrorOccurred" xml:space="preserve">
+    <value>An error has occurred in the system. Please try again in a few minutes</value>
+  </data>
+  <data name="SocialNetwork.LinkMustNotBeEmpty" xml:space="preserve">
     <value>Social network's link is not empty</value>
   </data>
-  <data name="social_network_logo_is_not_empty" xml:space="preserve">
+  <data name="SocialNetwork.LogoMustNotBeEmpty" xml:space="preserve">
     <value>Social network's logo is not empty</value>
   </data>
-  <data name="social_network_name_is_not_empty" xml:space="preserve">
+  <data name="SocialNetwork.NameMustNotBeEmpty" xml:space="preserve">
     <value>Social network's name is not empty</value>
   </data>
-  <data name="specialty_name_is_not_empty" xml:space="preserve">
-    <value>Special's name is not empty</value>
+  <data name="Utilities.ImageIsNotValid" xml:space="preserve">
+    <value>Image is not valid</value>
   </data>
-  <data name="symptom_name_is_not_empty" xml:space="preserve">
-    <value>Symptom's name is not empty</value>
+  <data name="Account.PasswordContainsAtLeastNCharacters" xml:space="preserve">
+    <value>Contains at least {0} character(s)</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1LowercaseLetter" xml:space="preserve">
+    <value>Have at least 1 lowercase letter</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1Number" xml:space="preserve">
+    <value>Have at least 1 number</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1SpecialCharacter" xml:space="preserve">
+    <value>Have at least 1 special character</value>
+  </data>
+  <data name="Account.PasswordHasAtLeast1UppercaseLetter" xml:space="preserve">
+    <value>Have at least 1 uppercase letter</value>
+  </data>
+  <data name="Account.PasswordIsNotStrongEnough" xml:space="preserve">
+    <value>Password is not strong enough</value>
+  </data>
+  <data name="Account.PasswordMustIncludeTheFollowingElements" xml:space="preserve">
+    <value>Password must include the following elements</value>
+  </data>
+  <data name="Account.WasDeleted" xml:space="preserve">
+    <value>Account was deleted</value>
+  </data>
+  <data name="Account.EmailHasBeenSentPreviously" xml:space="preserve">
+    <value>Email has been sent previously, please try again later</value>
+  </data>
+  <data name="Account.NewPasswordMustNotBeEmpty" xml:space="preserve">
+    <value>New password must not be empty</value>
+  </data>
+  <data name="Account.OldPasswordIsIncorrect" xml:space="preserve">
+    <value>Old password is incorrect</value>
+  </data>
+  <data name="Account.OldPasswordMustNotBeEmpty" xml:space="preserve">
+    <value>Old password must not be empty</value>
+  </data>
+  <data name="Account.PleaseWaitUntil" xml:space="preserve">
+    <value>Please wait until &lt;strong&gt;{0}&lt;/strong&gt; to resend</value>
+  </data>
+  <data name="Account.VerificationCodeIsExpired" xml:space="preserve">
+    <value>Verification code is expired</value>
+  </data>
+  <data name="Account.VerificationCodeIsNotValid" xml:space="preserve">
+    <value>Verification code is not valid</value>
+  </data>
+  <data name="Account.VerificationCodeIsNotValidOrExpired" xml:space="preserve">
+    <value>Verification code is not valid or expired</value>
+  </data>
+  <data name="Role.Receptionist" xml:space="preserve">
+    <value>Receptionist</value>
+  </data>
+  <data name="Roles.Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Roles.Doctor" xml:space="preserve">
+    <value>Doctor</value>
+  </data>
+  <data name="Roles.Nurse" xml:space="preserve">
+    <value>Nurse</value>
+  </data>
+  <data name="Roles.SuperAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="CommonMessage.OtpIsNotValidOrExpired" xml:space="preserve">
+    <value>OTP is not valid or expired</value>
+  </data>
+  <data name="Account.EmailAlreadyVerified" xml:space="preserve">
+    <value>Email already verified</value>
+  </data>
+  <data name="SmsLimitExceeded" xml:space="preserve">
+    <value>SMS limit exceeded. Please try again later.</value>
+  </data>
+  <data name="Account.HasBeenForcedToLogout" xml:space="preserve">
+    <value>The account has been forced to log out</value>
+  </data>
+  <data name="Account.CodeAlreadyExists" xml:space="preserve">
+    <value>This code already exist on our system</value>
+  </data>
+  <data name="Roles.OneOrMoreRolesNotFound" xml:space="preserve">
+    <value>One or more roles were not found. Please check again</value>
+  </data>
+  <data name="Roles.CannotExist" xml:space="preserve">
+    <value>The {0} role cannot exist</value>
+  </data>
+  <data name="Account.CannotUpdateEmailVerified" xml:space="preserve">
+    <value>The email cannot be changed because it has been verified</value>
+  </data>
+  <data name="Account.CannotUpdatePhoneVerified" xml:space="preserve">
+    <value>The phone cannot be changed because it has been verified</value>
+  </data>
+  <data name="Articles.ContentMustNotBeEmpty" xml:space="preserve">
+    <value>Content must not be empty</value>
+  </data>
+  <data name="Articles.ImageMustNotBeEmpty" xml:space="preserve">
+    <value>Image must not be empty</value>
+  </data>
+  <data name="Articles.TitleMustNotBeEmpty" xml:space="preserve">
+    <value>Title must not be empty</value>
+  </data>
+  <data name="TeamInfo.ImagesMustNotBeEmpty" xml:space="preserve">
+    <value>Images must not be empty</value>
+  </data>
+  <data name="Articles.PostDateIsNotValid" xml:space="preserve">
+    <value>Post date is not valid</value>
+  </data>
+  <data name="Articles.IsNotActive" xml:space="preserve">
+    <value>Article is not active</value>
+  </data>
+  <data name="Articles.Posted" xml:space="preserve">
+    <value>This article already posted</value>
+  </data>
+  <data name="Services.ContentMustNotBeEmpty" xml:space="preserve">
+    <value>Content must not be empty</value>
+  </data>
+  <data name="Services.ImageIsNotValid" xml:space="preserve">
+    <value>Image is not valid</value>
+  </data>
+  <data name="Services.NameMustNotBeEmpty" xml:space="preserve">
+    <value>Service name must not be empty</value>
+  </data>
+  <data name="Services.StatusIsInThisStatusAlready" xml:space="preserve">
+    <value>Service is in this status already</value>
+  </data>
+  <data name="WebImages.StatusIsInThisStatusAlready" xml:space="preserve">
+    <value>Image is in this status already</value>
+  </data>
+  <data name="Articles.ContentEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Content in English must not be empty</value>
+  </data>
+  <data name="Articles.TitleEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Title in English must not be empty</value>
+  </data>
+  <data name="Services.ContentEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Content in English must not be empty</value>
+  </data>
+  <data name="Services.NameEnglishMustNotBeEmpty" xml:space="preserve">
+    <value>Service name in English must not be empty</value>
+  </data>
+  <data name="Services.AnswerMustNotBeEmpty" xml:space="preserve">
+    <value>Answer {0} must not be empty</value>
+  </data>
+  <data name="Services.questionMustNotBeEmpty" xml:space="preserve">
+    <value>Question {0} must not be empty</value>
+  </data>
+  <data name="Bookings.ContentMustNotBeEmpty" xml:space="preserve">
+    <value>Content must not be empty</value>
+  </data>
+  <data name="Bookings.DateIsNotValid" xml:space="preserve">
+    <value>Date is not valid</value>
+  </data>
+  <data name="Bookings.NameMustNotBeEmpty" xml:space="preserve">
+    <value>Name must not be empty</value>
+  </data>
+  <data name="Bookings.PetCategoryIsNotValid" xml:space="preserve">
+    <value>Pet type is not valid</value>
+  </data>
+  <data name="Bookings.PhoneIsNotValid" xml:space="preserve">
+    <value>Phone is not valid</value>
+  </data>
+  <data name="Bookings.ServiceIsNotValid" xml:space="preserve">
+    <value>Service is not valid</value>
+  </data>
+  <data name="Bookings.StatusIsNotWaiting" xml:space="preserve">
+    <value>Status is not waiting</value>
+  </data>
+  <data name="Contacts.EmailsContainNotValid" xml:space="preserve">
+    <value>The list includes invalid emails</value>
+  </data>
+  <data name="Contacts.PhonesContainNotValid" xml:space="preserve">
+    <value>The list contains invalid phone numbers</value>
+  </data>
+  <data name="Contacts.PhoneMustNotBeEmpty" xml:space="preserve">
+    <value>Phone must not be empty</value>
+  </data>
+  <data name="Contacts.DistrictIsNotValid" xml:space="preserve">
+    <value>District is not valid</value>
+  </data>
+  <data name="Contacts.EmailMustNotBeEmpty" xml:space="preserve">
+    <value>Email must be not empty</value>
+  </data>
+  <data name="Contacts.ProvinceIsNotValid" xml:space="preserve">
+    <value>Province is not valid</value>
+  </data>
+  <data name="Contacts.WardIsNotValid" xml:space="preserve">
+    <value>Ward is not valid</value>
+  </data>
+  <data name="CommonMessage.SlugIsNotValid" xml:space="preserve">
+    <value>The slug is not valid</value>
+  </data>
+  <data name="Account.AlreadyVerified" xml:space="preserve">
+    <value>The account has already been verified</value>
+  </data>
+  <data name="Gender.Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="Gender.Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="Gender.None" xml:space="preserve">
+    <value>--Not specified--</value>
+  </data>
+  <data name="DoctorTitle.Ths" xml:space="preserve">
+  <value>Master</value>
+</data>
+<data name="DoctorTitle.TS" xml:space="preserve">
+  <value>PhD</value>
+</data>
+<data name="DoctorTitle.TSKH" xml:space="preserve">
+  <value>Doctor of Science</value>
+</data>
+<data name="DoctorDegree.PSG" xml:space="preserve">
+  <value>Associate Professor</value>
+</data>
+<data name="DoctorDegree.GS" xml:space="preserve">
+  <value>Professor</value>
+</data>
+<data name="DoctorRank.BS" xml:space="preserve">
+  <value>Doctor</value>
+</data>
+<data name="DoctorRank.BSCKI" xml:space="preserve">
+  <value>Specialist Doctor Level I</value>
+</data>
+<data name="DoctorRank.BSNT" xml:space="preserve">
+  <value>Resident Doctor</value>
+</data>
+<data name="DoctorRank.BSCKII" xml:space="preserve">
+  <value>Specialist Doctor Level II</value>
+</data>
+<data name="Infor.None" xml:space="preserve">
+  <value>No data</value>
+</data>
+<data name="CommonMessage.MapURLIsNotValid" xml:space="preserve">
+    <value>Map url is not valid</value>
   </data>
 </root>

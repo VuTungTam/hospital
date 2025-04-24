@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.Articles;
+﻿using System.Linq.Expressions;
+using Hospital.Domain.Entities.Articles;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Distances;
 using Hospital.Domain.Entities.Doctors;
@@ -30,7 +31,6 @@ using Hospital.SharedKernel.Runtime.ExecutionContext;
 using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Linq.Expressions;
 using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
 
 namespace Hospital.Infrastructure.EFConfigurations
@@ -78,6 +78,7 @@ namespace Hospital.Infrastructure.EFConfigurations
             modelBuilder.ApplyConfiguration(new MetaEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ScriptEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceTimeRuleEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -121,7 +122,11 @@ namespace Hospital.Infrastructure.EFConfigurations
                     case EntityState.Added:
                         if (entry.Entity is IBaseEntity)
                         {
-                            (entry.Entity as IBaseEntity).Id = AuthUtility.GenerateSnowflakeId();
+                            if ((entry.Entity as IBaseEntity).Id == 0)
+                            {
+                                (entry.Entity as IBaseEntity).Id = AuthUtility.GenerateSnowflakeId();
+
+                            }
                         }
 
                         if (entry.Entity is ICreatedAt)
@@ -294,5 +299,9 @@ namespace Hospital.Infrastructure.EFConfigurations
         public DbSet<Action> Actions { get; set; }
 
         public DbSet<Image> Images { get; set; }
+
+        public DbSet<FacilitySpecialty> FacilitySpecialties { get; set; }
+        public DbSet<DoctorSpecialty> DoctorSpecialties { get; set; }
+
     }
 }

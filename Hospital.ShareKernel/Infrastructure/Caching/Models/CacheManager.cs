@@ -25,7 +25,7 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
 
         public static string GetConnectionSocketKey(long userId) => $"socket:{userId}";
 
-        public static string GetRemovePaginationPattern<T>(long ownerId) where T : BaseEntity
+        public static string GetRemovePaginationPattern<T>(long ownerId, long facilityId) where T : BaseEntity
         {
             var typeofT = typeof(T);
             var key = $"pagination:{GetTableName<T>()}";
@@ -36,6 +36,10 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
                 key = $"{key}:{ownerId}";
             }
 
+            if (!isSystem && typeofT.HasInterface<IFacility>())
+            {
+                key = $"{key}:{facilityId}";
+            }
 
             return key + "*";
         }
@@ -94,7 +98,7 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
         public static CacheEntry GetShortUrlCacheEntry(string code) => new CacheEntry($"short-rul:{code}", 7776000);
 
         public static CacheEntry GetMaxOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"max-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
-        
+
         public static CacheEntry GetCurrentOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"current-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
 
         public static CacheEntry GetFacilityType() => new CacheEntry($"facility-types", 7776000);

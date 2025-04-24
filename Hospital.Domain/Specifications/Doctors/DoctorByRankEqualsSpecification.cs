@@ -7,7 +7,7 @@ namespace Hospital.Domain.Specifications.Doctors
 {
     public class DoctorByRankEqualsSpecification : ExpressionSpecification<Doctor>
     {
-        public DoctorByRankEqualsSpecification(DoctorRank rank) : base(x => x.DoctorRank == rank)
+        public DoctorByRankEqualsSpecification(List<int> ranks) : base(x => ranks.Contains((int)x.DoctorRank))
         {
         }
     }

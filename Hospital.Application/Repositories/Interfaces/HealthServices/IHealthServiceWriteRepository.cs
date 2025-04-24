@@ -6,5 +6,6 @@ namespace Hospital.Application.Repositories.Interfaces.HealthServices
 {
     public interface IHealthServiceWriteRepository : IWriteRepository<HealthService>
     {
+        Task UpdateServiceAsync(HealthService oldEntity, HealthService newEntity, CancellationToken cancellationToken);
     }
 }

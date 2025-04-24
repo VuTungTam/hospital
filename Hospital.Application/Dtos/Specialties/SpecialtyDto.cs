@@ -9,6 +9,7 @@ namespace Hospital.Application.Dtos.Specialties
     {
         public string NameVn { get; set; }
         public string NameEn { get; set; }
+
     }
     public class SpecialtyValidator : BaseAbstractValidator<SpecialtyDto>
     {

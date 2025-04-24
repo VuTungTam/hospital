@@ -4,6 +4,7 @@ namespace Hospital.SharedKernel.Libraries.ExtensionMethods
 {
     public static class EnumerationExtensions
     {
+
         public static string GetDescription(this Enum en)
         {
             var fi = en.GetType().GetField(en.ToString());

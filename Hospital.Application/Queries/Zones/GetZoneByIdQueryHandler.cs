@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.HealthServices;
+using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Zones;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Resource.Properties;
@@ -17,14 +19,17 @@ namespace Hospital.Application.Queries.Zones
     public class GetZoneByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetZoneByIdQuery, ZoneDto>
     {
         private readonly IZoneReadRepository _zoneReadRepository;
+        private readonly ISpecialtyReadRepository _specialtyReadRepository;
         public GetZoneByIdQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IZoneReadRepository zoneReadRepository,
+            ISpecialtyReadRepository specialtyReadRepository,
             IStringLocalizer<Resources> localizer
             ) : base(authService, mapper, localizer)
         {
             _zoneReadRepository = zoneReadRepository;
+            _specialtyReadRepository = specialtyReadRepository;
         }
 
         public async Task<ZoneDto> Handle(GetZoneByIdQuery request, CancellationToken cancellationToken)
@@ -38,16 +43,23 @@ namespace Hospital.Application.Queries.Zones
                 Includes = new string[] { nameof(Zone.ZoneSpecialties) }
             };
 
-            var result = await _zoneReadRepository.GetByIdAsync(request.Id, option: option, cancellationToken: cancellationToken);
+            var zone = await _zoneReadRepository.GetByIdAsync(request.Id, option: option, cancellationToken: cancellationToken);
 
-            if (result == null)
+            if (zone == null)
             {
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
+            var speIds = zone.ZoneSpecialties.Select(ds => ds.SpecialtyId).ToList();
 
-            var zone = _mapper.Map<ZoneDto>(result);
+            var specialties = await _specialtyReadRepository.GetByIdsAsync(speIds, cancellationToken: cancellationToken);
 
-            return zone;
+            var specialtyDtos = _mapper.Map<List<SpecialtyDto>>(specialties);
+
+            var zoneDto = _mapper.Map<ZoneDto>(zone);
+
+            zoneDto.Specialties = specialtyDtos;
+
+            return zoneDto;
         }
     }
 }

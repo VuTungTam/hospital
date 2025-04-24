@@ -5,9 +5,9 @@ using Hospital.SharedKernel.Application.Models.Responses;
 
 namespace Hospital.Application.Queries.Zones
 {
-    public class GetZonesPaginationQuery : BaseQuery<PaginationResult<ZoneDto>>
+    public class GetZonesPaginationQuery : BaseAllowAnonymousQuery<PaginationResult<ZoneDto>>
     {
-        public GetZonesPaginationQuery(Pagination pagination) 
+        public GetZonesPaginationQuery(Pagination pagination)
         {
             Pagination = pagination;
         }

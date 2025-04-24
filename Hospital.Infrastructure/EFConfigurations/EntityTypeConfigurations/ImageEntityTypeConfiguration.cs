@@ -8,16 +8,9 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Image> builder)
         {
-            builder.Property(x => x.Url)
+            builder.Property(x => x.PublicId)
                    .HasColumnType("NVARCHAR(255)");
 
-            builder.Property(x => x.CreatedAt)
-                   .IsRequired()
-                   .HasColumnType("DATETIME")
-                   .HasDefaultValueSql("GETDATE()");
-
-            builder.Property(x => x.DeletedAt)
-                   .HasColumnType("DATETIME");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Hospital.Application.Dtos.ServiceTimeRules;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
@@ -18,7 +19,11 @@ namespace Hospital.Application.Dtos.HealthServices
 
         public string DescriptionEn { get; set; }
 
-        public long TypeId { get; set; }
+        public string TypeId { get; set; }
+
+        public string TypeNameVn { get; set; }
+
+        public string TypeNameEn { get; set; }
 
         public decimal Price { get; set; }
 
@@ -40,9 +45,54 @@ namespace Hospital.Application.Dtos.HealthServices
 
         public string SpecialtyId { get; set; }
 
+        public List<ServiceTimeRuleDto> ServiceTimeRules { get; set; }
 
-        public List<TimeFrame> TimeSlots ;
+        public List<GroupServiceTimeRuleDto> GroupServiceTimeRules
+        {
+            get
+            {
+                return ServiceTimeRules
+                    .GroupBy(rule => new
+                    {
+                        rule.StartTime,
+                        rule.StartBreakTime,
+                        rule.EndBreakTime,
+                        rule.EndTime,
+                        rule.SlotDuration,
+                        rule.MaxPatients
+                    })
+                    .Select(group => new GroupServiceTimeRuleDto
+                    {
+                        StartTime = group.Key.StartTime,
+                        StartBreakTime = group.Key.StartBreakTime,
+                        EndBreakTime = group.Key.EndBreakTime,
+                        EndTime = group.Key.EndTime,
+                        SlotDuration = group.Key.SlotDuration,
+                        MaxPatients = group.Key.MaxPatients,
+                        DayOfWeeks = group.Select(rule => rule.DayOfWeek).Distinct().ToList()
+                    })
+                    .ToList();
+            }
+        }
     }
+
+    public class GroupServiceTimeRuleDto
+    {
+        public TimeSpan StartTime { get; set; }
+
+        public TimeSpan StartBreakTime { get; set; }
+
+        public TimeSpan EndBreakTime { get; set; }
+
+        public TimeSpan EndTime { get; set; }
+
+        public int SlotDuration { get; set; }
+
+        public int MaxPatients { get; set; }
+
+        public List<DayOfWeek> DayOfWeeks { get; set; }
+    }
+
     public class HealthServiceValidator : BaseAbstractValidator<HealthServiceDto>
     {
         public HealthServiceValidator(IStringLocalizer<Resources> localizer) : base(localizer)
@@ -53,10 +103,9 @@ namespace Hospital.Application.Dtos.HealthServices
             RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["health_service_description_en_is_not_empty"]);
             RuleFor(x => x.Price).NotEmpty().WithMessage(localizer["health_service_price_is_not_empty"]);
             RuleFor(x => x.Price).GreaterThan(0).WithMessage(localizer["health_service_price_must_be_greater_than_0"]);
-            RuleFor(x => x.ZoneId).Must(x => int.TryParse(x, out var id) && id >= 0).WithMessage(localizer["invalid_zone_id"]);
-            RuleFor(x => x.FacilityId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_facility_id"]);
-            RuleFor(x => x.DoctorId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_doctor_id"]);
-            RuleFor(x => x.SpecialtyId).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_specialty_id"]);
+            RuleFor(x => x.DoctorId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_doctor_id"]);
+            RuleFor(x => x.TypeId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_type_id"]);
+            RuleFor(x => x.SpecialtyId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_specialty_id"]);
         }
     }
 }

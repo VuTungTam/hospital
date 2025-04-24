@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.HealthFacility;
+using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Resource.Properties;
@@ -16,14 +18,20 @@ namespace Hospital.Application.Queries.HealthFacilities
     public class GetFacilityByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFacilityByIdQuery, HealthFacilityDto>
     {
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
+        private readonly ISpecialtyReadRepository _specialtyReadRepository;
+        private readonly IFacilityTypeReadRepository _facilityTypeReadRepository;
         public GetFacilityByIdQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
-            IHealthFacilityReadRepository healthFacilityReadRepository
+            IHealthFacilityReadRepository healthFacilityReadRepository,
+            ISpecialtyReadRepository specialtyReadRepository,
+            IFacilityTypeReadRepository facilityTypeReadRepository
             ) : base(authService, mapper, localizer)
         {
             _healthFacilityReadRepository = healthFacilityReadRepository;
+            _facilityTypeReadRepository = facilityTypeReadRepository;
+            _specialtyReadRepository = specialtyReadRepository;
         }
 
         public async Task<HealthFacilityDto> Handle(GetFacilityByIdQuery request, CancellationToken cancellationToken)
@@ -35,7 +43,7 @@ namespace Hospital.Application.Queries.HealthFacilities
 
             var option = new QueryOption
             {
-                Includes = new string[] { nameof(HealthFacility.Images) }
+                Includes = new string[] { nameof(HealthFacility.Images), nameof(HealthFacility.FacilitySpecialties), nameof(HealthFacility.FacilityTypeMappings) }
             };
 
             var facility = await _healthFacilityReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
@@ -46,6 +54,19 @@ namespace Hospital.Application.Queries.HealthFacilities
             }
 
             var facilityDto = _mapper.Map<HealthFacilityDto>(facility);
+
+            var speIds = facility.FacilitySpecialties.Select(ds => ds.SpecialtyId).ToList();
+
+            var specialties = await _specialtyReadRepository.GetByIdsAsync(speIds, cancellationToken: cancellationToken);
+
+            facilityDto.Specialties = _mapper.Map<List<SpecialtyDto>>(specialties);
+
+            var typeIds = facility.FacilityTypeMappings.Select(ds => ds.TypeId).ToList();
+
+            var types = await _facilityTypeReadRepository.GetByIdsAsync(typeIds, cancellationToken: cancellationToken);
+
+            facilityDto.Types = _mapper.Map<List<FacilityTypeDto>>(types);
+
             return facilityDto;
         }
     }

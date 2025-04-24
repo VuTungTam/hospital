@@ -1,4 +1,5 @@
 ﻿using Hospital.Application.Dtos.Doctors;
+using Hospital.Application.Models.Doctors;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Requests;
@@ -12,21 +13,15 @@ namespace Hospital.Application.Queries.Doctors
     [RequiredPermission(ActionExponent.ViewDoctor)]
     public class GetDoctorsPaginationQuery : BaseQuery<PaginationResult<DoctorDto>>
     {
-        public GetDoctorsPaginationQuery(Pagination pagination, List<long> specialtyIds, AccountStatus state, DoctorDegree degree, DoctorTitle title, DoctorRank rank)
+        public GetDoctorsPaginationQuery(Pagination pagination, AccountStatus state, FilterDoctorRequest request)
         {
             Pagination = pagination;
-            SpecialtyIds = specialtyIds;
             State = state;
-            Degree = degree;
-            Title = title;
-            Rank = rank;
+            Request = request;
         }
 
         public Pagination Pagination { get; }
-        public List<long> SpecialtyIds { get; }
         public AccountStatus State { get; }
-        public DoctorDegree Degree { get; }
-        public DoctorTitle Title { get; }
-        public DoctorRank Rank { get; }
+        public FilterDoctorRequest Request { get; }
     }
 }

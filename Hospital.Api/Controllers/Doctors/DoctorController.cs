@@ -45,20 +45,20 @@ namespace Hospital.Api.Controllers.Doctors
         }
 
         [HttpPost("public/pagination"), AllowAnonymous]
-        public async Task<IActionResult> GetDoctorPagination(int page, int size, int state, [FromBody] FilterDoctorRequest request, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GettPublicDoctorPagination(int page, int size, int state, [FromBody] FilterDoctorRequest request, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetPublicDoctorsPaginationQuery(pagination, request.SpeIds, (AccountStatus)state, (DoctorDegree)request.Degree, (DoctorTitle)request.Title, (DoctorRank)request.Rank);
+            var query = new GetPublicDoctorsPaginationQuery(pagination, request, (AccountStatus)state);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
         [HttpPost("pagination")]
-        public async Task<IActionResult> GetPublicDoctorPagination(int page, int size, int state, [FromBody] FilterDoctorRequest request, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetDoctorPagination(int page, int size, int state, [FromBody] FilterDoctorRequest request, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetDoctorsPaginationQuery(pagination, request.SpeIds, (AccountStatus)state, (DoctorDegree)request.Degree, (DoctorTitle)request.Title, (DoctorRank)request.Rank);
+            var query = new GetDoctorsPaginationQuery(pagination, (AccountStatus)state, request);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });

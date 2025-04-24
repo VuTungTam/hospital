@@ -1,12 +1,16 @@
 ﻿using FluentValidation;
 using Hospital.Application.Dtos.Images;
+using Hospital.Application.Dtos.Specialties;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
+using Hospital.SharedKernel.Configures.Models;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Emails.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Sms.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Websites.Utils;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
+using Hospital.SharedKernel.Libraries.Helpers;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Dtos.HealthFacility
@@ -25,15 +29,13 @@ namespace Hospital.Application.Dtos.HealthFacility
 
         public string SummaryEn { get; set; }
 
-        public string Image { get; set; }
+        public string Logo { get; set; }
+
+        public string LogoUrl => CdnConfig.Get(Logo);
 
         public string Phone { get; set; }
 
         public string Email { get; set; }
-
-        public string Website { get; set; }
-
-        public long CategoryId { get; set; }
 
         public HealthFacilityStatus Status { get; set; }
 
@@ -68,22 +70,73 @@ namespace Hospital.Application.Dtos.HealthFacility
         public string Slug { get; set; }
 
         public List<ImageDto> Images { get; set; }
+
+        public List<string> ImageNames { get; set; }
+
+        public List<string> ImageUrls
+        {
+            get
+            {
+                if (Images == null) return new List<string>();
+                return Images.Select(img => CdnConfig.Get(img.PublicId)).ToList();
+
+            }
+        }
+
+        public List<SpecialtyDto> Specialties { get; set; }
+
+        public List<string> SpecialtyIds { get; set; }
+
+        public List<FacilityTypeDto> Types { get; set; }
+
+        public List<string> TypeIds { get; set; }
+
+        public string ListSpecialtyNameVns =>
+        (Specialties != null && Specialties.Any())
+            ? string.Join(", ", Specialties
+                .Select(s => s.NameVn))
+            : "Chưa có thông tin";
+
+        public string ListSpecialtyNameEns =>
+        (Specialties != null && Specialties.Any())
+            ? string.Join(", ", Specialties
+                .Select(s => s.NameEn))
+            : "No data";
+
+        public string ListTypeNameVns =>
+        (Types != null && Types.Any())
+            ? string.Join(", ", Types
+                .Select(s => s.NameVn))
+            : "Chưa có thông tin";
+
+
+        public string ListTypeNameEns =>
+        (Types != null && Types.Any())
+            ? string.Join(", ", Types
+                .Select(s => s.NameEn))
+            : "No data";
     }
     public class HealthFacilityValidator : BaseAbstractValidator<HealthFacilityDto>
     {
         public HealthFacilityValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
+            RuleFor(x => x.Logo).Must(x => FileHelper.IsImageByFileName(x)).WithMessage(localizer["Utilities.ImageIsNotValid"]);
             RuleFor(x => x.NameVn).NotEmpty().WithMessage(localizer["health_facility_name_vn_is_not_empty"]);
             RuleFor(x => x.NameEn).NotEmpty().WithMessage(localizer["health_facility_name_en_is_not_empty"]);
+            RuleFor(x => x.Logo).NotEmpty().WithMessage(localizer["health_facility_logo_is_not_empty"]);
             RuleFor(x => x.DescriptionVn).NotEmpty().WithMessage(localizer["health_facility_description_vn_is_not_empty"]);
             RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["health_facility_description_en_is_not_empty"]);
-            RuleFor(x => x.Address).NotEmpty().WithMessage(localizer["health_facility_address_is_not_empty"]);
-            RuleFor(x => x.Phone).Must(x => SmsUtility.IsVietnamesePhone(x)).WithMessage("invalid_phone_number");
-            RuleFor(x => x.Email).Must(x => EmailUtility.IsEmail(x)).WithMessage(localizer["invalid_email"]);
-            RuleFor(x => x.Website).Must(x => WebsiteUtility.BeAValidUrl(x)).WithMessage(localizer["invalid_website_url"]);
-            RuleFor(x => x.Pid).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_province"]);
-            RuleFor(x => x.Did).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_district"]);
-            RuleFor(x => x.Wid).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_ward"]);
+            RuleFor(x => x.SummaryVn).NotEmpty().WithMessage(localizer["health_facility_summary_en_is_not_empty"]);
+            RuleFor(x => x.SummaryEn).NotEmpty().WithMessage(localizer["health_facility_summary_en_is_not_empty"]);
+            RuleFor(x => x.Email).Must(x => EmailUtility.IsEmail(x)).WithMessage(localizer["CommonMessage.EmailIsNotValid"]);
+            RuleFor(x => x.MapURL).Must(x => MapUtility.IsMapURL(x)).WithMessage(localizer["invalid_map"]);
+            RuleFor(x => x.SpecialtyIds)
+                .NotNull().WithMessage(localizer["health_facility_specialties_required"])
+                .Must(x => x.Any()).WithMessage(localizer["health_facility_specialties_required"]);
+
+            RuleFor(x => x.TypeIds)
+                .NotNull().WithMessage(localizer["health_facility_types_required"])
+                .Must(x => x.Any()).WithMessage(localizer["health_facility_types_required"]);
         }
     }
 }

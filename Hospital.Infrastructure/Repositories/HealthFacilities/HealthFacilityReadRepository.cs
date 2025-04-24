@@ -33,6 +33,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             QueryOption option = new QueryOption();
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
+                        .Include(f => f.FacilityTypeMappings)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
@@ -52,9 +53,9 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
                 var whereClause = "WHERE Slug = {0} AND IsDeleted = 0";
 
                 var columns = string.Join(", ",
-                    "Slug", "Id", "Image", "Address", "Status", "Did", "Dname", "Email",
+                    "Slug", "Id", "Logo", "Address", "Status", "Did", "Dname", "Email",
                     "Latitude", "Longitude", "MapURL", "Phone", "Pid", "Pname",
-                    "StarPoint", "TotalFeedback", "TotalStars", "Website", "Wid", "Wname",
+                    "StarPoint", "TotalFeedback", "TotalStars", "Wid", "Wname",
                     "CreatedBy", "CreatedAt", "ModifiedBy", "ModifiedAt", "IsDeleted", "DeletedAt", "DeletedBy",
                     langs.Contains("vi-VN") ? "NameVn" : "'' AS NameVn",
                     langs.Contains("vi-VN") ? "DescriptionVn" : "'' AS DescriptionVn",
@@ -74,7 +75,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
                 if (data != null)
                 {
                     data.Images = await _dbContext.Images
-                            .Where(img => img.FacilityId == data.Id && !img.IsDeleted)
+                            .Where(img => img.FacilityId == data.Id)
                             .AsNoTracking()
                             .ToListAsync(cancellationToken);
                     await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
@@ -99,7 +100,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(expression);
 
-            var countFactory = () => query.CountAsync(cancellationToken); 
+            var countFactory = () => query.CountAsync(cancellationToken);
 
             var dataFactory = () => query
                 .OrderBy(x => x.NameVn)

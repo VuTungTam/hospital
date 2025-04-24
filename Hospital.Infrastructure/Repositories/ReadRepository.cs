@@ -1,4 +1,6 @@
-﻿using Hospital.Domain.Constants;
+﻿using System.Linq.Expressions;
+using System.Reflection;
+using Hospital.Domain.Constants;
 using Hospital.Domain.Specifications;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
@@ -17,8 +19,6 @@ using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Serilog;
-using System.Linq.Expressions;
-using System.Reflection;
 
 
 namespace Hospital.Infrastructure.Repositories
@@ -59,7 +59,7 @@ namespace Hospital.Infrastructure.Repositories
         {
             option ??= new QueryOption();
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
-            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking().IncludesRelateData(option.Includes), pagination)
                          .Where(guardExpression)
                          .BuildOrderBy(pagination.Sorts);
 
@@ -72,12 +72,11 @@ namespace Hospital.Infrastructure.Repositories
                 var cacheEntry = CacheManager.GetPaginationCacheEntry<T>(pagination, _executionContext.Identity, _executionContext.FacilityId);
                 var valueFactory = async () => new PaginationResult<T>(await dataFactory(), await countFactory());
 
-                return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
+                //return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
             }
 
             var data = await dataFactory();
             var count = await countFactory();
-
             return new PaginationResult<T>(data, count);
         }
 

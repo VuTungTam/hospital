@@ -1,12 +1,12 @@
-﻿using Hospital.Domain.Entities.ServiceTimeRules;
-using Hospital.Domain.Entities.Specialties;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.Doctors;
+using Hospital.Domain.Entities.HealthFacilities;
+using Hospital.Domain.Entities.ServiceTimeRules;
+using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
-using Hospital.Domain.Entities.HealthFacilities;
-using Hospital.Domain.Entities.Doctors;
 
 namespace Hospital.Domain.Entities.HealthServices
 {
@@ -46,6 +46,8 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public List<Booking> Bookings { get; set; }
 
+        public List<ServiceTimeRule> ServiceTimeRules { get; set; }
+
         public decimal Price { get; set; }
 
         public float StarPoint { get; set; }
@@ -72,7 +74,7 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public Doctor Doctor { get; set; }
 
-        public long DoctorId { get ; set ; }
+        public long DoctorId { get; set; }
 
         public void getStar()
         {

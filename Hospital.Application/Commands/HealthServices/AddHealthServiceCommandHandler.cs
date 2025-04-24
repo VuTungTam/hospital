@@ -2,14 +2,18 @@
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
 using MediatR;
@@ -24,6 +28,8 @@ namespace Hospital.Application.Commands.HealthServices
         private readonly IExecutionContext _executionContext;
         private readonly IHealthFacilityReadRepository _facilityReadRepository;
         private readonly IDoctorReadRepository _doctorReadRepository;
+        private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
+        private readonly ITimeSlotWriteRepository _timeSlotWriteRepository;
         public AddHealthServiceCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -32,13 +38,17 @@ namespace Hospital.Application.Commands.HealthServices
             IHealthFacilityReadRepository facilityReadRepository,
             IDoctorReadRepository doctorReadRepository,
             IExecutionContext executionContext,
-            IHealthServiceWriteRepository healthServiceWriteRepository
+            IHealthServiceWriteRepository healthServiceWriteRepository,
+            IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository,
+            ITimeSlotWriteRepository timeSlotWriteRepository
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthServiceWriteRepository = healthServiceWriteRepository;
             _executionContext = executionContext;
             _facilityReadRepository = facilityReadRepository;
             _doctorReadRepository = doctorReadRepository;
+            _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
+            _timeSlotWriteRepository = timeSlotWriteRepository;
         }
 
         public async Task<string> Handle(AddHealthServiceCommand request, CancellationToken cancellationToken)
@@ -84,7 +94,42 @@ namespace Hospital.Application.Commands.HealthServices
 
             service.SpecialtyId = long.Parse(request.HealthService.SpecialtyId);
 
-            await _healthServiceWriteRepository.AddAsync(service, cancellationToken);
+            foreach (var timeRule in service.ServiceTimeRules)
+            {
+                timeRule.Id = AuthUtility.GenerateSnowflakeId();
+
+                var timeSlots = _serviceTimeRuleWriteRepository.GenerateTimeSlots(timeRule);
+
+                _timeSlotWriteRepository.AddRange(timeSlots);
+            }
+
+            _healthServiceWriteRepository.Add(service);
+
+            await _healthServiceWriteRepository.SaveChangesAsync(cancellationToken);
+
+            // foreach (var timeRuleDto in request.HealthService.ServiceTimeRules)
+            // {
+            //     timeRuleDto.Id = null;
+
+            //     var timeRule = _mapper.Map<ServiceTimeRule>(timeRuleDto);
+
+            //     timeRule.Id = AuthUtility.GenerateSnowflakeId();
+
+            //     timeRule.ServiceId = service.Id;
+
+            //     Console.WriteLine("------------------------------------------------- " + timeRule.Id);
+
+            //     _serviceTimeRuleWriteRepository.Add(timeRule);
+
+            //     //await _serviceTimeRuleWriteRepository.SaveChangesAsync(cancellationToken);
+
+            //     var timeSlots = _serviceTimeRuleWriteRepository.GenerateTimeSlots(timeRule);
+
+            //     _timeSlotWriteRepository.AddRange(timeSlots);
+
+            // }
+
+            await _healthServiceWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
             return service.Id.ToString();
         }

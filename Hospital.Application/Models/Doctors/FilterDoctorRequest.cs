@@ -1,13 +1,11 @@
 ﻿namespace Hospital.Application.Models.Doctors
 {
     public class FilterDoctorRequest
-    {
-        public int Degree;
-
-        public int Title;
-
-        public int Rank;
-
-        public List<long> SpeIds;
-    }
+{
+    public List<int> Degrees { get; set; } = new();
+    public List<int> Titles { get; set; } = new();
+    public List<int> Ranks { get; set; } = new();
+    public List<long> SpeIds { get; set; } = new();
+    public List<int> Genders { get; set; } = new();
+}
 }

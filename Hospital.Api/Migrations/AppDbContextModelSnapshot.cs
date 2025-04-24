@@ -320,6 +320,9 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDefaultPassword")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -560,14 +563,14 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("NVARCHAR(255)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Latitude")
                         .HasColumnType("DECIMAL(9,6)");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("NVARCHAR(255)");
 
                     b.Property<decimal>("Longitude")
                         .HasColumnType("DECIMAL(9,6)");
@@ -621,10 +624,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<int>("TotalStars")
                         .HasColumnType("INT");
-
-                    b.Property<string>("Website")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
 
                     b.Property<int>("Wid")
                         .HasColumnType("int");
@@ -848,27 +847,10 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Url")
+                    b.Property<string>("PublicId")
                         .HasColumnType("NVARCHAR(255)");
 
                     b.HasKey("Id");
@@ -958,7 +940,9 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
@@ -967,16 +951,19 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
 
                     b.Property<TimeSpan>("EndBreakTime")
-                        .HasColumnType("time");
+                        .HasColumnType("Time");
 
                     b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
+                        .HasColumnType("Time");
+
+                    b.Property<long?>("HealthServiceId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -985,7 +972,7 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATETIME");
 
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
@@ -997,12 +984,14 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<TimeSpan>("StartBreakTime")
-                        .HasColumnType("time");
+                        .HasColumnType("Time");
 
                     b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
+                        .HasColumnType("Time");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HealthServiceId");
 
                     b.HasIndex("ServiceId");
 
@@ -1259,6 +1248,14 @@ namespace Hospital.Api.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LocationEn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("LocationVn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("DATETIME");
 
@@ -1498,6 +1495,9 @@ namespace Hospital.Api.Migrations
                     b.Property<bool>("EmailVerified")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDefaultPassword")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1634,6 +1634,9 @@ namespace Hospital.Api.Migrations
 
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDefaultPassword")
                         .ValueGeneratedOnAdd()
@@ -2110,8 +2113,12 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
                 {
-                    b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", "Service")
+                    b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", null)
                         .WithMany("TimeRules")
+                        .HasForeignKey("HealthServiceId");
+
+                    b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", "Service")
+                        .WithMany("ServiceTimeRules")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2293,6 +2300,8 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.HealthService", b =>
                 {
                     b.Navigation("Bookings");
+
+                    b.Navigation("ServiceTimeRules");
 
                     b.Navigation("TimeRules");
                 });

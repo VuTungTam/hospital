@@ -84,7 +84,9 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
         }
 
         public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
-            => await _db.KeyDeleteAsync(CacheManager.GetCombineKey(key));
+        {
+            await _db.KeyDeleteAsync(CacheManager.GetCombineKey(key));
+        }
 
         public async Task SetAsync(string key, object value, TimeSpan? absoluteExpireTime = null, CancellationToken cancellationToken = default)
             => await _db.StringSetAsync(CacheManager.GetCombineKey(key), new RedisValue(JsonConvert.SerializeObject(value)), absoluteExpireTime ?? DefaultAbsoluteExpireTime);
@@ -94,8 +96,9 @@ namespace Hospital.SharedKernel.Infrastructure.Redis
 
         public async Task RemoveByPatternAsync(string pattern)
         {
+            var cPattern = CacheManager.GetCombineKey(pattern);
             var server = _redis.GetServers().First();
-            var keys = server.Keys(pattern: pattern).ToList();
+            var keys = server.Keys(pattern: cPattern).ToList();
 
             if (keys != null && keys.Any())
             {

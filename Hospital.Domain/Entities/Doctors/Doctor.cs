@@ -25,7 +25,6 @@ namespace Hospital.Domain.Entities.Doctors
 
         public List<HealthService> HealthServices { get; set; }
 
-
         public string Description { get; set; }
 
         public string TrainingProcess { get; set; }

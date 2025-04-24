@@ -5,12 +5,14 @@ using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.Users;
 using Hospital.Domain.Entities.Doctors;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Constants;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
@@ -51,7 +53,12 @@ namespace Hospital.Application.Commands.Doctors
 
             await ValidateAndThrowAsync(request.Doctor, cancellationToken);
 
-            var doctor = await _doctorReadRepository.GetByIdAsync(long.Parse(request.Doctor.Id), cancellationToken: cancellationToken);
+            var option = new QueryOption
+            {
+                Includes = new string[] { nameof(Doctor.DoctorSpecialties) }
+            };
+
+            var doctor = await _doctorReadRepository.GetByIdAsync(long.Parse(request.Doctor.Id), option, cancellationToken: cancellationToken);
             if (doctor == null)
             {
                 throw new BadRequestException("Nhân viên không tồn tại");
@@ -61,10 +68,10 @@ namespace Hospital.Application.Commands.Doctors
             var newDname = await _locationReadRepository.GetNameByIdAsync(int.Parse(request.Doctor.Did), "district", cancellationToken);
             var newWname = await _locationReadRepository.GetNameByIdAsync(int.Parse(request.Doctor.Wid), "ward", cancellationToken);
 
-            var newDoctor = _mapper.Map<Doctor>(request.Doctor);
-            newDoctor.Pname = newPname;
-            newDoctor.Dname = newDname;
-            newDoctor.Wname = newWname;
+            // var newDoctor = _mapper.Map<Doctor>(request.Doctor);
+            doctor.Pname = newPname;
+            doctor.Dname = newDname;
+            doctor.Wname = newWname;
 
             doctor.DoctorTitle = request.Doctor.DoctorTitle;
             doctor.DoctorDegree = request.Doctor.DoctorDegree;
@@ -88,23 +95,12 @@ namespace Hospital.Application.Commands.Doctors
             doctor.Dname = newDname;
             doctor.Wname = newWname;
 
-            var newSpecialtyIds = request.Doctor.Specialties.Select(x => long.Parse(x.Id));
-
-            var oldSpecialtyIds = doctor.DoctorSpecialties.Select(x => x.SpecialtyId);
-
-            bool areEqual = new HashSet<long>(oldSpecialtyIds).SetEquals(newSpecialtyIds);
-
-            if (areEqual)
-            {
-                await _doctorWriteRepository.UpdateSpecialtiesAsync(doctor.Id, newSpecialtyIds, cancellationToken: cancellationToken);
-            }
-
             if (doctor.Status != AccountStatus.Active)
             {
                 await _authRepository.RemoveRefreshTokensAsync(new List<long> { doctor.Id }, cancellationToken);
             }
 
-            await _doctorWriteRepository.UpdateAsync(doctor, cancellationToken: cancellationToken);
+            await _doctorWriteRepository.UpdateDoctorAsync(doctor, request.Doctor, cancellationToken: cancellationToken);
 
             // Nếu ko kích hoạt thì force logout, nếu recover thành kích hoạt thì xóa force logout
             if (doctor.Status != AccountStatus.Active)
@@ -120,7 +116,6 @@ namespace Hospital.Application.Commands.Doctors
             {
                 throw new BadRequestException("ID không hợp lệ");
             }
-
             var codeExist = await _userRepository.CodeExistAsync(doctor.Code, id, cancellationToken);
             if (codeExist)
             {

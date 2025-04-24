@@ -18,8 +18,8 @@ namespace Hospital.Application.Queries.Zones
     {
         private readonly IZoneReadRepository _zoneReadRepository;
         public GetZonesPaginationQueryHandler(
-            IAuthService authService, 
-            IMapper mapper, 
+            IAuthService authService,
+            IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IZoneReadRepository zoneReadRepository
             ) : base(authService, mapper, localizer)

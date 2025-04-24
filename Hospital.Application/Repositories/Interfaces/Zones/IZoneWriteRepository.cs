@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.Zones;
+﻿using Hospital.Application.Dtos.Zones;
+using Hospital.Domain.Entities.Zones;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 using MediatR;
 
@@ -8,5 +9,6 @@ namespace Hospital.Application.Repositories.Interfaces.Zones
     {
         Task RemoveSpecialtiesAsync(List<ZoneSpecialty> zoneSpecialties, CancellationToken cancellationToken);
         Task UpdateZoneSpecialtiesAsync(long zoneId, IEnumerable<long> speIds, CancellationToken cancellationToken);
+        Task UpdateZoneAsync(Zone oldZone, ZoneDto newZone, CancellationToken cancellationToken);
     }
 }
