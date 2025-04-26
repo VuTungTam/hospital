@@ -5,5 +5,6 @@ namespace Hospital.Application.Repositories.Interfaces.HealthProfiles
 {
     public interface IHealthProfileWriteRepository : IWriteRepository<HealthProfile>
     {
+        Task AddProfileAsync(HealthProfile healthProfile, CancellationToken cancellationToken = default);
     }
 }

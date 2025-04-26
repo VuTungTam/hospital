@@ -1,7 +1,7 @@
-﻿using Hospital.Domain.Entities.Bookings;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.HealthProfiles
 {
@@ -16,11 +16,15 @@ namespace Hospital.Domain.Entities.HealthProfiles
         IDeletedBy,
         IOwnedEntity
     {
+        public string Code { get; set; }
+
         public string CICode { get; set; }
 
         public string Name { get; set; }
 
         public string Phone { get; set; }
+
+        public string Email { get; set; }
 
         public int Gender { get; set; }
 
@@ -40,10 +44,6 @@ namespace Hospital.Domain.Entities.HealthProfiles
 
         public string Address { get; set; }
 
-        public int Eid { get; set; }
-
-        public string Ethinic { get; set; }
-
         public List<Booking> Bookings { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -60,6 +60,6 @@ namespace Hospital.Domain.Entities.HealthProfiles
 
         public long? DeletedBy { get; set; }
 
-        public long OwnerId { get ; set; }
+        public long OwnerId { get; set; }
     }
 }

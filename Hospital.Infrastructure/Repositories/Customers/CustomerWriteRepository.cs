@@ -1,4 +1,9 @@
-﻿using Hospital.Application.Repositories.Interfaces.Customers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Domain.Entities.Customers;
@@ -10,11 +15,6 @@ using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hospital.Infrastructure.Repositories.Customers
 {

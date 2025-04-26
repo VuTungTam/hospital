@@ -1,6 +1,8 @@
 ﻿using Hospital.Application.Commands.HealthProfiles;
 using Hospital.Application.Dtos.HealthProfiles;
 using Hospital.Application.Queries.HealthProfiles;
+using Hospital.Application.Queries.Sequences;
+using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -18,14 +20,22 @@ namespace Hospital.Api.Controllers.Delarations
         {
         }
 
-        [HttpPost, AllowAnonymous]
+
+        [HttpGet("sequence")]
+        public async Task<IActionResult> GetSequence(CancellationToken cancellationToken = default)
+        {
+            var table = new HealthProfile().GetTableName();
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(new GetSequenceQuery(table), cancellationToken) });
+        }
+
+        [HttpPost]
         public virtual async Task<IActionResult> Add(HealthProfileDto HealthProfileDto, CancellationToken cancellationToken = default)
         {
             var command = new AddHealthProfileCommand(HealthProfileDto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
         }
 
-        [HttpGet("{id}"), AllowAnonymous]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
         {
             var query = new GetHealthProfileByIdQuery(id);
@@ -35,7 +45,7 @@ namespace Hospital.Api.Controllers.Delarations
             return Ok(new SimpleDataResult { Data = result });
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> GetPagination(
             int page,
             int size,
@@ -54,7 +64,7 @@ namespace Hospital.Api.Controllers.Delarations
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet("myself"), AllowAnonymous]
+        [HttpGet("myself")]
         public async Task<IActionResult> GetMyProfiles(CancellationToken cancellationToken = default)
         {
             var query = new GetMyHealthProfilesQuery();

@@ -4,6 +4,7 @@ using Hospital.Infrastructure.EFConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250425100715_U32")]
+    partial class U32
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -648,10 +650,6 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(15)");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(32)");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
@@ -698,6 +696,7 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("NVARCHAR(12)");
 
                     b.Property<int>("Pid")

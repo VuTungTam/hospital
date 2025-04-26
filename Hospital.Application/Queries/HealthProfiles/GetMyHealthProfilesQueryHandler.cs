@@ -27,12 +27,7 @@ namespace Hospital.Application.Queries.HealthProfiles
 
         public async Task<List<HealthProfileDto>> Handle(GetMyHealthProfilesQuery request, CancellationToken cancellationToken)
         {
-            var option = new QueryOption
-            {
-                IgnoreOwner = false,
-            };
-
-            var profiles = await _healthProfileReadRepository.GetAsync(option: option, cancellationToken:cancellationToken);
+            var profiles = await _healthProfileReadRepository.GetAsync(cancellationToken: cancellationToken);
 
             var profileDtos = _mapper.Map<List<HealthProfileDto>>(profiles);
 

@@ -5,10 +5,9 @@ using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Application.Queries.HealthProfiles
 {
-    [RequiredPermission(ActionExponent.ViewProfile)]
     public class GetHealthProfileByIdQuery : BaseQuery<HealthProfileDto>
     {
-        public GetHealthProfileByIdQuery(long id) 
+        public GetHealthProfileByIdQuery(long id)
         {
             Id = id;
         }

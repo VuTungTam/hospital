@@ -6,12 +6,11 @@ using Hospital.SharedKernel.Libraries.Attributes;
 namespace Hospital.Application.Commands.HealthProfiles
 {
     [RequiredPermission(ActionExponent.AddProfile)]
-    public class AddHealthProfileCommand : BaseCommand<long>
+    public class AddHealthProfileCommand : BaseCommand<string>
     {
         public AddHealthProfileCommand(HealthProfileDto dto)
         {
             Dto = dto;
-
         }
         public HealthProfileDto Dto { get; set; }
     }

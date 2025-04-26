@@ -2,6 +2,7 @@
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.HealthProfiles;
+using Hospital.Infrastructure.EFConfigurations;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Enums;
@@ -18,7 +19,11 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
 {
     public class HealthProfileReadRepository : ReadRepository<HealthProfile>, IHealthProfileReadRepository
     {
-        public HealthProfileReadRepository(IServiceProvider serviceProvider, IStringLocalizer<Resources> localizer, IRedisCache redisCache) : base(serviceProvider, localizer, redisCache)
+        public HealthProfileReadRepository(
+            IServiceProvider serviceProvider,
+            IStringLocalizer<Resources> localizer,
+             IRedisCache redisCache
+             ) : base(serviceProvider, localizer, redisCache)
         {
         }
 
@@ -43,7 +48,8 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
         {
             ISpecification<HealthProfile> spec = null;
 
-            if (userId > 0) {
+            if (userId > 0)
+            {
 
                 spec = new GetHealthProfileByOwnerIdSpecification(userId);
 
@@ -67,6 +73,42 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
             var count = await query.CountAsync(cancellationToken);
 
             return new PaginationResult<HealthProfile>(data, count);
+        }
+
+        public async Task<bool> PhoneExistAsync(string phone, long exceptId = 0, CancellationToken cancellationToken = default)
+        {
+            ISpecification<HealthProfile> specProfile = new HealthProfileByPhoneSpecification(phone);
+
+            if (exceptId > 0)
+            {
+                specProfile = specProfile.Not(new IdEqualsSpecification<HealthProfile>(exceptId));
+            }
+
+            return await _dbContext.HealthProfiles.AnyAsync(specProfile.GetExpression(), cancellationToken);
+        }
+
+        public async Task<bool> EmailExistAsync(string email, long exceptId = 0, CancellationToken cancellationToken = default)
+        {
+            ISpecification<HealthProfile> specProfile = new HealthProfileByEmailSpecification(email);
+
+            if (exceptId > 0)
+            {
+                specProfile = specProfile.Not(new IdEqualsSpecification<HealthProfile>(exceptId));
+            }
+
+            return await _dbContext.HealthProfiles.AnyAsync(specProfile.GetExpression(), cancellationToken);
+        }
+
+        public async Task<bool> CodeExistAsync(string code, long exceptId = 0, CancellationToken cancellationToken = default)
+        {
+            ISpecification<HealthProfile> specProfile = new HealthProfileByCodeSpecification(code);
+
+            if (exceptId > 0)
+            {
+                specProfile = specProfile.Not(new IdEqualsSpecification<HealthProfile>(exceptId));
+            }
+
+            return await _dbContext.HealthProfiles.AnyAsync(specProfile.GetExpression(), cancellationToken);
         }
     }
 }

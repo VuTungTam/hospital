@@ -10,5 +10,11 @@ namespace Hospital.Application.Repositories.Interfaces.HealthProfiles
         Task<HealthProfile> GetProfileById(long id, CancellationToken cancellationToken);
 
         Task<PaginationResult<HealthProfile>> GetPagingWithFilterAsync(Pagination pagination, long userId, CancellationToken cancellationToken = default);
+
+        Task<bool> PhoneExistAsync(string phone, long exceptId = 0, CancellationToken cancellationToken = default);
+
+        Task<bool> EmailExistAsync(string email, long exceptId = 0, CancellationToken cancellationToken = default);
+
+        Task<bool> CodeExistAsync(string code, long exceptId = 0, CancellationToken cancellationToken = default);
     }
 }
