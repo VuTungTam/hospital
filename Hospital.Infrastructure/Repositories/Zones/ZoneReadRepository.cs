@@ -1,5 +1,4 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Zones;
-using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Specifications;
 using Hospital.Resource.Properties;
@@ -7,6 +6,7 @@ using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Infrastructure.Repositories.Zones
@@ -21,6 +21,16 @@ namespace Hospital.Infrastructure.Repositories.Zones
         {
         }
 
+        public async Task<long> GetZoneBySpecialtyId(long specialtyId, long facilityId, CancellationToken cancellationToken)
+        {
+            var zoneId = await _dbContext.Zones
+                .Where(z => z.FacilityId == facilityId &&
+                            z.ZoneSpecialties.Any(zs => zs.SpecialtyId == specialtyId))
+                .Select(z => z.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+            return zoneId;
+        }
+
         public override ISpecification<Zone> GuardDataAccess<Zone>(ISpecification<Zone> spec, QueryOption option = default)
         {
             option ??= new QueryOption();
@@ -29,7 +39,7 @@ namespace Hospital.Infrastructure.Repositories.Zones
 
             spec = spec.And(base.GuardDataAccess(spec, option));
 
-            spec = spec.And(new LimitByFacilityIdSpecification<Zone>(_executionContext.FacilityId));
+            //spec = spec.And(new LimitByFacilityIdSpecification<Zone>(_executionContext.FacilityId));
 
             return spec;
         }

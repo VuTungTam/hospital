@@ -1,8 +1,8 @@
-﻿using Hospital.Domain.Entities.HealthServices;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.TimeSlots;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.ServiceTimeRules
 {
@@ -34,7 +34,7 @@ namespace Hospital.Domain.Entities.ServiceTimeRules
 
         public List<TimeSlot> TimeSlots { get; set; }
 
-        public DayOfWeek DayOfWeek { get; set; }
+        public int DayOfWeek { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

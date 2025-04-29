@@ -8,17 +8,15 @@ namespace Hospital.Application.Queries.TimeSlots
 {
     public class GetTimeSlotsPaginationQuery : BaseAllowAnonymousQuery<PaginationResult<TimeSlotDto>>
     {
-        public GetTimeSlotsPaginationQuery(Pagination pagination, long serviceId, Shift shift) 
+        public GetTimeSlotsPaginationQuery(Pagination pagination, long serviceId)
         {
             Pagination = pagination;
             ServiceId = serviceId;
-            Shift = shift;
         }
 
-        public Pagination Pagination { get;}
+        public Pagination Pagination { get; }
 
-        public long ServiceId { get;}
+        public long ServiceId { get; }
 
-        public Shift Shift { get;}
     }
 }

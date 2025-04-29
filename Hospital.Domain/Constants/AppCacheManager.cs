@@ -23,6 +23,8 @@ namespace Hospital.Domain.Constants
 
         public static CacheEntry GetServiceBySlugAndLangsCacheEntry(string slug, List<string> langs) => new CacheEntry($"services-by-slug-and-langs:{slug}:{string.Join(":", langs)}", 604800);
 
+        public static CacheEntry GetServiceTypeBySlugAndLangsCacheEntry(string slug, List<string> langs) => new CacheEntry($"service-type-by-slug-and-langs:{slug}:{string.Join(":", langs)}", 604800);
+
         public static CacheEntry GetAricleBySlugCacheEntry(string slug) => new CacheEntry($"{typeof(Article).Name.ToLower()}:slug:{slug}", 604800);
 
         public static CacheEntry GetDistanceMatrixCacheEntry(double srcLat, double srcLng, double desLat, double desLng) => new CacheEntry($"distance-matrix:{srcLat}:{srcLng}:{desLat}:{desLng}", 8640000);

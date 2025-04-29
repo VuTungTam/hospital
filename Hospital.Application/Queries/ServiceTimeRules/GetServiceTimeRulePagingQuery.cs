@@ -7,14 +7,14 @@ namespace Hospital.Application.Queries.ServiceTimeRules
 {
     public class GetServiceTimeRulePagingQuery : BaseAllowAnonymousQuery<PaginationResult<ServiceTimeRuleDto>>
     {
-        public GetServiceTimeRulePagingQuery(Pagination pagination, long serviceId, DayOfWeek? dayOfWeek) 
+        public GetServiceTimeRulePagingQuery(Pagination pagination, long serviceId, int dayOfWeek)
         {
             Pagination = pagination;
             ServiceId = serviceId;
             DayOfWeek = dayOfWeek;
         }
-        public long ServiceId { get;}
-        public DayOfWeek? DayOfWeek { get;}
-        public Pagination Pagination { get;}
+        public long ServiceId { get; }
+        public int DayOfWeek { get; }
+        public Pagination Pagination { get; }
     }
 }

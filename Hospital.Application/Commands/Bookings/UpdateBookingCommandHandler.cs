@@ -51,16 +51,6 @@ namespace Hospital.Application.Commands.Bookings
 
             var entity = _mapper.Map<Booking>(request.Booking);
 
-            var newSymptomIds = request.Booking.Symptoms.Select(x => long.Parse(x.Id));
-
-            var oldSymptomIds = booking.BookingSymptoms.Select(x => x.SymptomId);
-
-            bool areEqual = new HashSet<long>(oldSymptomIds).SetEquals(newSymptomIds);
-            if (areEqual)
-            {
-                await _bookingWriteRepository.UpdateSymptomsAsync(booking.Id, newSymptomIds, cancellationToken: cancellationToken);
-            }
-
             await _bookingWriteRepository.UpdateAsync(entity, cancellationToken: cancellationToken);
 
             return Unit.Value;

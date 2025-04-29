@@ -18,7 +18,7 @@ namespace Hospital.Application.Queries.HealthProfiles
     {
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         public GetHealthProfileByIdQueryHandler(
-            IAuthService authService, 
+            IAuthService authService,
             IMapper mapper,
             IHealthProfileReadRepository healthProfileReadRepository,
             IStringLocalizer<Resources> localizer
@@ -34,7 +34,7 @@ namespace Hospital.Application.Queries.HealthProfiles
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var profile = await _healthProfileReadRepository.GetProfileById(request.Id, cancellationToken: cancellationToken);
+            var profile = await _healthProfileReadRepository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
 
             if (profile == null)
             {
@@ -42,7 +42,7 @@ namespace Hospital.Application.Queries.HealthProfiles
             }
 
             var profileDto = _mapper.Map<HealthProfileDto>(profile);
-            
+
             return profileDto;
         }
     }

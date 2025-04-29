@@ -42,7 +42,6 @@ using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
 using Hospital.Infrastructure.Repositories.Specilities;
-using Hospital.Infrastructure.Repositories.Symptoms;
 using Hospital.Infrastructure.Repositories.TimeSlots;
 using Hospital.Infrastructure.Repositories.Users;
 using Hospital.Infrastructure.Repositories.Zones;
@@ -105,10 +104,6 @@ namespace Hospital.Infrastructure.DI
             //Social Network
             services.AddScoped<ISocialNetworkReadRepository, SocialNetworkReadRepository>();
             services.AddScoped<ISocialNetworkWriteRepository, SocialNetworkWriteRepository>();
-
-            //Symptom 
-            services.AddScoped<ISymptomReadRepository, SymptomReadRepository>();
-            services.AddScoped<ISymptomWriteRepository, SymptomWriteRepository>();
 
             //Location
             services.AddScoped<ILocationReadRepository, LocationReadRepository>();

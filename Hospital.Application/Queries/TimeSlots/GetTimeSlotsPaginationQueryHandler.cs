@@ -19,7 +19,7 @@ namespace Hospital.Application.Queries.TimeSlots
         private readonly ITimeSlotReadRepository _timeSlotReadRepository;
         public GetTimeSlotsPaginationQueryHandler(
             IAuthService authService,
-            IMapper mapper, 
+            IMapper mapper,
             ITimeSlotReadRepository timeSlotReadRepository,
             IStringLocalizer<Resources> localizer
             ) : base(authService, mapper, localizer)
@@ -29,28 +29,11 @@ namespace Hospital.Application.Queries.TimeSlots
 
         public async Task<PaginationResult<TimeSlotDto>> Handle(GetTimeSlotsPaginationQuery request, CancellationToken cancellationToken)
         {
-            var spec = new GetTimeSlotByTimeRuleIdSpecification(request.ServiceId);
-
-            if (request.Shift == Shift.Morning)
-            {
-                spec.And(new GetTimeSlotsAtMorningShiftSpecification());
-            }
-
-            if (request.Shift == Shift.Afternoon)
-            {
-                spec.And(new GetTimeSlotsAtAfternoonShiftSpecification());
-            }
-
-            if (request.Shift == Shift.Night)
-            {
-                spec.And(new GetTimeSlotsAtNightShiftSpecification());
-            }
-
-            var result = await _timeSlotReadRepository.GetPaginationAsync(request.Pagination, spec, cancellationToken: cancellationToken);
+            var result = await _timeSlotReadRepository.GetPaginationAsync(request.Pagination, spec: null, cancellationToken: cancellationToken);
 
             var slots = _mapper.Map<List<TimeSlotDto>>(result.Data);
 
-            return new PaginationResult<TimeSlotDto> (slots, result.Total );
+            return new PaginationResult<TimeSlotDto>(slots, result.Total);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Hospital.Application.Queries.Bookings
     public class GetMyBookingByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetBookingByIdQuery, BookingDto>
     {
         private readonly IBookingReadRepository _bookingReadRepository;
-        private readonly ISymptomReadRepository _symptomReadRepository;
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
 
         public GetMyBookingByIdQueryHandler(
@@ -24,12 +23,10 @@ namespace Hospital.Application.Queries.Bookings
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IBookingReadRepository bookingReadRepository,
-            ISymptomReadRepository symptomReadRepository,
             IHealthServiceReadRepository healthServiceReadRepository
         ) : base(authService, mapper, localizer)
         {
             _bookingReadRepository = bookingReadRepository;
-            _symptomReadRepository = symptomReadRepository;
             _healthServiceReadRepository = healthServiceReadRepository;
         }
 
@@ -40,12 +37,7 @@ namespace Hospital.Application.Queries.Bookings
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var option = new QueryOption
-            {
-                Includes = new string[] { nameof(Booking.BookingSymptoms) }
-            };
-
-            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
+            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, null, cancellationToken: cancellationToken);
 
             if (booking == null)
             {
@@ -62,17 +54,6 @@ namespace Hospital.Application.Queries.Bookings
                 {
                     bookingDto.ServiceNameVn = service.NameVn;
                     bookingDto.ServiceNameEn = service.NameEn;
-                }
-
-                var symptomIds = _mapper.Map<List<long>>(bookingDto.SymptomIds);
-                if (symptomIds?.Any() == true)
-                {
-                    var symptoms = await _symptomReadRepository.GetByIdsAsync(symptomIds, _symptomReadRepository.DefaultQueryOption, cancellationToken);
-                    if (symptoms?.Any() == true)
-                    {
-                        bookingDto.SymptomNameVns = symptoms.Select(x => x.NameVn).ToList();
-                        bookingDto.SymptomNameEns = symptoms.Select(x => x.NameEn).ToList();
-                    }
                 }
 
             }

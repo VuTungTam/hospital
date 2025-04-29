@@ -70,8 +70,6 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public long? DeletedBy { get; set; }
 
-        public List<ServiceTimeRule> TimeRules { get; set; }
-
         public Doctor Doctor { get; set; }
 
         public long DoctorId { get; set; }

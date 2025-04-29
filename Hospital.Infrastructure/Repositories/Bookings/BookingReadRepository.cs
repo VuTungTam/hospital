@@ -97,7 +97,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             return await _redisCache.GetOrSetAsync(cacheKey.Key, ValueFactory,
                 TimeSpan.FromSeconds(cacheKey.ExpiriesInSeconds), cancellationToken);
         }
-        public async Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceTypeId = 0, DateTime date = default, CancellationToken cancellationToken = default)
         {
             ISpecification<Booking> spec = new GetBookingsByStatusSpecification(status);
             if (date != default)
@@ -105,16 +105,20 @@ namespace Hospital.Infrastructure.Repositories.Bookings
                 spec = spec.And(new GetBookingsByDateSpecification(date));
             }
 
-            if (serviceId > 0)
+            if (serviceTypeId > 0)
             {
-                spec = spec.And(new GetBookingsByServiceIdSpecification(serviceId));
+                spec = spec.And(new GetBookingsByServiceTypeIdSpecification(serviceTypeId));
             }
-            QueryOption option = new QueryOption
+            var option = new QueryOption
             {
-                Includes = new string[] { nameof(Booking.BookingSymptoms) }
+                IgnoreOwner = false,
+                IgnoreDoctor = true,
+                IgnoreFacility = true,
+                IgnoreZone = true,
+                Includes = new string[] { nameof(Booking.Service) }
             };
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
-            var query = BuildSearchPredicate(_dbSet.AsNoTracking().IncludesRelateData(option.Includes), pagination)
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.Code)
                          .ThenByDescending(x => x.Date)
@@ -147,13 +151,12 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             var option = new QueryOption
             {
                 IgnoreOwner = true,
-                IgnoreDoctor = false,
+                IgnoreDoctor = true,
                 IgnoreFacility = false,
-                IgnoreZone = false,
-                Includes = new string[] { nameof(Booking.BookingSymptoms) }
+                IgnoreZone = true,
             };
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
-            var query = BuildSearchPredicate(_dbSet.AsNoTracking().IncludesRelateData(option.Includes), pagination)
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.Code)
                          .ThenByDescending(x => x.Date)

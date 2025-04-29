@@ -10,8 +10,6 @@ namespace Hospital.Application.Dtos.TimeSlots
 
         public long TimeRuleId { get; set; }
 
-        public ServiceTimeRule ServiceTimeRule { get; set; }
-
         public long? CreatedBy { get; set; }
 
         public DateTime? DeletedAt { get; set; }

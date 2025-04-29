@@ -15,8 +15,8 @@ using Hospital.Application.Dtos.Metas;
 using Hospital.Application.Dtos.ServiceTimeRules;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
-using Hospital.Application.Dtos.Symptoms;
 using Hospital.Application.Dtos.SystemConfigurations;
+using Hospital.Application.Dtos.TimeSlots;
 using Hospital.Application.Dtos.Zones;
 using Hospital.Application.Models.Auth;
 using Hospital.Domain.Entities.Bookings;
@@ -31,7 +31,7 @@ using Hospital.Domain.Entities.Metas;
 using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
-using Hospital.Domain.Entities.Symptoms;
+using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Auths;
@@ -108,7 +108,6 @@ namespace Hospital.Application.Mappings
             CreateMap<SocialNetwork, SocialNetworkDto>().ReverseMap();
 
             //Symptom
-            CreateMap<Symptom, SymptomDto>().ReverseMap();
 
             //ServiceType
             CreateMap<ServiceType, ServiceTypeDto>().ReverseMap();
@@ -118,6 +117,8 @@ namespace Hospital.Application.Mappings
 
             //ServiceTimeRule
             CreateMap<ServiceTimeRule, ServiceTimeRuleDto>().ReverseMap();
+
+            CreateMap<TimeSlot, TimeSlotDto>().ReverseMap();
 
             //Feedback
             CreateMap<Feedback, FeedbackDto>().ReverseMap();
@@ -144,13 +145,9 @@ namespace Hospital.Application.Mappings
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
 
             // Booking
-            CreateMap<Booking, BookingDto>()
-                .ForMember(dest => dest.SymptomIds, opt => opt.MapFrom(src => src.BookingSymptoms != null
-                    ? src.BookingSymptoms.Select(bs => bs.SymptomId.ToString()).ToList()
-                    : new List<string>()));
+            CreateMap<Booking, BookingDto>();
 
-            CreateMap<BookingDto, Booking>()
-                .ForMember(des => des.BookingSymptoms, opt => opt.MapFrom(src => src.Symptoms.Select(x => new BookingSymptom { BookingId = long.Parse(src.Id), SymptomId = long.Parse(x.Id) })));
+            CreateMap<BookingDto, Booking>();
 
             //Zone
             CreateMap<Zone, ZoneDto>()

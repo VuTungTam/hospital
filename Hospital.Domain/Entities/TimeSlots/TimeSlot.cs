@@ -1,7 +1,7 @@
-﻿using Hospital.Domain.Entities.ServiceTimeRules;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.TimeSlots
 {
@@ -30,6 +30,6 @@ namespace Hospital.Domain.Entities.TimeSlots
         public long? DeletedBy { get; set; }
 
         public bool IsDeleted { get; set; }
-        
+
     }
 }

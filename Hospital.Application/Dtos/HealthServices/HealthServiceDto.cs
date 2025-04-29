@@ -43,7 +43,17 @@ namespace Hospital.Application.Dtos.HealthServices
 
         public string FacilityId { get; set; }
 
+        public string FacilityNameVn { get; set; }
+
+        public string FacilityNameEn { get; set; }
+
+        public string FacilityFullAddress { get; set; }
+
         public string SpecialtyId { get; set; }
+
+        public string SpecialtyNameVn { get; set; }
+
+        public string SpecialtyNameEn { get; set; }
 
         public List<ServiceTimeRuleDto> ServiceTimeRules { get; set; }
 

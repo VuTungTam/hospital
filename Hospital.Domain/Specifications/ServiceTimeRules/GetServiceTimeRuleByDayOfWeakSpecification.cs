@@ -5,7 +5,7 @@ namespace Hospital.Domain.Specifications.ServiceTimeRules
 {
     public class GetServiceTimeRuleByDayOfWeekSpecification : ExpressionSpecification<ServiceTimeRule>
     {
-        public GetServiceTimeRuleByDayOfWeekSpecification(DayOfWeek dayOfWeek) : base(x => x.DayOfWeek == dayOfWeek)
+        public GetServiceTimeRuleByDayOfWeekSpecification(int dayOfWeek) : base(x => x.DayOfWeek == dayOfWeek)
         {
         }
     }

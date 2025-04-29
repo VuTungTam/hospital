@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.HealthServices;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
+using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Resource.Properties;
@@ -16,14 +18,21 @@ namespace Hospital.Application.Queries.HealthServices
     public class GetHealthServiceByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetHealthServiceByIdQuery, HealthServiceDto>
     {
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
+        private readonly ISpecialtyReadRepository _specialtyReadRepository;
+
+        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
         public GetHealthServiceByIdQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
-            IHealthServiceReadRepository healthServiceReadRepository
+            IHealthServiceReadRepository healthServiceReadRepository,
+            IHealthFacilityReadRepository healthFacilityReadRepository,
+            ISpecialtyReadRepository specialtyReadRepository
             ) : base(authService, mapper, localizer)
         {
             _healthServiceReadRepository = healthServiceReadRepository;
+            _healthFacilityReadRepository = healthFacilityReadRepository;
+            _specialtyReadRepository = specialtyReadRepository;
         }
 
         public async Task<HealthServiceDto> Handle(GetHealthServiceByIdQuery request, CancellationToken cancellationToken)
@@ -45,7 +54,33 @@ namespace Hospital.Application.Queries.HealthServices
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(service.FacilityId, cancellationToken: cancellationToken);
+
+            if (facility == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
+            var specialty = await _specialtyReadRepository.GetByIdAsync(service.SpecialtyId, cancellationToken: cancellationToken);
+
+            if (specialty == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
             var serviceDto = _mapper.Map<HealthServiceDto>(service);
+
+            serviceDto.FacilityNameVn = facility.NameVn;
+
+            serviceDto.FacilityNameEn = facility.NameEn;
+
+            serviceDto.SpecialtyNameEn = specialty.NameEn;
+
+            serviceDto.SpecialtyNameVn = specialty.NameVn;
+
+            var address = facility.Address + ',' + facility.Wname + ',' + facility.Dname + ',' + facility.Pname;
+
+            serviceDto.FacilityFullAddress = address;
 
             return serviceDto;
         }

@@ -25,7 +25,6 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
-        private readonly ISymptomReadRepository _symptomReadRepository;
         private readonly IRedisCache _redisCache;
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         private readonly IZoneReadRepository _zoneReadRepository;
@@ -37,7 +36,6 @@ namespace Hospital.Application.Commands.Bookings
             IBookingWriteRepository bookingWriteRepository,
             IBookingReadRepository bookingReadRepository,
             IRedisCache redisCache,
-            ISymptomReadRepository symptomReadRepository,
             IZoneReadRepository zoneReadRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IHealthServiceReadRepository healthServiceReadRepository
@@ -46,7 +44,6 @@ namespace Hospital.Application.Commands.Bookings
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
-            _symptomReadRepository = symptomReadRepository;
             _redisCache = redisCache;
             _zoneReadRepository = zoneReadRepository;
             _healthServiceReadRepository = healthServiceReadRepository;
@@ -74,21 +71,6 @@ namespace Hospital.Application.Commands.Bookings
             if (maxOrder == maxSlot)
             {
                 throw new BadRequestException(_localizer["So luong da day"]);
-            }
-
-            var symptoms = await _symptomReadRepository.GetAsync(cancellationToken: cancellationToken);
-
-            booking.BookingSymptoms = new();
-
-            foreach (var symptom in request.Booking.Symptoms)
-            {
-                var symptomDb = symptoms.First(x => x.Id + "" == symptom.Id);
-
-                booking.BookingSymptoms.Add(new BookingSymptom
-                {
-                    Id = AuthUtility.GenerateSnowflakeId(),
-                    SymptomId = symptomDb.Id,
-                });
             }
 
             booking.Order = maxOrder + 1;

@@ -1,20 +1,23 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
+using Hospital.Domain.Specifications.Zones;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
-using Hospital.SharedKernel.Libraries.Utils;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Modules.Notifications.Entities;
 using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
+using Hospital.SharedKernel.Runtime.ExecutionContext;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -24,9 +27,11 @@ namespace Hospital.Application.Commands.Bookings
     {
         private readonly IZoneReadRepository _zoneReadRepository;
         private readonly IBookingWriteRepository _bookingWriteRepository;
-        private readonly ISymptomReadRepository _symptomReadRepository;
         private readonly IEmployeeWriteRepository _employeeWriteRepository;
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
+        private readonly IExecutionContext _executionContext;
+
+        private readonly ICustomerReadRepository _customerReadRepository;
         public AddBookingCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -34,16 +39,18 @@ namespace Hospital.Application.Commands.Bookings
             IMapper mapper,
             IZoneReadRepository zoneReadRepository,
             IBookingWriteRepository bookingWriteRepository,
-            ISymptomReadRepository symptomReadRepository,
             IEmployeeWriteRepository employeeWriteRepository,
-            IHealthServiceReadRepository healthServiceReadRepository
+            IHealthServiceReadRepository healthServiceReadRepository,
+            ICustomerReadRepository customerReadRepository,
+            IExecutionContext executionContext
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingWriteRepository = bookingWriteRepository;
-            _symptomReadRepository = symptomReadRepository;
             _employeeWriteRepository = employeeWriteRepository;
             _zoneReadRepository = zoneReadRepository;
             _healthServiceReadRepository = healthServiceReadRepository;
+            _executionContext = executionContext;
+            _customerReadRepository = customerReadRepository;
         }
 
         public async Task<string> Handle(AddBookingCommand request, CancellationToken cancellationToken)
@@ -59,28 +66,36 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException("Booking.ServiceNotFound");
             }
 
-            var symptoms = await _symptomReadRepository.GetAsync(cancellationToken: cancellationToken);
-
             var booking = _mapper.Map<Booking>(request.Booking);
+
+            if (string.IsNullOrWhiteSpace(booking.Email) || string.IsNullOrWhiteSpace(booking.Phone))
+            {
+                var customer = await _customerReadRepository.GetByIdAsync(_executionContext.Identity, cancellationToken: cancellationToken);
+
+                if (string.IsNullOrWhiteSpace(booking.Email))
+                {
+                    booking.Email = customer.Email;
+                }
+
+                if (string.IsNullOrWhiteSpace(booking.Phone))
+                {
+                    booking.Phone = customer.Phone;
+                }
+            }
 
             booking.Status = BookingStatus.Waiting;
 
-            booking.BookingSymptoms = new();
-
-            foreach (var symptom in request.Booking.Symptoms)
-            {
-                var symptomDb = symptoms.First(x => x.Id + "" == symptom.Id);
-
-                booking.BookingSymptoms.Add(new BookingSymptom
-                {
-                    Id = AuthUtility.GenerateSnowflakeId(),
-                    SymptomId = symptomDb.Id,
-                });
-            }
-
             booking.FacilityId = service.FacilityId;
 
-            var zones = await _zoneReadRepository.GetAsync(cancellationToken: cancellationToken);
+            var option = new QueryOption
+            {
+                IgnoreFacility = true,
+                Includes = new string[] { nameof(Zone.ZoneSpecialties) }
+            };
+
+            //var spec = new GetZoneByFacilityIdSpecification(booking.FacilityId);
+
+            var zones = await _zoneReadRepository.GetAsync(option: option, cancellationToken: cancellationToken);
 
             if (zones == null)
             {
@@ -98,12 +113,12 @@ namespace Hospital.Application.Commands.Bookings
             _bookingWriteRepository.Add(booking);
 
             await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
-
+            booking.Id.ToString();
             var notification = new Notification
             {
                 Data = booking.Id.ToString(),
                 IsUnread = true,
-                Description = $"<p>Yêu cầu xét duyệt! Khách hàng <span class='n-bold'>{booking.HealthProfile.Name}</span> vừa đặt lịch khám lúc <span class='n-bold'>{booking.Date:HH:mm dd/MM/yyyy}</span>. </span></p>",
+                Description = $"<p>Yêu cầu xét duyệt! Khách hàng <span class='n-bold'></span> vừa đặt lịch khám lúc <span class='n-bold'>{booking.Date:HH:mm dd/MM/yyyy}</span>. </span></p>",
                 Timestamp = DateTime.Now,
                 Type = NotificationType.Booking
             };

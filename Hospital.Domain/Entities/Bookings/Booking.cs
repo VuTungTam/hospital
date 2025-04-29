@@ -1,4 +1,7 @@
-﻿using Hospital.Domain.Entities.Feedbacks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.TimeSlots;
@@ -6,9 +9,6 @@ using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Libraries.Attributes;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 
 namespace Hospital.Domain.Entities.Bookings
 {
@@ -43,18 +43,21 @@ namespace Hospital.Domain.Entities.Bookings
 
         public long TimeSlotId { get; set; }
 
-        public TimeSpan StartBooking {  get; set; }
+        public TimeSpan StartBooking { get; set; }
 
-        public TimeSpan EndBooking {  get; set; }
+        public TimeSpan EndBooking { get; set; }
 
         public TimeSlot TimeSlot { get; set; }
 
-        public int Order {  get; set; }
-        public bool IsFeedbacked { get; set; } = false; 
+        public string Phone { get; set; }
+
+        public string Email { get; set; }
+
+        public int Order { get; set; }
+
+        public bool IsFeedbacked { get; set; } = false;
 
         public Feedback Feedback { get; set; }
-
-        public List<BookingSymptom> BookingSymptoms { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
@@ -76,6 +79,6 @@ namespace Hospital.Domain.Entities.Bookings
 
         public long ZoneId { get; set; }
 
-        public long DoctorId { get ; set ; }
+        public long DoctorId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Hospital.Application.Repositories.Interfaces.HealthProfiles;
+using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.HealthProfiles;
@@ -26,24 +27,31 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
              ) : base(serviceProvider, localizer, redisCache)
         {
         }
-
-        public Task<HealthProfile> GetProfileById(long id, CancellationToken cancellationToken)
+        public override async Task<HealthProfile> GetByIdAsync(long id, QueryOption option = null, CancellationToken cancellationToken = default)
         {
-            ISpecification<HealthProfile> spec = new IdEqualsSpecification<HealthProfile>(id);
-
-            if (_executionContext.AccountType == AccountType.Customer)
+            var cacheEntry = GetCacheEntry(id);
+            var data = await _redisCache.GetAsync<HealthProfile>(cacheEntry.Key, cancellationToken);
+            if (data == null)
             {
-                spec = spec.And(new LimitByOwnerIdSpecification<HealthProfile>(_executionContext.Identity));
-            }
-            else
-            {
-                spec = spec.And(new ExpressionSpecification<HealthProfile>(x => x.Bookings.Any(bk => bk.FacilityId == _executionContext.FacilityId)));
-            }
+                ISpecification<HealthProfile> spec = new IdEqualsSpecification<HealthProfile>(id);
 
-            return _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
+                if (_executionContext.AccountType == AccountType.Customer)
+                {
+                    spec = spec.And(new LimitByOwnerIdSpecification<HealthProfile>(_executionContext.Identity));
+                }
+                else
+                {
+                    spec = spec.And(new ExpressionSpecification<HealthProfile>(x => x.Bookings.Any(bk => bk.FacilityId == _executionContext.FacilityId)));
+                }
+                data = await _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
+
+                if (data != null)
+                {
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+                }
+            }
+            return data;
         }
-
-
         public async Task<PaginationResult<HealthProfile>> GetPagingWithFilterAsync(Pagination pagination, long userId, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthProfile> spec = null;

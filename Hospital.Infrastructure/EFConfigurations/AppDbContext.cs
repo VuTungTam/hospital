@@ -11,7 +11,6 @@ using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
-using Hospital.Domain.Entities.Symptoms;
 using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations;
@@ -54,7 +53,6 @@ namespace Hospital.Infrastructure.EFConfigurations
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new SocialNetworkEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new SymptomEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthFacilityEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FacilityCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SpecialtyEntityTypeConfiguration());
@@ -246,10 +244,6 @@ namespace Hospital.Infrastructure.EFConfigurations
 
         public DbSet<Booking> Bookings { get; set; }
 
-        public DbSet<BookingSymptom> BookingSymptoms { get; set; }
-
-        public DbSet<Symptom> Symptoms { get; set; }
-
         public DbSet<HealthProfile> HealthProfiles { get; set; }
 
         public DbSet<Specialty> Specialties { get; set; }
@@ -281,6 +275,8 @@ namespace Hospital.Infrastructure.EFConfigurations
         public DbSet<LoginHistory> LoginHistories { get; set; }
 
         public DbSet<Article> Articles { get; set; }
+
+        public DbSet<Zone> Zones { get; set; }
 
         public DbSet<Distance> Distances { get; set; }
 
