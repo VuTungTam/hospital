@@ -23,11 +23,10 @@ namespace Hospital.Api.Controllers.TimeSlots
             string search = "",
             string asc = "",
             string desc = "",
-            Shift shift = Shift.None,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetTimeSlotsPaginationQuery(pagination, timeRuleId, shift);
+            var query = new GetTimeSlotsPaginationQuery(pagination, timeRuleId);
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }

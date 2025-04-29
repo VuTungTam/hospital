@@ -24,7 +24,7 @@ namespace Hospital.Api.Controllers.ServiceTimeRules
             string search = "",
             string asc = "",
             string desc = "",
-            DayOfWeek? dayOfWeek = null,
+            int dayOfWeek = -1,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);

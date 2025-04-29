@@ -1,10 +1,6 @@
 using Hospital.Application.DI;
-using Hospital.Domain.Configs;
 using Hospital.Infrastructure.DI;
-using Hospital.SharedKernel.Application.Services.Auth.Models;
 using Hospital.SharedKernel.Configures;
-using Hospital.SharedKernel.Configures.Models;
-using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Runtime.Filters;
 using Microsoft.AspNetCore.HttpOverrides;
 
@@ -46,9 +42,9 @@ namespace Hospital.Api
             var app = builder.Build();
 
             app.UseCoreCors(builder.Configuration);
-            
+
             app.UseCoreConfigure(app.Environment);
-            
+
 
             await app.RunAsync();
         }

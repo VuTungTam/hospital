@@ -7,6 +7,7 @@ using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,16 @@ namespace Hospital.Api.Controllers.Bookings
         [HttpGet("filterable")]
         public IActionResult GetFilterable() => base.GetFilterable<Booking>();
 
+        [HttpGet("enums"), AllowAnonymous]
+        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<BookingStatus>(noneOption) });
+
         [HttpGet("sequence")]
         public async Task<IActionResult> GetSequence(CancellationToken cancellationToken = default)
         {
             var table = new Booking().GetTableName();
             return Ok(new SimpleDataResult { Data = await _mediator.Send(new GetSequenceQuery(table), cancellationToken) });
         }
+
 
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
@@ -83,14 +88,6 @@ namespace Hospital.Api.Controllers.Bookings
         {
             var command = new BookAnAppointmentCommand(dto);
             return Ok(new SimpleDataResult { Data = await _mediator.Send(command, cancellationToken) });
-        }
-
-        [HttpPut("add-symptoms"), AllowAnonymous]
-        public virtual async Task<IActionResult> AddSymptoms(long bookingId, List<long> symptomIds, CancellationToken cancellationToken = default)
-        {
-            var command = new AddSymptomsForBookingCommand(bookingId, symptomIds);
-            await _mediator.Send(command, cancellationToken);
-            return Ok(new BaseResponse());
         }
 
         [HttpPost]

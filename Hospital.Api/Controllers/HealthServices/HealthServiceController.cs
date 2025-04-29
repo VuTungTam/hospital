@@ -43,7 +43,24 @@ namespace Hospital.Api.Controllers.HealthServices
 
             return Ok(new SimpleDataResult { Data = dtos });
         }
-        [HttpGet]
+
+        [HttpGet("type/slug/{slug}"), AllowAnonymous]
+        public async Task<IActionResult> GetTypeBySlug(string slug, [FromQuery] List<string> langs, CancellationToken cancellationToken = default)
+        {
+            if (langs == null || !langs.Any())
+            {
+                langs = new List<string>
+                {
+                    "vi-VN",
+                    "en-US"
+                };
+            }
+
+            var query = new GetServiceTypeBySlugQuery(slug, langs);
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
+        }
+
+        [HttpGet, AllowAnonymous]
         public virtual async Task<IActionResult> GetPagination(
             int page,
             int size,
@@ -65,7 +82,7 @@ namespace Hospital.Api.Controllers.HealthServices
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), AllowAnonymous]
         public virtual async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
         {
             var query = new GetHealthServiceByIdQuery(id);

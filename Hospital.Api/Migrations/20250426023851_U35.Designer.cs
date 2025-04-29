@@ -4,6 +4,7 @@ using Hospital.Infrastructure.EFConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250426023851_U35")]
+    partial class U35
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,10 +146,6 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("DoctorId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
                     b.Property<TimeSpan>("EndBooking")
                         .HasColumnType("TIME");
 
@@ -174,10 +172,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<long>("OwnerId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(50)");
 
                     b.Property<long>("ServiceId")
                         .HasColumnType("bigint");
@@ -206,6 +200,32 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("TimeSlotId");
 
                     b.ToTable("tbl_bookings");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Bookings.BookingSymptom", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BookingId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SymptomId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
+
+                    b.HasIndex("SymptomId");
+
+                    b.ToTable("tbl_booking_symptom");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Distances.Distance", b =>
@@ -922,6 +942,9 @@ namespace Hospital.Api.Migrations
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("Time");
 
+                    b.Property<long?>("HealthServiceId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -947,6 +970,8 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("Time");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HealthServiceId");
 
                     b.HasIndex("ServiceId");
 
@@ -1095,6 +1120,47 @@ namespace Hospital.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tbl_specialties");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Symptoms.Symptom", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("NameVn")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_symptoms");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.TimeSlots.TimeSlot", b =>
@@ -1930,6 +1996,25 @@ namespace Hospital.Api.Migrations
                     b.Navigation("TimeSlot");
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entities.Bookings.BookingSymptom", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
+                        .WithMany("BookingSymptoms")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Domain.Entities.Symptoms.Symptom", "Symptom")
+                        .WithMany("BookingSymptom")
+                        .HasForeignKey("SymptomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+
+                    b.Navigation("Symptom");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.Feedbacks.Feedback", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
@@ -2008,6 +2093,10 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
                 {
+                    b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", null)
+                        .WithMany("TimeRules")
+                        .HasForeignKey("HealthServiceId");
+
                     b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", "Service")
                         .WithMany("ServiceTimeRules")
                         .HasForeignKey("ServiceId")
@@ -2153,6 +2242,8 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
                 {
+                    b.Navigation("BookingSymptoms");
+
                     b.Navigation("Feedback");
                 });
 
@@ -2191,6 +2282,8 @@ namespace Hospital.Api.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("ServiceTimeRules");
+
+                    b.Navigation("TimeRules");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.HealthServices.ServiceType", b =>
@@ -2210,6 +2303,11 @@ namespace Hospital.Api.Migrations
                     b.Navigation("HealthServices");
 
                     b.Navigation("ZoneSpecialties");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.Symptoms.Symptom", b =>
+                {
+                    b.Navigation("BookingSymptom");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Zones.Zone", b =>
