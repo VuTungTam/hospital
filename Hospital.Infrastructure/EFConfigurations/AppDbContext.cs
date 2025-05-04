@@ -7,7 +7,9 @@ using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthProfiles;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Images;
+using Hospital.Domain.Entities.Payments;
 using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
@@ -77,6 +79,7 @@ namespace Hospital.Infrastructure.EFConfigurations
             modelBuilder.ApplyConfiguration(new ScriptEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceTimeRuleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -297,7 +300,11 @@ namespace Hospital.Infrastructure.EFConfigurations
         public DbSet<Image> Images { get; set; }
 
         public DbSet<FacilitySpecialty> FacilitySpecialties { get; set; }
+
         public DbSet<DoctorSpecialty> DoctorSpecialties { get; set; }
+
+        public DbSet<HealthService> HealthServices { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
     }
 }

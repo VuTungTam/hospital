@@ -45,9 +45,6 @@ namespace Hospital.Application.Commands.HealthProfiles
             await ValidateAndThrowAsync(request.Dto, cancellationToken);
 
             var healthProfile = _mapper.Map<HealthProfile>(request.Dto);
-            healthProfile.Pname = await _locationReadRepository.GetNameByIdAsync(healthProfile.Pid, "province", cancellationToken);
-            healthProfile.Dname = await _locationReadRepository.GetNameByIdAsync(healthProfile.Did, "district", cancellationToken);
-            healthProfile.Wname = await _locationReadRepository.GetNameByIdAsync(healthProfile.Wid, "ward", cancellationToken);
 
             await _healthProfileWriteRepository.AddProfileAsync(healthProfile, cancellationToken);
 

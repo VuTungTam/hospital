@@ -9,16 +9,15 @@ using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Specifications;
-using Hospital.SharedKernel.Specifications.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.Specialties
 {
-    public class GetSpecialtyPagingQueryHandler : BaseQueryHandler, IRequestHandler<GetSpecialtyPagingQuery, PaginationResult<SpecialtyDto>>
+    public class GetSpecialtyPaginationQueryHandler : BaseQueryHandler, IRequestHandler<GetSpecialtyPaginationQuery, PaginationResult<SpecialtyDto>>
     {
         private readonly ISpecialtyReadRepository _specialtyReadRepository;
-        public GetSpecialtyPagingQueryHandler(
+        public GetSpecialtyPaginationQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
@@ -28,7 +27,7 @@ namespace Hospital.Application.Queries.Specialties
             _specialtyReadRepository = specialtyReadRepository;
         }
 
-        public async Task<PaginationResult<SpecialtyDto>> Handle(GetSpecialtyPagingQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<SpecialtyDto>> Handle(GetSpecialtyPaginationQuery request, CancellationToken cancellationToken)
         {
             var spec = new ExpressionSpecification<Specialty>(x => true);
             QueryOption option = new();

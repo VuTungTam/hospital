@@ -65,7 +65,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             oldFacility.Email = newFacility.Email;
 
             var oldImageNames = oldFacility.Images.Select(x => x.PublicId).ToList();
-            var newImageNames = newFacility.ImageNames;
+            var newImageNames = newFacility.ImageNames ?? new List<string>();
             var delImages = oldFacility.Images.Where(i => !newImageNames.Contains(i.PublicId)).ToList();
             var addImages = newImageNames.Except(oldImageNames).ToList();
 

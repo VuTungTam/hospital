@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.UploadImages
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class ImageUploadController : ApiBaseController
     {
         public ImageUploadController(IMediator mediator) : base(mediator)
@@ -25,6 +23,6 @@ namespace Hospital.Api.Controllers.UploadImages
             var result = await _mediator.Send(command);
 
             return Ok(new SimpleDataResult { Data = result.Url });
-        } 
+        }
     }
 }

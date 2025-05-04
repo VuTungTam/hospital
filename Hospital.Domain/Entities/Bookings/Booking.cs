@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.Payments;
 using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
@@ -80,5 +81,7 @@ namespace Hospital.Domain.Entities.Bookings
         public long ZoneId { get; set; }
 
         public long DoctorId { get; set; }
+
+        public List<Payment> Payments { get; set; }
     }
 }

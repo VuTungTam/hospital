@@ -2,6 +2,7 @@
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.Employees;
+using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Entities.Bookings;
@@ -30,8 +31,8 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IEmployeeWriteRepository _employeeWriteRepository;
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         private readonly IExecutionContext _executionContext;
-
         private readonly ICustomerReadRepository _customerReadRepository;
+        private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         public AddBookingCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -39,6 +40,7 @@ namespace Hospital.Application.Commands.Bookings
             IMapper mapper,
             IZoneReadRepository zoneReadRepository,
             IBookingWriteRepository bookingWriteRepository,
+            IHealthProfileReadRepository healthProfileReadRepository,
             IEmployeeWriteRepository employeeWriteRepository,
             IHealthServiceReadRepository healthServiceReadRepository,
             ICustomerReadRepository customerReadRepository,
@@ -51,6 +53,7 @@ namespace Hospital.Application.Commands.Bookings
             _healthServiceReadRepository = healthServiceReadRepository;
             _executionContext = executionContext;
             _customerReadRepository = customerReadRepository;
+            _healthProfileReadRepository = healthProfileReadRepository;
         }
 
         public async Task<string> Handle(AddBookingCommand request, CancellationToken cancellationToken)
@@ -62,6 +65,18 @@ namespace Hospital.Application.Commands.Bookings
 
             var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, cancellationToken: cancellationToken);
             if (service == null)
+            {
+                throw new BadRequestException("Booking.ServiceNotFound");
+            }
+
+            if (!long.TryParse(request.Booking.HealthProfileId, out var healthProfileId) || serviceId <= 0)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
+            }
+
+            var profile = await _healthProfileReadRepository.GetByIdAsync(healthProfileId, cancellationToken: cancellationToken);
+
+            if (profile == null)
             {
                 throw new BadRequestException("Booking.ServiceNotFound");
             }
@@ -82,6 +97,8 @@ namespace Hospital.Application.Commands.Bookings
                     booking.Phone = customer.Phone;
                 }
             }
+
+            booking.Date = booking.Date.AddDays(1);
 
             booking.Status = BookingStatus.Waiting;
 

@@ -9,7 +9,7 @@ namespace Hospital.Application.Repositories.Interfaces.HealthFacilities
 {
     public interface IHealthFacilityReadRepository : IReadRepository<HealthFacility>
     {
-        Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, HealthFacilityStatus status = HealthFacilityStatus.None, CancellationToken cancellationToken = default);
+        Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, long serviceTypeId = 0, HealthFacilityStatus status = HealthFacilityStatus.None, CancellationToken cancellationToken = default);
 
         Task<HealthFacility> GetBySlugAndLangsAsync(string slug, List<string> langs, CancellationToken cancellationToken);
 

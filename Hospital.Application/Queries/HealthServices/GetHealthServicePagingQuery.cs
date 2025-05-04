@@ -8,18 +8,20 @@ namespace Hospital.Application.Queries.HealthServices
 {
     public class GetHealthServicePagingQuery : BaseAllowAnonymousQuery<PaginationResult<HealthServiceDto>>
     {
-        public GetHealthServicePagingQuery(Pagination pagination, long facilityId, long typeId, long specialtyId, HealthServiceStatus status) 
+        public GetHealthServicePagingQuery(Pagination pagination, long facilityId, long typeId, long specialtyId, long doctorId, HealthServiceStatus status)
         {
             Pagination = pagination;
             FacilityId = facilityId;
             TypeId = typeId;
             SpecialtyId = specialtyId;
+            DoctorId = doctorId;
             Status = status;
         }
         public Pagination Pagination { get; }
         public long FacilityId { get; }
         public long TypeId { get; }
         public long SpecialtyId { get; }
+        public long DoctorId { get; }
         public HealthServiceStatus Status { get; }
     }
 }

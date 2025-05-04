@@ -21,7 +21,7 @@ namespace Hospital.Domain.Constants
 
         public static CacheEntry GetServiceByIdAndLangCacheEntry(long id, List<string> langs) => new CacheEntry($"services-by-id-and-langs:{id}:{string.Join(":", langs)}", 604800);
 
-        public static CacheEntry GetServiceBySlugAndLangsCacheEntry(string slug, List<string> langs) => new CacheEntry($"services-by-slug-and-langs:{slug}:{string.Join(":", langs)}", 604800);
+        public static CacheEntry GetFacilityBySlugAndLangsCacheEntry(string slug, List<string> langs) => new CacheEntry($"facility-by-slug-and-langs:{slug}:{string.Join(":", langs)}", 604800);
 
         public static CacheEntry GetServiceTypeBySlugAndLangsCacheEntry(string slug, List<string> langs) => new CacheEntry($"service-type-by-slug-and-langs:{slug}:{string.Join(":", langs)}", 604800);
 

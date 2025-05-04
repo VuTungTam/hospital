@@ -25,6 +25,8 @@ namespace Hospital.Application.Dtos.HealthServices
 
         public string TypeNameEn { get; set; }
 
+        public List<string> Days { get; set; }
+
         public decimal Price { get; set; }
 
         public int TotalStars { get; set; }

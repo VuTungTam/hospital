@@ -894,6 +894,68 @@ namespace Hospital.Api.Migrations
                     b.ToTable("tbl_scripts");
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entities.Payments.Payment", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("DECIMAL(18,2)");
+
+                    b.Property<string>("BankBin")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(20)");
+
+                    b.Property<long>("BookingId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<DateTime?>("ExpiredAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("ExternalTransactionId")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<long>("FacilityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentUrl")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("TransactionContent")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("tbl_payment");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
                 {
                     b.Property<long>("Id")
@@ -2006,6 +2068,17 @@ namespace Hospital.Api.Migrations
                     b.Navigation("HealthFacility");
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entities.Payments.Payment", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
+                        .WithMany("Payments")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.ServiceTimeRules.ServiceTimeRule", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.HealthServices.HealthService", "Service")
@@ -2154,6 +2227,8 @@ namespace Hospital.Api.Migrations
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
                 {
                     b.Navigation("Feedback");
+
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Doctors.Doctor", b =>

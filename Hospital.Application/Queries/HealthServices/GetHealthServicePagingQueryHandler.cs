@@ -28,7 +28,7 @@ namespace Hospital.Application.Queries.HealthServices
 
         public async Task<PaginationResult<HealthServiceDto>> Handle(GetHealthServicePagingQuery request, CancellationToken cancellationToken)
         {
-            var result = await _healthServiceReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.TypeId, request.FacilityId, request.SpecialtyId, cancellationToken: cancellationToken);
+            var result = await _healthServiceReadRepository.GetPagingWithFilterAsync(request.Pagination, request.Status, request.TypeId, request.FacilityId, request.SpecialtyId, request.DoctorId, cancellationToken: cancellationToken);
 
             var types = await _serviceTypeReadRepository.GetAsync(cancellationToken: cancellationToken);
 
@@ -40,6 +40,8 @@ namespace Hospital.Application.Queries.HealthServices
                 var type = types.First(x => x.Id.ToString() == dto.TypeId);
                 dto.TypeNameVn = type.NameVn;
                 dto.TypeNameEn = type.NameEn;
+                dto.Days = entity.ServiceTimeRules.Select(x => x.DayOfWeek.ToString()).ToList();
+
                 dtos.Add(dto);
             }
             return new PaginationResult<HealthServiceDto>(dtos, result.Total);

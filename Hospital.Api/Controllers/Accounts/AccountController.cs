@@ -22,8 +22,8 @@ using Microsoft.Extensions.Localization;
 
 namespace Hospital.Api.Controllers.Accounts
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    // [Route("api/[controller]")]
+    // [ApiController]
     public class AccountController : ApiBaseController
     {
         private readonly IStringLocalizer<Resources> _localizer;

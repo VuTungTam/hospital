@@ -62,7 +62,7 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> GetPaging(
             int page,
             int size,
@@ -114,14 +114,21 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new SimpleDataResult { Data = index });
         }
 
-        [HttpPut("confirm")]
+        [HttpPut("confirm/{id}")]
         public virtual async Task<IActionResult> Confirm(long id, CancellationToken cancellationToken = default)
         {
             await _mediator.Send(new ConfirmBookingCommand(id), cancellationToken);
             return Ok(new BaseResponse());
         }
 
-        [HttpPut("cancel")]
+        [HttpPut("reject/{id}")]
+        public virtual async Task<IActionResult> Reject(long id, CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(new RejectBookingCommand(id), cancellationToken);
+            return Ok(new BaseResponse());
+        }
+
+        [HttpPut("cancel/{id}")]
         public virtual async Task<IActionResult> Cancel(long id, CancellationToken cancellationToken = default)
         {
             await _mediator.Send(new CancelBookingCommand(id), cancellationToken);

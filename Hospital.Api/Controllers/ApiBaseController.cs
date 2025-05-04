@@ -1,14 +1,14 @@
-﻿using Hospital.SharedKernel.Application.Models.Responses;
+﻿using System.Reflection;
+using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Libraries.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Hospital.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class ApiBaseController : ControllerBase

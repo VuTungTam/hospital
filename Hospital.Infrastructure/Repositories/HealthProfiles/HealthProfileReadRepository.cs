@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.HealthProfiles;
+﻿using System.Security.Cryptography.X509Certificates;
+using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Specifications;
@@ -39,7 +40,7 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
                 {
                     spec = spec.And(new LimitByOwnerIdSpecification<HealthProfile>(_executionContext.Identity));
                 }
-                else
+                else if (_executionContext.IsFA)
                 {
                     spec = spec.And(new ExpressionSpecification<HealthProfile>(x => x.Bookings.Any(bk => bk.FacilityId == _executionContext.FacilityId)));
                 }
@@ -54,20 +55,18 @@ namespace Hospital.Infrastructure.Repositories.HealthProfiles
         }
         public async Task<PaginationResult<HealthProfile>> GetPagingWithFilterAsync(Pagination pagination, long userId, CancellationToken cancellationToken = default)
         {
-            ISpecification<HealthProfile> spec = null;
+            ISpecification<HealthProfile> spec = new ExpressionSpecification<HealthProfile>(x => true);
+
 
             if (userId > 0)
             {
-
-                spec = new GetHealthProfileByOwnerIdSpecification(userId);
-
+                spec = spec.And(new GetHealthProfileByOwnerIdSpecification(userId));
             }
-            QueryOption option = new QueryOption
-            {
-                IgnoreOwner = true,
-            };
 
-            spec = spec.And(new ExpressionSpecification<HealthProfile>(x => x.Bookings.Any(bk => bk.FacilityId == _executionContext.FacilityId)));
+            var option = new QueryOption
+            {
+                IgnoreOwner = true
+            };
 
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
 

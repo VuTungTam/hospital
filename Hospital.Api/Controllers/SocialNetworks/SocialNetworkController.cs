@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.SocialNetworks
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class SocialNetworkController : ApiBaseController
     {
         public SocialNetworkController(IMediator mediator) : base(mediator)

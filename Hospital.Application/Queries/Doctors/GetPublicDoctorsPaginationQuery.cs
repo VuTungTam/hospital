@@ -10,15 +10,18 @@ namespace Hospital.Application.Queries.Doctors
 {
     public class GetPublicDoctorsPaginationQuery : BaseAllowAnonymousQuery<PaginationResult<PublicDoctorDto>>
     {
-        public GetPublicDoctorsPaginationQuery(Pagination pagination, FilterDoctorRequest request, AccountStatus state)
+        public GetPublicDoctorsPaginationQuery(Pagination pagination, long facilityId, FilterDoctorRequest request, AccountStatus state)
         {
+
             Pagination = pagination;
             State = state;
             Request = request;
+            FacilityId = facilityId;
         }
 
         public Pagination Pagination { get; }
         public FilterDoctorRequest Request { get; }
+        public long FacilityId { get; }
         public AccountStatus State { get; }
     }
 }

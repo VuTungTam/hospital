@@ -1,10 +1,12 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Bookings;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Date;
@@ -40,12 +42,34 @@ namespace Hospital.Infrastructure.Repositories.Bookings
 
             spec = spec.And(base.GuardDataAccess(spec, option));
 
-            if (!option.IgnoreDoctor)
-            {
-                spec = spec.And(new LimitByDoctorIdSpecification<Booking>(_executionContext.Identity));
+            // if (!option.IgnoreDoctor)
+            // {
+            //     spec = spec.And(new LimitByDoctorIdSpecification<Booking>(_executionContext.Identity));
 
-            }
+            // }
             return spec;
+        }
+
+        public override async Task<Booking> GetByIdAsync(long id, QueryOption option = null, CancellationToken cancellationToken = default)
+        {
+            var cacheEntry = GetCacheEntry(id);
+            var data = await _redisCache.GetAsync<Booking>(cacheEntry.Key, cancellationToken);
+            if (data == null)
+            {
+                ISpecification<Booking> spec = new IdEqualsSpecification<Booking>(id);
+
+                if (_executionContext.AccountType == AccountType.Customer)
+                {
+                    spec = spec.And(new LimitByOwnerIdSpecification<Booking>(_executionContext.Identity));
+                }
+                data = await _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
+
+                if (data != null)
+                {
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+                }
+            }
+            return data;
         }
 
         public async Task<int> GetMaxOrderAsync(long serviceId, DateTime date, long timeSlotId, CancellationToken cancellationToken)
@@ -120,9 +144,10 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
-                         .OrderByDescending(x => x.Code)
-                         .ThenByDescending(x => x.Date)
-                         .ThenByDescending(x => x.ModifiedAt ?? x.CreatedAt);
+                         .OrderBy(x => x.Date)
+                         .ThenBy(x => x.TimeSlotId)
+                         .ThenBy(x => x.Status == BookingStatus.Completed ? 1 : 0)
+                         .ThenBy(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);
@@ -131,12 +156,12 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             return new PaginationResult<Booking>(data, count);
         }
 
-        public async Task<PaginationResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long profileId = 0, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long ownerId = 0, CancellationToken cancellationToken = default)
         {
             ISpecification<Booking> spec = new GetBookingsByStatusSpecification(status);
-            if (profileId > 0)
+            if (ownerId > 0)
             {
-                spec = spec.And(new GetBookingsByHealthProfileIdSpecification(profileId));
+                spec = spec.And(new OwnerIdEqualsSpecification<Booking>(ownerId));
             }
 
             if (date != default)
@@ -158,9 +183,11 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                          .Where(guardExpression)
-                         .OrderByDescending(x => x.Code)
-                         .ThenByDescending(x => x.Date)
-                         .ThenByDescending(x => x.ModifiedAt ?? x.CreatedAt);
+                         .OrderBy(x => x.Date)
+                         .ThenBy(x => x.TimeSlotId)
+                         .ThenBy(x => x.ModifiedAt)
+                         .ThenBy(x => x.ServiceId)
+                         .ThenBy(x => x.Status);
 
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);

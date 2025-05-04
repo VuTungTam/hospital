@@ -5,12 +5,14 @@ using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -75,11 +77,19 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.Order = maxOrder + 1;
 
-            booking.Status = BookingStatus.Completed;
+            booking.Status = BookingStatus.Confirmed;
 
             booking.FacilityId = service.FacilityId;
 
-            var zones = await _zoneReadRepository.GetAsync(cancellationToken: cancellationToken);
+            var option = new QueryOption
+            {
+                IgnoreFacility = true,
+                Includes = new string[] { nameof(Zone.ZoneSpecialties) }
+            };
+
+            //var spec = new GetZoneByFacilityIdSpecification(booking.FacilityId);
+
+            var zones = await _zoneReadRepository.GetAsync(option: option, cancellationToken: cancellationToken);
 
             if (zones == null)
             {

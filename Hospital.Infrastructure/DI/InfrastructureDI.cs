@@ -12,6 +12,7 @@ using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.Metas;
+using Hospital.Application.Repositories.Interfaces.Payments;
 using Hospital.Application.Repositories.Interfaces.Sequences;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
@@ -38,6 +39,7 @@ using Hospital.Infrastructure.Repositories.HealthServices;
 using Hospital.Infrastructure.Repositories.Locations;
 using Hospital.Infrastructure.Repositories.Metas;
 using Hospital.Infrastructure.Repositories.Notifications;
+using Hospital.Infrastructure.Repositories.Payments;
 using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialities;
@@ -50,6 +52,7 @@ using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Extensions;
 using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.VietQr.Extensions;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Modules.Notifications.Interfaces;
@@ -80,6 +83,8 @@ namespace Hospital.Infrastructure.DI
 
             // Dapper
             services.AddDbConenctionService(configuration);
+
+            services.AddVietQrService();
 
             // Google Maps
             services.AddScoped<IGoogleMapsService, GoogleMapsService>();
@@ -172,6 +177,10 @@ namespace Hospital.Infrastructure.DI
             //Zone 
             services.AddScoped<IZoneReadRepository, ZoneReadRepository>();
             services.AddScoped<IZoneWriteRepository, ZoneWriteRepository>();
+
+            //Payment 
+            services.AddScoped<IPaymentReadRepository, PaymentReadRepository>();
+            services.AddScoped<IPaymentWriteRepository, PaymentWriteRepository>();
 
             // Notifications
             services.AddScoped<INotificationReadRepository, NotificationReadRepository>();

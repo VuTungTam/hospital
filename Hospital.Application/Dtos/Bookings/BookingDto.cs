@@ -42,7 +42,7 @@ namespace Hospital.Application.Dtos.Bookings
 
         public TimeSpan EndBooking { get; set; }
 
-        public int Order { get; set; }
+        public string Order { get; set; }
 
         public bool IsFeedbacked { get; set; } = false;
 
@@ -53,6 +53,7 @@ namespace Hospital.Application.Dtos.Bookings
         public string OwnerId { get; set; }
 
         public string FacilityId { get; set; }
+        public string SpecialtyId { get; set; }
 
         public string FacilityNameVn { get; set; }
 

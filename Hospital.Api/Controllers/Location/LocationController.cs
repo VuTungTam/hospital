@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.Location
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    // [Route("api/[controller]")]
+    // [ApiController]
     public class LocationController : ApiBaseController
     {
         public LocationController(IMediator mediator) : base(mediator)

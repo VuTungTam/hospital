@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Repositories.Interfaces.HealthServices;
+﻿using System.Security.Cryptography.X509Certificates;
+using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
@@ -8,6 +9,7 @@ using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
@@ -40,27 +42,34 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
             return spec;
         }
 
-        public async Task<PaginationResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long? serviceTypeId = null, long? facilityId = null, long? specialtyId = null, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId, long facilityId, long specialtyId, long doctorId, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthService> spec = new GetHealthServicesByStatusSpecification(status);
-            if (serviceTypeId.HasValue && serviceTypeId.Value > 0)
+            if (serviceTypeId > 0)
             {
-                spec = spec.And(new GetHealthServicesByTypeSpecification(serviceTypeId.Value));
+                spec = spec.And(new GetHealthServicesByTypeSpecification(serviceTypeId));
             }
 
-            if (facilityId.HasValue && facilityId.Value > 0)
+            if (facilityId > 0)
             {
-                spec = spec.And(new GetHealthServicesByFacilityIdSpecification(facilityId.Value));
+                spec = spec.And(new GetHealthServicesByFacilityIdSpecification(facilityId));
             }
 
-            if (specialtyId.HasValue && specialtyId.Value > 0)
+            if (specialtyId > 0)
             {
-                spec = spec.And(new GetHealthServicesBySpecialtyIdSpecification(specialtyId.Value));
+                spec = spec.And(new GetHealthServicesBySpecialtyIdSpecification(specialtyId));
             }
+
+            if (doctorId > 0)
+            {
+                spec = spec.And(new GetHealthServicesByDoctorIdSpecification(doctorId));
+            }
+
             var guardExpression = GuardDataAccess(spec).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
-                         .Where(guardExpression)
-                         .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
+                        .Include(s => s.ServiceTimeRules)
+                        .Where(guardExpression)
+                        .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
             var data = await query.BuildLimit(pagination.Offset, pagination.Size)
                                   .ToListAsync(cancellationToken);
@@ -69,5 +78,19 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
             return new PaginationResult<HealthService>(data, count);
         }
 
+        public async Task<List<ServiceType>> GetServiceTypeByFacilityIdAsync(long facilityId, CancellationToken cancellationToken)
+        {
+            var cacheEntry = CacheManager.GetFacilityServiceType(facilityId);
+
+            var valueFactory = () => _dbContext.HealthServices
+                 .Where(s => s.FacilityId == facilityId)
+                 .Select(s => s.ServiceType)
+                 .Distinct()
+                 .ToListAsync(cancellationToken);
+
+            var serviceTypes = await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
+
+            return serviceTypes;
+        }
     }
 }

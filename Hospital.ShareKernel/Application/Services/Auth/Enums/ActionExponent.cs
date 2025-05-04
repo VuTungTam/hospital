@@ -1,5 +1,5 @@
-﻿using Hospital.SharedKernel.Libraries.Attributes;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.SharedKernel.Application.Services.Auth.Enums
 {
@@ -210,5 +210,8 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Enums
 
         [Description("Quản lý khu vực")]
         ZoneManagement = 65,
+
+        [Description("Quản lý khu vực")]
+        AccessEmployeePage = 66,
     }
 }

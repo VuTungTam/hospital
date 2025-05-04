@@ -1,4 +1,7 @@
-﻿using AspNetCoreRateLimit;
+﻿using System.Globalization;
+using System.Text;
+using System.Text.Json;
+using AspNetCoreRateLimit;
 using FluentValidation.AspNetCore;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
@@ -41,9 +44,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using StackExchange.Redis;
-using System.Globalization;
-using System.Text;
-using System.Text.Json;
 
 namespace Hospital.SharedKernel.Configures
 {
@@ -120,10 +120,7 @@ namespace Hospital.SharedKernel.Configures
 
             #region AddController + CamelCase + FluentValidation
             services.AddControllersWithViews()
-                    .AddNewtonsoftJson(options =>
-                    {
-                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    })
+                    .AddNewtonsoftJson()
                     .AddJsonOptions(options =>
                     {
                         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;

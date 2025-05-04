@@ -44,6 +44,13 @@ namespace Hospital.Api.Controllers.HealthServices
             return Ok(new SimpleDataResult { Data = dtos });
         }
 
+        [HttpGet("facility/{facilityId}/type"), AllowAnonymous]
+        public async Task<IActionResult> GetServiceTypeByFacilityId(long facilityId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetServiceTypeByFacilityIdQuery(facilityId);
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
+        }
+
         [HttpGet("type/slug/{slug}"), AllowAnonymous]
         public async Task<IActionResult> GetTypeBySlug(string slug, [FromQuery] List<string> langs, CancellationToken cancellationToken = default)
         {
@@ -70,12 +77,13 @@ namespace Hospital.Api.Controllers.HealthServices
             long typeId = 0,
             long facilityId = 0,
             long specialtyId = 0,
+            long doctorId = 0,
             HealthServiceStatus status = HealthServiceStatus.None,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
 
-            var query = new GetHealthServicePagingQuery(pagination, facilityId, typeId, specialtyId, status);
+            var query = new GetHealthServicePagingQuery(pagination, facilityId, typeId, specialtyId, doctorId, status);
 
             var result = await _mediator.Send(query, cancellationToken);
 

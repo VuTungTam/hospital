@@ -108,7 +108,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
         }
 
         public async Task<PaginationResult<Doctor>> GetPublicDoctorsPaginationResultAsync(Pagination pagination,
-            FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
+            FilterDoctorRequest request, long facilityId = 0, AccountStatus status = AccountStatus.None,
             CancellationToken cancellationToken = default)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
@@ -117,6 +117,11 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                                   .ThenInclude(x => x.Specialty);
 
             ISpecification<Doctor> spec = new ExpressionSpecification<Doctor>(x => true); ;
+
+            if (facilityId > 0)
+            {
+                spec = spec.And(new LimitByFacilityIdSpecification<Doctor>(facilityId));
+            }
 
             if (status != AccountStatus.None)
             {
@@ -147,8 +152,11 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             {
                 spec = spec.And(new DoctorByGenderEqualsSpecification(request.Genders));
             }
-
-            spec = GuardDataAccess(spec);
+            var option = new QueryOption
+            {
+                IgnoreFacility = true,
+            };
+            spec = GuardDataAccess(spec, option);
 
             query = query.Where(spec.GetExpression());
 
@@ -156,6 +164,8 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             {
                 Id = d.Id,
                 Name = d.Name,
+                Avatar = d.Avatar,
+                Gender = d.Gender,
                 DoctorTitle = d.DoctorTitle,
                 DoctorDegree = d.DoctorDegree,
                 DoctorRank = d.DoctorRank,

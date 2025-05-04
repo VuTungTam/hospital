@@ -26,9 +26,17 @@ namespace Hospital.Api.Controllers.Specialties
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetSpecialtyPagingQuery(pagination, facilityId);
+            var query = new GetSpecialtyPaginationQuery(pagination, facilityId);
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
+        }
+
+        [HttpGet("{id}"), AllowAnonymous]
+        public async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
+        {
+            var query = new GetSpecialtyByIdQuery(id);
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(new SimpleDataResult { Data = result });
         }
 
         [HttpPost]

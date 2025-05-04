@@ -2,6 +2,7 @@
 using Hospital.Domain.Entities.Bookings;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Domain.Entities.HealthProfiles
 {
@@ -16,14 +17,15 @@ namespace Hospital.Domain.Entities.HealthProfiles
         IDeletedBy,
         IOwnedEntity
     {
+        [Filterable("Mã")]
         public string Code { get; set; }
-
+        [Filterable("CCCD")]
         public string CICode { get; set; }
-
+        [Filterable("Tên")]
         public string Name { get; set; }
-
+        [Filterable("Số điện thoại")]
         public string Phone { get; set; }
-
+        [Filterable("Email")]
         public string Email { get; set; }
 
         public int Gender { get; set; }

@@ -45,10 +45,10 @@ namespace Hospital.Api.Controllers.Doctors
         }
 
         [HttpPost("public/pagination"), AllowAnonymous]
-        public async Task<IActionResult> GettPublicDoctorPagination(int page, int size, int state, [FromBody] FilterDoctorRequest request, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GettPublicDoctorPagination(int page, int size, long facilityId, int state, [FromBody] FilterDoctorRequest request, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetPublicDoctorsPaginationQuery(pagination, request, (AccountStatus)state);
+            var query = new GetPublicDoctorsPaginationQuery(pagination, facilityId, request, (AccountStatus)state);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });

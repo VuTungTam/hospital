@@ -15,7 +15,7 @@ namespace Hospital.Application.Repositories.Interfaces.Doctors
             CancellationToken cancellationToken = default);
 
         Task<PaginationResult<Doctor>> GetPublicDoctorsPaginationResultAsync(Pagination pagination,
-            FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
+            FilterDoctorRequest request, long facilityId = 0, AccountStatus status = AccountStatus.None,
             CancellationToken cancellationToken = default);
 
         Task<Doctor> GetPublicDoctorById(long id, CancellationToken cancellationToken);

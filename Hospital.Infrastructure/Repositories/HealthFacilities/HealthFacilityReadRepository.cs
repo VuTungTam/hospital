@@ -23,21 +23,27 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
         {
         }
 
-        public async Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, HealthFacilityStatus status = default, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, long serviceTypeId = 0, HealthFacilityStatus status = default, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthFacility> spec = new GetHealthFacilitiesByStatusSpecification(status);
             if (facilityTypeId > 0)
             {
                 spec = spec.And(new GetHealthFacilitiesByTypeIdSpecification(facilityTypeId));
             }
+            if (serviceTypeId > 0)
+            {
+                spec = spec.And(new GetHealthFacilitiesByServiceTypeSpecification(serviceTypeId));
+            }
             QueryOption option = new QueryOption();
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                         .Include(f => f.FacilityTypeMappings)
+                        .Include(f => f.HealthServices)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 
-            var data = await query.BuildLimit(pagination.Offset, pagination.Size)
+            var data = await query
+                                .BuildLimit(pagination.Offset, pagination.Size)
                                   .ToListAsync(cancellationToken);
             var count = await query.CountAsync(cancellationToken);
 
@@ -46,7 +52,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
 
         public async Task<HealthFacility> GetBySlugAndLangsAsync(string slug, List<string> langs, CancellationToken cancellationToken)
         {
-            var cacheEntry = AppCacheManager.GetServiceBySlugAndLangsCacheEntry(slug, langs);
+            var cacheEntry = AppCacheManager.GetFacilityBySlugAndLangsCacheEntry(slug, langs);
             var data = await _redisCache.GetAsync<HealthFacility>(cacheEntry.Key, cancellationToken);
             if (data == null)
             {

@@ -13,6 +13,8 @@ namespace Hospital.Application.Dtos.Doctors
 
         public string PhotoUrl { get; set; }
 
+        public int Gender { get; set; }
+
         public DoctorTitle DoctorTitle { get; set; }
 
         public DoctorDegree DoctorDegree { get; set; }
@@ -36,5 +38,7 @@ namespace Hospital.Application.Dtos.Doctors
         public string WorkExperience { get; set; }
 
         public string ProfessionalLevel { get; set; }
+
+        public string Credentials { get; set; }
     }
 }

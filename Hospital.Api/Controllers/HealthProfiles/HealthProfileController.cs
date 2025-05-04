@@ -12,14 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.Delarations
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class HealthProfileController : ApiBaseController
     {
         public HealthProfileController(IMediator mediator) : base(mediator)
         {
         }
-
+        [HttpGet("filterable")]
+        public IActionResult GetFilterable() => GetFilterable<HealthProfile>();
 
         [HttpGet("sequence")]
         public async Task<IActionResult> GetSequence(CancellationToken cancellationToken = default)

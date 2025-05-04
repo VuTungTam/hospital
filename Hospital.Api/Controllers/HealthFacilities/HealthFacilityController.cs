@@ -58,11 +58,12 @@ namespace Hospital.Api.Controllers.HealthFacilities
             string asc = "",
             string desc = "",
             long typeId = 0,
+            long serviceTypeId = 0,
             HealthFacilityStatus status = HealthFacilityStatus.None,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetHealthFacilityPaginationQuery(pagination, typeId, status);
+            var query = new GetHealthFacilityPaginationQuery(pagination, typeId, serviceTypeId, status);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });

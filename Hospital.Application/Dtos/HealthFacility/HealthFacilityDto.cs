@@ -55,6 +55,8 @@ namespace Hospital.Application.Dtos.HealthFacility
 
         public string Address { get; set; }
 
+        public string FullAddress => Address + ", " + Wname + ", " + Dname + ", " + Pname;
+
         public decimal Latitude { get; set; }
 
         public decimal Longitude { get; set; }
@@ -71,7 +73,7 @@ namespace Hospital.Application.Dtos.HealthFacility
 
         public List<ImageDto> Images { get; set; }
 
-        public List<string> ImageNames { get; set; }
+        public List<string> ImageNames { get; set; } = new List<string>();
 
         public List<string> ImageUrls
         {
