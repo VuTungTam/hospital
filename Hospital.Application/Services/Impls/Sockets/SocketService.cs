@@ -1,32 +1,152 @@
 ﻿using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Entities.Bookings;
-using Hospital.SharedKernel.SignalR;
+using Hospital.Domain.Enums;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Presentations.SignalR;
+using Hospital.SharedKernel.Presentations.SignalR.Models;
+using Hospital.SharedKernel.Runtime.ExecutionContext;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Hospital.Application.Services.Impls.Sockets
 {
     public class SocketService : ISocketService
     {
-        public IHubContext<SignalRHub> HubContext => throw new NotImplementedException();
+        private readonly IHubContext<SignalRHub> _hubContext;
+        private readonly IExecutionContext _executionContext;
 
-        public Task AskReload(long userId, string message, CancellationToken cancellationToken = default)
+        public SocketService(IHubContext<SignalRHub> hubContext, IExecutionContext executionContext, IAuthService authService)
         {
-            throw new NotImplementedException();
+            _hubContext = hubContext;
+            _executionContext = executionContext;
         }
 
-        public Task ForceLogout(long userId, string message, CancellationToken cancellationToken = default)
+        public IHubContext<SignalRHub> HubContext => _hubContext;
+
+        public async Task Maintaince(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var msg = new SignalRMessage { Type = (int)MessageHubType.Maintaince };
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", msg, cancellationToken);
         }
 
-        public Task Maintaince(CancellationToken cancellationToken = default)
+        public async Task ForceLogout(long userId, string message, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var key = CacheManager.GetConnectionSocketKey(userId);
+            if (
+                !SignalRHub.EmployeeConnections.TryGetValue(key, out var connection) &&
+                !SignalRHub.CustomerConnections.TryGetValue(key, out connection)
+            )
+            {
+                var msg2 = new SignalRMessage { Type = (int)MessageHubType.FindLogout, Data = userId, Message = message };
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", msg2, cancellationToken);
+                return;
+            }
+
+            var msg = new SignalRMessage { Type = (int)MessageHubType.Logout, Message = message };
+            var connectionIds = connection.Select(c => c.ConnectionId);
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+
+            SignalRHub.EmployeeConnections.TryRemove(key, out var v);
+            SignalRHub.CustomerConnections.TryRemove(key, out var v2);
         }
 
-        public Task SendNewBooking(Booking booking, string branchName, CancellationToken cancellationToken = default)
+        public async Task AskReload(long userId, string message, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var key = CacheManager.GetConnectionSocketKey(userId);
+            if (
+                !SignalRHub.EmployeeConnections.TryGetValue(key, out var connection) &&
+                !SignalRHub.CustomerConnections.TryGetValue(key, out connection)
+            )
+            {
+                return;
+            }
+
+            var msg = new SignalRMessage { Type = (int)MessageHubType.Reload, Message = message };
+            var connectionIds = connection.Select(c => c.ConnectionId);
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+        }
+
+        public async Task SendNewBooking(Booking booking, CancellationToken cancellationToken = default)
+        {
+            var employees = SignalRHub.EmployeeConnections.Values.Select(x => x);
+            var connections = new List<AuthenticatedSocketConnection>();
+            var connectionIds = new List<string>();
+
+            foreach (var c in employees)
+            {
+                connectionIds.AddRange(c.Where(x => x.FacilityId == booking.FacilityId && x.ZoneId == booking.ZoneId).Select(x => x.ConnectionId));
+            }
+
+            var data = JsonConvert.SerializeObject(new
+            {
+                BookingId = booking.Id.ToString(),
+            }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var msg = new SignalRMessage { Type = (int)MessageHubType.Booking, Data = data };
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+        }
+
+        public async Task ConfirmBooking(Booking booking, CancellationToken cancellationToken = default)
+        {
+            var customer = SignalRHub.CustomerConnections.Values.Select(x => x);
+            var connections = new List<AuthenticatedSocketConnection>();
+            var connectionIds = new List<string>();
+
+            foreach (var c in customer)
+            {
+                connectionIds.AddRange(c.Where(x => x.UserId == booking.OwnerId.ToString()).Select(x => x.ConnectionId));
+            }
+
+            var data = JsonConvert.SerializeObject(new
+            {
+                BookingId = booking.Id.ToString(),
+            }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var msg = new SignalRMessage { Type = (int)MessageHubType.ConfirmBooking, Data = data };
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+        }
+
+        public async Task CustomerCancelBooking(Booking booking, CancellationToken cancellationToken = default)
+        {
+            var connections = new List<AuthenticatedSocketConnection>();
+            var connectionIds = new List<string>();
+            var employees = SignalRHub.EmployeeConnections.Values.Select(x => x);
+            foreach (var c in employees)
+            {
+                connectionIds.AddRange(c.Where(x => x.FacilityId == booking.FacilityId && x.ZoneId == booking.ZoneId).Select(x => x.ConnectionId));
+            }
+
+            var data = JsonConvert.SerializeObject(new
+            {
+                BookingId = booking.Id.ToString(),
+            }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var msg = new SignalRMessage { Type = (int)MessageHubType.CustomerCancelBooking, Data = data };
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+        }
+
+        public async Task EmployeeCancelBooking(Booking booking, CancellationToken cancellationToken = default)
+        {
+            var connections = new List<AuthenticatedSocketConnection>();
+            var connectionIds = new List<string>();
+            var customer = SignalRHub.CustomerConnections.Values.Select(x => x);
+
+            foreach (var c in customer)
+            {
+                connectionIds.AddRange(c.Where(x => x.UserId == booking.OwnerId.ToString()).Select(x => x.ConnectionId));
+            }
+
+            var data = JsonConvert.SerializeObject(new
+            {
+                BookingId = booking.Id.ToString(),
+            }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var msg = new SignalRMessage { Type = (int)MessageHubType.EmployeeCancelBooking, Data = data };
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
         }
     }
 }

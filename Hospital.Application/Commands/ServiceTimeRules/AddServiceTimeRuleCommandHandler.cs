@@ -35,13 +35,11 @@ namespace Hospital.Application.Commands.ServiceTimeRules
         {
             var timeRule = _mapper.Map<ServiceTimeRule>(request.TimeRule);
 
-            var spec = new GetServiceTimeRuleByDayOfWeekSpecification(timeRule.DayOfWeek);
+            var serviceTimeRules = await _serviceTimeRuleReadRepository.GetByServiceIdAsync(timeRule.ServiceId, cancellationToken: cancellationToken);
 
-            spec.And(new GetServiceTimeRuleByServiceIdSpecification(timeRule.ServiceId));
+            var existTimeRules = serviceTimeRules.Where(x => x.DayOfWeek == timeRule.DayOfWeek).ToList();
 
-            var existTimeRule = await _serviceTimeRuleReadRepository.GetAsync(spec, cancellationToken: cancellationToken);
-
-            if (existTimeRule.Any())
+            if (existTimeRules.Any())
             {
                 throw new BadRequestException("Time rule đã được thêm");
             }

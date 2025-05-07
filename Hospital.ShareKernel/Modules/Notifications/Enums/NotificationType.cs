@@ -4,5 +4,8 @@
     {
         SignIn = 0,
         Booking = 20,
+        ConfirmBooking = 30,
+        CancelBooking = 40
+
     }
 }

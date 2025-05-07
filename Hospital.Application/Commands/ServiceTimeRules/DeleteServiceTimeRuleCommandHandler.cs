@@ -6,6 +6,8 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -14,6 +16,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 {
     public class DeleteServiceTimeRuleCommandHandler : BaseCommandHandler, IRequestHandler<DeleteServiceTimeRuleCommand>
     {
+        private readonly IRedisCache _redisCache;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
         private readonly ITimeSlotReadRepository _timeSlotReadRepository;
@@ -23,6 +26,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
+            IRedisCache redisCache,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository,
             ITimeSlotReadRepository timeSlotReadRepository,
@@ -33,6 +37,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
             _timeSlotReadRepository = timeSlotReadRepository;
             _timeSlotWriteRepository = timeSlotWriteRepository;
+            _redisCache = redisCache;
         }
 
         public async Task<Unit> Handle(DeleteServiceTimeRuleCommand request, CancellationToken cancellationToken)
@@ -49,12 +54,15 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
                 foreach (var rule in rules)
                 {
-                    var spec = new GetTimeSlotByTimeRuleIdSpecification(rule.Id);
-                    var timeSlots = await _timeSlotReadRepository.GetAsync(spec, cancellationToken: cancellationToken);
+                    var timeSlots = await _timeSlotReadRepository.GetByTimeRuleIdAsync(rule.Id, cancellationToken: cancellationToken);
                     if (timeSlots.Any())
                     {
                         _timeSlotWriteRepository.Delete(timeSlots);
                     }
+                    var cacheEntry = CacheManager.GetTimeSlotsEntry(rule.Id);
+
+                    await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
+
                 }
             }
 
@@ -63,6 +71,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
             await _serviceTimeRuleWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken: cancellationToken);
 
             await _timeSlotWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken: cancellationToken);
+
 
             return Unit.Value;
         }

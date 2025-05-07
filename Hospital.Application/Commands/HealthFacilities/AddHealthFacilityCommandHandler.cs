@@ -8,6 +8,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Libraries.Utils;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -21,6 +22,8 @@ namespace Hospital.Application.Commands.HealthFacilities
         private readonly ISpecialtyReadRepository _specialtyReadRepository;
         private readonly IFacilityTypeReadRepository _facilityTypeReadRepository;
 
+        private readonly ILocationReadRepository _locationReadRepository;
+
         public AddHealthFacilityCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -29,6 +32,7 @@ namespace Hospital.Application.Commands.HealthFacilities
             IHealthFacilityWriteRepository healthFacilityWriteRepository,
             ISpecialtyReadRepository specialtyReadRepository,
             IFacilityTypeReadRepository facilityTypeReadRepository,
+            ILocationReadRepository locationReadRepository,
             IMapper mapper
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
@@ -36,11 +40,16 @@ namespace Hospital.Application.Commands.HealthFacilities
             _healthFacilityWriteRepository = healthFacilityWriteRepository;
             _facilityTypeReadRepository = facilityTypeReadRepository;
             _specialtyReadRepository = specialtyReadRepository;
+            _locationReadRepository = locationReadRepository;
         }
 
         public async Task<string> Handle(AddHealthFacilityCommand request, CancellationToken cancellationToken)
         {
             var facility = _mapper.Map<HealthFacility>(request.HealthFacility);
+
+            facility.Wname = await _locationReadRepository.GetNameByIdAsync(facility.Wid, "ward", cancellationToken);
+            facility.Dname = await _locationReadRepository.GetNameByIdAsync(facility.Did, "district", cancellationToken);
+            facility.Pname = await _locationReadRepository.GetNameByIdAsync(facility.Pid, "province", cancellationToken);
 
             var speIds = request.HealthFacility.SpecialtyIds.Select(x => long.Parse(x)).ToList();
 

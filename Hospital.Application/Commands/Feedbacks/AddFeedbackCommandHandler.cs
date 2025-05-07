@@ -2,7 +2,6 @@
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Feedbacks;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Feedbacks;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;

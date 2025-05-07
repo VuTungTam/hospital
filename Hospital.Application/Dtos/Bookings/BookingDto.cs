@@ -25,6 +25,10 @@ namespace Hospital.Application.Dtos.Bookings
 
         public string ServiceTypeId { get; set; }
 
+        public string ServiceTypeNameVn { get; set; }
+
+        public string ServiceTypeNameEn { get; set; }
+
         public string ServiceNameVn { get; set; }
 
         public string ServiceNameEn { get; set; }
@@ -34,7 +38,6 @@ namespace Hospital.Application.Dtos.Bookings
         public string Phone { get; set; }
 
         public string Email { get; set; }
-
 
         public string TimeRange { get; set; }
 
@@ -53,11 +56,14 @@ namespace Hospital.Application.Dtos.Bookings
         public string OwnerId { get; set; }
 
         public string FacilityId { get; set; }
+
         public string SpecialtyId { get; set; }
 
         public string FacilityNameVn { get; set; }
 
         public string FacilityNameEn { get; set; }
+
+        public string FacilityFullAddress { get; set; }
 
         public string ZoneId { get; set; }
 

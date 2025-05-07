@@ -37,6 +37,10 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
                                    .IgnoreQueryFilters()
                                    .AsNoTracking()
                                    .FirstOrDefaultAsync(cancellationToken);
+                if (data != null)
+                {
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
+                }
             }
 
             if (data == null)

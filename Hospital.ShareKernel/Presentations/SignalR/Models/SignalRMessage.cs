@@ -1,4 +1,4 @@
-﻿namespace Hospital.SharedKernel.SignalR.Models
+﻿namespace Hospital.SharedKernel.Presentations.SignalR.Models
 {
     public class SignalRMessage
     {

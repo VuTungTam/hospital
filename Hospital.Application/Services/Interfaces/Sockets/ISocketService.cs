@@ -1,5 +1,5 @@
 ﻿using Hospital.Domain.Entities.Bookings;
-using Hospital.SharedKernel.SignalR;
+using Hospital.SharedKernel.Presentations.SignalR;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Hospital.Application.Services.Interfaces.Sockets
@@ -14,6 +14,12 @@ namespace Hospital.Application.Services.Interfaces.Sockets
 
         Task AskReload(long userId, string message, CancellationToken cancellationToken = default);
 
-        Task SendNewBooking(Booking booking, string branchName, CancellationToken cancellationToken = default);
+        Task SendNewBooking(Booking booking, CancellationToken cancellationToken = default);
+
+        Task ConfirmBooking(Booking booking, CancellationToken cancellationToken = default);
+
+        Task CustomerCancelBooking(Booking booking, CancellationToken cancellationToken = default);
+
+        Task EmployeeCancelBooking(Booking booking, CancellationToken cancellationToken = default);
     }
 }

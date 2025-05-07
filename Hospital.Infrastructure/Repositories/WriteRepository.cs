@@ -208,18 +208,18 @@ namespace Hospital.Infrastructure.Repositories
         #region Remove Cache
         protected virtual async Task RemoveOneRecordCacheAsync(long id, CancellationToken cancellationToken)
         {
-            var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
-                      CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity) :
-                      CacheManager.DbSystemIdCacheEntry<T>(id);
+            // var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
+            //           CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity) :
+            var cacheEntry = CacheManager.DbSystemIdCacheEntry<T>(id);
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
         }
 
         protected virtual async Task RemoveAllRecordsCacheAsync(CancellationToken cancellationToken)
         {
-            var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
-                         CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity) :
-                         CacheManager.DbSystemAllCacheEntry<T>();
+            // var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
+            //              CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity) :
+            var cacheEntry = CacheManager.DbSystemAllCacheEntry<T>();
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
         }

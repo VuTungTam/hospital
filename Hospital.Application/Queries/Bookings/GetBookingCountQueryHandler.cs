@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications.Bookings;
 using Hospital.Resource.Properties;
@@ -15,7 +15,7 @@ namespace Hospital.Application.Queries.Bookings
         private readonly IBookingReadRepository _bookingReadRepository;
         public GetBookingCountQueryHandler(
             IAuthService authService,
-            IMapper mapper, 
+            IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IBookingReadRepository bookingReadRepository
             ) : base(authService, mapper, localizer)
@@ -26,9 +26,9 @@ namespace Hospital.Application.Queries.Bookings
         public async Task<int> Handle(GetBookingCountQuery request, CancellationToken cancellationToken)
         {
             var spec = new GetBookingsByStatusSpecification(BookingStatus.Confirmed);
-            
-            var quantity = await _bookingReadRepository.GetCountBySpecAsync(spec,_bookingReadRepository.DefaultQueryOption, cancellationToken);
-            
+
+            var quantity = await _bookingReadRepository.GetCountBySpecAsync(spec, _bookingReadRepository.DefaultQueryOption, cancellationToken);
+
             return quantity;
         }
     }

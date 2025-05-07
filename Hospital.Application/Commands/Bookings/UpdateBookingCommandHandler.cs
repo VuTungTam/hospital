@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;

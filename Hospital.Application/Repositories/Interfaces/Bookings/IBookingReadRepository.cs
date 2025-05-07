@@ -4,7 +4,7 @@ using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Repositories.Interface;
 
-namespace Hospital.Application.Repositories.Interfaces.Symptoms
+namespace Hospital.Application.Repositories.Interfaces.Bookings
 {
     public interface IBookingReadRepository : IReadRepository<Booking>
     {
@@ -16,6 +16,9 @@ namespace Hospital.Application.Repositories.Interfaces.Symptoms
 
         Task<int> GetCurrentAsync(long serviceId, long timeSlotId, CancellationToken cancellationToken);
 
+        Task<Booking> GetByCodeAsync(string code, CancellationToken cancellationToken);
+
+        Task<List<Booking>> GetBookingsToReorder(Booking cancelBooking, CancellationToken cancellationToken);
         //Task<int> GetBookingQuantity(long? serviceId, DateTime? date, TimeSpan? start, TimeSpan? end, List<BookingStatus>? status, CancellationToken cancellationToken);
     }
 }

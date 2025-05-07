@@ -1,15 +1,20 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
+using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Enums;
+using Hospital.Domain.Specifications.ServiceTimeRules;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -21,7 +26,9 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
+        private readonly ICustomerWriteRepository _customerWriteRepository;
         private readonly IRedisCache _redisCache;
+        private readonly ISocketService _socketService;
         public ConfirmBookingCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -30,6 +37,8 @@ namespace Hospital.Application.Commands.Bookings
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
+            ICustomerWriteRepository customerWriteRepository,
+            ISocketService socketService,
             IRedisCache redisCache
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
@@ -37,6 +46,8 @@ namespace Hospital.Application.Commands.Bookings
             _bookingWriteRepository = bookingWriteRepository;
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _redisCache = redisCache;
+            _socketService = socketService;
+            _customerWriteRepository = customerWriteRepository;
         }
 
         public async Task<Unit> Handle(ConfirmBookingCommand request, CancellationToken cancellationToken)
@@ -66,9 +77,20 @@ namespace Hospital.Application.Commands.Bookings
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date,
                 booking.TimeSlotId, cancellationToken);
 
-            var maxSlot = await _serviceTimeRuleReadRepository.GetMaxSlotAsync(booking.ServiceId, booking.Date, cancellationToken);
+            var serviceTimeRules = await _serviceTimeRuleReadRepository.GetByServiceIdAsync(booking.ServiceId, cancellationToken: cancellationToken);
 
-            if (maxOrder == maxSlot)
+            if (serviceTimeRules == null)
+            {
+                throw new BadRequestException("Chưa có suất khám");
+            }
+            var timeRule = serviceTimeRules.FirstOrDefault(x => x.DayOfWeek == (int)booking.Date.DayOfWeek);
+
+            if (timeRule == null)
+            {
+                throw new BadRequestException("Ngày trong tuần không hợp lệ");
+            }
+
+            if (maxOrder == timeRule.MaxPatients)
             {
                 throw new BadRequestException(_localizer["So luong da day"]);
             }
@@ -77,13 +99,32 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.Order = maxOrder + 1;
 
-            await _bookingWriteRepository.UpdateAsync(booking, cancellationToken: cancellationToken);
+            _bookingWriteRepository.Update(booking);
+
+            var notification = new Notification
+            {
+                Data = booking.Id.ToString(),
+                IsUnread = true,
+                Description = $"<p>Lịch khám <span class='n-bold'>{booking.Code}</span> vừa được xác nhận.</p>",
+                Timestamp = DateTime.Now,
+                Type = NotificationType.ConfirmBooking
+            };
+
+            var callbackWrapper = new CallbackWrapper();
+
+            await _customerWriteRepository.AddNotificationForCustomerAsync(notification, booking.OwnerId, callbackWrapper, cancellationToken);
+
+            await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+
+            await callbackWrapper.Callback();
+
+            await _bookingWriteRepository.RemoveCacheWhenUpdateAsync(booking.Id, cancellationToken);
 
             var cacheEntry = CacheManager.GetMaxOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
 
-            await _redisCache.SetAsync(cacheEntry.Key, booking.Order, cancellationToken: cancellationToken);
+            await _socketService.ConfirmBooking(booking, cancellationToken);
 
             return Unit.Value;
         }

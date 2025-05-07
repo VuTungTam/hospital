@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Infrastructure.Databases.UnitOfWork;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 
 namespace Hospital.Infrastructure.Repositories.Customers
 {
@@ -67,6 +71,28 @@ namespace Hospital.Infrastructure.Repositories.Customers
 
             Add(customer);
             await sequenceRepository.IncreaseValueAsync(table, cancellationToken);
+        }
+
+        public async Task AddNotificationForCustomerAsync(Notification notification, long OwnerId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken)
+        {
+            var query = _dbSet.AsNoTracking()
+                .Where(x => x.Id == OwnerId);
+
+            var customerReadRepository = _serviceProvider.GetRequiredService<ICustomerReadRepository>();
+            var notificationWriteRepository = _serviceProvider.GetRequiredService<INotificationWriteRepository>();
+
+            var customer = await query.FirstOrDefaultAsync(cancellationToken);
+
+            var removeCacheTasks = new List<Task>();
+
+            var noti = JsonConvert.DeserializeObject<Notification>(JsonConvert.SerializeObject(notification));
+
+            noti.OwnerId = customer.Id;
+            notificationWriteRepository.Add(noti);
+
+            removeCacheTasks.Add(notificationWriteRepository.RemovePaginationCacheByUserIdAsync(customer.Id, cancellationToken));
+
+            callbackWrapper.Callback = () => Task.WhenAll(removeCacheTasks);
         }
 
         public async Task UpdateStatusAsync(Customer customer, CancellationToken cancellationToken)

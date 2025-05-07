@@ -8,9 +8,11 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.DataProtection.KeyManagement.Internal;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Commands.ServiceTimeRules
@@ -62,9 +64,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
             var newTimeSlots = _serviceTimeRuleWriteRepository.GenerateTimeSlots(entity);
 
-            var spec = new GetTimeSlotByTimeRuleIdSpecification(timeRule.Id);
-
-            var oldTimeSlots = await _timeSlotReadRepository.GetAsync(spec, cancellationToken: cancellationToken);
+            var oldTimeSlots = await _timeSlotReadRepository.GetByTimeRuleIdAsync(timeRule.Id, cancellationToken: cancellationToken);
 
             var comparer = new TimeSlotEqualityComparer();
 
@@ -87,7 +87,15 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
             await _serviceTimeRuleWriteRepository.RemoveCacheWhenUpdateAsync(timeRule.Id, cancellationToken);
 
+            var cacheEntry2 = CacheManager.GetTimeRulesEntry(timeRule.ServiceId);
+
+            await _redisCache.RemoveAsync(cacheEntry2.Key, cancellationToken);
+
             await _timeSlotWriteRepository.RemoveCacheWhenAddAsync(cancellationToken);
+
+            var cacheEntry3 = CacheManager.GetTimeSlotsEntry(timeRule.Id);
+
+            await _redisCache.RemoveAsync(cacheEntry3.Key, cancellationToken);
 
             return Unit.Value;
         }

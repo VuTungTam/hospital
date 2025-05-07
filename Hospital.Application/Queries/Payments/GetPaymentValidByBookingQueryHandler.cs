@@ -38,8 +38,8 @@ namespace Hospital.Application.Queries.Payments
             {
                 IgnoreFacility = true
             };
-
-            var payments = await _paymentReadRepository.GetAsync(spec, option, cancellationToken);
+            //Sua lai cho nay
+            var payments = await _paymentReadRepository.GetAsync(option, cancellationToken);
 
             var payment = payments.FirstOrDefault(x => !x.IsPaid && (x.ExpiredAt == null || x.ExpiredAt > DateTime.UtcNow));
 

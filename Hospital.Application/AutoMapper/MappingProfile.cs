@@ -12,6 +12,7 @@ using Hospital.Application.Dtos.HealthServices;
 using Hospital.Application.Dtos.Images;
 using Hospital.Application.Dtos.Locations;
 using Hospital.Application.Dtos.Metas;
+using Hospital.Application.Dtos.Notifications;
 using Hospital.Application.Dtos.ServiceTimeRules;
 using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
@@ -40,6 +41,7 @@ using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Domain.Entities.Systems;
 using Hospital.SharedKernel.Domain.Models.Auths;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Entites;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
 using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
 namespace Hospital.Application.Mappings
 {
@@ -58,6 +60,9 @@ namespace Hospital.Application.Mappings
 
             //LoginHistory
             CreateMap<LoginHistory, LoginHistoryDto>();
+
+            // Notifications
+            CreateMap<Notification, NotificationDto>().ReverseMap();
 
             // Roles
             CreateMap<Action, ActionDto>();

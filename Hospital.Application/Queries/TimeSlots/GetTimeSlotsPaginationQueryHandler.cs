@@ -29,7 +29,9 @@ namespace Hospital.Application.Queries.TimeSlots
 
         public async Task<PaginationResult<TimeSlotDto>> Handle(GetTimeSlotsPaginationQuery request, CancellationToken cancellationToken)
         {
-            var result = await _timeSlotReadRepository.GetPaginationAsync(request.Pagination, spec: null, cancellationToken: cancellationToken);
+            var spec = new GetTimeSlotByTimeRuleIdSpecification(request.ServiceId);
+
+            var result = await _timeSlotReadRepository.GetPaginationAsync(request.Pagination, spec: spec, cancellationToken: cancellationToken);
 
             var slots = _mapper.Map<List<TimeSlotDto>>(result.Data);
 

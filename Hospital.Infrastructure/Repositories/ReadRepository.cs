@@ -175,19 +175,19 @@ namespace Hospital.Infrastructure.Repositories
         public virtual async Task<List<T>> GetByIdsAsync(IList<long> ids, QueryOption option = default, CancellationToken cancellationToken = default)
             => await GetBySpecificationAsync(new GetByIdsSpecification<T>(ids), option, cancellationToken);
 
-        public virtual async Task<List<T>> GetAsync(ISpecification<T> spec, QueryOption option, CancellationToken cancellationToken = default)
+        public virtual async Task<List<T>> GetAsync(QueryOption option, CancellationToken cancellationToken = default)
         {
             option ??= new QueryOption();
             if (option.Includes != null && option.Includes.Any())
             {
-                return await GetBySpecificationAsync(spec, option, cancellationToken);
+                return await GetBySpecificationAsync<T>(null, option, cancellationToken);
             }
 
             var cacheEntry = GetCacheEntry(type: "all");
             var data = await _redisCache.GetAsync<List<T>>(cacheEntry.Key, cancellationToken: cancellationToken);
             if (data == null)
             {
-                data = await GetBySpecificationAsync(spec, option, cancellationToken);
+                data = await GetBySpecificationAsync<T>(null, option, cancellationToken);
                 if (data != null && data.Any())
                 {
                     await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(AppCacheTime.Records), cancellationToken: cancellationToken);
@@ -211,17 +211,17 @@ namespace Hospital.Infrastructure.Repositories
         {
             if (type == "all")
             {
-                if (typeof(T).HasInterface<IOwnedEntity>())
-                {
-                    return CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity);
-                }
+                // if (typeof(T).HasInterface<IOwnedEntity>())
+                // {
+                //     return CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity);
+                // }
                 return CacheManager.DbSystemAllCacheEntry<T>();
             }
 
-            if (typeof(T).HasInterface<IOwnedEntity>())
-            {
-                return CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity);
-            }
+            // if (typeof(T).HasInterface<IOwnedEntity>())
+            // {
+            //     return CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity);
+            // }
             return CacheManager.DbSystemIdCacheEntry<T>(id);
         }
 

@@ -26,7 +26,7 @@ namespace Hospital.Infrastructure.Repositories.Notifications
 
         public async Task MarkAllAsReadAsync(CancellationToken cancellationToken)
         {
-            var updateColumns = $"IsUnread = 0, ModifiedAt = CURRENT_TIMESTAMP(), ModifiedBy = {_executionContext.Identity}";
+            var updateColumns = $"IsUnread = 0, ModifiedAt = GETDATE(), ModifiedBy = {_executionContext.Identity}";
             var sql = $"UPDATE {new Notification().GetTableName()} SET {updateColumns} WHERE OwnerId = {_executionContext.Identity} AND IsDeleted = 0";
 
             await _dbConnection.ExecuteAsync(sql, null, autoCommit: true);
@@ -35,7 +35,8 @@ namespace Hospital.Infrastructure.Repositories.Notifications
 
         public async Task MarkAsReadOrUnreadAsync(long id, bool markAsRead, CancellationToken cancellationToken)
         {
-            var updateColumns = $"IsUnread = {!markAsRead}, ModifiedAt = CURRENT_TIMESTAMP(), ModifiedBy = {_executionContext.Identity}";
+            var value = !markAsRead ? 1 : 0;
+            var updateColumns = $"IsUnread = {value}, ModifiedAt = GETDATE(), ModifiedBy = {_executionContext.Identity}";
             var sql = $"UPDATE {new Notification().GetTableName()} SET {updateColumns} WHERE Id = {id} AND OwnerId = {_executionContext.Identity} AND IsDeleted = 0";
 
             await _dbConnection.ExecuteAsync(sql, null, autoCommit: true);
@@ -44,7 +45,7 @@ namespace Hospital.Infrastructure.Repositories.Notifications
 
         public async Task DeleteAsync(List<long> ids, CancellationToken cancellationToken)
         {
-            var sql = $"UPDATE {new Notification().GetTableName()} SET IsDeleted = 1, DeletedAt = CURRENT_TIMESTAMP(), DeletedBy = {_executionContext.Identity} WHERE Id IN ({string.Join(",", ids)}) AND {nameof(Notification.OwnerId)} = {_executionContext.Identity} AND IsDeleted = 0";
+            var sql = $"UPDATE {new Notification().GetTableName()} SET IsDeleted = 1, DeletedAt = GETDATE(), DeletedBy = {_executionContext.Identity} WHERE Id IN ({string.Join(",", ids)}) AND {nameof(Notification.OwnerId)} = {_executionContext.Identity} AND IsDeleted = 0";
 
             await _dbConnection.ExecuteAsync(sql, null, autoCommit: true);
             await RemovePaginationCacheByUserIdAsync(_executionContext.Identity, cancellationToken);

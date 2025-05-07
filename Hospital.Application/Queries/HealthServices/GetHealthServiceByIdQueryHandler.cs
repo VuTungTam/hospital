@@ -19,6 +19,7 @@ namespace Hospital.Application.Queries.HealthServices
     {
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         private readonly ISpecialtyReadRepository _specialtyReadRepository;
+        private readonly IServiceTypeReadRepository _typeReadRepository;
 
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
         public GetHealthServiceByIdQueryHandler(
@@ -27,12 +28,14 @@ namespace Hospital.Application.Queries.HealthServices
             IStringLocalizer<Resources> localizer,
             IHealthServiceReadRepository healthServiceReadRepository,
             IHealthFacilityReadRepository healthFacilityReadRepository,
-            ISpecialtyReadRepository specialtyReadRepository
+            ISpecialtyReadRepository specialtyReadRepository,
+            IServiceTypeReadRepository typeReadRepository
             ) : base(authService, mapper, localizer)
         {
             _healthServiceReadRepository = healthServiceReadRepository;
             _healthFacilityReadRepository = healthFacilityReadRepository;
             _specialtyReadRepository = specialtyReadRepository;
+            _typeReadRepository = typeReadRepository;
         }
 
         public async Task<HealthServiceDto> Handle(GetHealthServiceByIdQuery request, CancellationToken cancellationToken)
@@ -68,11 +71,22 @@ namespace Hospital.Application.Queries.HealthServices
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
+            var type = await _typeReadRepository.GetByIdAsync(service.TypeId, cancellationToken: cancellationToken);
+
+            if (type == null)
+            {
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
+            }
+
             var serviceDto = _mapper.Map<HealthServiceDto>(service);
 
             serviceDto.FacilityNameVn = facility.NameVn;
 
             serviceDto.FacilityNameEn = facility.NameEn;
+
+            serviceDto.TypeNameVn = type.NameVn;
+
+            serviceDto.TypeNameEn = type.NameEn;
 
             serviceDto.SpecialtyNameEn = specialty.NameEn;
 

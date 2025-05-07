@@ -112,6 +112,7 @@ namespace Hospital.Application.Commands.Employees
             employee.Pid = int.Parse(request.Employee.Pid);
             employee.Did = int.Parse(request.Employee.Did);
             employee.Wid = int.Parse(request.Employee.Wid);
+            employee.ZoneId = long.Parse(request.Employee.ZoneId);
             employee.Address = request.Employee.Address;
             employee.Pname = newPname;
             employee.Dname = newDname;

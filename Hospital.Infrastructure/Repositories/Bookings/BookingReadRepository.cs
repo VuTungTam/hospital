@@ -1,4 +1,4 @@
-﻿using Hospital.Application.Repositories.Interfaces.Symptoms;
+﻿using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
@@ -14,8 +14,10 @@ using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
+using Hospital.SharedKernel.Runtime.ExecutionContext;
 using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -196,42 +198,56 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             return new PaginationResult<Booking>(data, count);
         }
 
-        //    public async Task<int> GetBookingQuantity(
-        //long? serviceId, DateTime? date, TimeSpan? start, TimeSpan? end, List<BookingStatus>? status, CancellationToken cancellationToken)
-        //    {
-        //        var specs = new List<ISpecification<Booking>>();
+        public async Task<Booking> GetByCodeAsync(string code, CancellationToken cancellationToken)
+        {
+            var cacheEntry = CacheManager.GetBookingIdByCodeCacheEntry(code);
+            long masterId = await _redisCache.GetAsync<long>(cacheEntry.Key, cancellationToken);
+            Booking data;
+            if (masterId != 0)
+            {
+                data = await GetByIdAsync(masterId, cancellationToken: cancellationToken);
+            }
+            else
+            {
+                data = await GetBookingFromDatabaseAsync(code, cancellationToken);
+                if (data == null)
+                {
+                    throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
+                }
+                else
+                {
+                    var cacheEntry2 = GetCacheEntry(data.Id);
+                    await _redisCache.SetAsync(cacheEntry.Key, data.Id, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+                    await _redisCache.SetAsync(cacheEntry2.Key, data, TimeSpan.FromSeconds(AppCacheTime.RecordWithId), cancellationToken: cancellationToken);
+                }
+            }
 
-        //        if (status?.Any() == true)
-        //        {
-        //            foreach (var item in status)
-        //            {
-        //                specs.Add(new GetBookingsByStatusSpecification(item));
-        //            }
-        //        }
+            return data;
+        }
 
-        //        if (serviceId.HasValue && serviceId.Value > 0)
-        //        {
-        //            specs.Add(new GetBookingsByServiceIdSpecification(serviceId.Value));
-        //        }
+        private async Task<Booking> GetBookingFromDatabaseAsync(string code, CancellationToken cancellationToken)
+        {
+            var sql = $@"
+                SELECT * FROM {new Booking().GetTableName()} 
+                WHERE Code = @code AND OwnerId = @ownerId";
 
-        //        if (date.HasValue)
-        //        {
-        //            specs.Add(new GetBookingsByDateSpecification(date.Value));
-        //        }
+            var parameters = new[]
+            {
+                new SqlParameter("@code", code),
+                new SqlParameter("@ownerId", _executionContext.Identity)
+            };
 
-        //        if (start.HasValue && end.HasValue)
-        //        {
-        //            specs.Add(new GetBookingsByTimeSlotSpecification(start.Value, end.Value));
-        //        }
-
-        //        var combinedSpec = specs.Aggregate((spec1, spec2) => spec1.And(spec2));
-        //        QueryOption option = new QueryOption();
-        //        var guardExpression = GuardDataAccess(combinedSpec,option).GetExpression();
-
-        //        return await _dbSet.AsNoTracking()
-        //                           .Where(guardExpression)
-        //                           .CountAsync(cancellationToken);
-        //    }
-
+            return await _dbSet.FromSqlRaw(sql, parameters)
+                               .IgnoreQueryFilters()
+                               .AsNoTracking()
+                               .FirstOrDefaultAsync(cancellationToken);
+        }
+        public async Task<List<Booking>> GetBookingsToReorder(Booking cancelBooking, CancellationToken cancellationToken)
+        {
+            var data = await _dbSet.AsNoTracking()
+            .Where(x => x.Date == cancelBooking.Date && x.ServiceId == cancelBooking.ServiceId
+                && x.TimeSlotId == cancelBooking.TimeSlotId && x.Order > cancelBooking.Order).ToListAsync(cancellationToken);
+            return data;
+        }
     }
 }

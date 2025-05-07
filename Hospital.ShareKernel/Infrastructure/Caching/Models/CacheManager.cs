@@ -99,6 +99,10 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
 
         public static CacheEntry GetMaxOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"max-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
 
+        public static CacheEntry GetTimeRulesEntry(long serviceId) => new CacheEntry($"service-time-rules:{serviceId}", 7776000);
+
+        public static CacheEntry GetTimeSlotsEntry(long timeRuleId) => new CacheEntry($"time-slots:{timeRuleId}", 7776000);
+
         public static CacheEntry GetCurrentOrderCacheEntry(long serviceId, DateTime date, long timeSlotId) => new CacheEntry($"current-order:{serviceId}:{date:yyyyMMdd}:time-slot:{timeSlotId}", 7776000);
 
         public static CacheEntry GetFacilityType() => new CacheEntry($"facility-types", 7776000);
@@ -107,21 +111,28 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
 
         public static CacheEntry GetCustomerPermission() => new CacheEntry($"customer-permission", 7776000);
 
-        public static CacheEntry DbSystemIdCacheEntry<T>(long id) where T : BaseEntity
-            => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:{GetTableName<T>()}:{id}", 3600);
+        public static CacheEntry GetBookingIdByCodeCacheEntry(string code)
+                    => new CacheEntry($"id:s-row-code:tbl_booking:{code}", 3600);
+
+
 
         public static CacheEntry DbSystemPublicIdCacheEntry<T>(long id) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:public-{GetTableName<T>()}:{id}", 3600);
 
-        public static CacheEntry DbOwnerIdCacheEntry<T>(long recordId, long ownerId) where T : BaseEntity
-            => new CacheEntry($"{typeof(T).Name.ToLower()}:row-id:{GetTableName<T>()}:{recordId}:{ownerId}", 600);
+        public static CacheEntry DbSystemPublicAllCacheEntry<T>() where T : BaseEntity
+                   => new CacheEntry($"{typeof(T).Name.ToLower()}:s-rows:public-{GetTableName<T>()}", 3600);
+
+        public static CacheEntry DbSystemIdCacheEntry<T>(long id) where T : BaseEntity
+            => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:{GetTableName<T>()}:{id}", 3600);
+
+        // public static CacheEntry DbOwnerIdCacheEntry<T>(long recordId, long ownerId) where T : BaseEntity
+        //     => new CacheEntry($"{typeof(T).Name.ToLower()}:row-id:{GetTableName<T>()}:{recordId}:{ownerId}", 600);
 
         public static CacheEntry DbSystemAllCacheEntry<T>() where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-rows:{GetTableName<T>()}", 3600);
-        public static CacheEntry DbSystemPublicAllCacheEntry<T>() where T : BaseEntity
-            => new CacheEntry($"{typeof(T).Name.ToLower()}:s-rows:public-{GetTableName<T>()}", 3600);
 
-        public static CacheEntry DbOwnerAllCacheEntry<T>(long ownerId) where T : BaseEntity
-            => new CacheEntry($"{typeof(T).Name.ToLower()}:rows:{GetTableName<T>()}:{ownerId}", 600);
+
+        // public static CacheEntry DbOwnerAllCacheEntry<T>(long ownerId) where T : BaseEntity
+        //     => new CacheEntry($"{typeof(T).Name.ToLower()}:rows:{GetTableName<T>()}:{ownerId}", 600);
     }
 }

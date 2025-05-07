@@ -12,6 +12,7 @@ using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Enums;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -28,18 +29,19 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
         {
         }
 
-        public async Task<int> GetMaxSlotAsync(long serviceId, DateTime date, CancellationToken cancellationToken)
+        public async Task<List<ServiceTimeRule>> GetByServiceIdAsync(long serviceId, CancellationToken cancellationToken)
         {
-            int dayOfWeek = (int)date.DayOfWeek;
-
-            var rule = await _dbSet.FirstOrDefaultAsync(x => x.DayOfWeek == dayOfWeek && x.ServiceId == serviceId);
-
-            if (rule == null)
+            CacheEntry cacheEntry = CacheManager.GetTimeRulesEntry(serviceId);
+            var data = await _redisCache.GetAsync<List<ServiceTimeRule>>(cacheEntry.Key, cancellationToken);
+            if (data == null)
             {
-                throw new BadRequestException("Khung gio khong phu hop");
+                data = await _dbSet.AsNoTracking().Where(x => x.ServiceId == serviceId).ToListAsync(cancellationToken);
+                if (data != null && data.Any())
+                {
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken);
+                }
             }
-
-            return rule.MaxPatients;
+            return data;
         }
 
         public async Task<PaginationResult<ServiceTimeRule>> GetPagingWithFilterAsync(Pagination pagination, long serviceId, int dayOfWeek, CancellationToken cancellationToken = default)

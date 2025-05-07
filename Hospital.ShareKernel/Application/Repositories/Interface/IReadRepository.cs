@@ -1,9 +1,9 @@
-﻿using Hospital.SharedKernel.Application.Models.Requests;
+﻿using System.Linq.Expressions;
+using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Specifications.Interfaces;
-using System.Linq.Expressions;
 
 namespace Hospital.SharedKernel.Application.Repositories.Interface
 {
@@ -15,7 +15,7 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 
         Task<List<T>> GetByIdsAsync(IList<long> id, QueryOption option = default, CancellationToken cancellationToken = default);
 
-        Task<List<T>> GetAsync(ISpecification<T> spec = null, QueryOption option = default, CancellationToken cancellationToken = default);
+        Task<List<T>> GetAsync(QueryOption option = default, CancellationToken cancellationToken = default);
 
         Task<PaginationResult<T>> GetPaginationAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
 

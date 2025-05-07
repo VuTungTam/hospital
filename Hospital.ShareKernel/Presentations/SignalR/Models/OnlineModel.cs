@@ -1,4 +1,4 @@
-﻿namespace Hospital.SharedKernel.SignalR.Models
+﻿namespace Hospital.SharedKernel.Presentations.SignalR.Models
 {
     public class OnlineModel
     {
@@ -8,6 +8,6 @@
 
         public int CustomerCount { get; set; }
 
-        public long Total => EmployeeCount + CustomerCount + AnonymousCount;
+        public int Total => EmployeeCount + CustomerCount + AnonymousCount;
     }
 }

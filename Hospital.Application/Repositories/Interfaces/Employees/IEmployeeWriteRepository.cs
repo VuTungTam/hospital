@@ -11,9 +11,9 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
     {
         Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken);
 
-        Task AddFacilityAdminAsync(Employee employee, long facilityId,CancellationToken cancellationToken);
+        Task AddFacilityAdminAsync(Employee employee, long facilityId, CancellationToken cancellationToken);
 
-        Task AddBookingNotificationForCoordinatorAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
+        Task AddNotificationForEmployeeAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
 
         Task SetActionAsDefaultAsync(long employeeId, CancellationToken cancellationToken);
 

@@ -17,7 +17,6 @@ using Hospital.Application.Repositories.Interfaces.Sequences;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Application.Repositories.Interfaces.Users;
 using Hospital.Application.Repositories.Interfaces.Zones;

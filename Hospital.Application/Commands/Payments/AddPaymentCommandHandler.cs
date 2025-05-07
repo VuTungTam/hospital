@@ -1,6 +1,6 @@
 using AutoMapper;
+using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Payments;
-using Hospital.Application.Repositories.Interfaces.Symptoms;
 using Hospital.Domain.Entities.Payments;
 using Hospital.Domain.Specifications.Payments;
 using Hospital.Resource.Properties;
@@ -61,7 +61,9 @@ namespace Hospital.Application.Commands.Payments
 
             var spec = new GetPaymentsByBookingIdSpecification(request.Dto.BookingId);
 
-            var payments = await _paymentReadRepository.GetAsync(spec, option, cancellationToken);
+            var payments = await _paymentReadRepository.GetAsync(option, cancellationToken);
+
+            //payments = payments.Where(x => x.BookingId == request.Dto.BookingId)
 
             var now = DateTime.Now;
 

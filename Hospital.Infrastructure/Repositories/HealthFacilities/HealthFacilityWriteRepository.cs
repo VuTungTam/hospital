@@ -8,6 +8,7 @@ using Hospital.Domain.Entities.Specialties;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Libraries.Utils;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +20,17 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
     public class HealthFacilityWriteRepository : WriteRepository<HealthFacility>, IHealthFacilityWriteRepository
     {
         private readonly IMapper _mapper;
+        private readonly ILocationReadRepository _locationReadRepository;
         public HealthFacilityWriteRepository(
             IServiceProvider serviceProvider,
             IStringLocalizer<Resources> localizer,
             IRedisCache redisCache,
+            ILocationReadRepository locationReadRepository,
             IMapper mapper
             ) : base(serviceProvider, localizer, redisCache)
         {
             _mapper = mapper;
+            _locationReadRepository = locationReadRepository;
         }
         public async Task RemoveFacilitySpecialtyAsync(FacilitySpecialty facilitySpecialty, CancellationToken cancellationToken)
         {
@@ -63,6 +67,10 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             oldFacility.Phone = newFacility.Phone;
 
             oldFacility.Email = newFacility.Email;
+
+            oldFacility.Wname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Wid), "ward", cancellationToken);
+            oldFacility.Dname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Did), "district", cancellationToken);
+            oldFacility.Pname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Pid), "province", cancellationToken);
 
             var oldImageNames = oldFacility.Images.Select(x => x.PublicId).ToList();
             var newImageNames = newFacility.ImageNames ?? new List<string>();
