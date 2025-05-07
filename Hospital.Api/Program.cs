@@ -18,6 +18,8 @@ namespace Hospital.Api
 
             services.AddCoreService(builder.Configuration);
 
+            services.AddSignalR();
+
             services.AddCoreAuthentication(builder.Configuration);
 
             services.AddCoreCache(builder.Configuration);

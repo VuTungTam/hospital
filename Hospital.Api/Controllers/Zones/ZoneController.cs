@@ -18,18 +18,19 @@ namespace Hospital.Api.Controllers.Zones
         }
         [HttpGet("filterable")]
         public IActionResult GetFilterable() => GetFilterable<Zone>();
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public virtual async Task<IActionResult> GetPagination(
             int page,
             int size,
             string search = "",
             string asc = "",
             string desc = "",
+            long facilityId = 0,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
 
-            var query = new GetZonesPaginationQuery(pagination);
+            var query = new GetZonesPaginationQuery(pagination, facilityId);
 
             var result = await _mediator.Send(query, cancellationToken);
 

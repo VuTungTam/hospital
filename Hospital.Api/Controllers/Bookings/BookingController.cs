@@ -42,6 +42,15 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new SimpleDataResult { Data = user });
         }
 
+        [HttpGet("code/{code}")]
+        public virtual async Task<IActionResult> GetByCode(string code, CancellationToken cancellationToken = default)
+        {
+            var query = new GetBookingByCodeQuery(code);
+            var user = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = user });
+        }
+
         [HttpGet("myself")]
         public async Task<IActionResult> GetMyListPagination(
             int page,
