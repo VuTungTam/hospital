@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 using Hospital.Domain.Entities.Feedbacks;
+using Hospital.Domain.Entities.HealthFacilities;
 using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Payments;
@@ -77,6 +76,8 @@ namespace Hospital.Domain.Entities.Bookings
         public long OwnerId { get; set; }
 
         public long FacilityId { get; set; }
+
+        public HealthFacility HealthFacility { get; set; }
 
         public long ZoneId { get; set; }
 

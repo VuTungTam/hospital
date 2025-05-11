@@ -14,5 +14,7 @@ namespace Hospital.Application.Repositories.Interfaces.HealthFacilities
         Task<HealthFacility> GetBySlugAndLangsAsync(string slug, List<string> langs, CancellationToken cancellationToken);
 
         Task<PaginationResult<HealthFacility>> GetNamePaginationAsync(Pagination pagination, CancellationToken cancellationToken = default);
+
+        Task<List<HealthFacility>> GetMostFacilityAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -123,5 +123,27 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             var valueFactory = async () => new PaginationResult<HealthFacility>(await dataFactory(), await countFactory());
             return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
+
+        public async Task<List<HealthFacility>> GetMostFacilityAsync(CancellationToken cancellationToken = default)
+        {
+            CacheEntry cacheEntry = CacheManager.GetMostFacilities();
+
+            var data = await _redisCache.GetAsync<List<HealthFacility>>(cacheEntry.Key, cancellationToken);
+
+            if (data == null)
+            {
+                data = await _dbContext.HealthFacilities
+                        .Where(f => !f.IsDeleted)
+                        .OrderByDescending(f => f.Bookings.Count(b => !b.IsDeleted))
+                        .Take(5)
+                        .ToListAsync(cancellationToken);
+                if (data != null)
+                {
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken);
+                }
+            }
+
+            return data;
+        }
     }
 }

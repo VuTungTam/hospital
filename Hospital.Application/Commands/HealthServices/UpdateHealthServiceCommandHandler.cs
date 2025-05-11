@@ -73,8 +73,6 @@ namespace Hospital.Application.Commands.HealthServices
 
             oldService.NameVn = newService.NameVn;
             oldService.NameEn = newService.NameEn;
-            oldService.DescriptionVn = newService.DescriptionVn;
-            oldService.DescriptionEn = newService.DescriptionEn;
             oldService.TypeId = newService.TypeId;
             oldService.Price = newService.Price;
 

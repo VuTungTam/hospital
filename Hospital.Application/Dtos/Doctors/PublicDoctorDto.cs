@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Enums;
+﻿using Hospital.Application.Dtos.Specialties;
+using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Configures.Models;
 
 namespace Hospital.Application.Dtos.Doctors
@@ -40,5 +41,7 @@ namespace Hospital.Application.Dtos.Doctors
         public string ProfessionalLevel { get; set; }
 
         public string Credentials { get; set; }
+
+        public string FacilityId { get; set; }
     }
 }

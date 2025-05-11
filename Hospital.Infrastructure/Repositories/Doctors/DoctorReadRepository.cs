@@ -173,6 +173,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                 WorkExperience = d.WorkExperience,
                 TrainingProcess = d.TrainingProcess,
                 Description = d.Description,
+                FacilityId = d.FacilityId,
                 DoctorSpecialties = d.DoctorSpecialties.Select(ds => new DoctorSpecialty
                 {
                     DoctorId = ds.DoctorId,
@@ -210,6 +211,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                 WorkExperience = d.WorkExperience,
                 TrainingProcess = d.TrainingProcess,
                 Description = d.Description,
+                FacilityId = d.FacilityId,
                 DoctorSpecialties = d.DoctorSpecialties.Select(ds => new DoctorSpecialty
                 {
                     DoctorId = ds.DoctorId,

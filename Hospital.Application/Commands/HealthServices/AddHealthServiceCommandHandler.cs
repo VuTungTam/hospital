@@ -12,7 +12,9 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
+using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
@@ -30,6 +32,7 @@ namespace Hospital.Application.Commands.HealthServices
         private readonly IDoctorReadRepository _doctorReadRepository;
         private readonly IServiceTimeRuleWriteRepository _serviceTimeRuleWriteRepository;
         private readonly ITimeSlotWriteRepository _timeSlotWriteRepository;
+        private readonly IRedisCache _redisCache;
         public AddHealthServiceCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -40,7 +43,8 @@ namespace Hospital.Application.Commands.HealthServices
             IExecutionContext executionContext,
             IHealthServiceWriteRepository healthServiceWriteRepository,
             IServiceTimeRuleWriteRepository serviceTimeRuleWriteRepository,
-            ITimeSlotWriteRepository timeSlotWriteRepository
+            ITimeSlotWriteRepository timeSlotWriteRepository,
+            IRedisCache redisCache
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _healthServiceWriteRepository = healthServiceWriteRepository;
@@ -49,6 +53,7 @@ namespace Hospital.Application.Commands.HealthServices
             _doctorReadRepository = doctorReadRepository;
             _serviceTimeRuleWriteRepository = serviceTimeRuleWriteRepository;
             _timeSlotWriteRepository = timeSlotWriteRepository;
+            _redisCache = redisCache;
         }
 
         public async Task<string> Handle(AddHealthServiceCommand request, CancellationToken cancellationToken)
@@ -107,29 +112,13 @@ namespace Hospital.Application.Commands.HealthServices
 
             await _healthServiceWriteRepository.SaveChangesAsync(cancellationToken);
 
-            // foreach (var timeRuleDto in request.HealthService.ServiceTimeRules)
-            // {
-            //     timeRuleDto.Id = null;
-
-            //     var timeRule = _mapper.Map<ServiceTimeRule>(timeRuleDto);
-
-            //     timeRule.Id = AuthUtility.GenerateSnowflakeId();
-
-            //     timeRule.ServiceId = service.Id;
-
-            //     Console.WriteLine("------------------------------------------------- " + timeRule.Id);
-
-            //     _serviceTimeRuleWriteRepository.Add(timeRule);
-
-            //     //await _serviceTimeRuleWriteRepository.SaveChangesAsync(cancellationToken);
-
-            //     var timeSlots = _serviceTimeRuleWriteRepository.GenerateTimeSlots(timeRule);
-
-            //     _timeSlotWriteRepository.AddRange(timeSlots);
-
-            // }
-
             await _healthServiceWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+
+            await _healthServiceWriteRepository.RemoveCacheWhenAddAsync(cancellationToken);
+
+            CacheEntry cacheEntry = CacheManager.GetFacilityServiceType(_executionContext.FacilityId);
+
+            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
 
             return service.Id.ToString();
         }

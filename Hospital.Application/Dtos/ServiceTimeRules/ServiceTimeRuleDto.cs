@@ -55,7 +55,7 @@ namespace Hospital.Application.Dtos.ServiceTimeRules
 
                 if (nextTime > end)
                 {
-                    nextTime = end; 
+                    nextTime = end;
                 }
 
                 list.Add(new TimeFrame { StartTime = currentTime, EndTime = nextTime });

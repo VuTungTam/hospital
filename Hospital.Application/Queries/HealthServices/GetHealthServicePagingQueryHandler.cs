@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hospital.Application.Dtos.HealthServices;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
@@ -14,16 +15,19 @@ namespace Hospital.Application.Queries.HealthServices
     {
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         private readonly IServiceTypeReadRepository _serviceTypeReadRepository;
+        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
         public GetHealthServicePagingQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IHealthServiceReadRepository healthServiceReadRepository,
-            IServiceTypeReadRepository serviceTypeReadRepository
+            IServiceTypeReadRepository serviceTypeReadRepository,
+            IHealthFacilityReadRepository healthFacilityReadRepository
             ) : base(authService, mapper, localizer)
         {
             _healthServiceReadRepository = healthServiceReadRepository;
             _serviceTypeReadRepository = serviceTypeReadRepository;
+            _healthFacilityReadRepository = healthFacilityReadRepository;
         }
 
         public async Task<PaginationResult<HealthServiceDto>> Handle(GetHealthServicePagingQuery request, CancellationToken cancellationToken)
@@ -36,12 +40,14 @@ namespace Hospital.Application.Queries.HealthServices
 
             foreach (var entity in result.Data)
             {
+                var facility = await _healthFacilityReadRepository.GetByIdAsync(entity.FacilityId, cancellationToken: cancellationToken);
                 var dto = _mapper.Map<HealthServiceDto>(entity);
                 var type = types.First(x => x.Id.ToString() == dto.TypeId);
                 dto.TypeNameVn = type.NameVn;
                 dto.TypeNameEn = type.NameEn;
                 dto.Days = entity.ServiceTimeRules.Select(x => x.DayOfWeek.ToString()).ToList();
-
+                dto.FacilityNameVn = facility.NameVn;
+                dto.FacilityNameEn = facility.NameEn;
                 dtos.Add(dto);
             }
             return new PaginationResult<HealthServiceDto>(dtos, result.Total);

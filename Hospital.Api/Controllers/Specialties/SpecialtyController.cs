@@ -39,6 +39,14 @@ namespace Hospital.Api.Controllers.Specialties
             return Ok(new SimpleDataResult { Data = result });
         }
 
+        [HttpGet("doctor/{doctorId}"), AllowAnonymous]
+        public async Task<IActionResult> GetByDoctorId(long doctorId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetSpecialtyByDoctorIdQuery(doctorId);
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(new SimpleDataResult { Data = result });
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(SpecialtyDto specialty, CancellationToken cancellationToken = default)
         {

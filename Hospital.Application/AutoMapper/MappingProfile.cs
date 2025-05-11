@@ -118,7 +118,10 @@ namespace Hospital.Application.Mappings
             CreateMap<ServiceType, ServiceTypeDto>().ReverseMap();
 
             //HealthService
-            CreateMap<HealthService, HealthServiceDto>().ReverseMap();
+            CreateMap<HealthService, HealthServiceDto>();
+
+            CreateMap<HealthServiceDto, HealthService>()
+                .ForMember(dest => dest.Specialty, opt => opt.Ignore());
 
             //ServiceTimeRule
             CreateMap<ServiceTimeRule, ServiceTimeRuleDto>().ReverseMap();
@@ -135,7 +138,15 @@ namespace Hospital.Application.Mappings
                         : new List<string>()))
                 .ForMember(dest => dest.TypeIds, opt => opt.MapFrom(src => src.FacilityTypeMappings != null
                         ? src.FacilityTypeMappings.Select(bs => bs.TypeId.ToString()).ToList()
-                        : new List<string>()));
+                        : new List<string>()))
+                 .ForMember(dest => dest.FullAddress, opt => opt.MapFrom(src =>
+                        string.Join(", ", new[] {
+                            src.Address,
+                            src.Wname,
+                            src.Dname,
+                            src.Pname
+                        }.Where(s => !string.IsNullOrWhiteSpace(s)))));
+
             CreateMap<HealthFacilityDto, HealthFacility>();
 
             CreateMap<HealthFacility, FacilityNameDto>();

@@ -107,6 +107,8 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
 
         public static CacheEntry GetFacilityType() => new CacheEntry($"facility-types", 7776000);
 
+        public static CacheEntry GetMostFacilities() => new CacheEntry($"most-facilities", 7776000);
+
         public static CacheEntry GetFacilityServiceType(long id) => new CacheEntry($"facility:{id}:service-types", 7776000);
 
         public static CacheEntry GetCustomerPermission() => new CacheEntry($"customer-permission", 7776000);

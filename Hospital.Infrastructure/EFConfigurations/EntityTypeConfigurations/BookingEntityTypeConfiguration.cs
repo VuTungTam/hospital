@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.Bookings;
+﻿using System.Security.Cryptography.X509Certificates;
+using Hospital.Domain.Entities.Bookings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -45,6 +46,10 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                      builder.HasIndex(x => x.Code)
                             .IsUnique();
 
+                     builder.HasOne(x => x.HealthFacility)
+                            .WithMany(x => x.Bookings)
+                            .HasForeignKey(x => x.FacilityId)
+                            .OnDelete(DeleteBehavior.Restrict); ;
               }
        }
 }

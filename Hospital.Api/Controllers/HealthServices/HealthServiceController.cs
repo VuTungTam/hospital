@@ -37,11 +37,8 @@ namespace Hospital.Api.Controllers.HealthServices
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllServiceType(CancellationToken cancellationToken = default)
         {
-            var types = await _serviceTypeReadRepository.GetAsync(cancellationToken: cancellationToken);
-
-            var dtos = _mapper.Map<List<ServiceTypeDto>>(types);
-
-            return Ok(new SimpleDataResult { Data = dtos });
+            var query = new GetServiceTypeQuery();
+            return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
         }
 
         [HttpGet("facility/{facilityId}/type"), AllowAnonymous]

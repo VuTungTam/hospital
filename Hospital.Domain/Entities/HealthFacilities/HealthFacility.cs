@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.Specialties;
@@ -50,6 +51,8 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public List<HealthService> HealthServices { get; set; } = new();
 
         public List<FacilityTypeMapping> FacilityTypeMappings { get; set; } = new();
+
+        public List<Booking> Bookings { get; set; } = new();
 
         public int Pid { get; set; }
 

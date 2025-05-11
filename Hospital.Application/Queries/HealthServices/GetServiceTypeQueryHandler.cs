@@ -4,17 +4,16 @@ using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
-using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Queries.HealthServices
 {
-    public class GetServiceTypeBySlugQueryHandler : BaseQueryHandler, IRequestHandler<GetServiceTypeBySlugQuery, ServiceTypeDto>
+    public class GetServiceTypeQueryHandler : BaseQueryHandler, IRequestHandler<GetServiceTypeQuery, List<ServiceTypeDto>>
     {
         private readonly IServiceTypeReadRepository _serviceTypeReadRepository;
 
-        public GetServiceTypeBySlugQueryHandler(
+        public GetServiceTypeQueryHandler(
             IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
@@ -24,16 +23,11 @@ namespace Hospital.Application.Queries.HealthServices
             _serviceTypeReadRepository = serviceTypeReadRepositor;
         }
 
-        public async Task<ServiceTypeDto> Handle(GetServiceTypeBySlugQuery request, CancellationToken cancellationToken)
+        public async Task<List<ServiceTypeDto>> Handle(GetServiceTypeQuery request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(request.Slug))
-            {
-                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
-            }
+            var types = await _serviceTypeReadRepository.GetAsync(cancellationToken: cancellationToken);
 
-            var serviceType = await _serviceTypeReadRepository.GetTypeBySlugAndLangsAsync(request.Slug, request.Langs, cancellationToken);
-
-            return _mapper.Map<ServiceTypeDto>(serviceType);
+            return _mapper.Map<List<ServiceTypeDto>>(types);
         }
     }
 }

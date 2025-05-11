@@ -7,8 +7,6 @@ using Hospital.SharedKernel.Application.Validators;
 using Hospital.SharedKernel.Configures.Models;
 using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Emails.Utils;
-using Hospital.SharedKernel.Infrastructure.Services.Sms.Utils;
-using Hospital.SharedKernel.Infrastructure.Services.Websites.Utils;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Libraries.Helpers;
 using Microsoft.Extensions.Localization;

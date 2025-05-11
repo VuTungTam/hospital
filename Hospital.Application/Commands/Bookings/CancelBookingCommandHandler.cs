@@ -163,11 +163,11 @@ namespace Hospital.Application.Commands.Bookings
         {
             if (booking.OwnerId == _executionContext.Identity)
             {
-                await _socketService.EmployeeCancelBooking(booking, cancellationToken);
+                await _socketService.CustomerCancelBooking(booking, cancellationToken);
             }
             else
             {
-                await _socketService.CustomerCancelBooking(booking, cancellationToken);
+                await _socketService.EmployeeCancelBooking(booking, cancellationToken);
             }
             return Unit.Value;
         }

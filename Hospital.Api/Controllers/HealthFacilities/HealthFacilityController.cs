@@ -69,6 +69,15 @@ namespace Hospital.Api.Controllers.HealthFacilities
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
+        [HttpGet("most"), AllowAnonymous]
+        public async Task<IActionResult> GetMostFacility(CancellationToken cancellationToken = default)
+        {
+            var query = new GetMostFacilityQuery();
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = result });
+        }
+
         [HttpGet("{id}"), AllowAnonymous]
         public async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
         {

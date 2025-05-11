@@ -26,10 +26,6 @@ namespace Hospital.Domain.Entities.HealthServices
 
         public string NameEn { get; set; }
 
-        public string DescriptionVn { get; set; }
-
-        public string DescriptionEn { get; set; }
-
         public long TypeId { get; set; }
 
         public ServiceType ServiceType { get; set; }
