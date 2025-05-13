@@ -17,16 +17,8 @@ namespace Hospital.Api.Controllers.HealthServices
 {
     public class HealthServiceController : ApiBaseController
     {
-        private readonly IServiceTypeReadRepository _serviceTypeReadRepository;
-        private readonly IMapper _mapper;
-        public HealthServiceController(
-            IMediator mediator,
-            IServiceTypeReadRepository serviceTypeReadRepository,
-            IMapper mapper
-            ) : base(mediator)
+        public HealthServiceController(IMediator mediator) : base(mediator)
         {
-            _serviceTypeReadRepository = serviceTypeReadRepository;
-            _mapper = mapper;
         }
         [HttpGet("filterable")]
         public IActionResult GetFilterable() => base.GetFilterable<HealthService>();
@@ -91,6 +83,37 @@ namespace Hospital.Api.Controllers.HealthServices
         public virtual async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
         {
             var query = new GetHealthServiceByIdQuery(id);
+
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = result });
+        }
+        [HttpGet("current/pagination"), AllowAnonymous]
+        public virtual async Task<IActionResult> GetCurrentServicePagination(
+            int page,
+            int size,
+            string search = "",
+            string asc = "",
+            string desc = "",
+            long doctorId = 0,
+            long facilityId = 0,
+            CancellationToken cancellationToken = default)
+        {
+            var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
+
+            var query = new GetHealthServiceCurrentQuery(pagination, facilityId, doctorId);
+
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
+        }
+
+        [HttpGet("current/{doctorId}"), AllowAnonymous]
+        public virtual async Task<IActionResult> GetDoctorCurrentService(
+            long doctorId = 0,
+            CancellationToken cancellationToken = default)
+        {
+            var query = new GetDoctorContextQuery(doctorId);
 
             var result = await _mediator.Send(query, cancellationToken);
 

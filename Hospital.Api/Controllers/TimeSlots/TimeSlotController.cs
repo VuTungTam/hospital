@@ -39,5 +39,14 @@ namespace Hospital.Api.Controllers.TimeSlots
 
             return Ok(new SimpleDataResult { Data = user });
         }
+
+        [HttpGet("current/{serviceId}")]
+        public virtual async Task<IActionResult> GetByServiceId(long serviceId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetCurrentTimeSlotByServiceIdQuery(serviceId);
+            var user = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = user });
+        }
     }
 }

@@ -72,7 +72,7 @@ namespace Hospital.Api.Controllers.Bookings
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPaging(
+        public async Task<IActionResult> GetPagination(
             int page,
             int size,
             string search = "",
@@ -87,6 +87,48 @@ namespace Hospital.Api.Controllers.Bookings
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
             var query = new GetBookingsPagingQuery(pagination, owner, status, date, excludeId);
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
+        }
+
+        [HttpGet("doctor")]
+        public async Task<IActionResult> GetDoctorPagination(
+            int page,
+            int size,
+            string search = "",
+            string asc = "",
+            string desc = "",
+            long ownerId = 0,
+            long serviceId = 0,
+            long timeSlotId = 0,
+            DateTime date = default,
+            BookingStatus status = BookingStatus.None,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
+            var query = new GetDoctorBookingsPagingQuery(pagination, status, serviceId, timeSlotId, date, ownerId);
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
+        }
+
+        [HttpGet("queue")]
+        public async Task<IActionResult> GetQueuePagination(
+            int page,
+            int size,
+            string search = "",
+            string asc = "",
+            string desc = "",
+            long serviceId = 0,
+            long timeSlotId = 0,
+            DateTime date = default,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
+            var query = new GetQueueBookingsPagingQuery(pagination, serviceId, timeSlotId, date);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
@@ -113,7 +155,7 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new BaseResponse());
         }
 
-        [HttpGet("current/{serviceId}")]
+        [HttpGet("current/{serviceId}/{timeSlotId}")]
         public virtual async Task<IActionResult> GetCurrent(long serviceId, long timeSlotId, CancellationToken cancellationToken = default)
         {
             var query = new GetCurrentOrderQuery(serviceId, timeSlotId);
@@ -144,6 +186,20 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new BaseResponse());
         }
 
+        [HttpPut("start/{id}")]
+        public virtual async Task<IActionResult> Start(long id, CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(new StartBookingCommand(id), cancellationToken);
+            return Ok(new BaseResponse());
+        }
+
+        [HttpPut("complete/{id}")]
+        public virtual async Task<IActionResult> Complete(long id, CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(new CompleteBookingCommand(id), cancellationToken);
+            return Ok(new BaseResponse());
+        }
+
         [HttpDelete]
         public virtual async Task<IActionResult> Delete(List<long> ids, CancellationToken cancellationToken = default)
         {
@@ -151,21 +207,5 @@ namespace Hospital.Api.Controllers.Bookings
             await _mediator.Send(command, cancellationToken);
             return Ok(new BaseResponse());
         }
-
-        //[HttpGet("booked-slots")]
-        //public virtual async Task<IActionResult> GetQuantity
-        //    (long serviceId, 
-        //    DateTime date, 
-        //    TimeSpan serviceStartTime, 
-        //    TimeSpan serviceEndTime, 
-
-        //    CancellationToken cancellationToken = default)
-        //{
-        //    var query = new GetCurrentOrderQuery(serviceId, serviceStartTime, serviceEndTime);
-
-        //    var index = await _mediator.Send(query, cancellationToken);
-
-        //    return Ok(new SimpleDataResult { Data = index });
-        //}
     }
 }

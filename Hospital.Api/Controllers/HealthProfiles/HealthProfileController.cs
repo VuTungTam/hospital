@@ -7,7 +7,6 @@ using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.Api.Controllers.Delarations
