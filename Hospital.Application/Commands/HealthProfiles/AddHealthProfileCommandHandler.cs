@@ -48,6 +48,8 @@ namespace Hospital.Application.Commands.HealthProfiles
 
             await _healthProfileWriteRepository.AddProfileAsync(healthProfile, cancellationToken);
 
+            await _healthProfileWriteRepository.RemoveCacheWhenAddAsync(healthProfile, cancellationToken);
+
             return healthProfile.Id.ToString();
         }
         public async Task ValidateAndThrowAsync(HealthProfileDto profile, CancellationToken cancellationToken)

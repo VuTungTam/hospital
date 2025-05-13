@@ -54,11 +54,13 @@ namespace Hospital.Application.Commands.Doctors
 
             var doctor = _mapper.Map<Doctor>(request.Doctor);
 
+            await _doctorWriteRepository.AddDoctorAsync(doctor, cancellationToken: cancellationToken);
+
             doctor.DoctorSpecialties = new();
 
-            foreach (var specialty in request.Doctor.Specialties)
+            foreach (var specialtyId in request.Doctor.SpecialtyIds)
             {
-                var specialtyDb = specialties.First(x => x.Id + "" == specialty.Id);
+                var specialtyDb = specialties.First(x => x.Id + "" == specialtyId);
 
                 doctor.DoctorSpecialties.Add(new DoctorSpecialty
                 {
@@ -71,9 +73,7 @@ namespace Hospital.Application.Commands.Doctors
             doctor.Dname = await _locationReadRepository.GetNameByIdAsync(doctor.Did, "district", cancellationToken);
             doctor.Wname = await _locationReadRepository.GetNameByIdAsync(doctor.Wid, "ward", cancellationToken);
 
-            await _doctorWriteRepository.AddDoctorAsync(doctor, cancellationToken: cancellationToken);
-
-            await _sequenceRepository.IncreaseValueAsync(new Employee().GetTableName(), cancellationToken);
+            await _sequenceRepository.IncreaseValueAsync(new Doctor().GetTableName(), cancellationToken);
 
             //employee.AddDomainEvent(new AddEmployeeDomainEvent(employee));
 

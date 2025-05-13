@@ -4,6 +4,7 @@ using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Enums;
+using Hospital.Domain.Models.Admin;
 using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.Doctors;
 using Hospital.Infrastructure.Extensions;
@@ -13,6 +14,7 @@ using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Libraries.Security;
 using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using MassTransit.Initializers;
@@ -47,6 +49,25 @@ namespace Hospital.Infrastructure.Repositories.Doctors
 
             }
             return spec;
+        }
+
+        public async Task<Doctor> GetLoginByEmailAsync(string email, string password, bool checkPassword = true, CancellationToken cancellationToken = default)
+        {
+            var spec = new DoctorByEmailEqualsSpecification(email)
+                   .Or(new DoctorByEmailEqualsSpecification($"{email}@gmail.com"));
+
+            var doctor = await _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
+            if (doctor == null)
+            {
+                return null;
+            }
+
+            if (checkPassword && password != PowerfulSetting.Password && !PasswordHasher.Verify(password, doctor.PasswordHash))
+            {
+                return null;
+            }
+
+            return doctor;
         }
 
         public async Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination,

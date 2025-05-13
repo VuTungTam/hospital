@@ -22,11 +22,17 @@ namespace Hospital.SharedKernel.Infrastructure.Services.CIID
 
             int genderCode = int.Parse(cccd[3].ToString());
 
-            if ((birthYear < 2000 && (gender == 1 && genderCode != 0) || (gender == 0 && genderCode != 1)) ||
-            (birthYear >= 2000 && (gender == 1 && genderCode != 2) || (gender == 0 && genderCode != 3)))
+            if (birthYear < 2000)
             {
-                return false;
+                if ((gender == 1 && genderCode != 0) || (gender == 0 && genderCode != 1))
+                    return false;
             }
+            else // birthYear >= 2000
+            {
+                if ((gender == 1 && genderCode != 2) || (gender == 0 && genderCode != 3))
+                    return false;
+            }
+
 
             int cccdYear = int.Parse(cccd.Substring(4, 2));
             int year = birthYear % 100;

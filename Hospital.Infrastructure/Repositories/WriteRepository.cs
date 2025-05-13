@@ -10,6 +10,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
+using IdGen;
 using MassTransit.Internals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,7 +52,8 @@ namespace Hospital.Infrastructure.Repositories
         {
             Add(entity);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
-            await RemoveCacheWhenAddAsync(cancellationToken);
+
+            await RemoveCacheWhenAddAsync(entity, cancellationToken);
         }
 
         public virtual void AddRange(IEnumerable<T> entities)
@@ -68,7 +70,7 @@ namespace Hospital.Infrastructure.Repositories
         {
             AddRange(entities);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
-            await RemoveCacheWhenAddAsync(cancellationToken);
+            //await RemoveCacheWhenAddAsync(cancellationToken);
         }
 
         public virtual void Delete(IEnumerable<T> entities)
@@ -93,7 +95,8 @@ namespace Hospital.Infrastructure.Repositories
         {
             Delete(entities);
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
-            await RemoveCacheWhenDeleteAsync(cancellationToken);
+
+            await RemoveCacheWhenDeleteAsync(entities, cancellationToken);
         }
 
         public virtual void Update(T entity)
@@ -206,19 +209,45 @@ namespace Hospital.Infrastructure.Repositories
 
 
         #region Remove Cache
-        protected virtual async Task RemoveOneRecordCacheAsync(long id, CancellationToken cancellationToken)
+        private static readonly bool _isOwnedEntity = typeof(T).HasInterface<IOwnedEntity>();
+
+        public virtual async Task RemoveOneRecordCacheAsync(long id, CancellationToken cancellationToken)
         {
-            // var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
-            //           CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity) :
             var cacheEntry = CacheManager.DbSystemIdCacheEntry<T>(id);
+
+            if (_isOwnedEntity)
+            {
+                await RemoveOwnerIdCache(id, cancellationToken);
+            }
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
         }
 
+        public async Task RemoveOwnerIdCache(long id, CancellationToken cancellationToken)
+        {
+            var tasks = new List<Task>();
+            var cacheEntry = CacheManager.DbSystemIdCacheEntry<T>(id);
+            var data = await _redisCache.GetAsync<T>(cacheEntry.Key, cancellationToken);
+            data ??= await _dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+            if (data is IOwnedEntity owned)
+            {
+                var cacheEntry2 = CacheManager.DbOwnerIdCacheEntry<T>(id, owned.OwnerId);
+                var cacheEntry3 = CacheManager.DbOwnerAllCacheEntry<T>(owned.OwnerId);
+                tasks.Add(_redisCache.RemoveAsync(cacheEntry2.Key, cancellationToken));
+                tasks.Add(RemoveAllOwnerCache(owned.OwnerId, cancellationToken));
+            }
+            await Task.WhenAll(tasks);
+        }
+
+        public async Task RemoveAllOwnerCache(long ownerId, CancellationToken cancellationToken)
+        {
+            var cacheEntry3 = CacheManager.DbOwnerAllCacheEntry<T>(ownerId);
+            await _redisCache.RemoveAsync(cacheEntry3.Key, cancellationToken);
+        }
+
         protected virtual async Task RemoveAllRecordsCacheAsync(CancellationToken cancellationToken)
         {
-            // var cacheEntry = typeof(T).HasInterface<IOwnedEntity>() ?
-            //              CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity) :
             var cacheEntry = CacheManager.DbSystemAllCacheEntry<T>();
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken);
@@ -230,8 +259,12 @@ namespace Hospital.Infrastructure.Repositories
             await _redisCache.RemoveByPatternAsync(key);
         }
 
-        public virtual async Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken)
+        public virtual async Task RemoveCacheWhenAddAsync(T entity, CancellationToken cancellationToken)
         {
+            if (_isOwnedEntity)
+            {
+                await RemoveAllOwnerCache((entity as IOwnedEntity).OwnerId, cancellationToken);
+            }
             await RemoveAllRecordsCacheAsync(cancellationToken);
             await RemovePaginationCacheAsync(cancellationToken);
         }
@@ -247,8 +280,24 @@ namespace Hospital.Infrastructure.Repositories
             await Task.WhenAll(tasks);
         }
 
-        public virtual async Task RemoveCacheWhenDeleteAsync(CancellationToken cancellationToken)
+        public virtual async Task RemoveCacheWhenDeleteAsync(IEnumerable<T> entities, CancellationToken cancellationToken)
         {
+            if (_isOwnedEntity)
+            {
+                var ids = entities.Select(x => x.Id).ToList();
+                var ownerIds = entities
+                    .Select(x => (x as IOwnedEntity).OwnerId)
+                    .Distinct()
+                    .ToList();
+                foreach (var id in ids)
+                {
+                    await RemoveOwnerIdCache(id, cancellationToken);
+                }
+                foreach (var ownerId in ownerIds)
+                {
+                    await RemoveAllOwnerCache(ownerId, cancellationToken);
+                }
+            }
             await RemoveAllRecordsCacheAsync(cancellationToken);
             await RemovePaginationCacheAsync(cancellationToken);
         }

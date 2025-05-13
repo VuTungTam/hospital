@@ -25,10 +25,6 @@ namespace Hospital.Application.Dtos.Bookings
 
         public string ServiceTypeId { get; set; }
 
-        public string ServiceTypeNameVn { get; set; }
-
-        public string ServiceTypeNameEn { get; set; }
-
         public string ServiceNameVn { get; set; }
 
         public string ServiceNameEn { get; set; }
@@ -58,6 +54,10 @@ namespace Hospital.Application.Dtos.Bookings
         public string FacilityId { get; set; }
 
         public string SpecialtyId { get; set; }
+
+        public string SpecialtyNameVn { get; set; }
+
+        public string SpecialtyNameEn { get; set; }
 
         public string FacilityNameVn { get; set; }
 

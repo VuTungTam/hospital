@@ -3,6 +3,7 @@ using Hospital.Application.EventBus;
 using Hospital.Application.Models.Auth;
 using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Customers;
+using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Domain.Models.Admin;
 using Hospital.Resource.Properties;
@@ -23,6 +24,7 @@ namespace Hospital.Application.Commands.Auth.Login
     {
         private readonly IEmployeeReadRepository _employeeReadRepository;
         private readonly ICustomerReadRepository _customerReadRepository;
+        private readonly IDoctorReadRepository _doctorReadRepository;
 
         public TraditionLoginCommandHandler(
             IEventDispatcher eventDispatcher,
@@ -33,11 +35,13 @@ namespace Hospital.Application.Commands.Auth.Login
             IAuthRepository authRepository,
             IRedisCache redisCache,
             IEmployeeReadRepository employeeReadRepository,
-            ICustomerReadRepository customerReadRepository
+            ICustomerReadRepository customerReadRepository,
+            IDoctorReadRepository doctorReadRepository
         ) : base(eventDispatcher, authService, localizer, mapper, executionContext, authRepository, redisCache)
         {
             _employeeReadRepository = employeeReadRepository;
             _customerReadRepository = customerReadRepository;
+            _doctorReadRepository = doctorReadRepository;
         }
 
         public async Task<LoginResult> Handle(TraditionLoginCommand request, CancellationToken cancellationToken)
@@ -58,6 +62,11 @@ namespace Hospital.Application.Commands.Auth.Login
             if (account == null)
             {
                 account = await _customerReadRepository.GetLoginByEmailAsync(request.Dto.Username, request.Dto.Password, cancellationToken: cancellationToken);
+            }
+
+            if (account == null)
+            {
+                account = await _doctorReadRepository.GetLoginByEmailAsync(request.Dto.Username, request.Dto.Password, cancellationToken: cancellationToken);
             }
 
             if (account == null)

@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.Bookings;
+﻿using Hospital.Application.Models.Bookings;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -12,9 +13,13 @@ namespace Hospital.Application.Repositories.Interfaces.Bookings
 
         Task<PaginationResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long ownerId = 0, CancellationToken cancellationToken = default);
 
+        Task<PaginationResult<Booking>> GetDoctorPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId, long timeSlotId, DateTime date = default, long ownerId = 0, CancellationToken cancellationToken = default);
+
+        Task<PaginationResult<Booking>> GetBookingInQueueAsync(Pagination pagination, long serviceId, long timeSlotId, DateTime date = default, CancellationToken cancellationToken = default);
+
         Task<int> GetMaxOrderAsync(long serviceId, DateTime date, long timeSlotId, CancellationToken cancellationToken);
 
-        Task<int> GetCurrentAsync(long serviceId, long timeSlotId, CancellationToken cancellationToken);
+        Task<CurrentBookingModel> GetCurrentAsync(long serviceId, long timeSlotId, CancellationToken cancellationToken);
 
         Task<Booking> GetByCodeAsync(string code, CancellationToken cancellationToken);
 

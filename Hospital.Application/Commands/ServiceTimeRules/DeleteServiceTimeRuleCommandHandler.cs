@@ -68,9 +68,9 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
             await _serviceTimeRuleWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
-            await _serviceTimeRuleWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken: cancellationToken);
+            await _serviceTimeRuleWriteRepository.RemoveCacheWhenDeleteAsync(rules, cancellationToken: cancellationToken);
 
-            await _timeSlotWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken: cancellationToken);
+            await _timeSlotWriteRepository.RemoveCacheWhenDeleteAsync(null, cancellationToken: cancellationToken);
 
 
             return Unit.Value;

@@ -91,7 +91,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
             await _redisCache.RemoveAsync(cacheEntry2.Key, cancellationToken);
 
-            await _timeSlotWriteRepository.RemoveCacheWhenAddAsync(cancellationToken);
+            await _timeSlotWriteRepository.RemoveCacheWhenAddAsync(null, cancellationToken);
 
             var cacheEntry3 = CacheManager.GetTimeSlotsEntry(timeRule.Id);
 

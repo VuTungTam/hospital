@@ -13,6 +13,8 @@ namespace Hospital.SharedKernel.Application.Services.Auth.Interfaces
 
         Task<string> GetCustomerPermission(CancellationToken cancellationToken);
 
+        Task<string> GetDoctorPermission(CancellationToken cancellationToken);
+
         bool CheckPermission(ActionExponent exponent);
 
         bool CheckPermission(ActionExponent[] exponents);

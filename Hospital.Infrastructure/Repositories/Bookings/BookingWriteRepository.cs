@@ -49,9 +49,9 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             await RemoveCacheWhenUpdateAsync(bookingId, cancellationToken);
         }
 
-        public Task ActionAfterAddAsync(CancellationToken cancellationToken)
+        public Task ActionAfterAddAsync(Booking booking, CancellationToken cancellationToken)
         {
-            return base.RemoveCacheWhenAddAsync(cancellationToken);
+            return base.RemoveCacheWhenAddAsync(booking, cancellationToken);
         }
 
     }

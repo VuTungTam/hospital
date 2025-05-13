@@ -9,6 +9,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -53,9 +54,13 @@ namespace Hospital.Application.Queries.Bookings
                     var timeSlotId = _mapper.Map<long>(bookingDto.TimeSlotId);
                     var facilityId = _mapper.Map<long>(bookingDto.FacilityId);
                     var profileId = _mapper.Map<long>(bookingDto.HealthProfileId);
+                    var option = new QueryOption
+                    {
+                        IgnoreOwner = true
+                    };
                     var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, cancellationToken: cancellationToken);
                     var facility = await _healthFacilityReadRepository.GetByIdAsync(facilityId, cancellationToken: cancellationToken);
-                    var profile = await _healthProfileReadRepository.GetByIdAsync(profileId, cancellationToken: cancellationToken);
+                    var profile = await _healthProfileReadRepository.GetByIdAsync(profileId, option, cancellationToken: cancellationToken);
                     var timeSlot = await _timeSlotReadRepository.GetByIdAsync(timeSlotId, cancellationToken: cancellationToken);
                     if (service != null)
                     {

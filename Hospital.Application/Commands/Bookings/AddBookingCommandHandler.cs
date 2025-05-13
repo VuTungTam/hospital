@@ -16,6 +16,7 @@ using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Modules.Notifications.Entities;
 using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -110,6 +111,8 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.FacilityId = service.FacilityId;
 
+            booking.DoctorId = service.DoctorId;
+
             var option = new QueryOption
             {
                 IgnoreFacility = true,
@@ -152,7 +155,7 @@ namespace Hospital.Application.Commands.Bookings
 
             await _socketService.SendNewBooking(booking, cancellationToken);
 
-            await _bookingWriteRepository.ActionAfterAddAsync(cancellationToken);
+            await _bookingWriteRepository.ActionAfterAddAsync(booking, cancellationToken);
 
             await callbackWrapper.Callback();
 

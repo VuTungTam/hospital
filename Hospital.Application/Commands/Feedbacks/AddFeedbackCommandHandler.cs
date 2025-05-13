@@ -104,7 +104,7 @@ namespace Hospital.Application.Commands.Feedbacks
 
             await _bookingWriteRepository.RemoveCacheWhenUpdateAsync(booking.Id, cancellationToken);
 
-            await _feedbackWriteRepository.RemoveCacheWhenAddAsync(cancellationToken);
+            await _feedbackWriteRepository.RemoveCacheWhenAddAsync(feedback, cancellationToken);
 
             return feedback.Id.ToString();
         }

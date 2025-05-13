@@ -4,9 +4,7 @@ using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
-using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
-using Hospital.Domain.Entities.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -24,7 +22,6 @@ namespace Hospital.Application.Queries.Bookings
         private readonly ITimeSlotReadRepository _timeSlotReadRepository;
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
-
         public GetBookingByIdQueryHandler(
             IAuthService authService,
             IMapper mapper,
@@ -81,8 +78,6 @@ namespace Hospital.Application.Queries.Bookings
                 {
                     bookingDto.ServiceNameVn = service.NameVn;
                     bookingDto.ServiceNameEn = service.NameEn;
-                    bookingDto.ServiceTypeId = service.TypeId.ToString();
-                    bookingDto.SpecialtyId = service.SpecialtyId.ToString();
                 }
                 if (facility != null)
                 {

@@ -63,9 +63,9 @@ namespace Hospital.Application.Commands.Zones
 
             zone.ZoneSpecialties = new();
 
-            foreach (var specialty in request.Zone.Specialties)
+            foreach (var specialtyId in request.Zone.SpecialtyIds)
             {
-                var speDb = specialties.First(x => x.Id + "" == specialty.Id);
+                var speDb = specialties.First(x => x.Id + "" == specialtyId);
 
                 zone.ZoneSpecialties.Add(new ZoneSpecialty
                 {

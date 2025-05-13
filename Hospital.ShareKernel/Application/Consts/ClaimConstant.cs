@@ -4,6 +4,7 @@
     {
         public const string IS_SA = "is_sa";
         public const string IS_FA = "is_fa";
+        public const string IS_DOCTOR = "is_doctor";
         public const string SHARDING = "sharding_group";
         public const string USER_ID = "user_id";
         public const string FACILITY_ID = "facility_id";

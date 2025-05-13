@@ -8,6 +8,7 @@ using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
+using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
@@ -48,7 +49,12 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
+            var option = new QueryOption
+            {
+                IgnoreOwner = true
+            };
+
+            var booking = await _bookingReadRepository.GetByIdAsync(request.Id, option, cancellationToken: cancellationToken);
             if (booking == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
@@ -61,7 +67,9 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.EndBooking = _dateService.GetClientTime().TimeOfDay;
 
-            await _bookingWriteRepository.ChangeStatusAsync(request.Id, BookingStatus.Completed, cancellationToken);
+            booking.Status = BookingStatus.Completed;
+
+            await _bookingWriteRepository.UpdateAsync(booking, cancellationToken: cancellationToken);
 
             var cacheEntry = CacheManager.GetCurrentOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
 

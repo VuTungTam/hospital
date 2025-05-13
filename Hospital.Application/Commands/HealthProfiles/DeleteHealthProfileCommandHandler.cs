@@ -41,7 +41,6 @@ namespace Hospital.Application.Commands.HealhProfiles
                 await _healthProfileWriteRepository.DeleteAsync(healthProfiles, cancellationToken);
 
             }
-
             return Unit.Value;
         }
     }

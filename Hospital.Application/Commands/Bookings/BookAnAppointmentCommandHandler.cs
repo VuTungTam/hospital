@@ -15,7 +15,6 @@ using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
-using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Modules.Notifications.Entities;
 using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -101,6 +100,8 @@ namespace Hospital.Application.Commands.Bookings
             booking.Status = BookingStatus.Confirmed;
 
             booking.FacilityId = service.FacilityId;
+
+            booking.DoctorId = service.DoctorId;
 
             var option = new QueryOption
             {

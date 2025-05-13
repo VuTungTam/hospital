@@ -1,9 +1,10 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using AspNetCoreRateLimit;
+using Hospital.Application.Dtos.DoctorWorkingContexts;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
-using Hospital.Domain.Entities.Bookings;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Domain.Enums;
-using Hospital.Domain.Specifications;
 using Hospital.Domain.Specifications.HealthServices;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
@@ -20,12 +21,17 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
 {
     public class HealthServiceReadRepository : ReadRepository<HealthService>, IHealthServiceReadRepository
     {
+
+        private readonly ITimeSlotReadRepository _timeSlotReadRepository;
+
         public HealthServiceReadRepository(
             IServiceProvider serviceProvider,
             IStringLocalizer<Resources> localizer,
-            IRedisCache redisCache
+            IRedisCache redisCache,
+            ITimeSlotReadRepository timeSlotReadRepository
             ) : base(serviceProvider, localizer, redisCache)
         {
+            _timeSlotReadRepository = timeSlotReadRepository;
         }
 
         public override ISpecification<HealthService> GuardDataAccess<HealthService>(ISpecification<HealthService> spec, QueryOption option = default)
@@ -41,7 +47,6 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
             // }
             return spec;
         }
-
         public async Task<PaginationResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId, long facilityId, long specialtyId, long doctorId, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthService> spec = new GetHealthServicesByStatusSpecification(status);
@@ -91,6 +96,101 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
             var serviceTypes = await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
 
             return serviceTypes;
+        }
+
+        public async Task<PaginationResult<HealthService>> GetServiceCurrentAsync(Pagination pagination, long facilityId, long doctorId, CancellationToken cancellationToken)
+        {
+            var now = DateTime.Now;
+            var currentTime = now.TimeOfDay;
+            var currentDay = (int)now.DayOfWeek;
+
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
+                .Include(s => s.ServiceTimeRules.Where(r => r.DayOfWeek == currentDay))
+                .Where(s => s.ServiceTimeRules.Any(r => r.DayOfWeek == currentDay));
+
+            if (facilityId > 0)
+                query = query.Where(s => s.FacilityId == facilityId);
+
+            if (doctorId > 0)
+                query = query.Where(s => s.DoctorId == doctorId);
+
+            var data = await query.ToListAsync(cancellationToken);
+            var filtered = data
+                .Where(service => service.ServiceTimeRules.Any(r => IsTimeWithinRule(r, currentTime)))
+                .ToList();
+
+            var paged = filtered.Skip(pagination.Offset).Take(pagination.Size).ToList();
+            return new PaginationResult<HealthService>(paged, filtered.Count);
+        }
+
+
+        private static bool IsTimeWithinRule(ServiceTimeRule rule, TimeSpan currentTime)
+        {
+            var inMainRange = currentTime >= rule.StartTime && currentTime <= rule.EndTime;
+            var inBreak = rule.StartBreakTime != rule.EndBreakTime &&
+                          currentTime >= rule.StartBreakTime && currentTime <= rule.EndBreakTime;
+
+            return inMainRange && !inBreak;
+        }
+
+        public async Task<DoctorWorkingContextDto> GetServiceCurrentByDoctorIdAsync(long doctorId, CancellationToken cancellationToken)
+        {
+            CacheEntry cacheEntry = CacheManager.GetDoctorContext(doctorId);
+
+            var data = await _redisCache.GetAsync<DoctorWorkingContextDto>(cacheEntry.Key, cancellationToken);
+
+            if (data != null)
+            {
+                return data;
+            }
+
+            var now = DateTime.Now;
+            var currentTime = now.TimeOfDay;
+            var currentDay = (int)now.DayOfWeek;
+
+            var service = await _dbSet.AsNoTracking()
+                .Include(s => s.ServiceTimeRules.Where(r => r.DayOfWeek == currentDay))
+                .FirstOrDefaultAsync(s =>
+                    s.DoctorId == doctorId &&
+                    s.ServiceTimeRules.Any(r => r.DayOfWeek == currentDay),
+                    cancellationToken);
+
+            if (service == null)
+            {
+                return null;
+            }
+
+            var rule = service.ServiceTimeRules.FirstOrDefault();
+            if (rule == null)
+            {
+                return null;
+            }
+
+            var timeSlots = await _timeSlotReadRepository.GetByTimeRuleIdAsync(rule.Id, cancellationToken);
+
+            var currentSlot = timeSlots.FirstOrDefault(ts => ts.Start <= currentTime && ts.End > currentTime);
+
+            if (currentSlot == null)
+            {
+                return null;
+            }
+
+            data = new DoctorWorkingContextDto
+            {
+                DoctorId = doctorId.ToString(),
+                ServiceId = service.Id.ToString(),
+                ServiceTimeRuleId = rule.Id.ToString(),
+                TimeSlotId = currentSlot.Id.ToString()
+            };
+
+            var expired = currentSlot.End - currentTime;
+            if (expired.TotalSeconds > 0)
+            {
+                await _redisCache.SetAsync(cacheEntry.Key, data, expired, cancellationToken);
+            }
+
+            return data;
+
         }
     }
 }

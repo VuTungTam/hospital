@@ -56,7 +56,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             doctor.FacilityId = _executionContext.FacilityId;
             doctor.LastSeen = null;
 
-            await _dbSet.AddAsync(doctor, cancellationToken);
+            _dbSet.Add(doctor);
         }
         public async Task UpdateDoctorAsync(Doctor doctor, DoctorDto newDoctor, CancellationToken cancellationToken = default)
         {

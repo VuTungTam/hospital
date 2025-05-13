@@ -211,17 +211,17 @@ namespace Hospital.Infrastructure.Repositories
         {
             if (type == "all")
             {
-                // if (typeof(T).HasInterface<IOwnedEntity>())
-                // {
-                //     return CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity);
-                // }
+                if (typeof(T).HasInterface<IOwnedEntity>() && _executionContext.AccountType == AccountType.Customer)
+                {
+                    return CacheManager.DbOwnerAllCacheEntry<T>(_executionContext.Identity);
+                }
                 return CacheManager.DbSystemAllCacheEntry<T>();
             }
 
-            // if (typeof(T).HasInterface<IOwnedEntity>())
-            // {
-            //     return CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity);
-            // }
+            if (typeof(T).HasInterface<IOwnedEntity>() && _executionContext.AccountType == AccountType.Customer)
+            {
+                return CacheManager.DbOwnerIdCacheEntry<T>(id, _executionContext.Identity);
+            }
             return CacheManager.DbSystemIdCacheEntry<T>(id);
         }
 

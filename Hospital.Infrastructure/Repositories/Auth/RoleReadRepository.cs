@@ -1,4 +1,6 @@
-﻿using Hospital.Application.Repositories.Interfaces.Auth.Roles;
+﻿using System.Linq;
+using System.Threading;
+using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Resource.Properties;
@@ -11,8 +13,6 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System.Linq;
-using System.Threading;
 using Action = Hospital.SharedKernel.Domain.Entities.Auths.Action;
 namespace Hospital.Infrastructure.Repositories.Auth
 {
@@ -24,15 +24,17 @@ namespace Hospital.Infrastructure.Repositories.Auth
 
         public async Task<List<Action>> GetCustomerActions(CancellationToken cancellationToken)
         {
-            var cacheEntry = CacheManager.GetCustomerPermission();
+            var actions = await _dbContext.Roles.Where(r => r.Code == RoleCodeConstant.CUSTOMER)
+               .SelectMany(r => r.RoleActions.Select(ra => ra.Action))
+               .ToListAsync(cancellationToken);
+            return actions;
+        }
 
-            var valueFactory = () =>  _dbContext.Roles
-                .Where(r => r.Code == RoleCodeConstant.CUSTOMER)
+        public async Task<List<Action>> GetDoctorActions(CancellationToken cancellationToken)
+        {
+            var actions = await _dbContext.Roles.Where(r => r.Code == RoleCodeConstant.DOCTOR)
                 .SelectMany(r => r.RoleActions.Select(ra => ra.Action))
                 .ToListAsync(cancellationToken);
-
-            var actions = await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
-
             return actions;
         }
 

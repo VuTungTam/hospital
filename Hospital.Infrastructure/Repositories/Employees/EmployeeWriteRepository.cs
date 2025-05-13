@@ -104,7 +104,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
             foreach (var employee in employees)
             {
                 var noti = JsonConvert.DeserializeObject<Notification>(JsonConvert.SerializeObject(notification));
-
+                noti.Id = AuthUtility.GenerateSnowflakeId();
                 noti.OwnerId = employee.Id;
                 notificationWriteRepository.Add(noti);
 

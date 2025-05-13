@@ -3,7 +3,6 @@ using Hospital.Application.Dtos.HealthServices;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.Specialities;
-using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;

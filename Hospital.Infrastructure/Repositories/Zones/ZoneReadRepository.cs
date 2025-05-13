@@ -2,6 +2,7 @@
 using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Specifications;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Enums;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Specifications;
@@ -39,8 +40,14 @@ namespace Hospital.Infrastructure.Repositories.Zones
 
             spec = spec.And(base.GuardDataAccess(spec, option));
 
-            //spec = spec.And(new LimitByFacilityIdSpecification<Zone>(_executionContext.FacilityId));
-
+            if (_executionContext.AccountType == AccountType.Customer)
+            {
+                return spec;
+            }
+            else
+            {
+                spec = spec.And(new LimitByFacilityIdSpecification<Zone>(_executionContext.FacilityId));
+            }
             return spec;
         }
     }

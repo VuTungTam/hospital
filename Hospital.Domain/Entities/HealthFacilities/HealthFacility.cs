@@ -22,6 +22,7 @@ namespace Hospital.Domain.Entities.HealthFacilities
         IDeletedBy
     {
         [Filterable("Name VN")]
+
         public string NameVn { get; set; }
         [Filterable("Name US")]
         public string NameEn { get; set; }

@@ -14,7 +14,7 @@ namespace Hospital.Application.Queries.HealthProfiles
     {
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         public GetHealthProfilePagingQueryHandler(
-            IAuthService authService, 
+            IAuthService authService,
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IHealthProfileReadRepository healthProfileReadRepository
@@ -25,11 +25,11 @@ namespace Hospital.Application.Queries.HealthProfiles
 
         public async Task<PaginationResult<HealthProfileDto>> Handle(GetHealthProfilePagingQuery request, CancellationToken cancellationToken)
         {
-            var profiles = await _healthProfileReadRepository.GetPagingWithFilterAsync(request.Pagination, request.UserId, cancellationToken);   
-            
-            var profileDtos = _mapper.Map<List<HealthProfileDto>>(profiles.Data); 
-            
-            return new PaginationResult<HealthProfileDto> (profileDtos, profiles.Total );
+            var profiles = await _healthProfileReadRepository.GetPagingWithFilterAsync(request.Pagination, request.UserId, cancellationToken);
+
+            var profileDtos = _mapper.Map<List<HealthProfileDto>>(profiles.Data);
+
+            return new PaginationResult<HealthProfileDto>(profileDtos, profiles.Total);
         }
     }
 }

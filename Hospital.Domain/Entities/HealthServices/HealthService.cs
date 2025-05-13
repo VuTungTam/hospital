@@ -7,6 +7,7 @@ using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Domain.Entities.HealthServices
 {
@@ -22,8 +23,9 @@ namespace Hospital.Domain.Entities.HealthServices
         IFacility,
         IDoctor
     {
+        [Filterable("Name VN")]
         public string NameVn { get; set; }
-
+        [Filterable("Name US")]
         public string NameEn { get; set; }
 
         public long TypeId { get; set; }

@@ -34,11 +34,15 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
 
         Task<List<CacheEntry>> SetBlockUpdateRangeCacheAsync(List<long> ids, CancellationToken cancellationToken);
 
-        Task RemoveCacheWhenAddAsync(CancellationToken cancellationToken);
+        Task RemoveCacheWhenAddAsync(T entity, CancellationToken cancellationToken);
 
         Task RemoveCacheWhenUpdateAsync(long id, CancellationToken cancellationToken);
 
-        Task RemoveCacheWhenDeleteAsync(CancellationToken cancellationToken);
+        Task RemoveCacheWhenDeleteAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+
+        Task RemoveAllOwnerCache(long ownerId, CancellationToken cancellationToken);
+
+        Task RemoveOneRecordCacheAsync(long id, CancellationToken cancellationToken);
 
     }
 }

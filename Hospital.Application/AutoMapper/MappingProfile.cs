@@ -156,7 +156,8 @@ namespace Hospital.Application.Mappings
 
             //HealthProfile
             CreateMap<HealthProfile, HealthProfileDto>().ReverseMap();
-
+            CreateMap<HealthProfileDto, HealthProfile>()
+                .ForMember(des => des.OwnerId, opt => opt.MapFrom(src => StringToInt64(src.OwnerId)));
             //Specialty
             CreateMap<Specialty, SpecialtyDto>().ReverseMap();
 

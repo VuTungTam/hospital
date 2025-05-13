@@ -6,6 +6,5 @@ namespace Hospital.Application.Repositories.Interfaces.TimeSlots
     public interface ITimeSlotReadRepository : IReadRepository<TimeSlot>
     {
         Task<List<TimeSlot>> GetByTimeRuleIdAsync(long timeRuleId, CancellationToken cancellationToken);
-
     }
 }

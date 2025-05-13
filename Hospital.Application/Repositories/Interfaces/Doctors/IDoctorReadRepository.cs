@@ -10,6 +10,8 @@ namespace Hospital.Application.Repositories.Interfaces.Doctors
 {
     public interface IDoctorReadRepository : IReadRepository<Doctor>
     {
+        Task<Doctor> GetLoginByEmailAsync(string email, string password, bool checkPassword = true, CancellationToken cancellationToken = default);
+
         Task<PaginationResult<Doctor>> GetDoctorsPaginationResultAsync(Pagination pagination,
             FilterDoctorRequest request, AccountStatus status = AccountStatus.None,
             CancellationToken cancellationToken = default);

@@ -114,7 +114,7 @@ namespace Hospital.Application.Commands.HealthServices
 
             await _healthServiceWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
-            await _healthServiceWriteRepository.RemoveCacheWhenAddAsync(cancellationToken);
+            await _healthServiceWriteRepository.RemoveCacheWhenAddAsync(service, cancellationToken);
 
             CacheEntry cacheEntry = CacheManager.GetFacilityServiceType(_executionContext.FacilityId);
 

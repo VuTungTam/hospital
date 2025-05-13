@@ -51,7 +51,7 @@ namespace Hospital.Application.Commands.Zones
 
             await _zoneWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
-            await _zoneWriteRepository.RemoveCacheWhenDeleteAsync(cancellationToken);
+            await _zoneWriteRepository.RemoveCacheWhenDeleteAsync(zones, cancellationToken);
 
             return Unit.Value;
         }

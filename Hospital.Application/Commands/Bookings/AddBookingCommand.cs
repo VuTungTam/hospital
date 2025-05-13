@@ -6,7 +6,7 @@ using Hospital.SharedKernel.Libraries.Attributes;
 namespace Hospital.Application.Commands.Bookings
 {
     [RequiredPermission(ActionExponent.AddBooking)]
-    public class AddBookingCommand : BaseAllowAnonymousCommand<string>
+    public class AddBookingCommand : BaseCommand<string>
     {
         public AddBookingCommand(BookingDto booking)
         {

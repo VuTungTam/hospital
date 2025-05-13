@@ -61,7 +61,8 @@ namespace Hospital.Application.Commands.Bookings
 
             if (cancelBooking == null)
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
-
+            List<Booking> bookingsToUpdate = new List<Booking>();
+            var removeNextCache = false;
             switch (cancelBooking.Status)
             {
                 case BookingStatus.Completed:
@@ -72,7 +73,8 @@ namespace Hospital.Application.Commands.Bookings
                     await CancelBookingAsync(cancelBooking, cancellationToken);
                     break;
                 case BookingStatus.Confirmed:
-                    await CancelAndReorderAsync(cancelBooking, cancellationToken);
+                    bookingsToUpdate = await CancelAndReorderAsync(cancelBooking, cancellationToken);
+                    removeNextCache = true;
                     break;
                 default:
                     break;
@@ -84,6 +86,14 @@ namespace Hospital.Application.Commands.Bookings
             await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
             await _bookingWriteRepository.RemoveCacheWhenUpdateAsync(cancelBooking.Id, cancellationToken);
+
+            if (removeNextCache)
+            {
+                foreach (var booking in bookingsToUpdate)
+                {
+                    await _bookingWriteRepository.RemoveOneRecordCacheAsync(booking.Id, cancellationToken);
+                }
+            }
 
             await SendSignalR(cancelBooking, cancellationToken);
 
@@ -101,7 +111,7 @@ namespace Hospital.Application.Commands.Bookings
             return Unit.Value;
         }
 
-        private async Task<Unit> CancelAndReorderAsync(Booking cancelBooking, CancellationToken cancellationToken)
+        private async Task<List<Booking>> CancelAndReorderAsync(Booking cancelBooking, CancellationToken cancellationToken)
         {
             var bookingsToUpdate = await _bookingReadRepository.GetBookingsToReorder(cancelBooking, cancellationToken);
             cancelBooking.Status = BookingStatus.Cancel;
@@ -120,7 +130,7 @@ namespace Hospital.Application.Commands.Bookings
                 }
 
             }
-            return Unit.Value;
+            return bookingsToUpdate;
         }
 
         private async Task<Unit> SendCustomerNotification(Booking booking, CallbackWrapper callbackWrapper, CancellationToken cancellationToken)

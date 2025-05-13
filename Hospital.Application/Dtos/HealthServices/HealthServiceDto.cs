@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Hospital.Application.Dtos.ServiceTimeRules;
-using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;

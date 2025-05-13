@@ -27,6 +27,7 @@ namespace Hospital.Infrastructure.Repositories.TimeSlots
             }
             return data;
         }
+
     }
 
 }

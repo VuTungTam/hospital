@@ -1,9 +1,13 @@
-﻿using Hospital.Application.Repositories.Interfaces.Auth;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Constants;
+using Hospital.Domain.Entities.Doctors;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Configs;
 using Hospital.SharedKernel.Application.Consts;
@@ -34,9 +38,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polly;
 using Serilog;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Hospital.Application.Services.Impls.Auth
 {
@@ -118,7 +119,7 @@ namespace Hospital.Application.Services.Impls.Auth
             {
                 accountType = AccountType.Customer;
             }
-            else if(payload.User is Employee)
+            else if (payload.User is Employee)
             {
                 accountType = AccountType.Employee;
             }
@@ -133,6 +134,7 @@ namespace Hospital.Application.Services.Impls.Auth
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, "false"));
                 claims.Add(new Claim(ClaimConstant.IS_FA, "false"));
+                claims.Add(new Claim(ClaimConstant.IS_DOCTOR, "false"));
                 claims.Add(new Claim(ClaimConstant.ZONE_ID, (0).ToString()));
                 claims.Add(new Claim(ClaimConstant.FACILITY_ID, (0).ToString()));
             }
@@ -140,8 +142,18 @@ namespace Hospital.Application.Services.Impls.Auth
             {
                 claims.Add(new Claim(ClaimConstant.IS_SA, (payload.Roles.Any(r => r.Code == RoleCodeConstant.SUPER_ADMIN)).ToString()));
                 claims.Add(new Claim(ClaimConstant.IS_FA, (payload.Roles.Any(r => r.Code == RoleCodeConstant.FACILITY_ADMIN)).ToString()));
+                claims.Add(new Claim(ClaimConstant.IS_DOCTOR, "false"));
                 claims.Add(new Claim(ClaimConstant.ZONE_ID, (employee.ZoneId).ToString()));
                 claims.Add(new Claim(ClaimConstant.FACILITY_ID, (employee.FacilityId).ToString()));
+            }
+
+            else if (payload.User is Doctor doctor)
+            {
+                claims.Add(new Claim(ClaimConstant.IS_SA, "false"));
+                claims.Add(new Claim(ClaimConstant.IS_FA, "false"));
+                claims.Add(new Claim(ClaimConstant.IS_DOCTOR, "true"));
+                claims.Add(new Claim(ClaimConstant.ZONE_ID, (0).ToString()));
+                claims.Add(new Claim(ClaimConstant.FACILITY_ID, (doctor.FacilityId).ToString()));
             }
 
             claims.Add(new Claim(ClaimConstant.USER_ID, payload.User.Id.ToString()));
@@ -261,11 +273,43 @@ namespace Hospital.Application.Services.Impls.Auth
 
         public async Task<string> GetCustomerPermission(CancellationToken cancellationToken)
         {
-            var actions = await _roleReadRepository.GetCustomerActions(cancellationToken);
+            var cacheEntry = CacheManager.GetCustomerPermission();
 
-            var exponents = actions.Select(a => a.Exponent);
+            var valueFactory = async () =>
+            {
+                var actions = await _roleReadRepository.GetCustomerActions(cancellationToken);
+                var exponents = actions.Select(a => a.Exponent).Distinct();
+                return AuthUtility.CalculateToTalPermision(exponents);
+            };
 
-            return AuthUtility.CalculateToTalPermision(exponents.Distinct());
+            var permission = await _redisCache.GetOrSetAsync(
+                cacheEntry.Key,
+                valueFactory,
+                TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds),
+                cancellationToken: cancellationToken);
+
+            return permission;
+        }
+
+
+        public async Task<string> GetDoctorPermission(CancellationToken cancellationToken)
+        {
+            var cacheEntry = CacheManager.GetDoctorPermission();
+
+            var valueFactory = async () =>
+            {
+                var actions = await _roleReadRepository.GetDoctorActions(cancellationToken);
+                var exponents = actions.Select(a => a.Exponent).Distinct();
+                return AuthUtility.CalculateToTalPermision(exponents);
+            };
+
+            var permission = await _redisCache.GetOrSetAsync(
+                cacheEntry.Key,
+                valueFactory,
+                TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds),
+                cancellationToken: cancellationToken);
+
+            return permission;
         }
 
         public string GetPermission(List<ActionWithExcludeValue> actions)
@@ -368,9 +412,33 @@ namespace Hospital.Application.Services.Impls.Auth
 
         public async Task<LoginResult> GetLoginResultAsync(BaseUser user, CancellationToken cancellationToken)
         {
-            var roles = user is Customer ? new List<Role>() : (user as Employee).EmployeeRoles.Select(x => x.Role);
-            var actions = user is Customer ? new List<ActionWithExcludeValue>() : await _actionReadRepository.GetActionsByEmployeeIdAsync(user.Id, cancellationToken);
-            var permission = user is Customer ? await GetCustomerPermission(cancellationToken) : GetPermission(actions);
+            List<Role> roles;
+            List<ActionWithExcludeValue> actions;
+            string permission;
+
+            if (user is Customer)
+            {
+                roles = new List<Role>();
+                actions = new List<ActionWithExcludeValue>();
+                permission = await GetCustomerPermission(cancellationToken);
+            }
+            else if (user is Doctor doctor)
+            {
+                roles = new List<Role>();
+                actions = new List<ActionWithExcludeValue>();
+                permission = await GetDoctorPermission(cancellationToken);
+            }
+            else if (user is Employee employee)
+            {
+                roles = employee.EmployeeRoles.Select(x => x.Role).ToList();
+                actions = await _actionReadRepository.GetActionsByEmployeeIdAsync(user.Id, cancellationToken);
+                permission = GetPermission(actions);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unknown user type");
+            }
+
             var payload = new GenTokenPayload { User = user, Permission = permission, Roles = roles };
             var accessToken = await GenerateAccessTokenAsync(payload, cancellationToken);
 

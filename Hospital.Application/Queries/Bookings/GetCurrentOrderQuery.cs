@@ -1,10 +1,11 @@
-﻿using Hospital.SharedKernel.Application.CQRS.Queries.Base;
+﻿using Hospital.Application.Models.Bookings;
+using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetCurrentOrderQuery : BaseAllowAnonymousQuery<int>
+    public class GetCurrentOrderQuery : BaseAllowAnonymousQuery<CurrentBookingModel>
     {
-        public GetCurrentOrderQuery(long serviceId, long timeSlotId) 
+        public GetCurrentOrderQuery(long serviceId, long timeSlotId)
         {
             ServiceId = serviceId;
             TimeSlotId = timeSlotId;

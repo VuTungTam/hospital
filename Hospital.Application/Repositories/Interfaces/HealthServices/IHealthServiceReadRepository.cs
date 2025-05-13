@@ -1,4 +1,5 @@
-﻿using Hospital.Domain.Entities.HealthServices;
+﻿using Hospital.Application.Dtos.DoctorWorkingContexts;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -12,5 +13,8 @@ namespace Hospital.Application.Repositories.Interfaces.HealthServices
 
         Task<List<ServiceType>> GetServiceTypeByFacilityIdAsync(long facilityId, CancellationToken cancellationToken);
 
+        Task<PaginationResult<HealthService>> GetServiceCurrentAsync(Pagination pagination, long facilityId, long doctorId, CancellationToken cancellationToken);
+
+        Task<DoctorWorkingContextDto> GetServiceCurrentByDoctorIdAsync(long doctorId, CancellationToken cancellationToken);
     }
 }
