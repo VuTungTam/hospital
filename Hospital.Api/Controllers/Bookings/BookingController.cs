@@ -1,5 +1,6 @@
 ﻿using Hospital.Application.Commands.Bookings;
 using Hospital.Application.Dtos.Bookings;
+using Hospital.Application.Models.Bookings;
 using Hospital.Application.Queries.Bookings;
 using Hospital.Application.Queries.Sequences;
 using Hospital.Domain.Entities.Bookings;
@@ -179,10 +180,10 @@ namespace Hospital.Api.Controllers.Bookings
             return Ok(new BaseResponse());
         }
 
-        [HttpPut("cancel/{id}")]
-        public virtual async Task<IActionResult> Cancel(long id, CancellationToken cancellationToken = default)
+        [HttpPut("cancel")]
+        public virtual async Task<IActionResult> Cancel(CancelBookingModel model, CancellationToken cancellationToken = default)
         {
-            await _mediator.Send(new CancelBookingCommand(id), cancellationToken);
+            await _mediator.Send(new CancelBookingCommand(model), cancellationToken);
             return Ok(new BaseResponse());
         }
 

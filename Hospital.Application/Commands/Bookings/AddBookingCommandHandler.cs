@@ -2,6 +2,7 @@
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.Employees;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.Zones;
@@ -35,6 +36,7 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IExecutionContext _executionContext;
         private readonly ICustomerReadRepository _customerReadRepository;
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
+        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
 
         private readonly ISocketService _socketService;
         public AddBookingCommandHandler(
@@ -49,6 +51,7 @@ namespace Hospital.Application.Commands.Bookings
             IHealthServiceReadRepository healthServiceReadRepository,
             ICustomerReadRepository customerReadRepository,
             IExecutionContext executionContext,
+            IHealthFacilityReadRepository healthFacilityReadRepository,
             ISocketService socketService
 
         ) : base(eventDispatcher, authService, localizer, mapper)
@@ -60,6 +63,7 @@ namespace Hospital.Application.Commands.Bookings
             _executionContext = executionContext;
             _customerReadRepository = customerReadRepository;
             _healthProfileReadRepository = healthProfileReadRepository;
+            _healthFacilityReadRepository = healthFacilityReadRepository;
             _socketService = socketService;
         }
 
@@ -88,6 +92,14 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException("Booking.ServiceNotFound");
             }
 
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(service.FacilityId, cancellationToken: cancellationToken);
+
+            if (facility == null)
+            {
+                throw new BadRequestException("Booking.ServiceNotFound");
+            }
+
+
             var booking = _mapper.Map<Booking>(request.Booking);
 
             if (string.IsNullOrWhiteSpace(booking.Email) || string.IsNullOrWhiteSpace(booking.Phone))
@@ -104,6 +116,9 @@ namespace Hospital.Application.Commands.Bookings
                     booking.Phone = customer.Phone;
                 }
             }
+            booking.HealthProfileName = profile.Name;
+
+            booking.FacilityName = facility.NameVn;
 
             booking.Date = booking.Date.AddDays(1);
 

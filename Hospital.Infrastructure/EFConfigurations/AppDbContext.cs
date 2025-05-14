@@ -80,6 +80,7 @@ namespace Hospital.Infrastructure.EFConfigurations
             modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceTimeRuleEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CancelReasonEntityTypeConfiguration());
             base.OnModelCreating(modelBuilder);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

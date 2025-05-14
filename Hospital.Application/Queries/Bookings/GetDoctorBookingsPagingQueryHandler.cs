@@ -20,7 +20,6 @@ namespace Hospital.Application.Queries.Bookings
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         private readonly ITimeSlotReadRepository _timeSlotReadRepository;
-        private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
 
 
@@ -29,7 +28,6 @@ namespace Hospital.Application.Queries.Bookings
             IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IBookingReadRepository bookingReadRepository,
-            IHealthProfileReadRepository healthProfileReadRepository,
             ITimeSlotReadRepository timeSlotReadRepository,
             IHealthServiceReadRepository healthServiceReadRepository,
             IHealthFacilityReadRepository healthFacilityReadRepository
@@ -38,7 +36,6 @@ namespace Hospital.Application.Queries.Bookings
             _bookingReadRepository = bookingReadRepository;
             _healthServiceReadRepository = healthServiceReadRepository;
             _timeSlotReadRepository = timeSlotReadRepository;
-            _healthProfileReadRepository = healthProfileReadRepository;
             _healthFacilityReadRepository = healthFacilityReadRepository;
         }
 
@@ -53,14 +50,12 @@ namespace Hospital.Application.Queries.Bookings
                     var serviceId = _mapper.Map<long>(bookingDto.ServiceId);
                     var timeSlotId = _mapper.Map<long>(bookingDto.TimeSlotId);
                     var facilityId = _mapper.Map<long>(bookingDto.FacilityId);
-                    var profileId = _mapper.Map<long>(bookingDto.HealthProfileId);
                     var option = new QueryOption
                     {
                         IgnoreOwner = true
                     };
                     var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, cancellationToken: cancellationToken);
                     var facility = await _healthFacilityReadRepository.GetByIdAsync(facilityId, cancellationToken: cancellationToken);
-                    var profile = await _healthProfileReadRepository.GetByIdAsync(profileId, option, cancellationToken: cancellationToken);
                     var timeSlot = await _timeSlotReadRepository.GetByIdAsync(timeSlotId, cancellationToken: cancellationToken);
                     if (service != null)
                     {
@@ -73,10 +68,7 @@ namespace Hospital.Application.Queries.Bookings
                         bookingDto.FacilityNameVn = facility.NameVn;
                         bookingDto.FacilityNameEn = facility.NameEn;
                     }
-                    if (profile != null)
-                    {
-                        bookingDto.HealthProfileName = profile.Name;
-                    }
+
                     if (timeSlot != null)
                     {
                         bookingDto.TimeRange = timeSlot.Start.ToString("hh\\:mm") + " - " + timeSlot.End.ToString("hh\\:mm");

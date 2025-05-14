@@ -154,8 +154,14 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("FacilityName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("HealthProfileId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("HealthProfileName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -208,6 +214,32 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("TimeSlotId");
 
                     b.ToTable("tbl_bookings");
+                });
+
+            modelBuilder.Entity("Hospital.Domain.Entities.CancelReasons.CancelReason", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BookingId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("CancelType")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId")
+                        .IsUnique();
+
+                    b.ToTable("mcs_cancel_reasons");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Distances.Distance", b =>
@@ -1994,6 +2026,17 @@ namespace Hospital.Api.Migrations
                     b.Navigation("TimeSlot");
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entities.CancelReasons.CancelReason", b =>
+                {
+                    b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
+                        .WithOne("CancelReason")
+                        .HasForeignKey("Hospital.Domain.Entities.CancelReasons.CancelReason", "BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entities.Feedbacks.Feedback", b =>
                 {
                     b.HasOne("Hospital.Domain.Entities.Bookings.Booking", "Booking")
@@ -2228,6 +2271,8 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.Domain.Entities.Bookings.Booking", b =>
                 {
+                    b.Navigation("CancelReason");
+
                     b.Navigation("Feedback");
 
                     b.Navigation("Payments");

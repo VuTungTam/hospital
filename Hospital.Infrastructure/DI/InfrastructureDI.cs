@@ -3,7 +3,9 @@ using Hospital.Application.Repositories.Interfaces.Auth;
 using Hospital.Application.Repositories.Interfaces.Auth.Actions;
 using Hospital.Application.Repositories.Interfaces.Auth.Roles;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.CancelReasons;
 using Hospital.Application.Repositories.Interfaces.Customers;
+using Hospital.Application.Repositories.Interfaces.Dashboards;
 using Hospital.Application.Repositories.Interfaces.Distances;
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.Employees;
@@ -27,7 +29,9 @@ using Hospital.Infrastructure.Repositories.AppConfigs;
 using Hospital.Infrastructure.Repositories.Articles;
 using Hospital.Infrastructure.Repositories.Auth;
 using Hospital.Infrastructure.Repositories.Bookings;
+using Hospital.Infrastructure.Repositories.CancelReasons;
 using Hospital.Infrastructure.Repositories.Customers;
+using Hospital.Infrastructure.Repositories.Dashboards;
 using Hospital.Infrastructure.Repositories.Distances;
 using Hospital.Infrastructure.Repositories.Doctors;
 using Hospital.Infrastructure.Repositories.Employees;
@@ -41,8 +45,7 @@ using Hospital.Infrastructure.Repositories.Notifications;
 using Hospital.Infrastructure.Repositories.Payments;
 using Hospital.Infrastructure.Repositories.ServiceTimeRules;
 using Hospital.Infrastructure.Repositories.SocialNetworks;
-using Hospital.Infrastructure.Repositories.Specialities;
-using Hospital.Infrastructure.Repositories.Specilities;
+using Hospital.Infrastructure.Repositories.Specialties;
 using Hospital.Infrastructure.Repositories.TimeSlots;
 using Hospital.Infrastructure.Repositories.Users;
 using Hospital.Infrastructure.Repositories.Zones;
@@ -92,9 +95,12 @@ namespace Hospital.Infrastructure.DI
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
+            // Dashboard
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
+
             // Specialty
-            services.AddScoped<ISpecialtyReadRepository, SpecialityReadRepository>();
-            services.AddScoped<ISpecialtyWriteRepository, SpecialityWriteRepository>();
+            services.AddScoped<ISpecialtyReadRepository, SpecialtyReadRepository>();
+            services.AddScoped<ISpecialtyWriteRepository, SpecialtyWriteRepository>();
 
             // HealthFacility
             services.AddScoped<IHealthFacilityReadRepository, HealthFacilityReadRepository>();
@@ -192,6 +198,10 @@ namespace Hospital.Infrastructure.DI
             // Scripts
             services.AddScoped<IScriptReadRepository, ScriptReadRepository>();
             services.AddScoped<IScriptWriteRepository, ScriptWriteRepository>();
+
+            // CancelReasons
+            services.AddScoped<ICancelReasonReadRepository, CancelReasonReadRepository>();
+            services.AddScoped<ICancelReasonWriteRepository, CancelReasonWriteRepository>();
             return services;
         }
     }

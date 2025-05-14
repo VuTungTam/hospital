@@ -1,4 +1,5 @@
-﻿using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+﻿using Hospital.Application.Models.Bookings;
+using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Enums;
 using Hospital.SharedKernel.Libraries.Attributes;
 
@@ -7,11 +8,13 @@ namespace Hospital.Application.Commands.Bookings
     [RequiredPermission(ActionExponent.CancelBooking)]
     public class CancelBookingCommand : BaseCommand
     {
-        public CancelBookingCommand(long id)
+        public CancelBookingCommand(CancelBookingModel model)
         {
-            Id = id;
+            Model = model;
+
         }
 
-        public long Id { get; }
+        public CancelBookingModel Model { get; set; }
+
     }
 }

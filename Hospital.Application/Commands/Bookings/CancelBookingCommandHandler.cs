@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.CancelReasons;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Entities.Bookings;
+using Hospital.Domain.Entities.CancelReasons;
 using Hospital.Domain.Enums;
-using Hospital.Domain.Specifications.Bookings;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
-using Hospital.SharedKernel.Infrastructure.Databases.Models;
-using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Modules.Notifications.Entities;
 using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -28,6 +28,7 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IEmployeeWriteRepository _employeeWriteRepository;
         private readonly ICustomerWriteRepository _customerWriteRepository;
+        private readonly ICancelReasonWriteRepository _cancelReasonWriteRepository;
         private readonly IExecutionContext _executionContext;
         private readonly ISocketService _socketService;
         public CancelBookingCommandHandler(
@@ -39,6 +40,7 @@ namespace Hospital.Application.Commands.Bookings
             IBookingWriteRepository bookingWriteRepository,
             ICustomerWriteRepository customerWriteRepository,
             IEmployeeWriteRepository employeeWriteRepository,
+            ICancelReasonWriteRepository cancelReasonWriteRepository,
             ISocketService socketService,
             IExecutionContext executionContext
             ) : base(eventDispatcher, authService, localizer, mapper)
@@ -49,19 +51,20 @@ namespace Hospital.Application.Commands.Bookings
             _customerWriteRepository = customerWriteRepository;
             _socketService = socketService;
             _executionContext = executionContext;
+            _cancelReasonWriteRepository = cancelReasonWriteRepository;
         }
 
         public async Task<Unit> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
         {
-            if (request.Id <= 0)
+            if (request.Model.BookingId <= 0)
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
 
             var cancelBooking = await _bookingReadRepository.GetByIdAsync(
-                request.Id, _bookingReadRepository.DefaultQueryOption, cancellationToken);
+                request.Model.BookingId, _bookingReadRepository.DefaultQueryOption, cancellationToken);
 
             if (cancelBooking == null)
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
-            List<Booking> bookingsToUpdate = new List<Booking>();
+            var bookingsToUpdate = new List<Booking>();
             var removeNextCache = false;
             switch (cancelBooking.Status)
             {
@@ -80,6 +83,8 @@ namespace Hospital.Application.Commands.Bookings
                     break;
 
             }
+
+            AddCancelReason(cancelBooking, request.Model.Reason);
 
             await SendNotification(cancelBooking, cancellationToken);
 
@@ -164,8 +169,6 @@ namespace Hospital.Application.Commands.Bookings
 
             await _employeeWriteRepository.AddNotificationForEmployeeAsync(notification, booking.FacilityId, booking.ZoneId, callbackWrapper, cancellationToken);
 
-
-
             return Unit.Value;
         }
 
@@ -197,6 +200,19 @@ namespace Hospital.Application.Commands.Bookings
 
             await callbackWrapper.Callback();
 
+        }
+
+        private void AddCancelReason(Booking booking, string reasonMsg)
+        {
+            var reason = new CancelReason
+            {
+                Id = AuthUtility.GenerateSnowflakeId(),
+                Reason = reasonMsg,
+                CancelType = (booking.OwnerId == _executionContext.Identity) ? CancelType.Customer : CancelType.Coordinator,
+                BookingId = booking.Id,
+            };
+
+            _cancelReasonWriteRepository.Add(reason);
         }
     }
 }

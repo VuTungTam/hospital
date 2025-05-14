@@ -68,8 +68,20 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
 
             oldFacility.Email = newFacility.Email;
 
+            oldFacility.Wid = int.Parse(newFacility.Wid);
+
+            oldFacility.Did = int.Parse(newFacility.Did);
+
+            oldFacility.Pid = int.Parse(newFacility.Pid);
+
+            oldFacility.Address = newFacility.Address;
+
+            oldFacility.MapURL = newFacility.MapURL;
+
             oldFacility.Wname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Wid), "ward", cancellationToken);
+
             oldFacility.Dname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Did), "district", cancellationToken);
+
             oldFacility.Pname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Pid), "province", cancellationToken);
 
             var oldImageNames = oldFacility.Images.Select(x => x.PublicId).ToList();

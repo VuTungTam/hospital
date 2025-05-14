@@ -21,16 +21,16 @@ namespace Hospital.Api.Controllers.HealthFacilities
 {
     public class HealthFacilityController : ApiBaseController
     {
-        private IMapper _mapper;
-        private readonly IFacilityTypeReadRepository _facilityCategoryReadRepository;
-        public HealthFacilityController(
-            IMediator mediator,
-            IMapper mapper,
-            IFacilityTypeReadRepository facilityCategoryReadRepository
-            ) : base(mediator)
+        public HealthFacilityController(IMediator mediator) : base(mediator)
         {
-            _mapper = mapper;
-            _facilityCategoryReadRepository = facilityCategoryReadRepository;
+        }
+
+        [HttpGet("entire")]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            var query = new GetAllFacilityQuery();
+            var data = await _mediator.Send(query, cancellationToken);
+            return Ok(new ServiceResult { Data = data, Total = data.Count });
         }
 
         [HttpGet("filterable")]

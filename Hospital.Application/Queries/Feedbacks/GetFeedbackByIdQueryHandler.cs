@@ -13,10 +13,10 @@ namespace Hospital.Application.Queries.Feedbacks
 {
     public class GetFeedbackByIdQueryHandler : BaseCommandHandler, IRequestHandler<GetFeedbackByIdQuery, FeedbackDto>
     {
-        private readonly IFeedbackReadRepository  _feedbackReadRepository;
+        private readonly IFeedbackReadRepository _feedbackReadRepository;
         public GetFeedbackByIdQueryHandler(
-            IEventDispatcher eventDispatcher, 
-            IAuthService authService, 
+            IEventDispatcher eventDispatcher,
+            IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IFeedbackReadRepository feedbackReadRepository,
             IMapper mapper
@@ -33,7 +33,7 @@ namespace Hospital.Application.Queries.Feedbacks
                 throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
-            return _mapper.Map<FeedbackDto>( feedback );
+            return _mapper.Map<FeedbackDto>(feedback);
         }
     }
 }

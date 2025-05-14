@@ -1,13 +1,9 @@
 using AutoMapper;
 using Hospital.Application.Dtos.HealthFacility;
-using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
-using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
-using Hospital.SharedKernel.Domain.Events.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
