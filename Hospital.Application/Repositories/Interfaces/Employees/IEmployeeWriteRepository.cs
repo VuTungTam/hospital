@@ -15,10 +15,6 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
 
         Task AddNotificationForEmployeeAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
 
-        Task SetActionAsDefaultAsync(long employeeId, CancellationToken cancellationToken);
-
-        Task SetAdditionalActionsAsync(long employeeId, List<AdditionalAction> actions, CancellationToken cancellationToken);
-
         Task UpdateRolesAsync(long employeeId, IEnumerable<long> roleIds, CancellationToken cancellationToken);
 
         //Task UpdateBranchesAsync(long employeeId, IEnumerable<long> branchIds, CancellationToken cancellationToken);

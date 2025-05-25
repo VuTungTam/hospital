@@ -12,20 +12,7 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                             .IsRequired()
                             .HasColumnType("NVARCHAR(512)");
 
-                     builder.Property(x => x.PaymentUrl)
-                             .IsRequired()
-                             .HasColumnType("NVARCHAR(512)");
 
-                     builder.Property(x => x.ExternalTransactionId)
-                             .IsRequired()
-                             .HasColumnType("NVARCHAR(512)");
-
-                     builder.Property(x => x.BankBin)
-                             .IsRequired()
-                             .HasColumnType("NVARCHAR(20)");
-
-                     builder.Property(x => x.Note)
-                             .HasColumnType("NVARCHAR(512)");
 
                      builder.Property(x => x.Amount)
                             .IsRequired()
@@ -36,16 +23,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                             .HasColumnType("DATETIME")
                             .HasDefaultValueSql("GETDATE()");
 
-                     builder.Property(x => x.ExpiredAt)
-                            .HasColumnType("DATETIME");
-
-                     builder.Property(x => x.DeletedAt)
-                            .HasColumnType("DATETIME");
-
-                     builder.Property(x => x.IsDeleted)
-                            .IsRequired()
-                            .HasColumnType("BIT")
-                            .HasDefaultValue(false);
                      builder.HasOne(x => x.Booking)
                             .WithMany(x => x.Payments)
                             .HasForeignKey(x => x.BookingId);

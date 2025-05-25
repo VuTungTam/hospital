@@ -99,7 +99,6 @@ namespace Hospital.Application.Commands.Employees
             newEmployee.Pname = newPname;
             newEmployee.Dname = newDname;
             newEmployee.Wname = newWname;
-            //var auditDetail = GetAuditDetail(employee, newEmployee, oldRoles, newRoles);
             var oldState = employee.Status;
 
             employee.EmployeeRoles = new();
@@ -117,20 +116,11 @@ namespace Hospital.Application.Commands.Employees
             employee.Pname = newPname;
             employee.Dname = newDname;
             employee.Wname = newWname;
-            employee.ScheduleColor = request.Employee.ScheduleColor;
 
             if (!isSuperAdmin && employee.Id != _executionContext.Identity)
             {
                 await _employeeWriteRepository.UpdateRolesAsync(employee.Id, request.Employee.Roles.Select(x => long.Parse(x.Id)), cancellationToken);
             }
-
-            //_auditWriteRepository.Add(new Audit
-            //{
-            //    Type = AuditType.Account,
-            //    Category = typeof(BaseUser).Name.ToSnakeCaseLower(),
-            //    Description = $"<p>Cập nhật thông tin nhân viên <strong>{employee.Name} ({employee.Code})</strong>:</p> {auditDetail}",
-            //    IsSystemAction = true
-            //});
 
             if (employee.Status != AccountStatus.Active)
             {

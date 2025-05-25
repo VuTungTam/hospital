@@ -1,6 +1,4 @@
-﻿using Hospital.Domain.Entities.Bookings;
-
-namespace Hospital.Application.Dtos.Feedbacks
+﻿namespace Hospital.Application.Dtos.Feedbacks
 {
     public class FeedbackDto : BaseDto
     {

@@ -5,5 +5,6 @@ namespace Hospital.Application.Repositories.Interfaces.Feedbacks
 {
     public interface IFeedbackReadRepository : IReadRepository<Feedback>
     {
+        Task<Feedback> GetByBookingIdAsync(long bookingId, CancellationToken cancellationToken);
     }
 }

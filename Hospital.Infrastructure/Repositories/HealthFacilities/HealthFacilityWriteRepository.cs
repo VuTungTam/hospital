@@ -64,10 +64,6 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
 
             oldFacility.Logo = newFacility.Logo;
 
-            oldFacility.Phone = newFacility.Phone;
-
-            oldFacility.Email = newFacility.Email;
-
             oldFacility.Wid = int.Parse(newFacility.Wid);
 
             oldFacility.Did = int.Parse(newFacility.Did);

@@ -1,5 +1,9 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.VNPay.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Hospital.SharedKernel.Infrastructure.ExternalServices.VNPay
 {
@@ -42,30 +46,44 @@ namespace Hospital.SharedKernel.Infrastructure.ExternalServices.VNPay
 
         public string CreateRequestUrl(string baseUrl, string vnp_HashSecret)
         {
-            StringBuilder data = new StringBuilder();
-            foreach (KeyValuePair<string, string> kv in _requestData)
-            {
-                if (!string.IsNullOrEmpty(kv.Value))
-                {
-                    data.Append(WebUtility.UrlEncode(kv.Key) + "=" + WebUtility.UrlEncode(kv.Value) + "&");
-                }
-            }
-            string queryString = data.ToString();
+            var data = new StringBuilder();
 
-            baseUrl += "?" + queryString;
-            string signData = queryString;
+            foreach (var (key, value) in _requestData.Where(kv => !string.IsNullOrEmpty(kv.Value)))
+            {
+                data.Append(WebUtility.UrlEncode(key) + "=" + WebUtility.UrlEncode(value) + "&");
+            }
+
+            var querystring = data.ToString();
+
+            baseUrl += "?" + querystring;
+            var signData = querystring;
             if (signData.Length > 0)
             {
-
                 signData = signData.Remove(data.Length - 1, 1);
             }
-            string vnp_SecureHash = VNPayUtils.HmacSHA512(vnp_HashSecret, signData);
-            baseUrl += "vnp_SecureHash=" + vnp_SecureHash;
+
+            var vnpSecureHash = HmacSha512(vnp_HashSecret, signData);
+            baseUrl += "vnp_SecureHash=" + vnpSecureHash;
 
             return baseUrl;
         }
 
+        private string HmacSha512(string key, string inputData)
+        {
+            var hash = new StringBuilder();
+            var keyBytes = Encoding.UTF8.GetBytes(key);
+            var inputBytes = Encoding.UTF8.GetBytes(inputData);
+            using (var hmac = new HMACSHA512(keyBytes))
+            {
+                var hashValue = hmac.ComputeHash(inputBytes);
+                foreach (var theByte in hashValue)
+                {
+                    hash.Append(theByte.ToString("x2"));
+                }
+            }
 
+            return hash.ToString();
+        }
 
         #endregion
 
@@ -105,5 +123,50 @@ namespace Hospital.SharedKernel.Infrastructure.ExternalServices.VNPay
         }
 
         #endregion
+
+        public PaymentResponseModel GetFullResponseData(IQueryCollection collection, string hashSecret)
+        {
+            var vnPay = new VNPayLibrary();
+
+            foreach (var (key, value) in collection)
+            {
+                if (!string.IsNullOrEmpty(key) && key.StartsWith("vnp_"))
+                {
+                    vnPay.AddResponseData(key, value);
+                }
+            }
+
+            var orderId = Convert.ToInt64(vnPay.GetResponseData("vnp_TxnRef"));
+            var vnPayTranId = Convert.ToInt64(vnPay.GetResponseData("vnp_TransactionNo"));
+            var vnpResponseCode = vnPay.GetResponseData("vnp_ResponseCode");
+            var vnpSecureHash =
+                collection.FirstOrDefault(k => k.Key == "vnp_SecureHash").Value;
+            var orderInfo = vnPay.GetResponseData("vnp_OrderInfo");
+            int amount = Convert.ToInt32(vnPay.GetResponseData("vnp_Amount")) / 100;
+
+            DateTime payDate = DateTime.ParseExact(vnPay.GetResponseData("vnp_PayDate"), "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            var checkSignature =
+                vnPay.ValidateSignature(vnpSecureHash, hashSecret);
+
+            if (!checkSignature)
+                return new PaymentResponseModel()
+                {
+                    Success = false
+                };
+
+            return new PaymentResponseModel()
+            {
+                Success = true,
+                Amount = amount,
+                PaymentMethod = "VnPay",
+                OrderDescription = orderInfo,
+                OrderId = orderId.ToString(),
+                TransactionId = vnPayTranId.ToString(),
+                Token = vnpSecureHash,
+                VnPayResponseCode = vnpResponseCode,
+                Date = payDate
+            };
+        }
     }
 }

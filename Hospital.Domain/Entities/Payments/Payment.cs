@@ -11,8 +11,8 @@ namespace Hospital.Domain.Entities.Payments
     public class Payment
         : BaseEntity,
         ICreatedAt,
-        ISoftDelete,
-        IFacility
+        IFacility,
+        IOwnedEntity
     {
         public long BookingId { get; set; }
 
@@ -24,24 +24,12 @@ namespace Hospital.Domain.Entities.Payments
 
         public string TransactionContent { get; set; }
 
-        public string PaymentUrl { get; set; }
-
-        public bool IsPaid { get; set; }
-
-        public string ExternalTransactionId { get; set; }
-
-        public string BankBin { get; set; }
-
-        public string Note { get; set; }
+        public long TransactionId { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime? ExpiredAt { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedAt { get; set; }
-
         public long FacilityId { get; set; }
+
+        public long OwnerId { get; set; }
     }
 }

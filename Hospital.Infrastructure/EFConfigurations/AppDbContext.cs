@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Hospital.Domain.Entities.Articles;
 using Hospital.Domain.Entities.Bookings;
-using Hospital.Domain.Entities.Distances;
 using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.FacilityTypes;
 using Hospital.Domain.Entities.Feedbacks;
@@ -11,7 +10,6 @@ using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.Payments;
 using Hospital.Domain.Entities.ServiceTimeRules;
-using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Domain.Entities.Zones;
@@ -54,7 +52,6 @@ namespace Hospital.Infrastructure.EFConfigurations
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new SocialNetworkEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new HealthFacilityEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FacilityCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SpecialtyEntityTypeConfiguration());
@@ -65,7 +62,6 @@ namespace Hospital.Infrastructure.EFConfigurations
             modelBuilder.ApplyConfiguration(new ActionEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeActionEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeRoleEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new RoleEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ArticleEntityTypeConfiguration());
@@ -238,8 +234,6 @@ namespace Hospital.Infrastructure.EFConfigurations
             await Task.WhenAll(tasks);
         }
 
-        public DbSet<SocialNetwork> SocialNetworks { get; set; }
-
         public DbSet<Province> Provinces { get; set; }
 
         public DbSet<District> Districts { get; set; }
@@ -264,8 +258,6 @@ namespace Hospital.Infrastructure.EFConfigurations
 
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<EmployeeAction> EmployeesActions { get; set; }
-
         public DbSet<EmployeeRole> EmployeesRoles { get; set; }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
@@ -281,8 +273,6 @@ namespace Hospital.Infrastructure.EFConfigurations
         public DbSet<Article> Articles { get; set; }
 
         public DbSet<Zone> Zones { get; set; }
-
-        public DbSet<Distance> Distances { get; set; }
 
         public DbSet<Feedback> Feedbacks { get; set; }
 

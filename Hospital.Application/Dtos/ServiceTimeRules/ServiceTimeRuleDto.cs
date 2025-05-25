@@ -24,49 +24,6 @@ namespace Hospital.Application.Dtos.ServiceTimeRules
 
         public DayOfWeek DayOfWeek { get; set; }
 
-        public List<TimeFrame> TimeFrames => GenerateTimeSlots();
-
-        public List<TimeFrame> GenerateTimeSlots()
-        {
-            var list = new List<TimeFrame>();
-            if (StartTime < StartBreakTime)
-            {
-                AddTimeSlots(StartTime, StartBreakTime, list);
-            }
-            if (EndBreakTime < EndTime)
-            {
-                AddTimeSlots(EndBreakTime, EndTime, list);
-            }
-            return list;
-        }
-
-        private void AddTimeSlots(TimeSpan start, TimeSpan end, List<TimeFrame> list)
-        {
-            if (start >= end)
-            {
-                return;
-            }
-
-            var currentTime = start;
-
-            while (currentTime < end)
-            {
-                var nextTime = currentTime.Add(TimeSpan.FromMinutes(SlotDuration));
-
-                if (nextTime > end)
-                {
-                    nextTime = end;
-                }
-
-                list.Add(new TimeFrame { StartTime = currentTime, EndTime = nextTime });
-
-                currentTime = nextTime;
-
-            }
-        }
-
-
-
         public class ServiceTimeRuleValidator : BaseAbstractValidator<ServiceTimeRuleDto>
         {
             public ServiceTimeRuleValidator(IStringLocalizer<Resources> localizer) : base(localizer)

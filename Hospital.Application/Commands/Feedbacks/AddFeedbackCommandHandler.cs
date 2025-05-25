@@ -71,7 +71,7 @@ namespace Hospital.Application.Commands.Feedbacks
 
                 service.TotalStars += feedback.Stars;
 
-                service.StarPoint = service.TotalFeedback / service.TotalStars;
+                service.StarPoint = service.TotalStars / service.TotalFeedback;
 
                 serviceCacheEntry = await _healthServiceWriteRepository.SetBlockUpdateCacheAsync(service.Id, cancellationToken);
 
@@ -81,6 +81,8 @@ namespace Hospital.Application.Commands.Feedbacks
             var bookingCacheEntry = await _bookingWriteRepository.SetBlockUpdateCacheAsync(service.Id, cancellationToken);
 
             feedback.BookingCode = booking.Code;
+
+            feedback.FacilityId = booking.FacilityId;
 
             _feedbackWriteRepository.Add(feedback);
 

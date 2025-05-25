@@ -37,10 +37,6 @@ namespace Hospital.Domain.Entities.HealthFacilities
 
         public string Logo { get; set; }
 
-        public string Phone { get; set; }
-
-        public string Email { get; set; }
-
         public HealthFacilityStatus Status { get; set; }
 
         public List<FacilitySpecialty> FacilitySpecialties { get; set; } = new();
@@ -68,10 +64,6 @@ namespace Hospital.Domain.Entities.HealthFacilities
         public string Wname { get; set; }
 
         public string Address { get; set; }
-
-        public decimal Latitude { get; set; }
-
-        public decimal Longitude { get; set; }
 
         public string MapURL { get; set; }
 

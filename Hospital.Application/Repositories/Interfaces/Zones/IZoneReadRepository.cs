@@ -5,6 +5,8 @@ namespace Hospital.Application.Repositories.Interfaces.Zones
 {
     public interface IZoneReadRepository : IReadRepository<Zone>
     {
-        Task<long> GetZoneBySpecialtyId(long specialtyId, long facilityId, CancellationToken cancellationToken);
+        Task<Zone> GetZoneBySpecialtyId(long specialtyId, long facilityId, CancellationToken cancellationToken);
+
+        Task<List<Zone>> GetZonesByFacilityId(long facilityId, CancellationToken cancellationToken);
     }
 }

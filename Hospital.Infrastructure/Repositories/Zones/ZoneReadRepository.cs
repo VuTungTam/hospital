@@ -22,14 +22,22 @@ namespace Hospital.Infrastructure.Repositories.Zones
         {
         }
 
-        public async Task<long> GetZoneBySpecialtyId(long specialtyId, long facilityId, CancellationToken cancellationToken)
+        public async Task<Zone> GetZoneBySpecialtyId(long specialtyId, long facilityId, CancellationToken cancellationToken)
         {
-            var zoneId = await _dbContext.Zones
+            var zone = await _dbContext.Zones
                 .Where(z => z.FacilityId == facilityId &&
                             z.ZoneSpecialties.Any(zs => zs.SpecialtyId == specialtyId))
-                .Select(z => z.Id)
                 .FirstOrDefaultAsync(cancellationToken);
-            return zoneId;
+            return zone;
+        }
+
+        public async Task<List<Zone>> GetZonesByFacilityId(long facilityId, CancellationToken cancellationToken)
+        {
+            var zone = await _dbContext.Zones
+                .Where(z => z.FacilityId == facilityId)
+                .Include(x => x.ZoneSpecialties)
+                .ToListAsync(cancellationToken);
+            return zone;
         }
 
         public override ISpecification<Zone> GuardDataAccess<Zone>(ISpecification<Zone> spec, QueryOption option = default)

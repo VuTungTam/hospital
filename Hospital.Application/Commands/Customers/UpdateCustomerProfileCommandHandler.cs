@@ -33,7 +33,7 @@ namespace Hospital.Application.Commands.Customers
             ICustomerWriteRepository employeeWriteRepository,
             IExecutionContext executionContext,
             ILocationReadRepository locationReadRepository
-            //IAuditWriteRepository auditWriteRepository
+        //IAuditWriteRepository auditWriteRepository
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _userRepository = userRepository;
@@ -95,11 +95,6 @@ namespace Hospital.Application.Commands.Customers
             {
                 if (request.Model.Phone != profile.Phone)
                 {
-                    if (profile.PhoneVerified)
-                    {
-                        throw new BadRequestException(_localizer["Account.CannotUpdateEmailVerified"]);
-                    }
-
                     if (!SmsUtility.IsVietnamesePhone(request.Model.Phone))
                     {
                         throw new BadRequestException(_localizer["Authentication.PhoneIsNotValid"]);

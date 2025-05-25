@@ -122,7 +122,7 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
             }
 
             var bookings = await query.Where(spec.GetExpression())
-                                      .Select(x => new Booking { Id = x.Id, Date = x.Date, Status = x.Status, FacilityId = x.FacilityId, FacilityName = x.FacilityName })
+                                      .Select(x => new Booking { Id = x.Id, Date = x.Date, Status = x.Status, FacilityId = x.FacilityId, FacilityNameVn = x.FacilityNameVn })
                                       .ToListAsync(cancellationToken);
             if (!bookings.Any())
             {
@@ -138,7 +138,7 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
                 result.Values.Add(new YearlyFacilityBookingStatsValue
                 {
                     FacilityId = group.Key,
-                    FacilityName = bookingsByGroup[0].FacilityName,
+                    FacilityName = bookingsByGroup[0].FacilityNameVn,
                     TotalCount = bookingsByGroup.Count,
                     CompletedCount = bookingsByGroup.Count(x => x.Status == BookingStatus.Completed)
                 });
@@ -336,7 +336,7 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
             }
 
             var bookings = await query.Where(spec.GetExpression())
-                                      .Select(x => new Booking { Id = x.Id, Date = x.Date, Status = x.Status, FacilityId = x.FacilityId, FacilityName = x.FacilityName })
+                                      .Select(x => new Booking { Id = x.Id, Date = x.Date, Status = x.Status, FacilityId = x.FacilityId, FacilityNameVn = x.FacilityNameVn })
                                       .ToListAsync(cancellationToken);
             if (!bookings.Any())
             {
@@ -369,11 +369,11 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
 
             var facilities = await query
                         .Where(spec.GetExpression())
-                        .GroupBy(b => new { b.FacilityId, b.FacilityName })
+                        .GroupBy(b => new { b.FacilityId, b.FacilityNameVn })
                         .Select(g => new TopFacilityValue
                         {
                             FacilityId = g.Key.FacilityId,
-                            FacilityNameVn = g.Key.FacilityName,
+                            FacilityNameVn = g.Key.FacilityNameVn,
                             TotalCount = g.Count()
                         })
                         .OrderByDescending(x => x.TotalCount)

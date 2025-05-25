@@ -10,8 +10,6 @@ namespace Hospital.Application.Repositories.Interfaces.Customers
     {
         Task<Customer> GetLoginByEmailAsync(string email, string password, bool checkPassword = true, CancellationToken cancellationToken = default);
 
-        Task<Customer> GetByZaloIdlAsync(string zaloId, CancellationToken cancellationToken);
-
         Task<Customer> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
 
         Task<Customer> GetByPhoneAsync(string phone, CancellationToken cancellationToken = default);

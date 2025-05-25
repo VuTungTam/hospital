@@ -25,6 +25,15 @@ namespace Hospital.Api.Controllers.Feedbacks
             return Ok(new SimpleDataResult { Data = feedback });
         }
 
+        [HttpGet("booking/{bookingId}"), AllowAnonymous]
+        public virtual async Task<IActionResult> GetByBookingId(long bookingId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetFeedbackByBookingIdQuery(bookingId);
+            var feedback = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = feedback });
+        }
+
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetFeedbackPagination(int page, int size, long serviceId, int star, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
@@ -35,7 +44,7 @@ namespace Hospital.Api.Controllers.Feedbacks
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet("myself/pagination")]
+        [HttpGet("myself")]
         public async Task<IActionResult> GetMyFeedbackPagination(int page, int size, long serviceId, int star, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);

@@ -14,8 +14,8 @@ using Hospital.Application.Dtos.Images;
 using Hospital.Application.Dtos.Locations;
 using Hospital.Application.Dtos.Metas;
 using Hospital.Application.Dtos.Notifications;
+using Hospital.Application.Dtos.Payments;
 using Hospital.Application.Dtos.ServiceTimeRules;
-using Hospital.Application.Dtos.SocialNetworks;
 using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.SystemConfigurations;
 using Hospital.Application.Dtos.TimeSlots;
@@ -31,8 +31,8 @@ using Hospital.Domain.Entities.HealthProfiles;
 using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Images;
 using Hospital.Domain.Entities.Metas;
+using Hospital.Domain.Entities.Payments;
 using Hospital.Domain.Entities.ServiceTimeRules;
-using Hospital.Domain.Entities.SocialNetworks;
 using Hospital.Domain.Entities.Specialties;
 using Hospital.Domain.Entities.TimeSlots;
 using Hospital.Domain.Entities.Zones;
@@ -91,7 +91,6 @@ namespace Hospital.Application.Mappings
 
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.EmployeeRoles != null ? src.EmployeeRoles.Select(x => x.Role).ToList() : new()))
-                .ForMember(des => des.Actions, opt => opt.MapFrom(src => src.EmployeeActions != null ? src.EmployeeActions.Select(x => x.Action).ToList() : new()))
                 .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
 
             CreateMap<DoctorDto, Doctor>()
@@ -110,11 +109,6 @@ namespace Hospital.Application.Mappings
                 .ForMember(des => des.CanChangePassword, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Password)));
 
             CreateMap<Customer, CustomerNameDto>();
-
-            //Social network
-            CreateMap<SocialNetwork, SocialNetworkDto>().ReverseMap();
-
-            //Symptom
 
             //ServiceType
             CreateMap<ServiceType, ServiceTypeDto>().ReverseMap();
@@ -187,6 +181,9 @@ namespace Hospital.Application.Mappings
 
             //CancelReason
             CreateMap<CancelReason, CancelReasonDto>().ReverseMap();
+
+            //CancelReason
+            CreateMap<Payment, PaymentDto>().ReverseMap();
 
         }
         private static long StringToInt64(string str) => long.TryParse(str, out var id) ? id : 0;

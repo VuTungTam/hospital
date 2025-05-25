@@ -107,7 +107,6 @@ namespace Hospital.Infrastructure.Repositories.Customers
             }
             entry.Property(x => x.Status).IsModified = true;
             entry.Property(x => x.EmailVerified).IsModified = true;
-            entry.Property(x => x.PhoneVerified).IsModified = true;
 
             await UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
         }

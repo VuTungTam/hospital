@@ -7,6 +7,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
+using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Services.Emails.Utils;
 using Hospital.SharedKernel.Infrastructure.Services.Sms.Utils;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -19,15 +20,18 @@ namespace Hospital.Application.Commands.HealhProfiles
     {
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         private readonly IHealthProfileWriteRepository _healthProfileWriteRepository;
+        private readonly ILocationReadRepository _locationReadRepository;
         public UpdateHealthProfileCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
             IStringLocalizer<Resources> localizer,
             IMapper mapper,
+            ILocationReadRepository locationReadRepository,
             IHealthProfileReadRepository healthProfileReadRepository,
             IHealthProfileWriteRepository healthProfileWriteRepository
             ) : base(eventDispatcher, authService, localizer, mapper)
         {
+            _locationReadRepository = locationReadRepository;
             _healthProfileReadRepository = healthProfileReadRepository;
             _healthProfileWriteRepository = healthProfileWriteRepository;
         }
@@ -39,16 +43,20 @@ namespace Hospital.Application.Commands.HealhProfiles
                 throw new BadRequestException(_localizer["common_id_is_not_valid"]);
             }
 
-            await ValidateAndThrowAsync(request.HealthProfile, cancellationToken);
-
-            var entity = _mapper.Map<HealthProfile>(request.HealthProfile);
-
             var profile = await _healthProfileReadRepository.GetByIdAsync(id, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
 
             if (profile == null)
             {
                 throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
             }
+
+            await ValidateAndThrowAsync(request.HealthProfile, cancellationToken);
+
+            var entity = _mapper.Map<HealthProfile>(request.HealthProfile);
+
+            entity.Pname = await _locationReadRepository.GetNameByIdAsync(entity.Pid, "province", cancellationToken); ;
+            entity.Dname = await _locationReadRepository.GetNameByIdAsync(entity.Did, "district", cancellationToken);
+            entity.Wname = await _locationReadRepository.GetNameByIdAsync(entity.Wid, "ward", cancellationToken);
 
             await _healthProfileWriteRepository.UpdateAsync(entity, cancellationToken: cancellationToken);
 

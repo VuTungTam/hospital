@@ -59,8 +59,8 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
                 var whereClause = "WHERE Slug = {0} AND IsDeleted = 0";
 
                 var columns = string.Join(", ",
-                    "Slug", "Id", "Logo", "Address", "Status", "Did", "Dname", "Email",
-                    "Latitude", "Longitude", "MapURL", "Phone", "Pid", "Pname",
+                    "Slug", "Id", "Logo", "Address", "Status", "Did", "Dname",
+                    "MapURL", "Pid", "Pname",
                     "StarPoint", "TotalFeedback", "TotalStars", "Wid", "Wname",
                     "CreatedBy", "CreatedAt", "ModifiedBy", "ModifiedAt", "IsDeleted", "DeletedAt", "DeletedBy",
                     langs.Contains("vi-VN") ? "NameVn" : "'' AS NameVn",

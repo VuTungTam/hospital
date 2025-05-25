@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Hospital.Application.Dtos.Doctors;
+﻿using Hospital.Application.Dtos.Doctors;
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Domain.Entities.Doctors;
 using Hospital.Domain.Entities.Specialties;
@@ -7,7 +6,6 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Libraries.Utils;
-using Hospital.SharedKernel.Runtime.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -16,27 +14,13 @@ namespace Hospital.Infrastructure.Repositories.Doctors
 {
     public class DoctorWriteRepository : WriteRepository<Doctor>, IDoctorWriteRepository
     {
-        private readonly IMapper _mapper;
         public DoctorWriteRepository(
             IServiceProvider serviceProvider,
             IStringLocalizer<Resources> localizer,
-            IRedisCache redisCache,
-            IMapper mapper
+            IRedisCache redisCache
             ) : base(serviceProvider, localizer, redisCache)
         {
-            _mapper = mapper;
         }
-
-        public static List<string> DefaultRandomPassword = new List<string>
-        {
-            "XukaYeuChaien",
-            "NobitaDiHonda",
-            "NobitaChaXeko",
-            "DekhiYeuMimi",
-            "DoremonDiLonTon",
-            "ChaienBeNho",
-            "XukaMoNhon"
-        };
 
         public async Task AddDoctorAsync(Doctor doctor, CancellationToken cancellationToken = default)
         {
@@ -47,7 +31,7 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             if (string.IsNullOrEmpty(doctor.Password))
             {
                 var random = new Random();
-                doctor.Password = DefaultRandomPassword[random.Next(0, DefaultRandomPassword.Count)];
+                doctor.Password = "doctor@1";
                 doctor.IsDefaultPassword = true;
                 doctor.IsPasswordChangeRequired = true;
             }
@@ -60,9 +44,6 @@ namespace Hospital.Infrastructure.Repositories.Doctors
         }
         public async Task UpdateDoctorAsync(Doctor doctor, DoctorDto newDoctor, CancellationToken cancellationToken = default)
         {
-
-
-
             var oldSpecs = doctor.DoctorSpecialties.Select(x => x.SpecialtyId.ToString()).ToList();
             var newSpecs = newDoctor.SpecialtyIds;
             var delSpecs = doctor.DoctorSpecialties.Where(s => !newSpecs.Contains(s.SpecialtyId.ToString())).ToList();
@@ -83,8 +64,6 @@ namespace Hospital.Infrastructure.Repositories.Doctors
             await UpdateAsync(doctor, cancellationToken: cancellationToken);
         }
 
-
-
         public async Task UpdateSpecialtiesAsync(long doctorId, IEnumerable<long> specialtyIds, CancellationToken cancellationToken)
         {
             var sql = $"DELETE FROM {new DoctorSpecialty().GetTableName()} WHERE {nameof(DoctorSpecialty.DoctorId)} = {doctorId}; ";
@@ -97,7 +76,5 @@ namespace Hospital.Infrastructure.Repositories.Doctors
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, cancellationToken: cancellationToken);
         }
-
     }
-
 }

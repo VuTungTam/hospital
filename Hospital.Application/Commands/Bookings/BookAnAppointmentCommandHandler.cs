@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Customers;
+using Hospital.Application.Repositories.Interfaces.HealthFacilities;
+using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.Zones;
@@ -34,6 +36,8 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IHealthServiceReadRepository _healthServiceReadRepository;
         private readonly IZoneReadRepository _zoneReadRepository;
         private readonly ICustomerWriteRepository _customerWriteRepository;
+        private readonly IHealthProfileReadRepository _healthProfileReadRepository;
+        private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
         private readonly IExecutionContext _executionContext;
         public BookAnAppointmentCommandHandler(
             IEventDispatcher eventDispatcher,
@@ -47,6 +51,8 @@ namespace Hospital.Application.Commands.Bookings
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
             IHealthServiceReadRepository healthServiceReadRepository,
             ICustomerWriteRepository customerWriteRepository,
+            IHealthFacilityReadRepository healthFacilityReadRepository,
+            IHealthProfileReadRepository healthProfileReadRepository,
             IExecutionContext executionContext
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
@@ -57,6 +63,8 @@ namespace Hospital.Application.Commands.Bookings
             _zoneReadRepository = zoneReadRepository;
             _healthServiceReadRepository = healthServiceReadRepository;
             _customerWriteRepository = customerWriteRepository;
+            _healthProfileReadRepository = healthProfileReadRepository;
+            _healthFacilityReadRepository = healthFacilityReadRepository;
             _executionContext = executionContext;
         }
 
@@ -74,6 +82,26 @@ namespace Hospital.Application.Commands.Bookings
             }
 
             var booking = _mapper.Map<Booking>(request.Booking);
+
+            var profile = await _healthProfileReadRepository.GetByIdAsync(booking.HealthProfileId, cancellationToken: cancellationToken);
+
+            if (profile == null)
+            {
+                throw new BadRequestException("Booking.ServiceNotFound");
+            }
+
+            var facility = await _healthFacilityReadRepository.GetByIdAsync(service.FacilityId, cancellationToken: cancellationToken);
+
+            if (facility == null)
+            {
+                throw new BadRequestException("Booking.ServiceNotFound");
+            }
+
+            booking.HealthProfileName = profile.Name;
+
+            booking.FacilityNameVn = facility.NameVn;
+
+            booking.FacilityNameEn = facility.NameEn;
 
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, booking.TimeSlotId, cancellationToken);
 

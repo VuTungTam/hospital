@@ -8,7 +8,7 @@ namespace Hospital.Application.Dtos.Payments
 {
     public class PaymentDto : BaseDto
     {
-        public long BookingId { get; set; }
+        public string BookingId { get; set; }
 
         public PaymentMethod PaymentMethod { get; set; }
 
@@ -16,15 +16,7 @@ namespace Hospital.Application.Dtos.Payments
 
         public string TransactionContent { get; set; }
 
-        public string PaymentUrl { get; set; }
-
-        public bool IsPaid { get; set; }
-
-        public string ExternalTransactionId { get; set; }
-
-        public string BankBin { get; set; }
-
-        public string Note { get; set; }
+        public string TransactionId { get; set; }
 
         public string FacilityId { get; set; }
 
@@ -38,17 +30,15 @@ namespace Hospital.Application.Dtos.Payments
                     .GreaterThan(0).WithMessage(localizer["Số tiền phải lớn hơn 0."]);
 
                 RuleFor(x => x.BookingId)
-                    .GreaterThan(0).WithMessage(localizer["BookingId phải hợp lệ."]);
+                .NotEmpty().WithMessage(localizer["Bookings.ServiceIsRequired"])
+                .Must(x => long.TryParse(x, out var id) && id > 0)
+                .WithMessage(localizer["Bookings.ServiceIsNotValid"]);
 
                 RuleFor(x => x.PaymentMethod)
                     .IsInEnum().WithMessage(localizer["Phương thức thanh toán không hợp lệ."]);
 
                 RuleFor(x => x.TransactionContent)
                     .MaximumLength(255).WithMessage(localizer["Nội dung giao dịch không được quá 255 ký tự."]);
-
-                RuleFor(x => x.PaymentUrl)
-                    .Matches(@"^(https?|ftp)://[^\s/$.?#].[^\s]*$").When(x => !string.IsNullOrEmpty(x.PaymentUrl))
-                    .WithMessage(localizer["Đường dẫn thanh toán không hợp lệ."]);
 
                 RuleFor(x => x.ExpiredAt)
                     .GreaterThanOrEqualTo(DateTime.Now).When(x => x.ExpiredAt.HasValue)

@@ -3,7 +3,6 @@ using Hospital.SharedKernel.Domain.Entities.Interfaces;
 using Hospital.SharedKernel.Domain.Enums;
 using Hospital.SharedKernel.Libraries.Attributes;
 using Hospital.SharedKernel.Libraries.Security;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace Hospital.SharedKernel.Domain.Entities.Users
 {
@@ -19,8 +18,6 @@ namespace Hospital.SharedKernel.Domain.Entities.Users
         [Filterable("Mã")]
         [Immutable]
         public string Code { get; set; }
-
-        public string AliasLogin { get; set; }
 
         public string Password { get; set; }
 
@@ -56,16 +53,6 @@ namespace Hospital.SharedKernel.Domain.Entities.Users
         public AccountStatus Status { get; set; } = AccountStatus.Active;
 
         public string Avatar { get; set; }
-
-        public string ZaloId { get; set; }
-
-        public string Provider { get; set; }
-
-        public string PhotoUrl { get; set; }
-
-        public string Json { get; set; }
-
-        public int Shard { get; set; }
 
         public bool IsDefaultPassword { get; set; }
 

@@ -41,7 +41,7 @@ namespace Hospital.Application.Queries.Payments
             //Sua lai cho nay
             var payments = await _paymentReadRepository.GetAsync(option, cancellationToken);
 
-            var payment = payments.FirstOrDefault(x => !x.IsPaid && (x.ExpiredAt == null || x.ExpiredAt > DateTime.UtcNow));
+            var payment = payments.FirstOrDefault();
 
             return _mapper.Map<PaymentDto>(payment);
         }

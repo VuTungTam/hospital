@@ -8,8 +8,6 @@ namespace Hospital.Application.Dtos.Employee
 {
     public class EmployeeDto : BaseUserDto
     {
-        public string ScheduleColor { get; set; }
-
         public List<RoleDto> Roles { get; set; }
 
         public List<ActionDto> Actions { get; set; }

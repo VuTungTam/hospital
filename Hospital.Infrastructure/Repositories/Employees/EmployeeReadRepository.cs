@@ -70,8 +70,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
         public async Task<Employee> GetLoginByEmailAsync(string email, string password, bool checkPassword = true, CancellationToken cancellationToken = default)
         {
             var spec = new EmployeeByEmailEqualsSpecification(email)
-                   .Or(new EmployeeByEmailEqualsSpecification($"{email}@gmail.com"))
-                   .Or(new EmployeeByAliasLoginEqualsSpecification(email));
+                   .Or(new EmployeeByEmailEqualsSpecification($"{email}@gmail.com"));
 
             var employee = await _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
             if (employee == null)
@@ -106,12 +105,6 @@ namespace Hospital.Infrastructure.Repositories.Employees
         public Task<Employee> GetByPhoneAsync(string phone, CancellationToken cancellationToken = default)
         {
             var spec = new EmployeeByPhoneEqualsSpecification(phone);
-            return _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
-        }
-
-        public Task<Employee> GetByZaloIdlAsync(string zaloId, CancellationToken cancellationToken)
-        {
-            var spec = new EmployeeByZaloIdEqualsSpecification(zaloId);
             return _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
         }
 
@@ -158,7 +151,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
             return await _redisCache.GetOrSetAsync(cacheEntry.Key, valueFactory, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken: cancellationToken);
         }
 
-        public async Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0,long facilityId = 0, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Employee>> GetEmployeesPaginationResultAsync(Pagination pagination, AccountStatus status = AccountStatus.None, long zoneId = 0, long roleId = 0, long facilityId = 0, CancellationToken cancellationToken = default)
         {
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination);
 
@@ -173,7 +166,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
                 spec = spec.And(new EmployeeByStatusEqualsSpecification(status));
             }
 
-            if(facilityId > 0)
+            if (facilityId > 0)
             {
                 spec = spec.And(new EmployeeByFacilityIdEqualsSpecification(facilityId));
             }
@@ -207,10 +200,5 @@ namespace Hospital.Infrastructure.Repositories.Employees
             return new PaginationResult<Employee>(data, count);
         }
 
-        public Task<bool> IsEmployeeCustomizePermissionAsync(long employeeId, CancellationToken cancellationToken)
-        {
-            var spec = new EmployeeActionByEmployeeIdEqualsSpecification(employeeId);
-            return _dbContext.EmployeesActions.AnyAsync(spec.GetExpression(), cancellationToken);
-        }
     }
 }

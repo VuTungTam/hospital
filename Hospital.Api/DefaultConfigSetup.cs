@@ -2,6 +2,7 @@
 using Hospital.SharedKernel.Application.Services.Auth.Models;
 using Hospital.SharedKernel.Configures.Models;
 using Hospital.SharedKernel.CoreConfigs;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.VNPay.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 
 namespace Hospital.Api
@@ -29,6 +30,8 @@ namespace Hospital.Api
             ClientInfoConfig.Set(configuration);
 
             RedisConfig.Set(configuration);
+
+            VNPayConfig.Set(configuration);
 
             //GoogleMapsConfig.Set(configuration);
         }

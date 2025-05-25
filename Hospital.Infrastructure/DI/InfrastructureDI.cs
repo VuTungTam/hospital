@@ -6,7 +6,6 @@ using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.CancelReasons;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.Dashboards;
-using Hospital.Application.Repositories.Interfaces.Distances;
 using Hospital.Application.Repositories.Interfaces.Doctors;
 using Hospital.Application.Repositories.Interfaces.Employees;
 using Hospital.Application.Repositories.Interfaces.Feedbacks;
@@ -17,7 +16,6 @@ using Hospital.Application.Repositories.Interfaces.Metas;
 using Hospital.Application.Repositories.Interfaces.Payments;
 using Hospital.Application.Repositories.Interfaces.Sequences;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
-using Hospital.Application.Repositories.Interfaces.SocialNetworks;
 using Hospital.Application.Repositories.Interfaces.Specialities;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Application.Repositories.Interfaces.Users;
@@ -32,7 +30,6 @@ using Hospital.Infrastructure.Repositories.Bookings;
 using Hospital.Infrastructure.Repositories.CancelReasons;
 using Hospital.Infrastructure.Repositories.Customers;
 using Hospital.Infrastructure.Repositories.Dashboards;
-using Hospital.Infrastructure.Repositories.Distances;
 using Hospital.Infrastructure.Repositories.Doctors;
 using Hospital.Infrastructure.Repositories.Employees;
 using Hospital.Infrastructure.Repositories.Feedbacks;
@@ -44,7 +41,6 @@ using Hospital.Infrastructure.Repositories.Metas;
 using Hospital.Infrastructure.Repositories.Notifications;
 using Hospital.Infrastructure.Repositories.Payments;
 using Hospital.Infrastructure.Repositories.ServiceTimeRules;
-using Hospital.Infrastructure.Repositories.SocialNetworks;
 using Hospital.Infrastructure.Repositories.Specialties;
 using Hospital.Infrastructure.Repositories.TimeSlots;
 using Hospital.Infrastructure.Repositories.Users;
@@ -54,7 +50,9 @@ using Hospital.SharedKernel.Application.Repositories.Interface.AppConfigs;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Extensions;
 using Hospital.SharedKernel.Infrastructure.ExternalServices.Google.Maps;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.VietQr;
 using Hospital.SharedKernel.Infrastructure.ExternalServices.VietQr.Extensions;
+using Hospital.SharedKernel.Infrastructure.ExternalServices.VNPay;
 using Hospital.SharedKernel.Infrastructure.Repositories.Locations.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Modules.Notifications.Interfaces;
@@ -86,7 +84,9 @@ namespace Hospital.Infrastructure.DI
             // Dapper
             services.AddDbConenctionService(configuration);
 
-            services.AddVietQrService();
+            //Payment
+            services.AddScoped<IVietQrService, VietQrService>();
+            services.AddScoped<IVNPayService, VNPayService>();
 
             // Google Maps
             services.AddScoped<IGoogleMapsService, GoogleMapsService>();
@@ -110,10 +110,6 @@ namespace Hospital.Infrastructure.DI
             // HealthFacility
             services.AddScoped<IArticleReadRepository, ArticleReadRepository>();
             services.AddScoped<IArticleWriteRepository, ArticleWriteRepository>();
-
-            //Social Network
-            services.AddScoped<ISocialNetworkReadRepository, SocialNetworkReadRepository>();
-            services.AddScoped<ISocialNetworkWriteRepository, SocialNetworkWriteRepository>();
 
             //Location
             services.AddScoped<ILocationReadRepository, LocationReadRepository>();
@@ -164,9 +160,6 @@ namespace Hospital.Infrastructure.DI
             // Customers
             services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
-
-            // Distances
-            services.AddScoped<IDistanceRepository, DistanceRepository>();
 
             //Login History
             services.AddScoped<ILoginHistoryReadRepository, LoginHistoryReadRepository>();

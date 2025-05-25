@@ -1,6 +1,7 @@
 ﻿using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Domain.Models.Admin;
 using Hospital.Domain.Specifications.Customers;
+using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -11,7 +12,6 @@ using Hospital.SharedKernel.Libraries.Security;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using Hospital.Infrastructure.Extensions;
 
 namespace Hospital.Infrastructure.Repositories.Customers
 {
@@ -34,8 +34,7 @@ namespace Hospital.Infrastructure.Repositories.Customers
         public async Task<Customer> GetLoginByEmailAsync(string email, string password, bool checkPassword = true, CancellationToken cancellationToken = default)
         {
             var spec = new CustomerByEmailEqualsSpecification(email)
-                   .Or(new CustomerByEmailEqualsSpecification($"{email}@gmail.com"))
-                   .Or(new CustomerByAliasLoginEqualsSpecification(email));
+                   .Or(new CustomerByEmailEqualsSpecification($"{email}@gmail.com"));
 
             var customer = await _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
             if (customer == null)
@@ -48,12 +47,6 @@ namespace Hospital.Infrastructure.Repositories.Customers
                 return null;
             }
             return customer;
-        }
-
-        public Task<Customer> GetByZaloIdlAsync(string zaloId, CancellationToken cancellationToken)
-        {
-            var spec = new CustomerByZaloIdEqualsSpecification(zaloId);
-            return _dbSet.AsNoTracking().FirstOrDefaultAsync(spec.GetExpression(), cancellationToken);
         }
 
         public Task<Customer> GetByPhoneAsync(string phone, CancellationToken cancellationToken = default)

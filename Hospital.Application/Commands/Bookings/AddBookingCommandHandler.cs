@@ -10,14 +10,12 @@ using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Zones;
 using Hospital.Domain.Enums;
-using Hospital.Domain.Specifications.Zones;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
-using Hospital.SharedKernel.Libraries.Utils;
 using Hospital.SharedKernel.Modules.Notifications.Entities;
 using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
@@ -118,9 +116,9 @@ namespace Hospital.Application.Commands.Bookings
             }
             booking.HealthProfileName = profile.Name;
 
-            booking.FacilityName = facility.NameVn;
+            booking.FacilityNameVn = facility.NameVn;
 
-            booking.Date = booking.Date.AddDays(1);
+            booking.FacilityNameEn = facility.NameEn;
 
             booking.Status = BookingStatus.Waiting;
 
@@ -128,15 +126,7 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.DoctorId = service.DoctorId;
 
-            var option = new QueryOption
-            {
-                IgnoreFacility = true,
-                Includes = new string[] { nameof(Zone.ZoneSpecialties) }
-            };
-
-            //var spec = new GetZoneByFacilityIdSpecification(booking.FacilityId);
-
-            var zones = await _zoneReadRepository.GetAsync(option: option, cancellationToken: cancellationToken);
+            var zones = await _zoneReadRepository.GetZonesByFacilityId(service.FacilityId, cancellationToken: cancellationToken);
 
             if (zones == null)
             {

@@ -32,15 +32,8 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                             .IsRequired()
                             .HasColumnType("NVARCHAR(MAX)");
 
-                     builder.Property(x => x.Email)
-                            .IsRequired()
-                            .HasColumnType("NVARCHAR(255)");
-
                      builder.Property(x => x.Logo)
                             .HasColumnType("NVARCHAR(255)");
-
-                     builder.Property(x => x.Phone)
-                            .HasColumnType("NVARCHAR(50)");
 
                      builder.Property(x => x.Dname)
                             .HasColumnType("NVARCHAR(255)");
@@ -50,14 +43,6 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
 
                      builder.Property(x => x.Address)
                             .HasColumnType("NVARCHAR(512)");
-
-                     builder.Property(x => x.Latitude)
-                            .IsRequired()
-                            .HasColumnType("DECIMAL(9,6)");
-
-                     builder.Property(x => x.Longitude)
-                            .IsRequired()
-                            .HasColumnType("DECIMAL(9,6)");
 
                      builder.Property(x => x.MapURL)
                             .HasColumnType("NVARCHAR(MAX)");

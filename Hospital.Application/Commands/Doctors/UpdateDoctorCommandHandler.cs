@@ -77,10 +77,7 @@ namespace Hospital.Application.Commands.Doctors
             doctor.DoctorDegree = request.Doctor.DoctorDegree;
             doctor.DoctorRank = request.Doctor.DoctorRank;
             doctor.Expertise = request.Doctor.Expertise;
-            doctor.Description = request.Doctor.Description;
-            doctor.TrainingProcess = request.Doctor.TrainingProcess;
 
-            doctor.WorkExperience = request.Doctor.WorkExperience;
             doctor.Status = request.Doctor.Status;
             doctor.Avatar = request.Doctor.Avatar;
             doctor.Name = request.Doctor.Name;

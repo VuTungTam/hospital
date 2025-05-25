@@ -81,7 +81,9 @@ namespace Hospital.Domain.Entities.Bookings
 
         public long FacilityId { get; set; }
 
-        public string FacilityName { get; set; }
+        public string FacilityNameVn { get; set; }
+
+        public string FacilityNameEn { get; set; }
 
         public HealthFacility HealthFacility { get; set; }
 

@@ -122,7 +122,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             };
             //var now = _dateService.GetClientTime();
 
-            var now = new DateTime(2025, 05, 20);
+            var now = new DateTime(2025, 05, 15);
             var cacheEntry = CacheManager.GetCurrentOrderCacheEntry(serviceId, now, timeSlotId);
 
             var cachedData = await _redisCache.GetAsync<CurrentBookingModel>(cacheEntry.Key, cancellationToken);

@@ -77,13 +77,6 @@ namespace Hospital.Api.Controllers.Employees
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
-        [HttpGet("is-permission-customized/{employeeId}")]
-        public async Task<IActionResult> IsPermissionCustomized(long employeeId, CancellationToken cancellationToken = default)
-        {
-            var query = new CheckEmployeePermissionIsCustomizeQuery(employeeId);
-            return Ok(new SimpleDataResult { Data = await _mediator.Send(query, cancellationToken) });
-        }
-
         [HttpPost]
         public async Task<IActionResult> Add(EmployeeDto employee, CancellationToken cancellationToken = default)
         {
@@ -112,20 +105,6 @@ namespace Hospital.Api.Controllers.Employees
         {
             var command = new UpdateEmployeePasswordCommand(model);
             await _mediator.Send(command, cancellationToken);
-            return Ok(new BaseResponse());
-        }
-
-        [HttpPut("set-as-default/{employeeId}")]
-        public async Task<IActionResult> SetActionAsDefault(long employeeId, CancellationToken cancellationToken = default)
-        {
-            await _mediator.Send(new SetEmployeeActionAsDefaultCommand(employeeId), cancellationToken);
-            return Ok(new BaseResponse());
-        }
-
-        [HttpPut("update-additional-actions/{employeeId}")]
-        public async Task<IActionResult> UpdateAdditionalActionAsDefault(long employeeId, List<AdditionalAction> actions, CancellationToken cancellationToken = default)
-        {
-            await _mediator.Send(new SetEmployeeAdditionalActionsCommand(employeeId, actions), cancellationToken);
             return Ok(new BaseResponse());
         }
 

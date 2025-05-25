@@ -191,9 +191,6 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                 DoctorDegree = d.DoctorDegree,
                 DoctorRank = d.DoctorRank,
                 Expertise = d.Expertise,
-                WorkExperience = d.WorkExperience,
-                TrainingProcess = d.TrainingProcess,
-                Description = d.Description,
                 FacilityId = d.FacilityId,
                 DoctorSpecialties = d.DoctorSpecialties.Select(ds => new DoctorSpecialty
                 {
@@ -229,9 +226,6 @@ namespace Hospital.Infrastructure.Repositories.Doctors
                 DoctorDegree = d.DoctorDegree,
                 DoctorRank = d.DoctorRank,
                 Expertise = d.Expertise,
-                WorkExperience = d.WorkExperience,
-                TrainingProcess = d.TrainingProcess,
-                Description = d.Description,
                 FacilityId = d.FacilityId,
                 DoctorSpecialties = d.DoctorSpecialties.Select(ds => new DoctorSpecialty
                 {

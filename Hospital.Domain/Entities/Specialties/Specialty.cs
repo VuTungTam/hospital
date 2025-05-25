@@ -1,8 +1,8 @@
-﻿using Hospital.Domain.Entities.HealthServices;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Zones;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Domain.Entities.Specialties
 {
@@ -19,6 +19,8 @@ namespace Hospital.Domain.Entities.Specialties
         public string NameVn { get; set; }
 
         public string NameEn { get; set; }
+
+        public string Symptoms { get; set; }
 
         public List<HealthService> HealthServices { get; set; }
 

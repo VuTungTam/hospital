@@ -100,8 +100,6 @@ namespace Hospital.Application.Dtos.Users
 
         public string PhotoUrl { get; set; }
 
-        public int Shard { get; set; }
-
         public bool CanChangePassword { get; set; }
 
         public bool IsDefaultPassword { get; set; }
@@ -130,7 +128,6 @@ namespace Hospital.Application.Dtos.Users
             LastSeen = LastSeen,
             PhoneVerified = PhoneVerified,
             Provider = Provider,
-            Shard = Shard,
             Status = Status,
             CreatedAt = CreatedAt,
             ModifiedAt = ModifiedAt

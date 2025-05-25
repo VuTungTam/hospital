@@ -6,7 +6,7 @@ using Hospital.SharedKernel.Domain.Entities.Interfaces;
 
 namespace Hospital.Domain.Entities.CancelReasons
 {
-    [Table("mcs_cancel_reasons")]
+    [Table("tbl_cancel_reasons")]
     public class CancelReason :
         BaseEntity,
         ICreatedBy

@@ -25,6 +25,15 @@ namespace Hospital.Api.Controllers.Payments
             return Ok(new SimpleDataResult { Data = payment });
         }
 
+        [HttpGet("transaction/{transactionId}")]
+        public virtual async Task<IActionResult> GetByTransactionId(long transactionId, CancellationToken cancellationToken = default)
+        {
+            var query = new GetPaymentByTransactionIdQuery(transactionId);
+            var payment = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new SimpleDataResult { Data = payment });
+        }
+
         [HttpPost]
         public virtual async Task<IActionResult> Add(PaymentDto paymentDto, CancellationToken cancellationToken = default)
         {

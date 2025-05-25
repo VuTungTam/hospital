@@ -154,7 +154,10 @@ namespace Hospital.Api.Migrations
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("FacilityName")
+                    b.Property<string>("FacilityNameEn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacilityNameVn")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("HealthProfileId")
@@ -239,38 +242,7 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("BookingId")
                         .IsUnique();
 
-                    b.ToTable("mcs_cancel_reasons");
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.Distances.Distance", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("DestinationLatitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("DestinationLongitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("DistanceMeter")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<double>("SourceLatitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("SourceLongitude")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tbl_distances");
+                    b.ToTable("tbl_cancel_reasons");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Doctors.Doctor", b =>
@@ -280,9 +252,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR(512)");
-
-                    b.Property<string>("AliasLogin")
-                        .HasColumnType("NVARCHAR(128)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
@@ -304,9 +273,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<long?>("DeletedBy")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("NVARCHAR(MAX)");
 
                     b.Property<int>("Did")
                         .HasColumnType("int");
@@ -354,9 +320,6 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("Json")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("LastSeen")
                         .HasColumnType("DATETIME");
 
@@ -378,38 +341,20 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("NVARCHAR(50)");
 
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("NVARCHAR(255)");
-
                     b.Property<int>("Pid")
                         .HasColumnType("int");
 
                     b.Property<string>("Pname")
                         .HasColumnType("NVARCHAR(255)");
 
-                    b.Property<string>("Provider")
-                        .HasColumnType("NVARCHAR(20)");
-
-                    b.Property<int>("Shard")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<string>("TrainingProcess")
-                        .HasColumnType("NVARCHAR(255)");
 
                     b.Property<int>("Wid")
                         .HasColumnType("int");
 
                     b.Property<string>("Wname")
                         .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("WorkExperience")
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("ZaloId")
-                        .HasColumnType("NVARCHAR(20)");
 
                     b.HasKey("Id");
 
@@ -558,21 +503,11 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Dname")
                         .HasColumnType("NVARCHAR(255)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Latitude")
-                        .HasColumnType("DECIMAL(9,6)");
-
                     b.Property<string>("Logo")
                         .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<decimal>("Longitude")
-                        .HasColumnType("DECIMAL(9,6)");
 
                     b.Property<string>("MapURL")
                         .HasColumnType("NVARCHAR(MAX)");
@@ -590,9 +525,6 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("NameVn")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(512)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("NVARCHAR(50)");
 
                     b.Property<int>("Pid")
                         .HasColumnType("int");
@@ -928,10 +860,6 @@ namespace Hospital.Api.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("DECIMAL(18,2)");
 
-                    b.Property<string>("BankBin")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(20)");
-
                     b.Property<long>("BookingId")
                         .HasColumnType("bigint");
 
@@ -940,40 +868,21 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("DATETIME")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<DateTime?>("ExpiredAt")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<string>("ExternalTransactionId")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(512)");
-
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIT")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("NVARCHAR(512)");
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<string>("PaymentUrl")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(512)");
-
                     b.Property<string>("TransactionContent")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -1039,54 +948,6 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("tbl_service_time_rules");
-                });
-
-            modelBuilder.Entity("Hospital.Domain.Entities.SocialNetworks.SocialNetwork", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Link")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("Logo")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<long?>("ModifiedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(512)");
-
-                    b.Property<string>("Qr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tbl_social_networks");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entities.Specialties.DoctorSpecialty", b =>
@@ -1179,6 +1040,9 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("NameVn")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(512)");
+
+                    b.Property<string>("Symptoms")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1457,9 +1321,6 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR(512)");
 
-                    b.Property<string>("AliasLogin")
-                        .HasColumnType("NVARCHAR(128)");
-
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
 
@@ -1515,12 +1376,6 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("Json")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("LastPurchase")
-                        .HasColumnType("DATETIME");
-
                     b.Property<DateTime?>("LastSeen")
                         .HasColumnType("DATETIME");
 
@@ -1542,12 +1397,6 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("NVARCHAR(50)");
 
-                    b.Property<bool>("PhoneVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("NVARCHAR(255)");
-
                     b.Property<int>("Pid")
                         .HasColumnType("int");
 
@@ -1557,23 +1406,14 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Provider")
                         .HasColumnType("NVARCHAR(20)");
 
-                    b.Property<int>("Shard")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("TotalSpending")
-                        .HasColumnType("DECIMAL(19,2)");
 
                     b.Property<int>("Wid")
                         .HasColumnType("int");
 
                     b.Property<string>("Wname")
                         .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("ZaloId")
-                        .HasColumnType("NVARCHAR(20)");
 
                     b.HasKey("Id");
 
@@ -1596,9 +1436,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR(512)");
-
-                    b.Property<string>("AliasLogin")
-                        .HasColumnType("NVARCHAR(128)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
@@ -1655,9 +1492,6 @@ namespace Hospital.Api.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("Json")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("LastSeen")
                         .HasColumnType("DATETIME");
 
@@ -1679,23 +1513,11 @@ namespace Hospital.Api.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("NVARCHAR(50)");
 
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("NVARCHAR(255)");
-
                     b.Property<int>("Pid")
                         .HasColumnType("int");
 
                     b.Property<string>("Pname")
                         .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("Provider")
-                        .HasColumnType("NVARCHAR(20)");
-
-                    b.Property<string>("ScheduleColor")
-                        .HasColumnType("VARCHAR(7)");
-
-                    b.Property<int>("Shard")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -1705,9 +1527,6 @@ namespace Hospital.Api.Migrations
 
                     b.Property<string>("Wname")
                         .HasColumnType("NVARCHAR(255)");
-
-                    b.Property<string>("ZaloId")
-                        .HasColumnType("NVARCHAR(20)");
 
                     b.Property<long>("ZoneId")
                         .HasColumnType("bigint");
@@ -1724,39 +1543,6 @@ namespace Hospital.Api.Migrations
                     b.HasIndex("Phone");
 
                     b.ToTable("mcs_employees");
-                });
-
-            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeAction", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ActionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsExclude")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIT")
-                        .HasDefaultValueSql("0");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActionId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("perm_employee_action_map");
                 });
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeRole", b =>
@@ -2233,23 +2019,6 @@ namespace Hospital.Api.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeAction", b =>
-                {
-                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Auths.Action", "Action")
-                        .WithMany()
-                        .HasForeignKey("ActionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hospital.SharedKernel.Domain.Entities.Employees.Employee", null)
-                        .WithMany("EmployeeActions")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Action");
-                });
-
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.EmployeeRole", b =>
                 {
                     b.HasOne("Hospital.SharedKernel.Domain.Entities.Employees.Employee", "Employee")
@@ -2355,8 +2124,6 @@ namespace Hospital.Api.Migrations
 
             modelBuilder.Entity("Hospital.SharedKernel.Domain.Entities.Employees.Employee", b =>
                 {
-                    b.Navigation("EmployeeActions");
-
                     b.Navigation("EmployeeRoles");
                 });
 #pragma warning restore 612, 618
