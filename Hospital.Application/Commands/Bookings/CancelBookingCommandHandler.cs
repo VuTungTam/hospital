@@ -100,6 +100,8 @@ namespace Hospital.Application.Commands.Bookings
                 }
             }
 
+            await _bookingWriteRepository.ClearCacheAsync(cancelBooking, cancellationToken);
+
             await SendSignalR(cancelBooking, cancellationToken);
 
             return Unit.Value;
@@ -118,7 +120,7 @@ namespace Hospital.Application.Commands.Bookings
 
         private async Task<List<Booking>> CancelAndReorderAsync(Booking cancelBooking, CancellationToken cancellationToken)
         {
-            var bookingsToUpdate = await _bookingReadRepository.GetBookingsToReorder(cancelBooking, cancellationToken);
+            var bookingsToUpdate = await _bookingReadRepository.GetNextBookings(cancelBooking, cancellationToken);
             cancelBooking.Status = BookingStatus.Cancel;
             cancelBooking.Order = -1;
 

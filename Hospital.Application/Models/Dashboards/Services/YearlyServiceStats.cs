@@ -10,6 +10,7 @@
         public long ServiceId { get; set; }
 
         public string ServiceName { get; set; }
+        public string ServiceNameEn { get; set; }
 
         public int TotalCount { get; set; }
 

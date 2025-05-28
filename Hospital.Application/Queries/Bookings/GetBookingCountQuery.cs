@@ -1,17 +1,15 @@
-﻿using Hospital.SharedKernel.Application.CQRS.Queries.Base;
+﻿using Hospital.Application.Dtos.TimeSlots;
+using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 namespace Hospital.Application.Queries.Bookings
 {
-    public class GetBookingCountQuery : BaseAllowAnonymousQuery<int>
+    public class GetBookingCountQuery : BaseAllowAnonymousQuery<List<TimeSlotBookedDto>>
     {
-        public GetBookingCountQuery(long? serviceId, DateTime? date, TimeSpan? serviceStartTime, TimeSpan? serviceEndTime) { 
-            ServiceId = serviceId;
+        public GetBookingCountQuery(long timeRuleId, DateTime date)
+        {
             Date = date;
-            ServiceStartTime = serviceStartTime;
-            ServiceEndTime = serviceEndTime;
+            TimeRuleId = timeRuleId;
         }
-        public long? ServiceId { get; }
-        public DateTime? Date { get; }
-        public TimeSpan? ServiceStartTime { get; }
-        public TimeSpan? ServiceEndTime { get; }
+        public long TimeRuleId { get; }
+        public DateTime Date { get; }
     }
 }

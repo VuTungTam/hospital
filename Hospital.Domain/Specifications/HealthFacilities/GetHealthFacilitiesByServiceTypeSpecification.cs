@@ -1,6 +1,4 @@
-using System.Linq.Expressions;
 using Hospital.Domain.Entities.HealthFacilities;
-using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Specifications;
 
 namespace Hospital.Domain.Specifications.HealthFacilities

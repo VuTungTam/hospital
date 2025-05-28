@@ -24,6 +24,7 @@
         }
 
         public string CompareExplain { get; set; }
+        public string CompareExplainEn { get; set; }
 
         public double Percent => ((Value * 1.0 - SamePeriodLastYearValue) / (SamePeriodLastYearValue == 0 ? 1 : SamePeriodLastYearValue)) * 100;
 

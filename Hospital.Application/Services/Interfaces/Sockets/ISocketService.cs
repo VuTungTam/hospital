@@ -18,6 +18,10 @@ namespace Hospital.Application.Services.Interfaces.Sockets
 
         Task ConfirmBooking(Booking booking, CancellationToken cancellationToken = default);
 
+        Task CompleteBooking(Booking booking, CancellationToken cancellationToken = default);
+
+        Task NextBooking(Booking booking, CancellationToken cancellationToken = default);
+
         Task CustomerCancelBooking(Booking booking, CancellationToken cancellationToken = default);
 
         Task EmployeeCancelBooking(Booking booking, CancellationToken cancellationToken = default);

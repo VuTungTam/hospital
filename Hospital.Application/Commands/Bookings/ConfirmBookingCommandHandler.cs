@@ -120,9 +120,7 @@ namespace Hospital.Application.Commands.Bookings
 
             await _bookingWriteRepository.RemoveCacheWhenUpdateAsync(booking.Id, cancellationToken);
 
-            var cacheEntry = CacheManager.GetMaxOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
-
-            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
+            await _bookingWriteRepository.ClearCacheAsync(booking, cancellationToken);
 
             await _socketService.ConfirmBooking(booking, cancellationToken);
 

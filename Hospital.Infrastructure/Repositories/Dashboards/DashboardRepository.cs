@@ -16,10 +16,12 @@ using Hospital.Infrastructure.EFConfigurations;
 using Hospital.SharedKernel.Domain.Entities.Customers;
 using Hospital.SharedKernel.Domain.Entities.Employees;
 using Hospital.SharedKernel.Infrastructure.Databases.Dapper;
+using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Runtime.ExecutionContext;
 using Hospital.SharedKernel.Specifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 using VetHospital.Domain.Specifications.Bookings;
 
 namespace Hospital.Infrastructure.Repositories.Dashboards
@@ -186,7 +188,7 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
             }
 
             var groups = bookings.GroupBy(x => x.ServiceId).OrderByDescending(x => x.Count());
-            var services = await _dbContext.HealthServices.Select(x => new HealthService { Id = x.Id, NameVn = x.NameVn }).ToListAsync(cancellationToken);
+            var services = await _dbContext.HealthServices.Select(x => new HealthService { Id = x.Id, NameVn = x.NameVn, NameEn = x.NameEn }).ToListAsync(cancellationToken);
 
             for (int i = 0; i < top; i++)
             {
@@ -197,6 +199,7 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
                 {
                     model.ServiceId = group.Key;
                     model.ServiceName = services.FirstOrDefault(x => x.Id == group.Key)?.NameVn ?? "";
+                    model.ServiceNameEn = services.FirstOrDefault(x => x.Id == group.Key)?.NameEn ?? "";
                     model.TotalCount = group.Count();
                     model.CompletedCount = group.Count(x => x.Status == BookingStatus.Completed);
                 }
@@ -233,17 +236,18 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
 
         public async Task<BookingTrend> GetBookingTrendAsync(long facilityId, CancellationToken cancellationToken)
         {
-            var toDate = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
-            var endDate = DateTime.Now;
+            var now = DateTime.Now;
+            var toDate = new DateTime(now.Year, now.Month, 1);
+            var endDate = now;
 
-            var toDateSamePeriodLastYear = toDate.AddYears(-1);
-            var endDateSamePeriodLastYear = endDate.AddYears(-1);
+            var toDateLastMonth = toDate.AddMonths(-1);
+            var endDateLastMonth = toDate.AddDays(-1);
 
             var spec = new BookingByDateGreaterThanOrEqualsSpecification(toDate)
-                  .And(new BookingByDateLessThanOrEqualsSpecification(endDate));
+                .And(new BookingByDateLessThanOrEqualsSpecification(endDate));
 
-            var spec2 = new BookingByDateGreaterThanOrEqualsSpecification(toDateSamePeriodLastYear)
-                   .And(new BookingByDateLessThanOrEqualsSpecification(endDateSamePeriodLastYear));
+            var spec2 = new BookingByDateGreaterThanOrEqualsSpecification(toDateLastMonth)
+                .And(new BookingByDateLessThanOrEqualsSpecification(endDateLastMonth));
 
             if (_executionContext.IsSA)
             {
@@ -255,31 +259,26 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
             }
             else
             {
-                if (facilityId > 0)
-                {
-                    spec = spec.And(new LimitByFacilityIdSpecification<Booking>(facilityId));
-                    spec2 = spec2.And(new LimitByFacilityIdSpecification<Booking>(facilityId));
-                }
-                else
-                {
-                    spec = spec.And(new LimitByFacilityIdSpecification<Booking>(_executionContext.FacilityId));
-                    spec2 = spec2.And(new LimitByFacilityIdSpecification<Booking>(_executionContext.FacilityId));
-                }
+                var targetFacilityId = facilityId > 0 ? facilityId : _executionContext.FacilityId;
+                spec = spec.And(new LimitByFacilityIdSpecification<Booking>(targetFacilityId));
+                spec2 = spec2.And(new LimitByFacilityIdSpecification<Booking>(targetFacilityId));
             }
 
             var query = _dbContext.Bookings.Where(spec.GetExpression());
             var query2 = _dbContext.Bookings.Where(spec2.GetExpression());
 
-            var thisYearBookingCount = await query.CountAsync(cancellationToken);
-            var lastYearBookingCount = await query2.CountAsync(cancellationToken);
+            var thisMonthBookingCount = await query.CountAsync(cancellationToken);
+            var lastMonthBookingCount = await query2.CountAsync(cancellationToken);
 
             return new BookingTrend
             {
-                Value = thisYearBookingCount,
-                SamePeriodLastYearValue = lastYearBookingCount,
-                CompareExplain = $"So sánh [{toDateSamePeriodLastYear:dd/MM/yyyy} - {endDateSamePeriodLastYear:dd/MM/yyyy}] với [{toDate:dd/MM/yyyy} - {endDate:dd/MM/yyyy}]"
+                Value = thisMonthBookingCount,
+                SamePeriodLastYearValue = lastMonthBookingCount,
+                CompareExplain = $"So sánh [{toDateLastMonth:dd/MM/yyyy} - {endDateLastMonth:dd/MM/yyyy}] với [{toDate:dd/MM/yyyy} - {endDate:dd/MM/yyyy}]",
+                CompareExplainEn = $"Compare [{toDateLastMonth:dd/MM/yyyy} - {endDateLastMonth:dd/MM/yyyy}] and [{toDate:dd/MM/yyyy} - {endDate:dd/MM/yyyy}]"
             };
         }
+
 
         public async Task<CustomerTrend> GetCustomerTrendAsync(CancellationToken cancellationToken)
         {
@@ -305,7 +304,8 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
             {
                 Value = thisYearBookingCount,
                 SamePeriodLastYearValue = lastYearBookingCount,
-                CompareExplain = $"So sánh [{toDateSamePeriodLastYear:dd/MM/yyyy} - {endDateSamePeriodLastYear:dd/MM/yyyy}] với [{toDate:dd/MM/yyyy} - {endDate:dd/MM/yyyy}]"
+                CompareExplain = $"So sánh [{toDateSamePeriodLastYear:dd/MM/yyyy} - {endDateSamePeriodLastYear:dd/MM/yyyy}] với [{toDate:dd/MM/yyyy} - {endDate:dd/MM/yyyy}]",
+                CompareExplainEn = $"Compare [{toDateSamePeriodLastYear:dd/MM/yyyy} - {endDateSamePeriodLastYear:dd/MM/yyyy}] and [{toDate:dd/MM/yyyy} - {endDate:dd/MM/yyyy}]"
             };
         }
 
@@ -352,7 +352,8 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
                 result.Values.Add(new BookingStatusStatsValue
                 {
                     StatusId = (int)group.Key,
-                    StatusName = bookingsByGroup[0].Status.ToString(),
+                    StatusName = bookingsByGroup[0].Status.GetDescription(),
+                    StatusNameEn = bookingsByGroup[0].Status.ToString(),
                     TotalCount = bookingsByGroup.Count,
                 });
             }
@@ -369,11 +370,12 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
 
             var facilities = await query
                         .Where(spec.GetExpression())
-                        .GroupBy(b => new { b.FacilityId, b.FacilityNameVn })
+                        .GroupBy(b => new { b.FacilityId, b.FacilityNameVn, b.FacilityNameEn })
                         .Select(g => new TopFacilityValue
                         {
                             FacilityId = g.Key.FacilityId,
                             FacilityNameVn = g.Key.FacilityNameVn,
+                            FacilityNameEn = g.Key.FacilityNameEn,
                             TotalCount = g.Count()
                         })
                         .OrderByDescending(x => x.TotalCount)

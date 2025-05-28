@@ -39,6 +39,8 @@ namespace Hospital.Api
 
             services.AddInfrastructureService(builder.Configuration);
 
+            services.AddCoreHangfire(builder.Configuration);
+
             services.AddHttpClient();
 
             var app = builder.Build();

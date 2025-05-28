@@ -20,7 +20,5 @@ namespace Hospital.SharedKernel.Application.Repositories.Interface
         Task<PaginationResult<T>> GetPaginationAsync(Pagination pagination, ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
 
         Task<int> GetCountAsync(Expression<Func<T, bool>> predicate = null, CancellationToken cancellationToken = default);
-
-        Task<int> GetCountBySpecAsync(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default);
     }
 }

@@ -11,6 +11,8 @@ namespace Hospital.Application.Models.Dashboards.Bookings
 
         public string StatusName { get; set; }
 
+        public string StatusNameEn { get; set; }
+
         public int TotalCount { get; set; }
 
     }

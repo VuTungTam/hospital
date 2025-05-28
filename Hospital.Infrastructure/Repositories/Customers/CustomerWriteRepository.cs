@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hangfire;
 using Hospital.Application.Repositories.Interfaces.Customers;
+using Hospital.Domain.Entities.Bookings;
 using Hospital.Infrastructure.Repositories;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models;
@@ -14,6 +16,7 @@ using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Modules.Notifications.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -117,6 +120,12 @@ namespace Hospital.Infrastructure.Repositories.Customers
 
             await _dbContext.Database.ExecuteSqlRawAsync(sql, cancellationToken);
             await _dbContext.CommitAsync(cancellationToken: cancellationToken);
+        }
+        public async Task AddNotificationJobAsync(Notification notification, long ownerId)
+        {
+            var callbackWrapper = new CallbackWrapper();
+            await AddNotificationForCustomerAsync(notification, ownerId, callbackWrapper, CancellationToken.None);
+            await _dbContext.CommitAsync();
         }
     }
 }

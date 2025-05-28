@@ -4,6 +4,7 @@ using Hospital.Infrastructure.EFConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250526135104_U51")]
+    partial class U51
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,11 +298,8 @@ namespace Hospital.Api.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(255)");
 
-                    b.Property<string>("ExpertiseEn")
-                        .HasColumnType("NVARCHAR(512)");
-
-                    b.Property<string>("ExpertiseVn")
-                        .HasColumnType("NVARCHAR(512)");
+                    b.Property<string>("Expertise")
+                        .HasColumnType("NVARCHAR(255)");
 
                     b.Property<long>("FacilityId")
                         .HasColumnType("bigint");

@@ -25,7 +25,7 @@ namespace Hospital.Api.Controllers.Employees
         public IActionResult GetFilterable() => GetFilterable<Employee>();
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption, vn) });
 
         [HttpGet("sequence/{admin}")]
         public async Task<IActionResult> GetSequence(bool admin, CancellationToken cancellationToken = default)

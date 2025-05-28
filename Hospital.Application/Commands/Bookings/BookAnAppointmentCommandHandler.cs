@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Hangfire;
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.HealthFacilities;
 using Hospital.Application.Repositories.Interfaces.HealthProfiles;
 using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Application.Repositories.Interfaces.Zones;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.Zones;
@@ -38,7 +40,9 @@ namespace Hospital.Application.Commands.Bookings
         private readonly ICustomerWriteRepository _customerWriteRepository;
         private readonly IHealthProfileReadRepository _healthProfileReadRepository;
         private readonly IHealthFacilityReadRepository _healthFacilityReadRepository;
+        private readonly ITimeSlotReadRepository _timeSlotReadRepository;
         private readonly IExecutionContext _executionContext;
+        private readonly ICustomerReadRepository _customerReadRepository;
         public BookAnAppointmentCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -53,7 +57,9 @@ namespace Hospital.Application.Commands.Bookings
             ICustomerWriteRepository customerWriteRepository,
             IHealthFacilityReadRepository healthFacilityReadRepository,
             IHealthProfileReadRepository healthProfileReadRepository,
-            IExecutionContext executionContext
+            ITimeSlotReadRepository timeSlotReadRepository,
+            IExecutionContext executionContext,
+            ICustomerReadRepository customerReadRepository
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingReadRepository = bookingReadRepository;
@@ -65,7 +71,9 @@ namespace Hospital.Application.Commands.Bookings
             _customerWriteRepository = customerWriteRepository;
             _healthProfileReadRepository = healthProfileReadRepository;
             _healthFacilityReadRepository = healthFacilityReadRepository;
+            _timeSlotReadRepository = timeSlotReadRepository;
             _executionContext = executionContext;
+            _customerReadRepository = customerReadRepository;
         }
 
         public async Task<string> Handle(BookAnAppointmentCommand request, CancellationToken cancellationToken)
@@ -85,6 +93,21 @@ namespace Hospital.Application.Commands.Bookings
 
             var profile = await _healthProfileReadRepository.GetByIdAsync(booking.HealthProfileId, cancellationToken: cancellationToken);
 
+            if (string.IsNullOrWhiteSpace(booking.Email) || string.IsNullOrWhiteSpace(booking.Phone))
+            {
+                var customer = await _customerReadRepository.GetByIdAsync(_executionContext.Identity, cancellationToken: cancellationToken);
+
+                if (string.IsNullOrWhiteSpace(booking.Email))
+                {
+                    booking.Email = customer.Email;
+                }
+
+                if (string.IsNullOrWhiteSpace(booking.Phone))
+                {
+                    booking.Phone = customer.Phone;
+                }
+            }
+
             if (profile == null)
             {
                 throw new BadRequestException("Booking.ServiceNotFound");
@@ -103,6 +126,12 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.FacilityNameEn = facility.NameEn;
 
+            var timeSlot = await _timeSlotReadRepository.GetByIdAsync(booking.TimeSlotId, cancellationToken: cancellationToken);
+
+            if (timeSlot == null)
+            {
+                throw new BadRequestException("Booking.timeSlotNotFound");
+            }
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, booking.TimeSlotId, cancellationToken);
 
             var serviceTimeRules = await _serviceTimeRuleReadRepository.GetByServiceIdAsync(booking.ServiceId, cancellationToken: cancellationToken);
@@ -131,15 +160,7 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.DoctorId = service.DoctorId;
 
-            var option = new QueryOption
-            {
-                IgnoreFacility = true,
-                Includes = new string[] { nameof(Zone.ZoneSpecialties) }
-            };
-
-            //var spec = new GetZoneByFacilityIdSpecification(booking.FacilityId);
-
-            var zones = await _zoneReadRepository.GetAsync(option: option, cancellationToken: cancellationToken);
+            var zones = await _zoneReadRepository.GetZonesByFacilityId(service.FacilityId, cancellationToken: cancellationToken);
 
             if (zones == null)
             {
@@ -152,13 +173,17 @@ namespace Hospital.Application.Commands.Bookings
                 booking.ZoneId = zone.Id;
             }
 
+            _bookingWriteRepository.Add(booking);
+
             await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
+
+            await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
 
             var notification = new Notification
             {
                 Data = booking.Id.ToString(),
                 IsUnread = true,
-                Description = $"<p>Yêu cầu xét duyệt! Khách hàng <span class='n-bold'></span> vừa đặt lịch khám lúc <span class='n-bold'>{booking.CreatedAt:HH:mm dd/MM/yyyy}</span>. </span></p>",
+                Description = $"<p>Đặt lịch khám <span class='n-bold'>{booking.Code}</span> thành công lúc <span class='n-bold'>{booking.CreatedAt:HH:mm dd/MM/yyyy}</span>. Số thứ tự của bạn là <span class='n-bold'>{booking.Order}</span></p>",
                 Timestamp = DateTime.Now,
                 Type = NotificationType.ConfirmBooking
             };
@@ -166,13 +191,11 @@ namespace Hospital.Application.Commands.Bookings
 
             await _customerWriteRepository.AddNotificationForCustomerAsync(notification, _executionContext.Identity, callbackWrapper, cancellationToken);
 
-            await _bookingWriteRepository.AddAsync(booking, cancellationToken);
+            await _bookingWriteRepository.ScheduleNotificationForCustomerAsync(booking.Id, booking.Date, timeSlot.Start, cancellationToken);
 
-            var cacheEntry = CacheManager.GetMaxOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
+            await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
-            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
-
-            await _redisCache.SetAsync(cacheEntry.Key, booking.Order, cancellationToken: cancellationToken);
+            await _bookingWriteRepository.ClearCacheAsync(booking, cancellationToken);
 
             return booking.Id.ToString();
         }

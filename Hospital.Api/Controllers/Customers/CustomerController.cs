@@ -32,7 +32,7 @@ namespace Hospital.Api.Controllers.Customers
 
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption, vn) });
 
         [HttpGet("sequence")]
         public async Task<IActionResult> GetCustomerSequence(CancellationToken cancellationToken = default)

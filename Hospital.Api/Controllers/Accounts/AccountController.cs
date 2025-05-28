@@ -40,7 +40,7 @@ namespace Hospital.Api.Controllers.Accounts
         }
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption, vn) });
 
         [HttpGet("profile/{includeRole}")]
         public async Task<IActionResult> GetProfile(bool includeRole = false, CancellationToken cancellationToken = default)

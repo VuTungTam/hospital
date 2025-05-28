@@ -1,10 +1,15 @@
-﻿using Hospital.Application.Repositories.Interfaces.Bookings;
+﻿using Hangfire;
+using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
 using Hospital.SharedKernel.Infrastructure.Repositories.Sequences.Interfaces;
 using Hospital.SharedKernel.Libraries.Utils;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -54,5 +59,75 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             return base.RemoveCacheWhenAddAsync(booking, cancellationToken);
         }
 
+        public async Task ClearCacheAsync(Booking booking, CancellationToken cancellationToken)
+        {
+            var cacheEntry = CacheManager.GetMaxOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
+
+            await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
+
+            var cacheEntry2 = CacheManager.GetBookingCountByTimeSlotIdCacheEntry(booking.TimeSlotId, booking.Date);
+
+            await _redisCache.RemoveAsync(cacheEntry2.Key, cancellationToken: cancellationToken);
+        }
+        public Task ScheduleNotificationForCustomerAsync(long bookingId, DateTime appointmentDate, TimeSpan startTime, CancellationToken cancellationToken)
+        {
+            DateTime now = DateTime.Now;
+            DateTime appointmentDateTime = appointmentDate.Date + startTime;
+
+            TimeSpan timeUntilAppointment = (appointmentDateTime - now) - TimeSpan.FromMinutes(60);
+
+            DateTime sixAM = appointmentDate.Date.AddHours(5);
+            TimeSpan timeUntilSixAM = sixAM - now;
+
+            var notification = new Notification
+            {
+                Data = bookingId.ToString(),
+                IsUnread = true,
+                Description = $"<p>Bạn có lịch khám lúc <span class='n-bold'>{startTime:hh\\:mm}</span> hôm nay. Vui lòng đến cơ sở đúng lịch hẹn</p>",
+                Timestamp = DateTime.Now,
+                Type = NotificationType.Remind
+            };
+
+            var ownerId = _executionContext.Identity;
+
+            if (timeUntilAppointment > TimeSpan.Zero)
+            {
+                BackgroundJob.Schedule<ICustomerWriteRepository>(
+                    svc => svc.AddNotificationJobAsync(notification, ownerId),
+                    timeUntilAppointment);
+            }
+
+            if (timeUntilSixAM > TimeSpan.Zero)
+            {
+                BackgroundJob.Schedule<ICustomerWriteRepository>(
+                    svc => svc.AddNotificationJobAsync(notification, ownerId),
+                    timeUntilSixAM);
+            }
+            return Task.CompletedTask;
+        }
+
+        public void TestSchedule()
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan timeUntilAppointment = TimeSpan.FromMinutes(1);
+
+            var notification = new Notification
+            {
+                Data = "0",
+                IsUnread = true,
+                Description = $"<p>Test noti</p>",
+                Timestamp = DateTime.Now,
+                Type = NotificationType.Remind
+            };
+
+            var ownerId = _executionContext.Identity;
+
+            if (timeUntilAppointment > TimeSpan.Zero)
+            {
+                BackgroundJob.Schedule<ICustomerWriteRepository>(
+                    svc => svc.AddNotificationJobAsync(notification, ownerId),
+                    timeUntilAppointment);
+            }
+        }
     }
 }

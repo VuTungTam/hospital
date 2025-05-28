@@ -1,4 +1,5 @@
-﻿using Hospital.Application.Models.Bookings;
+﻿using Hospital.Application.Dtos.TimeSlots;
+using Hospital.Application.Models.Bookings;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Enums;
 using Hospital.SharedKernel.Application.Models.Requests;
@@ -23,7 +24,9 @@ namespace Hospital.Application.Repositories.Interfaces.Bookings
 
         Task<Booking> GetByCodeAsync(string code, CancellationToken cancellationToken);
 
-        Task<List<Booking>> GetBookingsToReorder(Booking cancelBooking, CancellationToken cancellationToken);
-        //Task<int> GetBookingQuantity(long? serviceId, DateTime? date, TimeSpan? start, TimeSpan? end, List<BookingStatus>? status, CancellationToken cancellationToken);
+        Task<List<Booking>> GetNextBookings(Booking cancelBooking, CancellationToken cancellationToken);
+
+        Task<int> GetBookingCountByTimeSlotId(long timeSlotId, DateTime date, CancellationToken cancellationToken);
+
     }
 }

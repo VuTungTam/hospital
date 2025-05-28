@@ -118,9 +118,10 @@ namespace Hospital.SharedKernel.Infrastructure.Caching.Models
         public static CacheEntry GetDoctorContext(long doctorId) => new CacheEntry($"doctor-context:{doctorId}", 3600);
 
         public static CacheEntry GetBookingIdByCodeCacheEntry(string code)
-                    => new CacheEntry($"id:s-row-code:tbl_booking:{code}", 3600);
+            => new CacheEntry($"id:s-row-code:tbl_booking:{code}", 3600);
 
-
+        public static CacheEntry GetBookingCountByTimeSlotIdCacheEntry(long timeSlotId, DateTime date)
+            => new CacheEntry($"tbl_booking:count:{date:yyyyMMdd}:{timeSlotId}", 3600);
 
         public static CacheEntry DbSystemPublicIdCacheEntry<T>(long id) where T : BaseEntity
             => new CacheEntry($"{typeof(T).Name.ToLower()}:s-row-id:public-{GetTableName<T>()}:{id}", 3600);

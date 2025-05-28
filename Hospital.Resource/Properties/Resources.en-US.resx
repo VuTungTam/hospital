@@ -486,6 +486,33 @@
 <data name="DoctorRank.BSCKII" xml:space="preserve">
   <value>Specialist Doctor Level II</value>
 </data>
+<data name="Ths" xml:space="preserve">
+  <value>MSc</value>
+</data>
+<data name="TS" xml:space="preserve">
+  <value>PhD</value>
+</data>
+<data name="TSKH" xml:space="preserve">
+  <value>ScD</value>
+</data>
+<data name="PSG" xml:space="preserve">
+  <value>Assoc. Prof.</value>
+</data>
+<data name="GS" xml:space="preserve">
+  <value>Prof.</value>
+</data>
+<data name="BS" xml:space="preserve">
+  <value>Dr</value>
+</data>
+<data name="BSCKI" xml:space="preserve">
+  <value>Dr I</value>
+</data>
+<data name="BSCKII" xml:space="preserve">
+  <value>Dr II</value>
+</data>
+<data name="BSNT" xml:space="preserve">
+  <value>Dr Res.</value>
+</data>
 <data name="Infor.None" xml:space="preserve">
   <value>No data</value>
 </data>

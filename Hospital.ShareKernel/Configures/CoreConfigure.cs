@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using AspNetCoreRateLimit;
 using FluentValidation.AspNetCore;
+using Hangfire;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Consts;
 using Hospital.SharedKernel.Application.Models.Responses;
@@ -89,6 +90,7 @@ namespace Hospital.SharedKernel.Configures
             services.AddScoped<IDateService, DateService>();
 
             services.AddSignalR();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -284,6 +286,15 @@ namespace Hospital.SharedKernel.Configures
             return services;
         }
 
+        public static IServiceCollection AddCoreHangfire(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddHangfire(config =>
+            config.UseSqlServerStorage(Configuration.GetConnectionString("HangFireDatabase")));
+
+            services.AddHangfireServer();
+            return services;
+        }
+
         public static IServiceCollection AddCloudinary(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddScoped<ICloudinaryService, CloudinaryService>();
@@ -341,6 +352,7 @@ namespace Hospital.SharedKernel.Configures
 
             app.UseIpRateLimiting();
             app.UseForwardedHeaders();
+            app.UseCoreHangfire();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
@@ -370,6 +382,12 @@ namespace Hospital.SharedKernel.Configures
                 c.RoutePrefix = "swagger";
             });
         }
+
+        public static void UseCoreHangfire(this IApplicationBuilder app)
+        {
+            app.UseHangfireDashboard();
+        }
+
         public static void UseCoreExceptionHandler(this IApplicationBuilder app)
         {
             // Handle exception

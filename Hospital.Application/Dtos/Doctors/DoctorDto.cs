@@ -23,7 +23,9 @@ namespace Hospital.Application.Dtos.Doctors
 
         public string DoctorRankStr { get; set; }
 
-        public string Expertise { get; set; }
+        public string ExpertiseVn { get; set; }
+
+        public string ExpertiseEn { get; set; }
 
         public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
 

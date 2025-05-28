@@ -38,7 +38,7 @@ namespace Hospital.Api.Controllers.HealthFacilities
 
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<HealthServiceStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<HealthServiceStatus>(noneOption, vn) });
 
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllFacilityType(CancellationToken cancellationToken = default)
@@ -58,12 +58,13 @@ namespace Hospital.Api.Controllers.HealthFacilities
             string asc = "",
             string desc = "",
             long typeId = 0,
+            int pid = 0,
             long serviceTypeId = 0,
             HealthFacilityStatus status = HealthFacilityStatus.None,
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetHealthFacilityPaginationQuery(pagination, typeId, serviceTypeId, status);
+            var query = new GetHealthFacilityPaginationQuery(pagination, typeId, serviceTypeId, pid, status);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });

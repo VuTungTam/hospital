@@ -1,15 +1,20 @@
 ﻿using AutoMapper;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
+using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
+using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Domain.Events.Interfaces;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -21,8 +26,10 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingReadRepository _bookingReadRepository;
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
+        private readonly ICustomerWriteRepository _customerWriteRepository;
         private readonly IRedisCache _redisCache;
         private readonly IDateService _dateService;
+        private readonly ISocketService _socketService;
         public CompleteBookingCommandHandler(
             IEventDispatcher eventDispatcher,
             IAuthService authService,
@@ -31,8 +38,10 @@ namespace Hospital.Application.Commands.Bookings
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
+            ICustomerWriteRepository customerWriteRepository,
             IRedisCache redisCache,
-            IDateService dateService
+            IDateService dateService,
+            ISocketService socketService
         ) : base(eventDispatcher, authService, localizer, mapper)
         {
             _bookingReadRepository = bookingReadRepository;
@@ -40,6 +49,8 @@ namespace Hospital.Application.Commands.Bookings
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
             _redisCache = redisCache;
             _dateService = dateService;
+            _socketService = socketService;
+            _customerWriteRepository = customerWriteRepository;
         }
 
         public async Task<Unit> Handle(CompleteBookingCommand request, CancellationToken cancellationToken)
@@ -69,11 +80,26 @@ namespace Hospital.Application.Commands.Bookings
 
             booking.Status = BookingStatus.Completed;
 
+            var notification = new Notification
+            {
+                Data = booking.Id.ToString(),
+                IsUnread = true,
+                Description = $"<p>Lịch khám <span class='n-bold'>{booking.Code}</span> vừa được hoàn thành, cảm ơn bạn đã sử dụng dịch vụ của chúng tôi</p>",
+                Timestamp = DateTime.Now,
+                Type = NotificationType.ConfirmBooking
+            };
+
+            var callbackWrapper = new CallbackWrapper();
+
+            await _customerWriteRepository.AddNotificationForCustomerAsync(notification, booking.OwnerId, callbackWrapper, cancellationToken);
+
             await _bookingWriteRepository.UpdateAsync(booking, cancellationToken: cancellationToken);
 
             var cacheEntry = CacheManager.GetCurrentOrderCacheEntry(booking.ServiceId, booking.Date, booking.TimeSlotId);
 
             await _redisCache.RemoveAsync(cacheEntry.Key, cancellationToken: cancellationToken);
+
+            //await _socketService.CompleteBooking(booking, cancellationToken);
 
             return Unit.Value;
         }

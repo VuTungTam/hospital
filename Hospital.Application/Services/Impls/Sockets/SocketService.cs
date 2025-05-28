@@ -148,5 +148,45 @@ namespace Hospital.Application.Services.Impls.Sockets
 
             await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
         }
+
+        public async Task CompleteBooking(Booking booking, CancellationToken cancellationToken = default)
+        {
+            var customer = SignalRHub.CustomerConnections.Values.Select(x => x);
+            var connections = new List<AuthenticatedSocketConnection>();
+            var connectionIds = new List<string>();
+
+            foreach (var c in customer)
+            {
+                connectionIds.AddRange(c.Where(x => x.UserId == booking.OwnerId.ToString()).Select(x => x.ConnectionId));
+            }
+
+            var data = JsonConvert.SerializeObject(new
+            {
+                BookingId = booking.Id.ToString(),
+            }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var msg = new SignalRMessage { Type = (int)MessageHubType.CompleteBooking, Data = data };
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+        }
+
+        public async Task NextBooking(Booking booking, CancellationToken cancellationToken = default)
+        {
+            var customer = SignalRHub.CustomerConnections.Values.Select(x => x);
+            var connections = new List<AuthenticatedSocketConnection>();
+            var connectionIds = new List<string>();
+
+            foreach (var c in customer)
+            {
+                connectionIds.AddRange(c.Where(x => x.UserId == booking.OwnerId.ToString()).Select(x => x.ConnectionId));
+            }
+
+            var data = JsonConvert.SerializeObject(new
+            {
+                BookingId = booking.Id.ToString(),
+            }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var msg = new SignalRMessage { Type = (int)MessageHubType.NextBooking, Data = data };
+
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("ReceiveMessage", msg, cancellationToken);
+        }
     }
 }

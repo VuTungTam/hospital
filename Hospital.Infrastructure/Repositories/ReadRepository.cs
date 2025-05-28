@@ -201,12 +201,6 @@ namespace Hospital.Infrastructure.Repositories
             return await _dbSet.CountAsync(predicate, cancellationToken);
         }
 
-        public virtual async Task<int> GetCountBySpecAsync(ISpecification<T> spec, QueryOption option = default, CancellationToken cancellationToken = default)
-        {
-            var guardExpression = GuardDataAccess(spec, option).GetExpression();
-            var query = _dbSet.AsNoTracking().Where(guardExpression);
-            return await query.CountAsync(cancellationToken);
-        }
         protected CacheEntry GetCacheEntry(long id = 0, string type = "")
         {
             if (type == "all")

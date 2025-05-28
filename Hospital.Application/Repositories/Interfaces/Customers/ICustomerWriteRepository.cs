@@ -14,5 +14,7 @@ namespace Hospital.Application.Repositories.Interfaces.Customers
         Task AddCustomerAsync(Customer customer, bool externalFlow = false, CancellationToken cancellationToken = default);
 
         Task AddNotificationForCustomerAsync(Notification notification, long OwnerId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
+
+        Task AddNotificationJobAsync(Notification notification, long ownerId);
     }
 }

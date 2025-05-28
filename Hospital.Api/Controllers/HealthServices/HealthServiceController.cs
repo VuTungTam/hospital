@@ -24,7 +24,7 @@ namespace Hospital.Api.Controllers.HealthServices
         public IActionResult GetFilterable() => base.GetFilterable<HealthService>();
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<HealthServiceStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<HealthServiceStatus>(noneOption, vn) });
 
         [HttpGet("type"), AllowAnonymous]
         public async Task<IActionResult> GetAllServiceType(CancellationToken cancellationToken = default)

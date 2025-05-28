@@ -15,6 +15,8 @@
         Reload = 10,
         ConfirmBooking = 11,
         CustomerCancelBooking = 12,
-        EmployeeCancelBooking = 13
+        EmployeeCancelBooking = 13,
+        NextBooking = 14,
+        CompleteBooking = 15,
     }
 }

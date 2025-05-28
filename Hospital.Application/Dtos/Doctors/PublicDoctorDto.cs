@@ -28,9 +28,13 @@ namespace Hospital.Application.Dtos.Doctors
 
         public string DoctorRankStr { get; set; }
 
-        public string Expertise { get; set; }
+        public string ExpertiseVn { get; set; }
 
-        public string Specialties { get; set; }
+        public string ExpertiseEn { get; set; }
+
+        public string SpecialtyVns { get; set; }
+
+        public string SpecialtyEns { get; set; }
 
         public string Description { get; set; }
 
@@ -40,7 +44,9 @@ namespace Hospital.Application.Dtos.Doctors
 
         public string ProfessionalLevel { get; set; }
 
-        public string Credentials { get; set; }
+        public string CredentialVns { get; set; }
+
+        public string CredentialEns { get; set; }
 
         public string FacilityId { get; set; }
     }

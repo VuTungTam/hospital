@@ -3,6 +3,7 @@ using Hospital.Domain.Entities.HealthServices;
 using Hospital.Domain.Entities.Zones;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Domain.Entities.Interfaces;
+using Hospital.SharedKernel.Libraries.Attributes;
 
 namespace Hospital.Domain.Entities.Specialties
 {
@@ -16,11 +17,14 @@ namespace Hospital.Domain.Entities.Specialties
         ISoftDelete,
         IDeletedBy
     {
+        [Filterable("NameVn")]
         public string NameVn { get; set; }
-
+        [Filterable("NameEn")]
         public string NameEn { get; set; }
 
-        public string Symptoms { get; set; }
+        public string SymptomVns { get; set; }
+
+        public string SymptomEns { get; set; }
 
         public List<HealthService> HealthServices { get; set; }
 

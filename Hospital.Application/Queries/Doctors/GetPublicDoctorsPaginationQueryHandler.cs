@@ -40,11 +40,17 @@ namespace Hospital.Application.Queries.Doctors
                     dto.DoctorRank > 0 ? _localizer["DoctorRank."+dto.DoctorRank.ToString()] : null,
                 }.Where(x => !string.IsNullOrEmpty(x))) ?? _localizer["Infor.None"];
 
-                dto.Credentials = string.Join(" ", new[]
+                dto.CredentialVns = string.Join(" ", new[]
                 {
                     dto.DoctorTitle > 0 ? dto.DoctorTitle.ToString() : null,
                     dto.DoctorDegree > 0 ? dto.DoctorDegree.ToString() : null,
                     dto.DoctorRank > 0 ? dto.DoctorRank.ToString() : null,
+                }.Where(x => !string.IsNullOrEmpty(x))) ?? _localizer["Infor.None"];
+                dto.CredentialEns = string.Join(" ", new[]
+                {
+                    dto.DoctorTitle > 0 ? _localizer[dto.DoctorTitle.ToString()]: null,
+                    dto.DoctorDegree > 0 ? _localizer[dto.DoctorDegree.ToString()] : null,
+                    dto.DoctorRank > 0 ? _localizer[dto.DoctorRank.ToString()]: null,
                 }.Where(x => !string.IsNullOrEmpty(x))) ?? _localizer["Infor.None"];
             });
 

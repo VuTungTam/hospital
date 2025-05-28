@@ -5,6 +5,7 @@ using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.Extensions.Localization;
+using Microsoft.OpenApi.Extensions;
 
 namespace Hospital.Application.Dtos.HealthServices
 {
@@ -33,6 +34,8 @@ namespace Hospital.Application.Dtos.HealthServices
         public HealthServiceStatus Status { get; set; }
 
         public string StatusText => Status.GetDescription();
+
+        public string StatusTextEn => Status.GetDisplayName();
 
         public string ZoneId { get; set; }
 

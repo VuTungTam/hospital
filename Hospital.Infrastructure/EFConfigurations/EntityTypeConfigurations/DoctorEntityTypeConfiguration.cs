@@ -43,8 +43,11 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                      builder.Property(x => x.Address)
                             .HasColumnType("NVARCHAR(512)");
 
-                     builder.Property(x => x.Expertise)
-                            .HasColumnType("NVARCHAR(255)");
+                     builder.Property(x => x.ExpertiseVn)
+                            .HasColumnType("NVARCHAR(512)");
+
+                     builder.Property(x => x.ExpertiseEn)
+                            .HasColumnType("NVARCHAR(512)");
 
                      builder.Property(x => x.LastSeen)
                             .HasColumnType("DATETIME");

@@ -23,7 +23,7 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
         {
         }
 
-        public async Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, long serviceTypeId = 0, HealthFacilityStatus status = default, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<HealthFacility>> GetPagingWithFilterAsync(Pagination pagination, long facilityTypeId = 0, long serviceTypeId = 0, int pid = 0, HealthFacilityStatus status = default, CancellationToken cancellationToken = default)
         {
             ISpecification<HealthFacility> spec = new GetHealthFacilitiesByStatusSpecification(status);
             if (facilityTypeId > 0)
@@ -34,11 +34,16 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
             {
                 spec = spec.And(new GetHealthFacilitiesByServiceTypeSpecification(serviceTypeId));
             }
+
+            if (pid > 0)
+            {
+                spec = spec.And(new GetHealthFacilitiesByPidSpecification(pid));
+            }
+
             QueryOption option = new QueryOption();
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
                         .Include(f => f.FacilityTypeMappings)
-                        .Include(f => f.HealthServices)
                          .Where(guardExpression)
                          .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
 

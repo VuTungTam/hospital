@@ -10,6 +10,7 @@ using Hospital.SharedKernel.Infrastructure.Services.Emails.Utils;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Libraries.Helpers;
 using Microsoft.Extensions.Localization;
+using Microsoft.OpenApi.Extensions;
 
 namespace Hospital.Application.Dtos.HealthFacility
 {
@@ -31,13 +32,11 @@ namespace Hospital.Application.Dtos.HealthFacility
 
         public string LogoUrl => CdnConfig.Get(Logo);
 
-        public string Phone { get; set; }
-
-        public string Email { get; set; }
-
         public HealthFacilityStatus Status { get; set; }
 
         public string StatusText => Status.GetDescription();
+
+        public string StatusTextEn => Status.GetDisplayName();
 
         public string Pid { get; set; }
 
@@ -54,10 +53,6 @@ namespace Hospital.Application.Dtos.HealthFacility
         public string Address { get; set; }
 
         public string FullAddress => Address + ", " + Wname + ", " + Dname + ", " + Pname;
-
-        public decimal Latitude { get; set; }
-
-        public decimal Longitude { get; set; }
 
         public string MapURL { get; set; }
 
@@ -128,7 +123,6 @@ namespace Hospital.Application.Dtos.HealthFacility
             RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["health_facility_description_en_is_not_empty"]);
             RuleFor(x => x.SummaryVn).NotEmpty().WithMessage(localizer["health_facility_summary_en_is_not_empty"]);
             RuleFor(x => x.SummaryEn).NotEmpty().WithMessage(localizer["health_facility_summary_en_is_not_empty"]);
-            RuleFor(x => x.Email).Must(x => EmailUtility.IsEmail(x)).WithMessage(localizer["CommonMessage.EmailIsNotValid"]);
             RuleFor(x => x.MapURL).Must(x => MapUtility.IsMapURL(x)).WithMessage(localizer["invalid_map"]);
             RuleFor(x => x.SpecialtyIds)
                 .NotNull().WithMessage(localizer["health_facility_specialties_required"])

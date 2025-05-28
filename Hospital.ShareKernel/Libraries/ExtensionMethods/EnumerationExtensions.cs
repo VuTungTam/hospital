@@ -22,12 +22,20 @@ namespace Hospital.SharedKernel.Libraries.ExtensionMethods
             return en.ToString();
         }
 
-        public static List<EnumValue> ToValues<T>(string noneOption) where T : Enum
+        public static List<EnumValue> ToValues<T>(string noneOption, bool vn) where T : Enum
         {
-            var values = Enum.GetValues(typeof(T))
-                             .Cast<T>()
-                             .Select(value => new EnumValue { Key = value.ToString(), Value = Convert.ToInt32(value), Description = value.GetDescription() });
+            IEnumerable<EnumValue> values;
 
+            if (vn)
+                values = Enum.GetValues(typeof(T))
+                                 .Cast<T>()
+                                 .Select(value => new EnumValue { Key = value.ToString(), Value = Convert.ToInt32(value), Description = value.GetDescription() });
+            else
+            {
+                values = Enum.GetValues(typeof(T))
+                                                 .Cast<T>()
+                                                 .Select(value => new EnumValue { Key = value.ToString(), Value = Convert.ToInt32(value), Description = value.ToString() });
+            }
             switch (noneOption)
             {
                 case "replace":
@@ -36,7 +44,14 @@ namespace Hospital.SharedKernel.Libraries.ExtensionMethods
                     {
                         if (value.Key == "None")
                         {
-                            value.Description = "Tất cả";
+                            if (vn)
+                            {
+                                value.Description = "Tất cả";
+                            }
+                            else
+                            {
+                                value.Description = "All";
+                            }
                         }
                         newList.Add(value);
                     }

@@ -32,7 +32,7 @@ namespace Hospital.Application.Queries.HealthFacilities
 
         public async Task<PaginationResult<HealthFacilityDto>> Handle(GetHealthFacilityPaginationQuery request, CancellationToken cancellationToken)
         {
-            var facilities = await _healthFacilityReadRepository.GetPagingWithFilterAsync(request.Pagination, request.TypeId, request.ServiceTypeId, request.Status, cancellationToken);
+            var facilities = await _healthFacilityReadRepository.GetPagingWithFilterAsync(request.Pagination, request.TypeId, request.ServiceTypeId, request.Pid, request.Status, cancellationToken);
             List<HealthFacilityDto> facilitieDtos = new();
             foreach (var facility in facilities.Data)
             {

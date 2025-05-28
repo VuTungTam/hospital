@@ -23,7 +23,7 @@ namespace Hospital.Api.Controllers.Articles
         public IActionResult GetFilterable() => GetFilterable<Article>();
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<ArticleStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<ArticleStatus>(noneOption, vn) });
 
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)

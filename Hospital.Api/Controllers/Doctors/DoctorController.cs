@@ -26,16 +26,16 @@ namespace Hospital.Api.Controllers.Doctors
         public IActionResult GetFilterable() => GetFilterable<Doctor>();
 
         [HttpGet("enums"), AllowAnonymous]
-        public IActionResult GetEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption) });
+        public IActionResult GetEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<AccountStatus>(noneOption, vn) });
 
         [HttpGet("enums/title"), AllowAnonymous]
-        public IActionResult GetTitleEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<DoctorTitle>(noneOption) });
+        public IActionResult GetTitleEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<DoctorTitle>(noneOption, true) });
 
         [HttpGet("enums/degree"), AllowAnonymous]
-        public IActionResult GetDegreeEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<DoctorDegree>(noneOption) });
+        public IActionResult GetDegreeEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<DoctorDegree>(noneOption, true) });
 
         [HttpGet("enums/rank"), AllowAnonymous]
-        public IActionResult GetRankEnums(string noneOption) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<DoctorRank>(noneOption) });
+        public IActionResult GetRankEnums(string noneOption, bool vn) => Ok(new SimpleDataResult { Data = EnumerationExtensions.ToValues<DoctorRank>(noneOption, true) });
 
         [HttpGet("sequence")]
         public async Task<IActionResult> GetSequence(CancellationToken cancellationToken = default)

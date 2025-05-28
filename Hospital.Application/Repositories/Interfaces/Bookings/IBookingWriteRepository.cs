@@ -12,5 +12,10 @@ namespace Hospital.Application.Repositories.Interfaces.Bookings
 
         Task ChangeStatusAsync(long bookingId, BookingStatus status, CancellationToken cancellationToken);
 
+        Task ClearCacheAsync(Booking booking, CancellationToken cancellationToken);
+
+        Task ScheduleNotificationForCustomerAsync(long bookingId, DateTime appointmentDate, TimeSpan startTime, CancellationToken cancellationToken);
+
+        void TestSchedule();
     }
 }

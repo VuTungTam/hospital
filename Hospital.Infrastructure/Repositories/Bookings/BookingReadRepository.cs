@@ -1,5 +1,7 @@
-﻿using Hospital.Application.Models.Bookings;
+﻿using Hangfire;
+using Hospital.Application.Models.Bookings;
 using Hospital.Application.Repositories.Interfaces.Bookings;
+using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Domain.Constants;
 using Hospital.Domain.Entities.Bookings;
@@ -9,12 +11,15 @@ using Hospital.Domain.Specifications.Bookings;
 using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Enums;
+using Hospital.SharedKernel.Application.Models;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
+using Hospital.SharedKernel.Modules.Notifications.Entities;
+using Hospital.SharedKernel.Modules.Notifications.Enums;
 using Hospital.SharedKernel.Runtime.Exceptions;
 using Hospital.SharedKernel.Specifications;
 using Hospital.SharedKernel.Specifications.Interfaces;
@@ -120,9 +125,8 @@ namespace Hospital.Infrastructure.Repositories.Bookings
                 BookingId = "0",
                 Order = "0"
             };
-            //var now = _dateService.GetClientTime();
+            var now = _dateService.GetClientTime();
 
-            var now = new DateTime(2025, 05, 15);
             var cacheEntry = CacheManager.GetCurrentOrderCacheEntry(serviceId, now, timeSlotId);
 
             var cachedData = await _redisCache.GetAsync<CurrentBookingModel>(cacheEntry.Key, cancellationToken);
@@ -321,7 +325,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
                                .AsNoTracking()
                                .FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<List<Booking>> GetBookingsToReorder(Booking cancelBooking, CancellationToken cancellationToken)
+        public async Task<List<Booking>> GetNextBookings(Booking cancelBooking, CancellationToken cancellationToken)
         {
             var data = await _dbSet.AsNoTracking()
             .Where(x => x.Date == cancelBooking.Date && x.ServiceId == cancelBooking.ServiceId
@@ -362,6 +366,22 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             var count = await query.CountAsync(cancellationToken);
 
             return new PaginationResult<Booking>(data, count);
+        }
+
+        public async Task<int> GetBookingCountByTimeSlotId(long timeSlotId, DateTime date, CancellationToken cancellationToken)
+        {
+            var cacheEntry = CacheManager.GetBookingCountByTimeSlotIdCacheEntry(timeSlotId, date);
+            var data = await _redisCache.GetAsync<int>(cacheEntry.Key, cancellationToken);
+            if (data == 0)
+            {
+                data = await _dbSet.AsNoTracking()
+                .Where(x => x.Date == date && x.TimeSlotId == timeSlotId && x.Status == BookingStatus.Confirmed).CountAsync(cancellationToken);
+                if (data > 0)
+                {
+                    await _redisCache.SetAsync(cacheEntry.Key, data, TimeSpan.FromSeconds(cacheEntry.ExpiriesInSeconds), cancellationToken);
+                }
+            }
+            return data;
         }
     }
 }

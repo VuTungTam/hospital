@@ -101,7 +101,8 @@ namespace Hospital.Application.Mappings
                         : new List<string>()));
 
             CreateMap<Doctor, PublicDoctorDto>()
-                .ForMember(des => des.Specialties, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameVn)) : string.Empty));
+                .ForMember(des => des.SpecialtyVns, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameVn)) : string.Empty))
+                .ForMember(des => des.SpecialtyEns, otp => otp.MapFrom(src => src.DoctorSpecialties != null ? string.Join(", ", src.DoctorSpecialties.Select(x => x.Specialty.NameEn)) : string.Empty));
 
             CreateMap<CustomerDto, Customer>();
 
@@ -123,6 +124,7 @@ namespace Hospital.Application.Mappings
             CreateMap<ServiceTimeRule, ServiceTimeRuleDto>().ReverseMap();
 
             CreateMap<TimeSlot, TimeSlotDto>().ReverseMap();
+            CreateMap<TimeSlot, TimeSlotBookedDto>().ReverseMap();
 
             //Feedback
             CreateMap<Feedback, FeedbackDto>().ReverseMap();
