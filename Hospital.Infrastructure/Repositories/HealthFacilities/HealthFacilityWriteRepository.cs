@@ -80,9 +80,9 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
 
             oldFacility.Pname = await _locationReadRepository.GetNameByIdAsync(int.Parse(newFacility.Pid), "province", cancellationToken);
 
-            var oldImageNames = oldFacility.Images.Select(x => x.PublicId).ToList();
+            var oldImageNames = oldFacility.Images.Select(x => x.PublicId.Split('/').Last()).ToList();
             var newImageNames = newFacility.ImageNames ?? new List<string>();
-            var delImages = oldFacility.Images.Where(i => !newImageNames.Contains(i.PublicId)).ToList();
+            var delImages = oldFacility.Images.Where(i => !newImageNames.Contains(i.PublicId.Split('/').Last())).ToList();
             var addImages = newImageNames.Except(oldImageNames).ToList();
 
             _dbContext.Images.RemoveRange(delImages);

@@ -11,10 +11,11 @@ namespace Hospital.Application.Queries.Bookings
     [RequiredPermission(ActionExponent.BookingManagement)]
     public class GetMyListBookingsPagingQuery : BaseQuery<PaginationResult<BookingDto>>
     {
-        public GetMyListBookingsPagingQuery(Pagination pagination, BookingStatus status, long serviceTypeId, DateTime date)
+        public GetMyListBookingsPagingQuery(Pagination pagination, BookingStatus status, long serviceTypeId, long serviceId, DateTime date)
         {
             Pagination = pagination;
             Status = status;
+            ServiceId = serviceId;
             ServiceTypeId = serviceTypeId;
             Date = date;
         }
@@ -22,6 +23,7 @@ namespace Hospital.Application.Queries.Bookings
         public Pagination Pagination { get; }
         public BookingStatus Status { get; }
         public long ServiceTypeId { get; }
+        public long ServiceId { get; }
         public DateTime Date { get; }
     }
 }

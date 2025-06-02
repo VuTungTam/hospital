@@ -41,7 +41,7 @@ namespace Hospital.Application.Commands.ServiceTimeRules
 
             if (existTimeRules.Any())
             {
-                throw new BadRequestException("Time rule đã được thêm");
+                throw new BadRequestException(_localizer["ServiceTimeRule.IsExist"]);
             }
 
             _serviceTimeRuleWriteRepository.Add(timeRule);

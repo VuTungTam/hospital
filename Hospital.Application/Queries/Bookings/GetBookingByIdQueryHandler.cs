@@ -44,7 +44,7 @@ namespace Hospital.Application.Queries.Bookings
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var option = new QueryOption
@@ -78,6 +78,8 @@ namespace Hospital.Application.Queries.Bookings
                 {
                     bookingDto.ServiceNameVn = service.NameVn;
                     bookingDto.ServiceNameEn = service.NameEn;
+                    bookingDto.SpecialtyId = service.SpecialtyId.ToString();
+                    bookingDto.ServiceTypeId = service.TypeId.ToString();
                 }
                 if (facility != null)
                 {

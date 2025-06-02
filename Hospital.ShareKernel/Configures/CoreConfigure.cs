@@ -479,7 +479,7 @@ namespace Hospital.SharedKernel.Configures
                 {
                     context.Response.StatusCode = 500;
                     responseContent.Code = ErrorCodeConstant.UNKNOWN_ERROR;
-                    responseContent.Message = InfrastructureConfiguration.EnabledShowError ? exception.Message : localizer["common_system_error_occurred"].Value;
+                    responseContent.Message = InfrastructureConfiguration.EnabledShowError ? exception.Message : localizer["CommonMessage.IdIsNotValid"].Value;
                     Log.Logger.Error(exception, exception.Message);
                 }
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(responseContent, new JsonSerializerSettings

@@ -31,7 +31,7 @@ namespace Hospital.Application.Commands.HealthFacilities
         {
             if (request.Ids == null || request.Ids.Exists(id => id <= 0))
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var facilities = await _healthFacilityReadRepository.GetByIdsAsync(request.Ids, _healthFacilityReadRepository.DefaultQueryOption, cancellationToken);

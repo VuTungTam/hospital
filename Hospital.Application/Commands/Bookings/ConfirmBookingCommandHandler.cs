@@ -54,7 +54,7 @@ namespace Hospital.Application.Commands.Bookings
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var option = new QueryOption
@@ -66,12 +66,12 @@ namespace Hospital.Application.Commands.Bookings
 
             if (booking == null)
             {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             }
 
             if (booking.Status != BookingStatus.Waiting)
             {
-                throw new BadRequestException(_localizer["booking_status_is_not_waiting"]);
+                throw new BadRequestException(_localizer["Booking.IsNotWaiting"]);
             }
 
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date,

@@ -40,7 +40,7 @@ namespace Hospital.Application.Commands.Zones
 
             if (zone == null)
             {
-                throw new BadRequestException("Zone không tồn tại");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
             await _zoneWriteRepository.UpdateZoneAsync(zone, request.Zone, cancellationToken: cancellationToken);

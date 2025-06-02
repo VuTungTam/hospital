@@ -33,7 +33,7 @@ namespace Hospital.Application.Queries.Bookings
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var booking = await _bookingReadRepository.GetByIdAsync(request.Id, null, cancellationToken: cancellationToken);

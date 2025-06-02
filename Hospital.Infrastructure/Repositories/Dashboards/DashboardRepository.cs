@@ -238,7 +238,7 @@ namespace Hospital.Infrastructure.Repositories.Dashboards
         {
             var now = DateTime.Now;
             var toDate = new DateTime(now.Year, now.Month, 1);
-            var endDate = now;
+            var endDate = new DateTime(now.Year, now.Month, 1).AddMonths(1).AddDays(-1);
 
             var toDateLastMonth = toDate.AddMonths(-1);
             var endDateLastMonth = toDate.AddDays(-1);

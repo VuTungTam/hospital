@@ -47,13 +47,13 @@ namespace Hospital.Application.Commands.ServiceTimeRules
         {
             if (!long.TryParse(request.Dto.Id, out var id) || id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var timeRule = await _serviceTimeRuleReadRepository.GetByIdAsync(id, _serviceTimeRuleReadRepository.DefaultQueryOption, cancellationToken);
             if (timeRule == null)
             {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             }
 
             var entity = _mapper.Map<ServiceTimeRule>(request.Dto);

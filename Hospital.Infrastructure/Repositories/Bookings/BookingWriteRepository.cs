@@ -69,22 +69,33 @@ namespace Hospital.Infrastructure.Repositories.Bookings
 
             await _redisCache.RemoveAsync(cacheEntry2.Key, cancellationToken: cancellationToken);
         }
-        public Task ScheduleNotificationForCustomerAsync(long bookingId, DateTime appointmentDate, TimeSpan startTime, CancellationToken cancellationToken)
+        public Task ScheduleNotificationForCustomerAsync(long bookingId, string code, DateTime appointmentDate, TimeSpan startTime, CancellationToken cancellationToken)
         {
             DateTime now = DateTime.Now;
             DateTime appointmentDateTime = appointmentDate.Date + startTime;
 
-            TimeSpan timeUntilAppointment = (appointmentDateTime - now) - TimeSpan.FromMinutes(60);
+            TimeSpan timeUntilAppointment = appointmentDateTime - now;
+            DateTime notiDateTime1 = appointmentDateTime.AddMinutes(-30);
 
-            DateTime sixAM = appointmentDate.Date.AddHours(5);
-            TimeSpan timeUntilSixAM = sixAM - now;
+
+            DateTime fiveAM = appointmentDate.Date.AddHours(5);
+            TimeSpan timeUntilFiveAM = fiveAM - now;
 
             var notification = new Notification
             {
                 Data = bookingId.ToString(),
                 IsUnread = true,
-                Description = $"<p>Bạn có lịch khám lúc <span class='n-bold'>{startTime:hh\\:mm}</span> hôm nay. Vui lòng đến cơ sở đúng lịch hẹn</p>",
-                Timestamp = DateTime.Now,
+                Description = $"<p>Bạn có lịch khám  <span class='n-bold'>{code}</span> lúc <span class='n-bold'>{startTime:hh\\:mm}</span> hôm nay. Vui lòng đến cơ sở đúng lịch hẹn</p>",
+                Timestamp = fiveAM,
+                Type = NotificationType.Remind
+            };
+
+            var notification2 = new Notification
+            {
+                Data = bookingId.ToString(),
+                IsUnread = true,
+                Description = $"<p>Sắp tới hẹn lịch khám <span class='n-bold'>{code}</span> lúc <span class='n-bold'>{startTime:hh\\:mm}</span>. Vui lòng đến cơ sở đúng lịch hẹn</p>",
+                Timestamp = notiDateTime1,
                 Type = NotificationType.Remind
             };
 
@@ -93,15 +104,15 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             if (timeUntilAppointment > TimeSpan.Zero)
             {
                 BackgroundJob.Schedule<ICustomerWriteRepository>(
-                    svc => svc.AddNotificationJobAsync(notification, ownerId),
+                    svc => svc.AddNotificationJobAsync(notification2, ownerId),
                     timeUntilAppointment);
             }
 
-            if (timeUntilSixAM > TimeSpan.Zero)
+            if (timeUntilFiveAM > TimeSpan.Zero)
             {
                 BackgroundJob.Schedule<ICustomerWriteRepository>(
                     svc => svc.AddNotificationJobAsync(notification, ownerId),
-                    timeUntilSixAM);
+                    timeUntilFiveAM);
             }
             return Task.CompletedTask;
         }

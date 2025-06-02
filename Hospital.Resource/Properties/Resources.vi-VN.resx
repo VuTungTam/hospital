@@ -339,6 +339,9 @@
   <data name="Roles.CannotExist" xml:space="preserve">
     <value>Không thể có vai trò là {0}</value>
   </data>
+  <data name="Roles.CannotEmpty" xml:space="preserve">
+    <value>Chưa chọn vai trò</value>
+  </data>
   <data name="Account.CannotUpdateEmailVerified" xml:space="preserve">
     <value>Không thể thay đổi email vì email đã được xác minh</value>
   </data>
@@ -398,24 +401,6 @@
   </data>
   <data name="Services.questionMustNotBeEmpty" xml:space="preserve">
     <value>Câu hỏi số {0} không được để trống</value>
-  </data>
-  <data name="Bookings.ContentMustNotBeEmpty" xml:space="preserve">
-    <value>Nội dung không được để trống</value>
-  </data>
-  <data name="Bookings.DateIsNotValid" xml:space="preserve">
-    <value>Thời gian không hợp lệ</value>
-  </data>
-  <data name="Bookings.NameMustNotBeEmpty" xml:space="preserve">
-    <value>Tên không được để trống</value>
-  </data>
-  <data name="Bookings.PhoneIsNotValid" xml:space="preserve">
-    <value>SĐT không hợp lệ</value>
-  </data>
-  <data name="Bookings.ServiceIsNotValid" xml:space="preserve">
-    <value>Dịch vụ không hợp lệ</value>
-  </data>
-  <data name="Bookings.StatusIsNotWaiting" xml:space="preserve">
-    <value>Trạng thái không phải đang chờ</value>
   </data>
   <data name="Contacts.EmailsContainNotValid" xml:space="preserve">
     <value>Danh sách bao gồm email không hợp lệ</value>
@@ -481,6 +466,231 @@
   <value>Chưa có thông tin</value>
 </data>
 <data name="CommonMessage.MapURLIsNotValid" xml:space="preserve">
-    <value>Map url is not valid</value>
+    <value>Đường dẫn map không hợp lệ</value>
   </data>
+  <data name="Doctor.TitleIsRequired" xml:space="preserve">
+  <value>Chức danh bác sĩ là bắt buộc.</value>
+</data>
+<data name="Doctor.DegreeIsRequired" xml:space="preserve">
+  <value>Học vị bác sĩ là bắt buộc.</value>
+</data>
+<data name="Doctor.RankIsRequired" xml:space="preserve">
+  <value>Học hàm bác sĩ là bắt buộc.</value>
+</data>
+<data name="Doctor.ExpertiseVnIsRequired" xml:space="preserve">
+  <value>Chuyên trị tiếng Việt là bắt buộc.</value>
+</data>
+<data name="Doctor.ExpertiseEnIsRequired" xml:space="preserve">
+  <value>Chuyên trị tiếng Anh là bắt buộc.</value>
+</data>
+<data name="Doctor.SpecialtyIsRequired" xml:space="preserve">
+  <value>Phải chọn ít nhất một chuyên khoa.</value>
+</data>
+<data name="Doctor.SpecialtyIdInvalid" xml:space="preserve">
+  <value>Chuyên khoa không hợp lệ.</value>
+</data>
+<data name="Doctor.NotHaveSpecialty" xml:space="preserve">
+  <value>Bác sĩ không có chuyên khoa này</value>
+</data>
+<data name="CommonMessage.FacilityIsNotValid" xml:space="preserve">
+    <value>Cơ sở không hợp lệ</value>
+  </data>
+  <data name="CommonMessage.ZoneIsNotValid" xml:space="preserve">
+    <value>Khu vực không hợp lệ</value>
+  </data>
+  <data name="HealthFacility.NameVnIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập tên cơ sở y tế (Tiếng Việt).</value>
+</data>
+<data name="HealthFacility.NameEnIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập tên cơ sở y tế (Tiếng Anh).</value>
+</data>
+<data name="HealthFacility.LogoIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng chọn logo cho cơ sở y tế.</value>
+</data>
+<data name="HealthFacility.DescriptionVnIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập mô tả (Tiếng Việt).</value>
+</data>
+<data name="HealthFacility.DescriptionEnIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập mô tả (Tiếng Anh).</value>
+</data>
+<data name="HealthFacility.SummaryVnIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập tóm tắt (Tiếng Việt).</value>
+</data>
+<data name="HealthFacility.SummaryEnIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập tóm tắt (Tiếng Anh).</value>
+</data>
+<data name="HealthFacility.NotHaveSpecialty" xml:space="preserve">
+  <value>Cơ sở không có chuyên khoa này</value>
+</data>
+<data name="HealthFacility.InvalidMapUrl" xml:space="preserve">
+  <value>Địa chỉ bản đồ không hợp lệ.</value>
+</data>
+<data name="HealthFacility.SpecialtyIsRequired" xml:space="preserve">
+  <value>Vui lòng chọn ít nhất một chuyên khoa.</value>
+</data>
+<data name="HealthFacility.TypeIsRequired" xml:space="preserve">
+  <value>Vui lòng chọn ít nhất một loại hình cơ sở y tế.</value>
+</data>
+<data name="HealthFacility.NotHaveZone" xml:space="preserve">
+  <value>Cơ sở không có khu vực này</value>
+</data>
+<data name="HealthProfile.NameIsNotEmpty" xml:space="preserve">
+  <value>Vui lòng nhập họ tên bệnh nhân.</value>
+</data>
+<data name="HealthProfile.GenderIsInvalid" xml:space="preserve">
+  <value>Giới tính không hợp lệ.</value>
+</data>
+<data name="HealthProfile.InvalidDateOfBirth" xml:space="preserve">
+  <value>Ngày sinh không hợp lệ. Vui lòng chọn ngày sinh từ năm 1950 đến hiện tại.</value>
+</data>
+<data name="HealthProfile.InvalidCICode" xml:space="preserve">
+  <value>Số CCCD không hợp lệ.</value>
+</data>
+<data name="HealthService.NameVnIsNotEmpty" xml:space="preserve">
+  <value>Tên dịch vụ (tiếng Việt) không được để trống.</value>
+</data>
+<data name="HealthService.NameEnIsNotEmpty" xml:space="preserve">
+  <value>Tên dịch vụ (tiếng Anh) không được để trống.</value>
+</data>
+<data name="HealthService.PriceIsNotEmpty" xml:space="preserve">
+  <value>Giá dịch vụ không được để trống.</value>
+</data>
+<data name="HealthService.PriceMustBeGreaterThanZero" xml:space="preserve">
+  <value>Giá dịch vụ phải lớn hơn 0.</value>
+</data>
+<data name="HealthService.InvalidDoctor" xml:space="preserve">
+  <value>Bác sĩ không hợp lệ.</value>
+</data>
+<data name="HealthService.InvalidType" xml:space="preserve">
+  <value>Loại dịch vụ không hợp lệ.</value>
+</data>
+<data name="HealthService.InvalidSpecialty" xml:space="preserve">
+  <value>Chuyên khoa không hợp lệ.</value>
+</data>
+<data name="Payment.AmountMustBeGreaterThanZero" xml:space="preserve">
+  <value>Số tiền phải lớn hơn 0.</value>
+</data>
+<data name="Payment.BookingIsRequired" xml:space="preserve">
+  <value>Đơn đặt lịch không được để trống.</value>
+</data>
+<data name="Payment.BookingIsNotValid" xml:space="preserve">
+  <value>Đơn đặt lịch không hợp lệ.</value>
+</data>
+<data name="Payment.PaymentMethodIsInvalid" xml:space="preserve">
+  <value>Phương thức thanh toán không hợp lệ.</value>
+</data>
+<data name="Payment.TransactionContentMaxLength" xml:space="preserve">
+  <value>Nội dung giao dịch không được quá 255 ký tự.</value>
+</data>
+<data name="ServiceTimeRule.SlotDurationMustBeGreaterThanZero" xml:space="preserve">
+  <value>Thời lượng phải lớn hơn 0.</value>
+</data>
+<data name="ServiceTimeRule.MaxPatientsMustBeGreaterThanZero" xml:space="preserve">
+  <value>Số lượng bệnh nhân tối đa phải lớn hơn 0.</value>
+</data>
+<data name="ServiceTimeRule.StartTimeIsRequired" xml:space="preserve">
+  <value>Giờ bắt đầu không được để trống.</value>
+</data>
+<data name="ServiceTimeRule.StartTimeMustBeLessThanEndTime" xml:space="preserve">
+  <value>Giờ bắt đầu phải nhỏ hơn giờ kết thúc.</value>
+</data>
+<data name="ServiceTimeRule.StartBreakTimeIsRequired" xml:space="preserve">
+  <value>Giờ bắt đầu nghỉ không được để trống.</value>
+</data>
+<data name="ServiceTimeRule.StartBreakTimeMustBeGreaterThanStartTime" xml:space="preserve">
+  <value>Giờ bắt đầu nghỉ phải lớn hơn giờ bắt đầu.</value>
+</data>
+<data name="ServiceTimeRule.StartBreakTimeMustBeLessThanEndBreakTime" xml:space="preserve">
+  <value>Giờ bắt đầu nghỉ phải nhỏ hơn giờ kết thúc nghỉ.</value>
+</data>
+<data name="ServiceTimeRule.EndBreakTimeIsRequired" xml:space="preserve">
+  <value>Giờ kết thúc nghỉ không được để trống.</value>
+</data>
+<data name="ServiceTimeRule.EndBreakTimeMustBeGreaterThanStartBreakTime" xml:space="preserve">
+  <value>Giờ kết thúc nghỉ phải lớn hơn giờ bắt đầu nghỉ.</value>
+</data>
+<data name="ServiceTimeRule.EndTimeIsRequired" xml:space="preserve">
+  <value>Giờ kết thúc không được để trống.</value>
+</data>
+<data name="ServiceTimeRule.EndTimeMustBeGreaterThanEndBreakTime" xml:space="preserve">
+  <value>Giờ kết thúc phải lớn hơn giờ kết thúc nghỉ.</value>
+</data>
+<data name="ServiceTimeRule.DayOfWeekIsInvalid" xml:space="preserve">
+  <value>Ngày không hợp lệ. Vui lòng chọn một ngày trong tuần.</value>
+</data>
+<data name="ServiceTimeRule.IsExist" xml:space="preserve">
+  <value>Khung giờ đã tồn tại.</value>
+</data>
+<data name="User.NameIsRequired" xml:space="preserve">
+  <value>Tên không được để trống</value>
+</data>
+<data name="User.PhoneIsInvalid" xml:space="preserve">
+  <value>Số điện thoại không hợp lệ</value>
+</data>
+<data name="User.EmailIsInvalid" xml:space="preserve">
+  <value>Email không hợp lệ</value>
+</data>
+<data name="Booking.ServiceIsRequired" xml:space="preserve">
+  <value>Dịch vụ không được để trống</value>
+</data>
+<data name="Booking.ServiceIsNotValid" xml:space="preserve">
+  <value>Dịch vụ không hợp lệ</value>
+</data>
+<data name="Booking.HealthProfileIsRequired" xml:space="preserve">
+  <value>Hồ sơ sức khỏe không được để trống</value>
+</data>
+<data name="Booking.HealthProfileIsNotValid" xml:space="preserve">
+  <value>Hồ sơ sức khỏe không hợp lệ</value>
+</data>
+<data name="Booking.DateIsRequired" xml:space="preserve">
+  <value>Ngày đặt lịch không được để trống</value>
+</data>
+<data name="Booking.DateMustBeInFuture" xml:space="preserve">
+  <value>Ngày đặt lịch phải bằng hoặc sau ngày hiện tại</value>
+</data>
+<data name="Booking.TimeSlotIsRequired" xml:space="preserve">
+  <value>Khung giờ không được để trống</value>
+</data>
+<data name="Booking.HasFeedback" xml:space="preserve">
+  <value>Lịch khám đã được đánh giá</value>
+</data>
+<data name="Booking.NoAvailableTimeSlots" xml:space="preserve">
+  <value>Chưa có suất khám</value>
+</data>
+<data name="Booking.InvalidDayOfWeek" xml:space="preserve">
+  <value>Ngày trong tuần không hợp lệ</value>
+</data>
+<data name="Booking.MaxPatientReached" xml:space="preserve">
+  <value>Số lượng bệnh nhân đã đầy</value>
+</data>
+<data name="Booking.IsNotDoing" xml:space="preserve">
+  <value>Trạng thái không là Đang khám</value>
+</data>
+<data name="Booking.IsNotWaiting" xml:space="preserve">
+  <value>Trạng thái không là Chờ xác nhận</value>
+</data>
+<data name="Booking.IsNotConfirmed" xml:space="preserve">
+  <value>Trạng thái không là Đã xác nhận</value>
+</data>
+<data name="Zone.NameVnIsNotEmpty" xml:space="preserve">
+  <value>Tên khu vực (tiếng Việt) không được để trống</value>
+</data>
+<data name="Zone.NameEnIsNotEmpty" xml:space="preserve">
+  <value>Tên khu vực (tiếng Anh) không được để trống</value>
+</data>
+<data name="Zone.LocationVnIsNotEmpty" xml:space="preserve">
+  <value>Vị trí (tiếng Việt) không được để trống</value>
+</data>
+<data name="Zone.LocationEnIsNotEmpty" xml:space="preserve">
+  <value>Vị trí (tiếng Anh) không được để trống</value>
+</data>
+<data name="Zone.SpecialtiesIsRequired" xml:space="preserve">
+  <value>Phải chọn ít nhất một chuyên khoa</value>
+</data>
+<data name="Zone.IsExist" xml:space="preserve">
+  <value>Khu vực đã tồn tại</value>
+</data>
+<data name="Zone.SpecialtyIsExistInOtherZone" xml:space="preserve">
+  <value>Chuyên khoa đã tồn tại trong một khu vực khác</value>
+</data>
 </root>

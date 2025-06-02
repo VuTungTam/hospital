@@ -1,8 +1,10 @@
 ﻿using System.Data;
+using FluentValidation;
 using Hospital.Application.Dtos.Specialties;
 using Hospital.Application.Dtos.Users;
 using Hospital.Domain.Enums;
 using Hospital.Resource.Properties;
+using Hospital.SharedKernel.Application.Validators;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Localization;
@@ -36,18 +38,31 @@ namespace Hospital.Application.Dtos.Doctors
             .Select(s => s.NameVn))
         : "Chưa có thông tin";
 
+    }
+    public class DoctorValidator : BaseAbstractValidator<DoctorDto>
+    {
+        public DoctorValidator(IStringLocalizer<Resources> localizer) : base(localizer)
+        {
+            RuleFor(x => x.DoctorTitle)
+                .IsInEnum().WithMessage(localizer["Doctor.TitleIsRequired"]);
 
-        public string ListSpecialtyNameEns => Specialties != null && Specialties.Any()
-            ? string.Join(", ", Specialties.Select(s => s.NameEn))
-            : "No data";
+            RuleFor(x => x.DoctorDegree)
+                .IsInEnum().WithMessage(localizer["Doctor.DegreeIsRequired"]);
 
-        public string Description { get; set; }
+            RuleFor(x => x.DoctorRank)
+                .IsInEnum().WithMessage(localizer["Doctor.RankIsRequired"]);
 
-        public string TrainingProcess { get; set; }
+            RuleFor(x => x.ExpertiseVn)
+                .NotEmpty().WithMessage(localizer["Doctor.ExpertiseVnIsRequired"]);
 
-        public string WorkExperience { get; set; }
+            RuleFor(x => x.ExpertiseEn)
+                .NotEmpty().WithMessage(localizer["Doctor.ExpertiseEnIsRequired"]);
 
-        public string ProfessionalLevel { get; set; }
+            RuleFor(x => x.SpecialtyIds)
+                .NotEmpty().WithMessage(localizer["Doctor.SpecialtyIsRequired"])
+                .Must(list => list != null && list.All(id => !string.IsNullOrWhiteSpace(id)))
+                .WithMessage(localizer["Doctor.SpecialtyIdInvalid"]);
+        }
     }
 }
 

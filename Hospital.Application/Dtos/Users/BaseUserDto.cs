@@ -164,14 +164,17 @@ namespace Hospital.Application.Dtos.Users
     {
         public BaseUserDtoDtoValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            //RuleFor(x => x.Code).NotEmpty().WithMessage("Mã không được để trống");
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Tên không được để trống");
-            //RuleFor(x => x.Dob).Must(x => x != default && x < DateTime.Now && x > new DateTime(1950, 1, 1)).WithMessage("Ngày sinh không hợp lệ");
-            RuleFor(x => x.Phone).Must(x => SmsUtility.IsVietnamesePhone(x)).WithMessage("Số điện thoại không hợp lệ");
-            RuleFor(x => x.Email).Must(x => EmailUtility.IsEmail(x)).WithMessage("Email không hợp lệ");
-            //RuleFor(x => x.Pid).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage("Tỉnh/thành không hợp lệ");
-            //RuleFor(x => x.Did).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage("Quận/huyện không hợp lệ");
-            //RuleFor(x => x.Wid).Must(x => int.TryParse(x, out var id) && id > 0).WithMessage("Xã/phường không hợp lệ");
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage(localizer["User.NameIsRequired"]);
+
+            RuleFor(x => x.Phone)
+                .Must(x => SmsUtility.IsVietnamesePhone(x))
+                .WithMessage(localizer["User.PhoneIsInvalid"]);
+
+            RuleFor(x => x.Email)
+                .Must(x => EmailUtility.IsEmail(x))
+                .WithMessage(localizer["User.EmailIsInvalid"]);
+
         }
     }
 }

@@ -57,13 +57,13 @@ namespace Hospital.Application.Commands.Bookings
         public async Task<Unit> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
         {
             if (request.Model.BookingId <= 0)
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
 
             var cancelBooking = await _bookingReadRepository.GetByIdAsync(
                 request.Model.BookingId, _bookingReadRepository.DefaultQueryOption, cancellationToken);
 
             if (cancelBooking == null)
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             var bookingsToUpdate = new List<Booking>();
             var removeNextCache = false;
             switch (cancelBooking.Status)

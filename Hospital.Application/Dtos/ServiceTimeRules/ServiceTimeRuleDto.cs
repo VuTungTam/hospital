@@ -24,35 +24,37 @@ namespace Hospital.Application.Dtos.ServiceTimeRules
 
         public DayOfWeek DayOfWeek { get; set; }
 
+        public bool AllowWalkin { get; set; }
+
         public class ServiceTimeRuleValidator : BaseAbstractValidator<ServiceTimeRuleDto>
         {
             public ServiceTimeRuleValidator(IStringLocalizer<Resources> localizer) : base(localizer)
             {
                 RuleFor(x => x.SlotDuration)
-                    .GreaterThan(0).WithMessage(localizer["Thời lượng phải lớn hơn 0."]);
+                    .GreaterThan(0).WithMessage(localizer["ServiceTimeRule.SlotDurationMustBeGreaterThanZero"]);
 
                 RuleFor(x => x.MaxPatients)
-                    .GreaterThan(0).WithMessage(localizer["Số lượng bệnh nhân tối đa phải lớn hơn 0."]);
+                    .GreaterThan(0).WithMessage(localizer["ServiceTimeRule.MaxPatientsMustBeGreaterThanZero"]);
 
                 RuleFor(x => x.StartTime)
-                    .NotEmpty().WithMessage(localizer["Giờ bắt đầu không được để trống."])
-                    .LessThan(x => x.EndTime).WithMessage(localizer["Giờ bắt đầu phải nhỏ hơn giờ kết thúc."]);
+                    .NotEmpty().WithMessage(localizer["ServiceTimeRule.StartTimeIsRequired"])
+                    .LessThan(x => x.EndTime).WithMessage(localizer["ServiceTimeRule.StartTimeMustBeLessThanEndTime"]);
 
                 RuleFor(x => x.StartBreakTime)
-                    .NotEmpty().WithMessage(localizer["Giờ bắt đầu nghỉ không được để trống."])
-                    .GreaterThan(x => x.StartTime).WithMessage(localizer["Giờ bắt đầu nghỉ phải lớn hơn giờ bắt đầu."])
-                    .LessThan(x => x.EndBreakTime).WithMessage(localizer["Giờ bắt đầu nghỉ phải nhỏ hơn giờ kết thúc nghỉ."]);
+                    .NotEmpty().WithMessage(localizer["ServiceTimeRule.StartBreakTimeIsRequired"])
+                    .GreaterThan(x => x.StartTime).WithMessage(localizer["ServiceTimeRule.StartBreakTimeMustBeGreaterThanStartTime"])
+                    .LessThan(x => x.EndBreakTime).WithMessage(localizer["ServiceTimeRule.StartBreakTimeMustBeLessThanEndBreakTime"]);
 
                 RuleFor(x => x.EndBreakTime)
-                    .NotEmpty().WithMessage(localizer["Giờ kết thúc nghỉ không được để trống."])
-                    .GreaterThan(x => x.StartBreakTime).WithMessage(localizer["Giờ kết thúc nghỉ phải lớn hơn giờ bắt đầu nghỉ."]);
+                    .NotEmpty().WithMessage(localizer["ServiceTimeRule.EndBreakTimeIsRequired"])
+                    .GreaterThan(x => x.StartBreakTime).WithMessage(localizer["ServiceTimeRule.EndBreakTimeMustBeGreaterThanStartBreakTime"]);
 
                 RuleFor(x => x.EndTime)
-                    .NotEmpty().WithMessage(localizer["Giờ kết thúc không được để trống."])
-                    .GreaterThan(x => x.EndBreakTime).WithMessage(localizer["Giờ kết thúc phải lớn hơn giờ kết thúc nghỉ."]);
+                    .NotEmpty().WithMessage(localizer["ServiceTimeRule.EndTimeIsRequired"])
+                    .GreaterThan(x => x.EndBreakTime).WithMessage(localizer["ServiceTimeRule.EndTimeMustBeGreaterThanEndBreakTime"]);
 
                 RuleFor(x => x.DayOfWeek)
-                    .IsInEnum().WithMessage(localizer["Ngày không hợp lệ. Vui lòng chọn một ngày trong tuần."]);
+                    .IsInEnum().WithMessage(localizer["ServiceTimeRule.DayOfWeekIsInvalid"]);
             }
         }
     }

@@ -62,13 +62,29 @@ namespace Hospital.Application.Dtos.HealthServices
     {
         public HealthServiceValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            RuleFor(x => x.NameVn).NotEmpty().WithMessage(localizer["health_service_name_vn_is_not_empty"]);
-            RuleFor(x => x.NameEn).NotEmpty().WithMessage(localizer["health_service_name_en_is_not_empty"]);
-            RuleFor(x => x.Price).NotEmpty().WithMessage(localizer["health_service_price_is_not_empty"]);
-            RuleFor(x => x.Price).GreaterThan(0).WithMessage(localizer["health_service_price_must_be_greater_than_0"]);
-            RuleFor(x => x.DoctorId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_doctor_id"]);
-            RuleFor(x => x.TypeId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_type_id"]);
-            RuleFor(x => x.SpecialtyId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_specialty_id"]);
+            RuleFor(x => x.NameVn)
+    .NotEmpty().WithMessage(localizer["HealthService.NameVnIsNotEmpty"]);
+
+            RuleFor(x => x.NameEn)
+                .NotEmpty().WithMessage(localizer["HealthService.NameEnIsNotEmpty"]);
+
+            RuleFor(x => x.Price)
+                .NotEmpty().WithMessage(localizer["HealthService.PriceIsNotEmpty"]);
+
+            RuleFor(x => x.Price)
+                .GreaterThan(0).WithMessage(localizer["HealthService.PriceMustBeGreaterThanZero"]);
+
+            RuleFor(x => x.DoctorId)
+                .Must(x => long.TryParse(x, out var id) && id > 0)
+                .WithMessage(localizer["HealthService.InvalidDoctor"]);
+
+            RuleFor(x => x.TypeId)
+                .Must(x => long.TryParse(x, out var id) && id > 0)
+                .WithMessage(localizer["HealthService.InvalidType"]);
+
+            RuleFor(x => x.SpecialtyId)
+                .Must(x => long.TryParse(x, out var id) && id > 0)
+                .WithMessage(localizer["HealthService.InvalidSpecialty"]);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Hospital.Application.Commands.HealthServices
         {
             if (request.Ids == null || request.Ids.Exists(id => id <= 0))
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var symptoms = await _healthServiceReadRepository.GetByIdsAsync(request.Ids, _healthServiceReadRepository.DefaultQueryOption, cancellationToken);

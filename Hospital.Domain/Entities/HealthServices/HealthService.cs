@@ -76,6 +76,5 @@ namespace Hospital.Domain.Entities.HealthServices
         {
             StarPoint = TotalStars / TotalFeedback;
         }
-
     }
 }

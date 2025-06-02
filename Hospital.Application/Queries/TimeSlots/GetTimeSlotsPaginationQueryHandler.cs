@@ -9,6 +9,7 @@ using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Models.Responses;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Specifications;
+using Hospital.SharedKernel.Specifications.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -29,7 +30,9 @@ namespace Hospital.Application.Queries.TimeSlots
 
         public async Task<PaginationResult<TimeSlotDto>> Handle(GetTimeSlotsPaginationQuery request, CancellationToken cancellationToken)
         {
-            var spec = new GetTimeSlotByTimeRuleIdSpecification(request.ServiceId);
+            ISpecification<TimeSlot> spec = new GetTimeSlotByTimeRuleIdSpecification(request.ServiceId);
+
+            spec = spec.And(new GetTimeSlotIsWalkinSpecification(request.IsWalkin));
 
             var result = await _timeSlotReadRepository.GetPaginationAsync(request.Pagination, spec: spec, cancellationToken: cancellationToken);
 

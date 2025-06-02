@@ -26,7 +26,7 @@ namespace Hospital.Application.Queries.Feedbacks
 
         public GetFeedbacksPaginationQueryHandler(
             IAuthService authService,
-            IMapper mapper, 
+            IMapper mapper,
             IStringLocalizer<Resources> localizer,
             IFeedbackReadRepository feedbackReadRepository
             ) : base(authService, mapper, localizer)
@@ -35,23 +35,39 @@ namespace Hospital.Application.Queries.Feedbacks
         }
         public async Task<PaginationResult<FeedbackDto>> Handle(GetFeedbacksPaginationQuery request, CancellationToken cancellationToken)
         {
-            var spec = new ExpressionSpecification<Feedback>();
+            ISpecification<Feedback> spec = new ExpressionSpecification<Feedback>(x => true);
 
             if (request.ServiceId > 0)
             {
-                spec.And(new GetFeedbackByServiceIdSpecification(request.ServiceId));
+                spec = spec.And(new GetFeedbackByServiceIdSpecification(request.ServiceId));
+            }
+            if (request.FacilityId > 0)
+            {
+                spec = spec.And(new GetFeedbackByFacilityIdSpecification(request.FacilityId));
             }
             if (request.Star > 0)
             {
-                spec.And(new GetFeedbackByStarSpecification(request.Star));
+                spec = spec.And(new GetFeedbackByStarSpecification(request.Star));
             }
-            var option = new QueryOption { IgnoreOwner = true };
+            var option = new QueryOption
+            {
+                IgnoreOwner = true,
+                Includes = new string[] { nameof(Feedback.Booking) }
+            };
 
-            var result =await _feedbackReadRepository.GetPaginationAsync(request.Pagination, spec, option, cancellationToken: cancellationToken);
+            var result = await _feedbackReadRepository.GetPaginationAsync(request.Pagination, spec, option, cancellationToken: cancellationToken);
 
-            var dto = _mapper.Map<List<FeedbackDto>>(result.Data);
+            var dtos = new List<FeedbackDto>();
+            foreach (var feedback in result.Data)
+            {
+                var dto = _mapper.Map<FeedbackDto>(feedback);
+                dto.FacilityNameVn = feedback.Booking.FacilityNameVn;
+                dto.FacilityNameEn = feedback.Booking.FacilityNameEn;
+                dtos.Add(dto);
+            }
 
-            return new PaginationResult<FeedbackDto>(dto, result.Total);
+
+            return new PaginationResult<FeedbackDto>(dtos, result.Total);
         }
     }
 }

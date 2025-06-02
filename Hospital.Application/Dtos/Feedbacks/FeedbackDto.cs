@@ -12,5 +12,9 @@
         public long OwnerId { get; set; }
 
         public string BookingCode { get; set; }
+
+        public string FacilityNameVn { get; set; }
+
+        public string FacilityNameEn { get; set; }
     }
 }

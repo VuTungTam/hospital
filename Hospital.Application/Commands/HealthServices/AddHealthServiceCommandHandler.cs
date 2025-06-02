@@ -67,14 +67,14 @@ namespace Hospital.Application.Commands.HealthServices
 
             if (facility == null)
             {
-                throw new BadRequestException("Loi");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
             var specialtyIds = facility.FacilitySpecialties.Select(x => x.SpecialtyId.ToString()).ToList();
 
             if (!specialtyIds.Contains(request.HealthService.SpecialtyId))
             {
-                throw new BadRequestException("Loi");
+                throw new BadRequestException(_localizer["HealthFacility.NotHaveSpecialty"]);
             }
 
             var option2 = new QueryOption
@@ -90,7 +90,7 @@ namespace Hospital.Application.Commands.HealthServices
 
             if (!doctorSpeIds.Contains(request.HealthService.SpecialtyId))
             {
-                throw new BadRequestException("Loi");
+                throw new BadRequestException(_localizer["Doctor.NotHaveSpecialty"]);
             }
 
             var service = _mapper.Map<HealthService>(request.HealthService);

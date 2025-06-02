@@ -119,7 +119,8 @@ namespace Hospital.Infrastructure.Repositories.HealthFacilities
                 {
                     Id = x.Id,
                     NameVn = x.NameVn,
-                    NameEn = x.NameEn
+                    NameEn = x.NameEn,
+                    Slug = x.Slug
                 })
                 .BuildLimit(pagination.Offset, pagination.Size)
                 .ToListAsync(cancellationToken);

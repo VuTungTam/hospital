@@ -41,7 +41,7 @@ namespace Hospital.Application.Queries.HealthServices
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var option = new QueryOption

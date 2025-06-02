@@ -32,13 +32,13 @@ namespace Hospital.Application.Commands.Bookings
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var booking = await _bookingReadRepository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
             if (booking == null)
             {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             }
 
             if (booking.Status != BookingStatus.Waiting)

@@ -38,6 +38,11 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                      builder.HasOne(x => x.Service)
                              .WithMany(x => x.ServiceTimeRules)
                              .HasForeignKey(x => x.ServiceId);
+
+                     builder.Property(x => x.AllowWalkin)
+                            .IsRequired()
+                            .HasDefaultValue(false)
+                            .HasColumnType("BIT");
               }
        }
 }

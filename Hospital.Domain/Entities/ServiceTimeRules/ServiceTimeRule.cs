@@ -36,6 +36,8 @@ namespace Hospital.Domain.Entities.ServiceTimeRules
 
         public int DayOfWeek { get; set; }
 
+        public bool AllowWalkin { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public long? CreatedBy { get; set; }
@@ -49,6 +51,22 @@ namespace Hospital.Domain.Entities.ServiceTimeRules
         public DateTime? DeletedAt { get; set; }
 
         public long? DeletedBy { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is not ServiceTimeRule other) return false;
+            return DayOfWeek == other.DayOfWeek &&
+                   StartTime == other.StartTime &&
+                   EndTime == other.EndTime &&
+                   StartBreakTime == other.StartBreakTime &&
+                   EndBreakTime == other.EndBreakTime &&
+                   SlotDuration == other.SlotDuration;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(DayOfWeek, StartTime, EndTime, StartBreakTime, EndBreakTime, SlotDuration);
+        }
 
     }
 }

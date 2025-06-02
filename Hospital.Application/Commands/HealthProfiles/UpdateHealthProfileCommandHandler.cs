@@ -40,14 +40,14 @@ namespace Hospital.Application.Commands.HealhProfiles
         {
             if (!long.TryParse(request.HealthProfile.Id, out var id) || id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var profile = await _healthProfileReadRepository.GetByIdAsync(id, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);
 
             if (profile == null)
             {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             }
 
             await ValidateAndThrowAsync(request.HealthProfile, cancellationToken);

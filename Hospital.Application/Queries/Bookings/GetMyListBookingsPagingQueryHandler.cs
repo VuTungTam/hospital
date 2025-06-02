@@ -39,7 +39,7 @@ namespace Hospital.Application.Queries.Bookings
 
         public async Task<PaginationResult<BookingDto>> Handle(GetMyListBookingsPagingQuery request, CancellationToken cancellationToken)
         {
-            var bookings = await _bookingReadRepository.GetMyListPagingWithFilterAsync(request.Pagination, request.Status, request.ServiceTypeId, request.Date, cancellationToken);
+            var bookings = await _bookingReadRepository.GetMyListPagingWithFilterAsync(request.Pagination, request.Status, request.ServiceTypeId, request.ServiceId, request.Date, cancellationToken);
             var bookingDtos = _mapper.Map<List<BookingDto>>(bookings.Data);
             if (bookings != null && bookings.Data.Any())
             {

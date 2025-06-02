@@ -11,6 +11,8 @@ namespace Hospital.Application.Repositories.Interfaces.HealthServices
     {
         Task<PaginationResult<HealthService>> GetPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId, long facilityId, long specialtyId, long doctorId, CancellationToken cancellationToken = default);
 
+        Task<PaginationResult<HealthService>> GetTodayPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId, long facilityId, long specialtyId, long doctorId, CancellationToken cancellationToken = default);
+
         Task<List<ServiceType>> GetServiceTypeByFacilityIdAsync(long facilityId, CancellationToken cancellationToken);
 
         Task<PaginationResult<HealthService>> GetServiceCurrentAsync(Pagination pagination, long facilityId, long doctorId, CancellationToken cancellationToken);

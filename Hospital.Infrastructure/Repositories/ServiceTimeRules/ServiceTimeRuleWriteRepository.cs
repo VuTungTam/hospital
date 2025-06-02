@@ -14,7 +14,7 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
     {
         public ServiceTimeRuleWriteRepository(IServiceProvider serviceProvider, IStringLocalizer<Resources> localizer, IRedisCache redisCache) : base(serviceProvider, localizer, redisCache)
         {
-            
+
         }
         public List<TimeSlot> GenerateTimeSlots(ServiceTimeRule timeRule)
         {
@@ -23,13 +23,15 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
             TimeSpan startBreak = timeRule.StartBreakTime;
             TimeSpan endBreak = timeRule.EndBreakTime;
             int duration = timeRule.SlotDuration;
+            bool allowWalkin = timeRule.AllowWalkin;
 
             var timeSlots = new List<TimeSlot>();
 
+            var morningSlots = new List<TimeSlot>();
             TimeSpan begin = start;
             while (begin.Add(TimeSpan.FromMinutes(duration)) <= startBreak)
             {
-                timeSlots.Add(new TimeSlot
+                morningSlots.Add(new TimeSlot
                 {
                     Id = AuthUtility.GenerateSnowflakeId(),
                     Start = begin,
@@ -38,11 +40,17 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
                 });
                 begin = begin.Add(TimeSpan.FromMinutes(duration));
             }
+            if (morningSlots.Any() && allowWalkin)
+            {
+                morningSlots.Last().ForWalkin = true;
+            }
+            timeSlots.AddRange(morningSlots);
 
+            var afternoonSlots = new List<TimeSlot>();
             TimeSpan begin2 = endBreak;
             while (begin2.Add(TimeSpan.FromMinutes(duration)) <= end)
             {
-                timeSlots.Add(new TimeSlot
+                afternoonSlots.Add(new TimeSlot
                 {
                     Id = AuthUtility.GenerateSnowflakeId(),
                     Start = begin2,
@@ -51,10 +59,14 @@ namespace Hospital.Infrastructure.Repositories.ServiceTimeRules
                 });
                 begin2 = begin2.Add(TimeSpan.FromMinutes(duration));
             }
+            if (afternoonSlots.Any() && allowWalkin)
+            {
+                afternoonSlots.Last().ForWalkin = true;
+            }
+            timeSlots.AddRange(afternoonSlots);
 
             return timeSlots;
         }
-
 
     }
 }

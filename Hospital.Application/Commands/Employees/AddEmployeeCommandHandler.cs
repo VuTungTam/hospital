@@ -102,7 +102,7 @@ namespace Hospital.Application.Commands.Employees
 
                 if (!zones.Select(x => x.Id == zoneId).Any())
                 {
-                    throw new BadRequestException(_localizer["Không có zone nào hợp lệ"]);
+                    throw new BadRequestException(_localizer["HealthFacility.NotHaveZone"]);
                 }
             }
 

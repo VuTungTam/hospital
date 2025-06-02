@@ -53,7 +53,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
             if (string.IsNullOrEmpty(employee.Password))
             {
                 var random = new Random();
-                employee.Password = "employee@1";
+                employee.Password = "admin@1";
                 employee.IsDefaultPassword = true;
                 employee.IsPasswordChangeRequired = true;
             }
@@ -72,14 +72,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
                 .Include(x => x.EmployeeRoles)
                 .Where(x => x.EmployeeRoles.Any(er => er.Role.Code == RoleCodeConstant.COORDINATOR));
 
-            if (zoneId != 0)
-            {
-                query.Where(x => x.ZoneId == zoneId);
-            }
-            else
-            {
-                query.Where(x => x.FacilityId == facilityId);
-            }
+            query = query.Where(x => x.ZoneId == zoneId && x.FacilityId == facilityId);
 
             var employeeReadRepository = _serviceProvider.GetRequiredService<IEmployeeReadRepository>();
             var notificationWriteRepository = _serviceProvider.GetRequiredService<INotificationWriteRepository>();

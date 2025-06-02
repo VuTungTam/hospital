@@ -3,6 +3,7 @@ using Hospital.Application.Repositories.Interfaces.HealthServices;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
 using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Domain.Entities.HealthServices;
+using Hospital.Domain.Entities.ServiceTimeRules;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Commands.Base;
 using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
@@ -43,7 +44,7 @@ namespace Hospital.Application.Commands.HealthServices
         {
             if (!long.TryParse(request.HealthService.Id, out var id) || id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var option = new QueryOption
@@ -55,36 +56,10 @@ namespace Hospital.Application.Commands.HealthServices
 
             if (oldService == null)
             {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             }
 
-            var newService = _mapper.Map<HealthService>(request.HealthService);
-
-            _serviceTimeRuleWriteRepository.Delete(oldService.ServiceTimeRules);
-            oldService.ServiceTimeRules.Clear();
-
-            oldService.ServiceTimeRules = newService.ServiceTimeRules
-                .Select(rule =>
-                {
-                    rule.Id = AuthUtility.GenerateSnowflakeId();
-                    rule.ServiceId = oldService.Id;
-                    return rule;
-                }).ToList();
-
-            oldService.NameVn = newService.NameVn;
-            oldService.NameEn = newService.NameEn;
-            oldService.TypeId = newService.TypeId;
-            oldService.Price = newService.Price;
-
-            _healthServiceWriteRepository.Update(oldService);
-
-            foreach (var timeRule in oldService.ServiceTimeRules)
-            {
-                var timeSlots = _serviceTimeRuleWriteRepository.GenerateTimeSlots(timeRule);
-                _timeSlotWriteRepository.AddRange(timeSlots);
-            }
-
-            await _healthServiceWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
+            await _healthServiceWriteRepository.UpdateServiceAsync(oldService, request.HealthService, cancellationToken);
 
             return Unit.Value;
         }

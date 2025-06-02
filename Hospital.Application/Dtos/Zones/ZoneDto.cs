@@ -1,4 +1,7 @@
-﻿using Hospital.Application.Dtos.Specialties;
+﻿using FluentValidation;
+using Hospital.Application.Dtos.Specialties;
+using Hospital.Resource.Properties;
+using Microsoft.Extensions.Localization;
 
 namespace Hospital.Application.Dtos.Zones
 {
@@ -11,7 +14,6 @@ namespace Hospital.Application.Dtos.Zones
         public string LocationVn { get; set; }
 
         public string LocationEn { get; set; }
-
 
         public List<SpecialtyDto> Specialties { get; set; }
 
@@ -30,5 +32,32 @@ namespace Hospital.Application.Dtos.Zones
 
 
         public long FacilityId { get; set; }
+    }
+    public class ZoneValidator : AbstractValidator<ZoneDto>
+    {
+        public ZoneValidator(IStringLocalizer<Resources> localizer)
+        {
+            RuleFor(x => x.NameVn)
+                .NotEmpty()
+                .WithMessage(localizer["Zone.NameVnIsNotEmpty"]);
+
+            RuleFor(x => x.NameEn)
+                .NotEmpty()
+                .WithMessage(localizer["Zone.NameEnIsNotEmpty"]);
+
+            RuleFor(x => x.LocationVn)
+                .NotEmpty()
+                .WithMessage(localizer["Zone.LocationVnIsNotEmpty"]);
+
+            RuleFor(x => x.LocationEn)
+                .NotEmpty()
+                .WithMessage(localizer["Zone.LocationEnIsNotEmpty"]);
+
+            RuleFor(x => x.SpecialtyIds)
+                .NotNull()
+                .WithMessage(localizer["Zone.SpecialtiesIsRequired"])
+                .Must(x => x.Any())
+                .WithMessage(localizer["Zone.SpecialtiesIsRequired"]);
+        }
     }
 }

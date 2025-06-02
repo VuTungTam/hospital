@@ -10,7 +10,7 @@ namespace Hospital.Application.Repositories.Interfaces.Bookings
 {
     public interface IBookingReadRepository : IReadRepository<Booking>
     {
-        Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default);
+        Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceTypeId = 0, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default);
 
         Task<PaginationResult<Booking>> GetPagingWithFilterAsync(Pagination pagination, BookingStatus status, long excludeId = 0, DateTime date = default, long ownerId = 0, CancellationToken cancellationToken = default);
 

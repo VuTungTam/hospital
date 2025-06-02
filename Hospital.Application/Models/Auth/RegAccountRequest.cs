@@ -52,12 +52,6 @@ namespace Hospital.Application.Models.Auth
                 .NotEmpty()
                 .WithMessage(localizer["Authentication.FullNameMustNotBeEmpty"]);
 
-            //RuleFor(x => x.Dob)
-            //    .NotEmpty()
-            //    .WithMessage(localizer["Authentication.DateOfBirthMustNotBeEmpty"])
-            //    .Must(x => x <= DateTime.Now)
-            //    .WithMessage(localizer["Authentication.DateOfBirthIsNotValid"]);
-
             RuleFor(x => x)
                 .Must(x =>
                 {

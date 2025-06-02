@@ -4,7 +4,7 @@ namespace VetHospital.Domain.Specifications.Bookings
 {
     public class BookingByDateGreaterThanOrEqualsSpecification : ExpressionSpecification<Booking>
     {
-        public BookingByDateGreaterThanOrEqualsSpecification(DateTime date) : base(x => x.CreatedAt >= date)
+        public BookingByDateGreaterThanOrEqualsSpecification(DateTime date) : base(x => x.Date >= date)
         {
         }
     }

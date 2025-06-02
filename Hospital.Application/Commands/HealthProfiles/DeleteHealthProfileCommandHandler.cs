@@ -32,7 +32,7 @@ namespace Hospital.Application.Commands.HealhProfiles
         {
             if (request.Ids == null || request.Ids.Exists(id => id <= 0))
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var healthProfiles = await _healthProfileReadRepository.GetByIdsAsync(request.Ids, _healthProfileReadRepository.DefaultQueryOption, cancellationToken: cancellationToken);

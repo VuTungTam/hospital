@@ -3,6 +3,7 @@ using Hospital.Domain.Enums;
 using Hospital.Domain.Models.Reactions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Validators;
+using Hospital.SharedKernel.Configures.Models;
 using Hospital.SharedKernel.Libraries.ExtensionMethods;
 using Hospital.SharedKernel.Libraries.Helpers;
 using Microsoft.Extensions.Localization;
@@ -17,7 +18,7 @@ namespace Hospital.Application.Dtos.Articles
 
         public string TitleSeo { get; set; }
 
-        public string ImageUrl = ""; //=> CdnConfig.Get(Image);
+        public string ImageUrl => CdnConfig.Get(Image);
 
         public string Title { get; set; }
 
@@ -45,7 +46,8 @@ namespace Hospital.Application.Dtos.Articles
 
         public int ViewCount { get; set; }
 
-        public int VirtualViewCount => (int)(long.Parse(Id) % 3000 + ViewCount);
+        //public int VirtualViewCount => (int)(long.Parse(Id) % 3000 + ViewCount);
+        public int VirtualViewCount { get; set; }
 
         public ReactionModel Reaction { get; set; } = new();
     }

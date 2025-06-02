@@ -35,7 +35,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Commands
             var entity = _mapper.Map<T>(request.Dto);
             if (entity.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             await _writeRepository.UpdateAsync(entity, cancellationToken: cancellationToken);

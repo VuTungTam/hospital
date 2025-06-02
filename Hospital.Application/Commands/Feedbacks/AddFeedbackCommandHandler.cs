@@ -58,7 +58,7 @@ namespace Hospital.Application.Commands.Feedbacks
 
             if (booking.IsFeedbacked)
             {
-                throw new BadRequestException("booking đã feedback");
+                throw new BadRequestException(_localizer["Booking.HasFeedback"]);
             }
 
             var service = await _healthServiceReadRepository.GetByIdAsync(booking.ServiceId, cancellationToken: cancellationToken);

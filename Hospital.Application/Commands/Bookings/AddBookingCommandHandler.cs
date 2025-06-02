@@ -75,7 +75,7 @@ namespace Hospital.Application.Commands.Bookings
             var service = await _healthServiceReadRepository.GetByIdAsync(serviceId, cancellationToken: cancellationToken);
             if (service == null)
             {
-                throw new BadRequestException("Booking.ServiceNotFound");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
             if (!long.TryParse(request.Booking.HealthProfileId, out var healthProfileId) || serviceId <= 0)
@@ -87,16 +87,15 @@ namespace Hospital.Application.Commands.Bookings
 
             if (profile == null)
             {
-                throw new BadRequestException("Booking.ServiceNotFound");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
             var facility = await _healthFacilityReadRepository.GetByIdAsync(service.FacilityId, cancellationToken: cancellationToken);
 
             if (facility == null)
             {
-                throw new BadRequestException("Booking.ServiceNotFound");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
-
 
             var booking = _mapper.Map<Booking>(request.Booking);
 

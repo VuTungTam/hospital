@@ -10,6 +10,7 @@ using Hospital.Infrastructure.Extensions;
 using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.Models.Requests;
 using Hospital.SharedKernel.Application.Models.Responses;
+using Hospital.SharedKernel.Application.Services.Date;
 using Hospital.SharedKernel.Infrastructure.Caching.Models;
 using Hospital.SharedKernel.Infrastructure.Databases.Models;
 using Hospital.SharedKernel.Infrastructure.Redis;
@@ -23,15 +24,18 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
     {
 
         private readonly ITimeSlotReadRepository _timeSlotReadRepository;
+        private readonly IDateService _dateService;
 
         public HealthServiceReadRepository(
             IServiceProvider serviceProvider,
             IStringLocalizer<Resources> localizer,
             IRedisCache redisCache,
+            IDateService dateService,
             ITimeSlotReadRepository timeSlotReadRepository
             ) : base(serviceProvider, localizer, redisCache)
         {
             _timeSlotReadRepository = timeSlotReadRepository;
+            _dateService = dateService;
         }
 
         public override ISpecification<HealthService> GuardDataAccess<HealthService>(ISpecification<HealthService> spec, QueryOption option = default)
@@ -191,6 +195,47 @@ namespace Hospital.Infrastructure.Repositories.HealthServices
 
             return data;
 
+        }
+
+        public async Task<PaginationResult<HealthService>> GetTodayPagingWithFilterAsync(Pagination pagination, HealthServiceStatus status, long serviceTypeId, long facilityId, long specialtyId, long doctorId, CancellationToken cancellationToken = default)
+        {
+            ISpecification<HealthService> spec = new GetHealthServicesByStatusSpecification(status);
+            if (serviceTypeId > 0)
+            {
+                spec = spec.And(new GetHealthServicesByTypeSpecification(serviceTypeId));
+            }
+
+            if (facilityId > 0)
+            {
+                spec = spec.And(new GetHealthServicesByFacilityIdSpecification(facilityId));
+            }
+
+            if (specialtyId > 0)
+            {
+                spec = spec.And(new GetHealthServicesBySpecialtyIdSpecification(specialtyId));
+            }
+
+            if (doctorId > 0)
+            {
+                spec = spec.And(new GetHealthServicesByDoctorIdSpecification(doctorId));
+            }
+
+
+            var now = _dateService.GetClientTime();
+
+            spec = spec.And(new GetHealthServicesDayOfWeekSpecification((int)now.DayOfWeek));
+
+            var guardExpression = GuardDataAccess(spec).GetExpression();
+            var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
+                        .Include(s => s.ServiceTimeRules)
+                        .Where(guardExpression)
+                        .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt);
+
+            var data = await query.BuildLimit(pagination.Offset, pagination.Size)
+                                  .ToListAsync(cancellationToken);
+            var count = await query.CountAsync(cancellationToken);
+
+            return new PaginationResult<HealthService>(data, count);
         }
     }
 }

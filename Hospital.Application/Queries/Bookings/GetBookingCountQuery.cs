@@ -4,12 +4,14 @@ namespace Hospital.Application.Queries.Bookings
 {
     public class GetBookingCountQuery : BaseAllowAnonymousQuery<List<TimeSlotBookedDto>>
     {
-        public GetBookingCountQuery(long timeRuleId, DateTime date)
+        public GetBookingCountQuery(long timeRuleId, bool isWalkin, DateTime date)
         {
             Date = date;
             TimeRuleId = timeRuleId;
+            IsWalkin = isWalkin;
         }
         public long TimeRuleId { get; }
+        public bool IsWalkin { get; }
         public DateTime Date { get; }
     }
 }

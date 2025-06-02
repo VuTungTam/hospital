@@ -16,7 +16,8 @@ namespace Hospital.Application.Dtos.TimeSlots
 
         public long? DeletedBy { get; set; }
 
-        public string TimeRange => $"{Start:hh\\:mm} - {End:hh\\:mm}";
+        public bool ForWalkin { get; set; }
 
+        public string TimeRange => $"{Start:hh\\:mm} - {End:hh\\:mm}";
     }
 }

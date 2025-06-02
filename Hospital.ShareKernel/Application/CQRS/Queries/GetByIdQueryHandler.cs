@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using System.Resources;
+using AutoMapper;
+using Hospital.Resource.Properties;
 using Hospital.SharedKernel.Application.CQRS.Queries.Base;
 using Hospital.SharedKernel.Application.Repositories.Interface;
+using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 using Hospital.SharedKernel.Domain.Entities.Base;
 using Hospital.SharedKernel.Runtime.Exceptions;
-using System.Resources;
+using MediatR;
 using Microsoft.Extensions.Localization;
-using Hospital.Resource.Properties;
-using Hospital.SharedKernel.Application.Services.Auth.Interfaces;
 
 namespace Hospital.SharedKernel.Application.CQRS.Queries
 {
@@ -31,7 +31,7 @@ namespace Hospital.SharedKernel.Application.CQRS.Queries
         {
             if (!request.IsValidId())
             {
-                throw new BadRequestException("common_id_is_not_valid");
+                throw new BadRequestException("CommonMessage.IdIsNotValid");
             }
             else
             {

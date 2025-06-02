@@ -38,7 +38,7 @@ namespace Hospital.Application.Queries.HealthFacilities
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var option = new QueryOption
@@ -66,6 +66,15 @@ namespace Hospital.Application.Queries.HealthFacilities
             var types = await _facilityTypeReadRepository.GetByIdsAsync(typeIds, cancellationToken: cancellationToken);
 
             facilityDto.Types = _mapper.Map<List<FacilityTypeDto>>(types);
+
+            var imageNames = new List<string>();
+
+            foreach (var image in facility.Images)
+            {
+                var imageName = image.PublicId.Split('/').Last();
+                imageNames.Add(imageName);
+            }
+            facilityDto.ImageNames = imageNames;
 
             return facilityDto;
         }

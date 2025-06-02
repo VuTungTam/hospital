@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AutoMapper;
+using Hospital.Application.Dtos.Articles;
 using Hospital.Application.Dtos.Auth;
 using Hospital.Application.Dtos.Bookings;
 using Hospital.Application.Dtos.CancelReasons;
@@ -21,6 +22,7 @@ using Hospital.Application.Dtos.SystemConfigurations;
 using Hospital.Application.Dtos.TimeSlots;
 using Hospital.Application.Dtos.Zones;
 using Hospital.Application.Models.Auth;
+using Hospital.Domain.Entities.Articles;
 using Hospital.Domain.Entities.Bookings;
 using Hospital.Domain.Entities.CancelReasons;
 using Hospital.Domain.Entities.Doctors;
@@ -117,8 +119,7 @@ namespace Hospital.Application.Mappings
             //HealthService
             CreateMap<HealthService, HealthServiceDto>();
 
-            CreateMap<HealthServiceDto, HealthService>()
-                .ForMember(dest => dest.Specialty, opt => opt.Ignore());
+            CreateMap<HealthServiceDto, HealthService>();
 
             //ServiceTimeRule
             CreateMap<ServiceTimeRule, ServiceTimeRuleDto>().ReverseMap();
@@ -186,6 +187,9 @@ namespace Hospital.Application.Mappings
 
             //CancelReason
             CreateMap<Payment, PaymentDto>().ReverseMap();
+
+            //Article
+            CreateMap<ArticleDto, Article>().ReverseMap();
 
         }
         private static long StringToInt64(string str) => long.TryParse(str, out var id) ? id : 0;

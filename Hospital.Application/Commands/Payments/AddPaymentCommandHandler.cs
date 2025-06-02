@@ -50,7 +50,7 @@ namespace Hospital.Application.Commands.Payments
 
             if (booking == null)
             {
-                throw new BadRequestException("Không thấy bản ghi");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
             var newPayment = _mapper.Map<Payment>(request.Dto);

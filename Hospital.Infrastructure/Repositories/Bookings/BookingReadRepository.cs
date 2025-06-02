@@ -164,7 +164,7 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             return data;
         }
 
-        public async Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceTypeId = 0, DateTime date = default, CancellationToken cancellationToken = default)
+        public async Task<PaginationResult<Booking>> GetMyListPagingWithFilterAsync(Pagination pagination, BookingStatus status, long serviceTypeId = 0, long serviceId = 0, DateTime date = default, CancellationToken cancellationToken = default)
         {
             ISpecification<Booking> spec = new GetBookingsByStatusSpecification(status);
             if (date != default)
@@ -176,6 +176,12 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             {
                 spec = spec.And(new GetBookingsByServiceTypeIdSpecification(serviceTypeId));
             }
+
+            if (serviceId > 0)
+            {
+                spec = spec.And(new GetBookingsByServiceIdSpecification(serviceId));
+            }
+
             var option = new QueryOption
             {
                 IgnoreOwner = false,

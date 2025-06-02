@@ -40,7 +40,7 @@ namespace Hospital.Application.Commands.HealthFacilities
         {
             if (!long.TryParse(request.HealthFacility.Id, out var id) || id <= 0)
             {
-                throw new BadRequestException(_localizer["common_id_is_not_valid"]);
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             var option = new QueryOption
@@ -52,7 +52,7 @@ namespace Hospital.Application.Commands.HealthFacilities
 
             if (facility == null)
             {
-                throw new BadRequestException(_localizer["common_data_does_not_exist_or_was_deleted"]);
+                throw new BadRequestException(_localizer["CommonMessage.DataDoesNotExistOrWasDeleted"]);
             }
 
             await _healthFacilityWriteRepository.UpdateFacilityAsync(facility, request.HealthFacility, cancellationToken: cancellationToken);

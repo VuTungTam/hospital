@@ -39,7 +39,7 @@ namespace Hospital.Application.Commands.Doctors
         {
             if (request.Id <= 0)
             {
-                throw new BadRequestException("Id không hợp lệ");
+                throw new BadRequestException(_localizer["CommonMessage.IdIsNotValid"]);
             }
 
             if (request.Status == AccountStatus.None)
@@ -50,7 +50,7 @@ namespace Hospital.Application.Commands.Doctors
             var doctor = await _doctorReadRepository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
             if (doctor == null)
             {
-                throw new BadRequestException("Nhân viên không tồn tại");
+                throw new BadRequestException(_localizer["CommonMessage.DataWasDeletedOrNotPermission"]);
             }
 
             if (doctor.Status == request.Status)

@@ -44,13 +44,22 @@ namespace Hospital.Application.Dtos.HealthProfiles
     {
         public HealthProfileDtoValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage(localizer["patient_name_is_not_empty"]);
-            //RuleFor(x => x.Gender).NotEmpty().WithMessage(localizer["patient_gender_is_not_empty"]);
-            RuleFor(x => x.Gender).Must(gender => gender == 0 || gender == 1).WithMessage(localizer["patient_gender_is_invalid"]);
-            RuleFor(x => x.Dob).Must(x => x != default && x < DateTime.Now && x > new DateTime(1950, 1, 1)).WithMessage(localizer["invalid_date_of_birth"]);
-            RuleFor(x => x.CICode).Must((x, cicCode)
-                => string.IsNullOrWhiteSpace(cicCode) || CICodeUtility.ValidateCCCD(cicCode, x.Dob.Year, x.Gender))
-                .WithMessage(localizer["invalid_CICode"]);
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage(localizer["HealthProfile.NameIsNotEmpty"]);
+
+            RuleFor(x => x.Gender)
+                .Must(gender => gender == 0 || gender == 1)
+                .WithMessage(localizer["HealthProfile.GenderIsInvalid"]);
+
+            RuleFor(x => x.Dob)
+                .Must(x => x != default && x < DateTime.Now && x > new DateTime(1950, 1, 1))
+                .WithMessage(localizer["HealthProfile.InvalidDateOfBirth"]);
+
+            RuleFor(x => x.CICode)
+                .Must((x, cicCode) =>
+                    string.IsNullOrWhiteSpace(cicCode) || CICodeUtility.ValidateCCCD(cicCode, x.Dob.Year, x.Gender))
+                .WithMessage(localizer["HealthProfile.InvalidCICode"]);
+
         }
     }
 }

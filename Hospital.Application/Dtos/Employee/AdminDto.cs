@@ -20,8 +20,8 @@ namespace Hospital.Application.Dtos.Employee
     {
         public AdminDtoValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            RuleFor(x => x).Must(x => x.Roles != null && x.Roles.Any()).WithMessage("Chưa chọn vai trò");
-            RuleFor(x => x.FacilityId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["invalid_facility_id"]);
+            RuleFor(x => x).Must(x => x.Roles != null && x.Roles.Any()).WithMessage(localizer["Roles.CannotEmpty"]);
+            RuleFor(x => x.FacilityId).Must(x => long.TryParse(x, out var id) && id > 0).WithMessage(localizer["CommonMessage.FacilityIsNotValid"]);
         }
     }
 }

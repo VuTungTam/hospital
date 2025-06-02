@@ -21,6 +21,8 @@ namespace Hospital.Domain.Entities.TimeSlots
 
         public ServiceTimeRule ServiceTimeRule { get; set; }
 
+        public bool ForWalkin { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public long? CreatedBy { get; set; }

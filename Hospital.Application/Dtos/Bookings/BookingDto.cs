@@ -74,26 +74,22 @@ namespace Hospital.Application.Dtos.Bookings
     {
         public BookingValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
-            // Validate ServiceId
             RuleFor(x => x.ServiceId)
-                .NotEmpty().WithMessage(localizer["Bookings.ServiceIsRequired"])
+                .NotEmpty().WithMessage(localizer["Booking.ServiceIsRequired"])
                 .Must(x => long.TryParse(x, out var id) && id > 0)
-                .WithMessage(localizer["Bookings.ServiceIsNotValid"]);
+                .WithMessage(localizer["Booking.ServiceIsNotValid"]);
 
-            // Validate HealthProfileId
             RuleFor(x => x.HealthProfileId)
-                .NotEmpty().WithMessage(localizer["Bookings.HealthProfileIsRequired"])
+                .NotEmpty().WithMessage(localizer["Booking.HealthProfileIsRequired"])
                 .Must(x => long.TryParse(x, out var id) && id > 0)
-                .WithMessage(localizer["Bookings.HealthProfileIsNotValid"]);
+                .WithMessage(localizer["Booking.HealthProfileIsNotValid"]);
 
-            // Validate Date
             RuleFor(x => x.Date)
-                .NotEmpty().WithMessage(localizer["Bookings.DateIsRequired"])
-                .GreaterThanOrEqualTo(DateTime.Today).WithMessage(localizer["Bookings.DateMustBeInFuture"]);
+                .NotEmpty().WithMessage(localizer["Booking.DateIsRequired"])
+                .GreaterThanOrEqualTo(DateTime.Today).WithMessage(localizer["Booking.DateMustBeInFuture"]);
 
-            // Validate TimeSlotId
             RuleFor(x => x.TimeSlotId)
-                .NotEmpty().WithMessage(localizer["Bookings.TimeSlotIsRequired"]);
+                .NotEmpty().WithMessage(localizer["Booking.TimeSlotIsRequired"]);
         }
     }
 }

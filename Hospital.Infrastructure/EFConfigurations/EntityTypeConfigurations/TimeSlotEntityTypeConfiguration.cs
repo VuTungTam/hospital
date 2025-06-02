@@ -36,6 +36,11 @@ namespace Hospital.Infrastructure.EFConfigurations.EntityTypeConfigurations
                   .IsRequired()
                   .HasDefaultValue(false)
                   .HasColumnType("BIT");
+
+            builder.Property(x => x.ForWalkin)
+                    .IsRequired()
+                    .HasDefaultValue(false)
+                    .HasColumnType("BIT");
         }
     }
 }

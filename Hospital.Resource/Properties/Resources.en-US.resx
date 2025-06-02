@@ -342,6 +342,9 @@
   <data name="Roles.CannotExist" xml:space="preserve">
     <value>The {0} role cannot exist</value>
   </data>
+  <data name="Roles.CannotEmpty" xml:space="preserve">
+    <value>Roles can not empty</value>
+  </data>
   <data name="Account.CannotUpdateEmailVerified" xml:space="preserve">
     <value>The email cannot be changed because it has been verified</value>
   </data>
@@ -401,27 +404,6 @@
   </data>
   <data name="Services.questionMustNotBeEmpty" xml:space="preserve">
     <value>Question {0} must not be empty</value>
-  </data>
-  <data name="Bookings.ContentMustNotBeEmpty" xml:space="preserve">
-    <value>Content must not be empty</value>
-  </data>
-  <data name="Bookings.DateIsNotValid" xml:space="preserve">
-    <value>Date is not valid</value>
-  </data>
-  <data name="Bookings.NameMustNotBeEmpty" xml:space="preserve">
-    <value>Name must not be empty</value>
-  </data>
-  <data name="Bookings.PetCategoryIsNotValid" xml:space="preserve">
-    <value>Pet type is not valid</value>
-  </data>
-  <data name="Bookings.PhoneIsNotValid" xml:space="preserve">
-    <value>Phone is not valid</value>
-  </data>
-  <data name="Bookings.ServiceIsNotValid" xml:space="preserve">
-    <value>Service is not valid</value>
-  </data>
-  <data name="Bookings.StatusIsNotWaiting" xml:space="preserve">
-    <value>Status is not waiting</value>
   </data>
   <data name="Contacts.EmailsContainNotValid" xml:space="preserve">
     <value>The list includes invalid emails</value>
@@ -519,4 +501,229 @@
 <data name="CommonMessage.MapURLIsNotValid" xml:space="preserve">
     <value>Map url is not valid</value>
   </data>
+  <data name="Doctor.TitleIsRequired" xml:space="preserve">
+  <value>Doctor title is required.</value>
+</data>
+<data name="Doctor.DegreeIsRequired" xml:space="preserve">
+  <value>Doctor degree is required.</value>
+</data>
+<data name="Doctor.RankIsRequired" xml:space="preserve">
+  <value>Doctor rank is required.</value>
+</data>
+<data name="Doctor.ExpertiseVnIsRequired" xml:space="preserve">
+  <value>Vietnamese expertise is required.</value>
+</data>
+<data name="Doctor.ExpertiseEnIsRequired" xml:space="preserve">
+  <value>English expertise is required.</value>
+</data>
+<data name="Doctor.SpecialtyIsRequired" xml:space="preserve">
+  <value>At least one specialty must be selected.</value>
+</data>
+<data name="Doctor.SpecialtyIdInvalid" xml:space="preserve">
+  <value>Specialty ID is invalid.</value>
+</data>
+<data name="Doctor.NotHaveSpecialty" xml:space="preserve">
+  <value>Doctor don't have this specialty</value>
+</data>
+<data name="CommonMessage.FacilityIsNotValid" xml:space="preserve">
+    <value>Facility is not valid</value>
+  </data>
+ <data name="CommonMessage.ZoneIsNotValid" xml:space="preserve">
+    <value>Zone is not valid</value>
+  </data>
+  <data name="HealthFacility.NameVnIsNotEmpty" xml:space="preserve">
+  <value>Please enter the health facility name in Vietnamese.</value>
+</data>
+<data name="HealthFacility.NameEnIsNotEmpty" xml:space="preserve">
+  <value>Please enter the health facility name in English.</value>
+</data>
+<data name="HealthFacility.LogoIsNotEmpty" xml:space="preserve">
+  <value>Please select a logo for the health facility.</value>
+</data>
+<data name="HealthFacility.DescriptionVnIsNotEmpty" xml:space="preserve">
+  <value>Please enter the description in Vietnamese.</value>
+</data>
+<data name="HealthFacility.DescriptionEnIsNotEmpty" xml:space="preserve">
+  <value>Please enter the description in English.</value>
+</data>
+<data name="HealthFacility.SummaryVnIsNotEmpty" xml:space="preserve">
+  <value>Please enter the summary in Vietnamese.</value>
+</data>
+<data name="HealthFacility.SummaryEnIsNotEmpty" xml:space="preserve">
+  <value>Please enter the summary in English.</value>
+</data>
+<data name="HealthFacility.NotHaveSpecialty" xml:space="preserve">
+  <value>Facility don't have this specialty</value>
+</data>
+<data name="HealthFacility.InvalidMapUrl" xml:space="preserve">
+  <value>The map URL is not valid.</value>
+</data>
+<data name="HealthFacility.SpecialtyIsRequired" xml:space="preserve">
+  <value>Please select at least one specialty.</value>
+</data>
+<data name="HealthFacility.TypeIsRequired" xml:space="preserve">
+  <value>Please select at least one facility type.</value>
+</data>
+<data name="HealthFacility.NotHaveZone" xml:space="preserve">
+  <value>Facility don't have this zone</value>
+</data>
+<data name="HealthProfile.NameIsNotEmpty" xml:space="preserve">
+  <value>Please enter the patient's full name.</value>
+</data>
+<data name="HealthProfile.GenderIsInvalid" xml:space="preserve">
+  <value>Invalid gender.</value>
+</data>
+<data name="HealthProfile.InvalidDateOfBirth" xml:space="preserve">
+  <value>Date of birth is invalid. Please select a date between 1950 and now.</value>
+</data>
+<data name="HealthProfile.InvalidCICode" xml:space="preserve">
+  <value>Citizen identification number (CCCD) is invalid.</value>
+</data>
+<data name="HealthService.NameVnIsNotEmpty" xml:space="preserve">
+  <value>Vietnamese service name must not be empty.</value>
+</data>
+<data name="HealthService.NameEnIsNotEmpty" xml:space="preserve">
+  <value>English service name must not be empty.</value>
+</data>
+<data name="HealthService.PriceIsNotEmpty" xml:space="preserve">
+  <value>Service price must not be empty.</value>
+</data>
+<data name="HealthService.PriceMustBeGreaterThanZero" xml:space="preserve">
+  <value>Service price must be greater than 0.</value>
+</data>
+<data name="HealthService.InvalidDoctor" xml:space="preserve">
+  <value>Doctor is not valid.</value>
+</data>
+<data name="HealthService.InvalidType" xml:space="preserve">
+  <value>Service type is not valid.</value>
+</data>
+<data name="HealthService.InvalidSpecialty" xml:space="preserve">
+  <value>Specialty is not valid.</value>
+</data>
+<data name="Payment.AmountMustBeGreaterThanZero" xml:space="preserve">
+  <value>Amount must be greater than zero.</value>
+</data>
+<data name="Payment.BookingIsRequired" xml:space="preserve">
+  <value>Booking is required.</value>
+</data>
+<data name="Payment.BookingIsNotValid" xml:space="preserve">
+  <value>Booking is not valid.</value>
+</data>
+<data name="Payment.PaymentMethodIsInvalid" xml:space="preserve">
+  <value>Payment method is invalid.</value>
+</data>
+<data name="Payment.TransactionContentMaxLength" xml:space="preserve">
+  <value>Transaction content must not exceed 255 characters.</value>
+</data>
+<data name="ServiceTimeRule.SlotDurationMustBeGreaterThanZero" xml:space="preserve">
+  <value>Slot duration must be greater than zero.</value>
+</data>
+<data name="ServiceTimeRule.MaxPatientsMustBeGreaterThanZero" xml:space="preserve">
+  <value>Maximum number of patients must be greater than zero.</value>
+</data>
+<data name="ServiceTimeRule.StartTimeIsRequired" xml:space="preserve">
+  <value>Start time is required.</value>
+</data>
+<data name="ServiceTimeRule.StartTimeMustBeLessThanEndTime" xml:space="preserve">
+  <value>Start time must be less than end time.</value>
+</data>
+<data name="ServiceTimeRule.StartBreakTimeIsRequired" xml:space="preserve">
+  <value>Start break time is required.</value>
+</data>
+<data name="ServiceTimeRule.StartBreakTimeMustBeGreaterThanStartTime" xml:space="preserve">
+  <value>Start break time must be greater than start time.</value>
+</data>
+<data name="ServiceTimeRule.StartBreakTimeMustBeLessThanEndBreakTime" xml:space="preserve">
+  <value>Start break time must be less than end break time.</value>
+</data>
+<data name="ServiceTimeRule.EndBreakTimeIsRequired" xml:space="preserve">
+  <value>End break time is required.</value>
+</data>
+<data name="ServiceTimeRule.EndBreakTimeMustBeGreaterThanStartBreakTime" xml:space="preserve">
+  <value>End break time must be greater than start break time.</value>
+</data>
+<data name="ServiceTimeRule.EndTimeIsRequired" xml:space="preserve">
+  <value>End time is required.</value>
+</data>
+<data name="ServiceTimeRule.EndTimeMustBeGreaterThanEndBreakTime" xml:space="preserve">
+  <value>End time must be greater than end break time.</value>
+</data>
+<data name="ServiceTimeRule.DayOfWeekIsInvalid" xml:space="preserve">
+  <value>Invalid day of week. Please select a valid weekday.</value>
+</data>
+<data name="ServiceTimeRule.IsExist" xml:space="preserve">
+  <value>Time rule already exists</value>
+</data>
+<data name="User.NameIsRequired" xml:space="preserve">
+  <value>Name is required</value>
+</data>
+<data name="User.PhoneIsInvalid" xml:space="preserve">
+  <value>Phone number is invalid</value>
+</data>
+<data name="User.EmailIsInvalid" xml:space="preserve">
+  <value>Email is invalid</value>
+</data>
+<data name="Booking.ServiceIsRequired" xml:space="preserve">
+  <value>Service is required</value>
+</data>
+<data name="Booking.ServiceIsNotValid" xml:space="preserve">
+  <value>Service is not valid</value>
+</data>
+<data name="Booking.HealthProfileIsRequired" xml:space="preserve">
+  <value>Health profile is required</value>
+</data>
+<data name="Booking.HealthProfileIsNotValid" xml:space="preserve">
+  <value>Health profile is not valid</value>
+</data>
+<data name="Booking.DateIsRequired" xml:space="preserve">
+  <value>Date is required</value>
+</data>
+<data name="Booking.DateMustBeInFuture" xml:space="preserve">
+  <value>Date must be today or later</value>
+</data>
+<data name="Booking.TimeSlotIsRequired" xml:space="preserve">
+  <value>Time slot is required</value>
+</data>
+<data name="Booking.HasFeedback" xml:space="preserve">
+  <value>Booking has feedback</value>
+</data>
+<data name="Booking.NoAvailableTimeSlots" xml:space="preserve">
+  <value>No available time slots</value>
+</data>
+<data name="Booking.InvalidDayOfWeek" xml:space="preserve">
+  <value>Invalid day of the week</value>
+</data>
+<data name="Booking.MaxPatientReached" xml:space="preserve">
+  <value>Maximum number of patients reached</value>
+</data>
+<data name="Booking.IsNotDoing" xml:space="preserve">
+  <value>Status is not 'Doing'</value>
+</data>
+<data name="Booking.IsNotWaiting" xml:space="preserve">
+  <value>Status is not 'Waiting'</value>
+</data>
+<data name="Booking.IsNotConfirmed" xml:space="preserve">
+  <value>Status is not 'Confirmed'</value>
+</data>
+<data name="Zone.NameVnIsNotEmpty" xml:space="preserve">
+  <value>Zone name (Vietnamese) must not be empty</value>
+</data>
+<data name="Zone.NameEnIsNotEmpty" xml:space="preserve">
+  <value>Zone name (English) must not be empty</value>
+</data>
+<data name="Zone.LocationVnIsNotEmpty" xml:space="preserve">
+  <value>Location (Vietnamese) must not be empty</value>
+</data>
+<data name="Zone.LocationEnIsNotEmpty" xml:space="preserve">
+  <value>Location (English) must not be empty</value>
+</data>
+<data name="Zone.SpecialtiesIsRequired" xml:space="preserve">
+  <value>At least one specialty must be selected</value>
+</data>
+<data name="Zone.IsExist" xml:space="preserve">
+  <value>Zone already exists</value>
+</data>
+<data name="Zone.SpecialtyIsExistInOtherZone" xml:space="preserve">
+  <value>Specialty already exists in another zone</value>
+</data>
 </root>

@@ -116,21 +116,22 @@ namespace Hospital.Application.Dtos.HealthFacility
         public HealthFacilityValidator(IStringLocalizer<Resources> localizer) : base(localizer)
         {
             RuleFor(x => x.Logo).Must(x => FileHelper.IsImageByFileName(x)).WithMessage(localizer["Utilities.ImageIsNotValid"]);
-            RuleFor(x => x.NameVn).NotEmpty().WithMessage(localizer["health_facility_name_vn_is_not_empty"]);
-            RuleFor(x => x.NameEn).NotEmpty().WithMessage(localizer["health_facility_name_en_is_not_empty"]);
-            RuleFor(x => x.Logo).NotEmpty().WithMessage(localizer["health_facility_logo_is_not_empty"]);
-            RuleFor(x => x.DescriptionVn).NotEmpty().WithMessage(localizer["health_facility_description_vn_is_not_empty"]);
-            RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["health_facility_description_en_is_not_empty"]);
-            RuleFor(x => x.SummaryVn).NotEmpty().WithMessage(localizer["health_facility_summary_en_is_not_empty"]);
-            RuleFor(x => x.SummaryEn).NotEmpty().WithMessage(localizer["health_facility_summary_en_is_not_empty"]);
-            RuleFor(x => x.MapURL).Must(x => MapUtility.IsMapURL(x)).WithMessage(localizer["invalid_map"]);
+            RuleFor(x => x.NameVn).NotEmpty().WithMessage(localizer["HealthFacility.NameVnIsNotEmpty"]);
+            RuleFor(x => x.NameEn).NotEmpty().WithMessage(localizer["HealthFacility.NameEnIsNotEmpty"]);
+            RuleFor(x => x.Logo).NotEmpty().WithMessage(localizer["HealthFacility.LogoIsNotEmpty"]);
+            RuleFor(x => x.DescriptionVn).NotEmpty().WithMessage(localizer["HealthFacility.DescriptionVnIsNotEmpty"]);
+            RuleFor(x => x.DescriptionEn).NotEmpty().WithMessage(localizer["HealthFacility.DescriptionEnIsNotEmpty"]);
+            RuleFor(x => x.SummaryVn).NotEmpty().WithMessage(localizer["HealthFacility.SummaryVnIsNotEmpty"]);
+            RuleFor(x => x.SummaryEn).NotEmpty().WithMessage(localizer["HealthFacility.SummaryEnIsNotEmpty"]);
+            RuleFor(x => x.MapURL)
+                .Must(x => MapUtility.IsMapURL(x))
+                .WithMessage(localizer["HealthFacility.InvalidMapUrl"]);
             RuleFor(x => x.SpecialtyIds)
-                .NotNull().WithMessage(localizer["health_facility_specialties_required"])
-                .Must(x => x.Any()).WithMessage(localizer["health_facility_specialties_required"]);
-
+                .NotNull().WithMessage(localizer["HealthFacility.SpecialtyIsRequired"])
+                .Must(x => x.Any()).WithMessage(localizer["HealthFacility.SpecialtyIsRequired"]);
             RuleFor(x => x.TypeIds)
-                .NotNull().WithMessage(localizer["health_facility_types_required"])
-                .Must(x => x.Any()).WithMessage(localizer["health_facility_types_required"]);
+                .NotNull().WithMessage(localizer["HealthFacility.TypeIsRequired"])
+                .Must(x => x.Any()).WithMessage(localizer["HealthFacility.TypeIsRequired"]);
         }
     }
 }

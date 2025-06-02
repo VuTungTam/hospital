@@ -92,14 +92,14 @@ namespace Hospital.Application.Commands.Zones
             {
                 if (z.NameVn == zone.NameVn || z.NameEn == zone.NameEn)
                 {
-                    throw new BadRequestException(_localizer["Zone đã tồn tại"]);
+                    throw new BadRequestException(_localizer["Zone.IsExist"]);
                 }
 
                 var specialtyIds = z.ZoneSpecialties.Select(x => x.SpecialtyId.ToString()).ToList();
 
-                if (zone.Specialties.Any(s => specialtyIds.Contains(s.Id)))
+                if (zone.SpecialtyIds.Any(s => specialtyIds.Contains(s)))
                 {
-                    throw new BadRequestException(_localizer["Specialty đã tồn tại trong một Zone khác"]);
+                    throw new BadRequestException(_localizer["Zone.SpecialtyIsExistInOtherZone"]);
                 }
 
             }

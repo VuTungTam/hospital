@@ -138,18 +138,19 @@ namespace Hospital.Application.Commands.Bookings
 
             if (serviceTimeRules == null)
             {
-                throw new BadRequestException("Chưa có suất khám");
+                throw new BadRequestException(_localizer["Booking.NoAvailableTimeSlots"]);
             }
+
             var timeRule = serviceTimeRules.FirstOrDefault(x => x.DayOfWeek == (int)booking.Date.DayOfWeek);
 
             if (timeRule == null)
             {
-                throw new BadRequestException("Ngày trong tuần không hợp lệ");
+                throw new BadRequestException(_localizer["Booking.InvalidDayOfWeek"]);
             }
 
             if (maxOrder == timeRule.MaxPatients)
             {
-                throw new BadRequestException(_localizer["So luong da day"]);
+                throw new BadRequestException(_localizer["Booking.MaxPatientReached"]);
             }
 
             booking.Order = maxOrder + 1;
@@ -178,20 +179,22 @@ namespace Hospital.Application.Commands.Bookings
             await _bookingWriteRepository.AddBookingCodeAsync(booking, cancellationToken);
 
             await _bookingWriteRepository.SaveChangesAsync(cancellationToken);
-
-            var notification = new Notification
+            if (booking.OwnerId != -1)
             {
-                Data = booking.Id.ToString(),
-                IsUnread = true,
-                Description = $"<p>Đặt lịch khám <span class='n-bold'>{booking.Code}</span> thành công lúc <span class='n-bold'>{booking.CreatedAt:HH:mm dd/MM/yyyy}</span>. Số thứ tự của bạn là <span class='n-bold'>{booking.Order}</span></p>",
-                Timestamp = DateTime.Now,
-                Type = NotificationType.ConfirmBooking
-            };
-            var callbackWrapper = new CallbackWrapper();
+                var notification = new Notification
+                {
+                    Data = booking.Id.ToString(),
+                    IsUnread = true,
+                    Description = $"<p>Đặt lịch khám <span class='n-bold'>{booking.Code}</span> thành công lúc <span class='n-bold'>{booking.CreatedAt:HH:mm dd/MM/yyyy}</span>. Số thứ tự của bạn là <span class='n-bold'>{booking.Order}</span></p>",
+                    Timestamp = DateTime.Now,
+                    Type = NotificationType.ConfirmBooking
+                };
+                var callbackWrapper = new CallbackWrapper();
 
-            await _customerWriteRepository.AddNotificationForCustomerAsync(notification, _executionContext.Identity, callbackWrapper, cancellationToken);
+                await _customerWriteRepository.AddNotificationForCustomerAsync(notification, booking.OwnerId, callbackWrapper, cancellationToken);
 
-            await _bookingWriteRepository.ScheduleNotificationForCustomerAsync(booking.Id, booking.Date, timeSlot.Start, cancellationToken);
+                await _bookingWriteRepository.ScheduleNotificationForCustomerAsync(booking.Id, booking.Code, booking.Date, timeSlot.Start, cancellationToken);
+            }
 
             await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
