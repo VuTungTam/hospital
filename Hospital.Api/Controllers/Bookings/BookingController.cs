@@ -53,9 +53,9 @@ namespace Hospital.Api.Controllers.Bookings
         }
 
         [HttpGet("count"), AllowAnonymous]
-        public virtual async Task<IActionResult> GetCount(long timeRuleId, DateTime date, CancellationToken cancellationToken = default)
+        public virtual async Task<IActionResult> GetCount(long timeRuleId, bool isWalkin, DateTime date, CancellationToken cancellationToken = default)
         {
-            var query = new GetBookingCountQuery(timeRuleId, date);
+            var query = new GetBookingCountQuery(timeRuleId, isWalkin, date);
             var user = await _mediator.Send(query, cancellationToken);
 
             return Ok(new SimpleDataResult { Data = user });
@@ -68,6 +68,7 @@ namespace Hospital.Api.Controllers.Bookings
             string search = "",
             string asc = "",
             string desc = "",
+            long serviceTypeId = 0,
             long serviceId = 0,
             DateTime date = default,
             BookingStatus status = BookingStatus.None,
@@ -75,7 +76,7 @@ namespace Hospital.Api.Controllers.Bookings
         )
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetMyListBookingsPagingQuery(pagination, status, serviceId, date);
+            var query = new GetMyListBookingsPagingQuery(pagination, status, serviceTypeId, serviceId, date);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });

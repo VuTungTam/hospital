@@ -18,6 +18,7 @@ namespace Hospital.Api.Controllers.TimeSlots
         [HttpGet("{timeRuleId}/pagination"), AllowAnonymous]
         public async Task<IActionResult> GetPagination(
             long timeRuleId,
+            bool isWalkin,
             int page,
             int size,
             string search = "",
@@ -26,7 +27,7 @@ namespace Hospital.Api.Controllers.TimeSlots
             CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetTimeSlotsPaginationQuery(pagination, timeRuleId);
+            var query = new GetTimeSlotsPaginationQuery(pagination, timeRuleId, isWalkin);
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }

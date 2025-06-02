@@ -79,6 +79,29 @@ namespace Hospital.Api.Controllers.HealthServices
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
         }
 
+        [HttpGet("today"), AllowAnonymous]
+        public virtual async Task<IActionResult> GetTodayPagination(
+            int page,
+            int size,
+            string search = "",
+            string asc = "",
+            string desc = "",
+            long typeId = 0,
+            long facilityId = 0,
+            long specialtyId = 0,
+            long doctorId = 0,
+            HealthServiceStatus status = HealthServiceStatus.None,
+            CancellationToken cancellationToken = default)
+        {
+            var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
+
+            var query = new GetHealthServiceTodayPagingQuery(pagination, facilityId, typeId, specialtyId, doctorId, status);
+
+            var result = await _mediator.Send(query, cancellationToken);
+
+            return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
+        }
+
         [HttpGet("{id}"), AllowAnonymous]
         public virtual async Task<IActionResult> GetById(long id, CancellationToken cancellationToken = default)
         {

@@ -35,10 +35,10 @@ namespace Hospital.Api.Controllers.Feedbacks
         }
 
         [HttpGet, AllowAnonymous]
-        public async Task<IActionResult> GetFeedbackPagination(int page, int size, long serviceId, int star, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetFeedbackPagination(int page, int size, long serviceId, int star, long facilityId, string search = "", string asc = "", string desc = "", CancellationToken cancellationToken = default)
         {
             var pagination = new Pagination(page, size, search, QueryType.Contains, asc, desc);
-            var query = new GetFeedbacksPaginationQuery(pagination, star, serviceId);
+            var query = new GetFeedbacksPaginationQuery(pagination, star, serviceId, facilityId);
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(new ServiceResult { Data = result.Data, Total = result.Total });
