@@ -29,6 +29,8 @@ namespace Hospital.Application.Dtos.Doctors
 
         public string ExpertiseEn { get; set; }
 
+        public string ProfessionalLevel { get; set; }
+
         public List<SpecialtyDto> Specialties { get; set; } = new List<SpecialtyDto>();
 
         public List<string> SpecialtyIds { get; set; } = new List<string>();

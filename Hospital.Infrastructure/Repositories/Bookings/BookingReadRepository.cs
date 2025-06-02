@@ -192,11 +192,11 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             };
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
-                         .Where(guardExpression)
-                         .OrderBy(x => x.Date)
-                         .ThenBy(x => x.TimeSlotId)
-                         .ThenBy(x => x.Status == BookingStatus.Completed ? 1 : 0)
-                         .ThenBy(x => x.ModifiedAt ?? x.CreatedAt);
+                 .Where(guardExpression)
+                 .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt)
+                 .ThenBy(x => x.Date)
+                 .ThenBy(x => x.TimeSlotId)
+                 .ThenBy(x => x.Status == BookingStatus.Completed ? 1 : 0);
 
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);
@@ -229,12 +229,11 @@ namespace Hospital.Infrastructure.Repositories.Bookings
             };
             var guardExpression = GuardDataAccess(spec, option).GetExpression();
             var query = BuildSearchPredicate(_dbSet.AsNoTracking(), pagination)
-                         .Where(guardExpression)
-                         .OrderBy(x => x.Date)
-                         .ThenBy(x => x.TimeSlotId)
-                         .ThenBy(x => x.ModifiedAt)
-                         .ThenBy(x => x.ServiceId)
-                         .ThenBy(x => x.Status);
+                        .Where(guardExpression)
+                        .OrderByDescending(x => x.ModifiedAt ?? x.CreatedAt)
+                        .ThenBy(x => x.Date)
+                        .ThenBy(x => x.TimeSlotId)
+                        .ThenBy(x => x.Status == BookingStatus.Completed ? 1 : 0);
 
             var data = await query
                 .BuildLimit(pagination.Offset, pagination.Size).ToListAsync(cancellationToken);

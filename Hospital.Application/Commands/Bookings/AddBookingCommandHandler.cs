@@ -153,7 +153,7 @@ namespace Hospital.Application.Commands.Bookings
             };
             var callbackWrapper = new CallbackWrapper();
 
-            await _employeeWriteRepository.AddNotificationForEmployeeAsync(notification, booking.ZoneId, booking.FacilityId, callbackWrapper, cancellationToken);
+            await _employeeWriteRepository.AddNotificationForEmployeeAsync(notification, booking.FacilityId, booking.ZoneId, callbackWrapper, cancellationToken);
 
             await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 

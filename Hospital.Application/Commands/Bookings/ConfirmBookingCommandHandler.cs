@@ -2,6 +2,7 @@
 using Hospital.Application.Repositories.Interfaces.Bookings;
 using Hospital.Application.Repositories.Interfaces.Customers;
 using Hospital.Application.Repositories.Interfaces.ServiceTimeRules;
+using Hospital.Application.Repositories.Interfaces.TimeSlots;
 using Hospital.Application.Services.Interfaces.Sockets;
 using Hospital.Domain.Enums;
 using Hospital.Domain.Specifications.ServiceTimeRules;
@@ -27,6 +28,7 @@ namespace Hospital.Application.Commands.Bookings
         private readonly IBookingWriteRepository _bookingWriteRepository;
         private readonly IServiceTimeRuleReadRepository _serviceTimeRuleReadRepository;
         private readonly ICustomerWriteRepository _customerWriteRepository;
+        private readonly ITimeSlotReadRepository _timeSlotReadRepository;
         private readonly IRedisCache _redisCache;
         private readonly ISocketService _socketService;
         public ConfirmBookingCommandHandler(
@@ -37,6 +39,7 @@ namespace Hospital.Application.Commands.Bookings
             IBookingReadRepository bookingReadRepository,
             IBookingWriteRepository bookingWriteRepository,
             IServiceTimeRuleReadRepository serviceTimeRuleReadRepository,
+            ITimeSlotReadRepository timeSlotReadRepository,
             ICustomerWriteRepository customerWriteRepository,
             ISocketService socketService,
             IRedisCache redisCache
@@ -45,6 +48,7 @@ namespace Hospital.Application.Commands.Bookings
             _bookingReadRepository = bookingReadRepository;
             _bookingWriteRepository = bookingWriteRepository;
             _serviceTimeRuleReadRepository = serviceTimeRuleReadRepository;
+            _timeSlotReadRepository = timeSlotReadRepository;
             _redisCache = redisCache;
             _socketService = socketService;
             _customerWriteRepository = customerWriteRepository;
@@ -74,6 +78,13 @@ namespace Hospital.Application.Commands.Bookings
                 throw new BadRequestException(_localizer["Booking.IsNotWaiting"]);
             }
 
+            var timeSlot = await _timeSlotReadRepository.GetByIdAsync(booking.TimeSlotId, cancellationToken: cancellationToken);
+
+            if (timeSlot == null)
+            {
+                throw new BadRequestException("Booking.TimeSlotNotFound");
+            }
+
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date,
                 booking.TimeSlotId, cancellationToken);
 
@@ -81,18 +92,19 @@ namespace Hospital.Application.Commands.Bookings
 
             if (serviceTimeRules == null)
             {
-                throw new BadRequestException("Chưa có suất khám");
+                throw new BadRequestException(_localizer["Booking.NoAvailableTimeSlots"]);
             }
+
             var timeRule = serviceTimeRules.FirstOrDefault(x => x.DayOfWeek == (int)booking.Date.DayOfWeek);
 
             if (timeRule == null)
             {
-                throw new BadRequestException("Ngày trong tuần không hợp lệ");
+                throw new BadRequestException(_localizer["Booking.InvalidDayOfWeek"]);
             }
 
             if (maxOrder == timeRule.MaxPatients)
             {
-                throw new BadRequestException(_localizer["So luong da day"]);
+                throw new BadRequestException(_localizer["Booking.MaxPatientReached"]);
             }
 
             booking.Status = BookingStatus.Confirmed;
@@ -113,6 +125,8 @@ namespace Hospital.Application.Commands.Bookings
             var callbackWrapper = new CallbackWrapper();
 
             await _customerWriteRepository.AddNotificationForCustomerAsync(notification, booking.OwnerId, callbackWrapper, cancellationToken);
+
+            await _bookingWriteRepository.ScheduleNotificationForCustomerAsync(booking.Id, booking.Code, booking.Date, timeSlot.Start, cancellationToken);
 
             await _bookingWriteRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 

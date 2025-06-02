@@ -13,7 +13,7 @@ namespace Hospital.Application.Repositories.Interfaces.Employees
 
         Task AddFacilityAdminAsync(Employee employee, long facilityId, CancellationToken cancellationToken);
 
-        Task AddNotificationForEmployeeAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
+        Task AddNotificationForEmployeeAsync(Notification notification, long facilityId, long zoneId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken);
 
         Task UpdateRolesAsync(long employeeId, IEnumerable<long> roleIds, CancellationToken cancellationToken);
 

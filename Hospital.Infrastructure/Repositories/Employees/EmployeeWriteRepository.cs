@@ -66,7 +66,7 @@ namespace Hospital.Infrastructure.Repositories.Employees
             await _dbSet.AddAsync(employee, cancellationToken);
         }
 
-        public async Task AddNotificationForEmployeeAsync(Notification notification, long zoneId, long facilityId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken)
+        public async Task AddNotificationForEmployeeAsync(Notification notification, long facilityId, long zoneId, CallbackWrapper callbackWrapper, CancellationToken cancellationToken)
         {
             var query = _dbSet.AsNoTracking()
                 .Include(x => x.EmployeeRoles)

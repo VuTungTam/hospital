@@ -130,7 +130,7 @@ namespace Hospital.Application.Commands.Bookings
 
             if (timeSlot == null)
             {
-                throw new BadRequestException("Booking.timeSlotNotFound");
+                throw new BadRequestException("Booking.TimeSlotNotFound");
             }
             var maxOrder = await _bookingReadRepository.GetMaxOrderAsync(booking.ServiceId, booking.Date, booking.TimeSlotId, cancellationToken);
 
