@@ -110,14 +110,14 @@ namespace Hospital.Application.Commands.Bookings
 
             if (profile == null)
             {
-                throw new BadRequestException("Booking.ServiceNotFound");
+                throw new BadRequestException("Booking.ProfileNotFound");
             }
 
             var facility = await _healthFacilityReadRepository.GetByIdAsync(service.FacilityId, cancellationToken: cancellationToken);
 
             if (facility == null)
             {
-                throw new BadRequestException("Booking.ServiceNotFound");
+                throw new BadRequestException("Booking.FacilityNotFound");
             }
 
             booking.HealthProfileName = profile.Name;

@@ -82,7 +82,7 @@ namespace Hospital.Infrastructure.DI
             //services.AddScoped<ISystemConfigurationWriteRepository, SystemConfigurationWriteRepository>();
 
             // Dapper
-            services.AddDbConenctionService(configuration);
+            services.AddDbConnectionService(configuration);
 
             //Payment
             services.AddScoped<IVietQrService, VietQrService>();

@@ -315,20 +315,9 @@ namespace Hospital.Infrastructure.Repositories.Bookings
 
         private async Task<Booking> GetBookingFromDatabaseAsync(string code, CancellationToken cancellationToken)
         {
-            var sql = $@"
-                SELECT * FROM {new Booking().GetTableName()} 
-                WHERE Code = @code AND OwnerId = @ownerId";
-
-            var parameters = new[]
-            {
-                new SqlParameter("@code", code),
-                new SqlParameter("@ownerId", _executionContext.Identity)
-            };
-
-            return await _dbSet.FromSqlRaw(sql, parameters)
-                               .IgnoreQueryFilters()
-                               .AsNoTracking()
-                               .FirstOrDefaultAsync(cancellationToken);
+            return await _dbSet
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Code == code && x.OwnerId == _executionContext.Identity, cancellationToken);
         }
         public async Task<List<Booking>> GetNextBookings(Booking cancelBooking, CancellationToken cancellationToken)
         {

@@ -419,13 +419,11 @@ namespace Hospital.Application.Services.Impls.Auth
             if (user is Customer)
             {
                 roles = new List<Role>();
-                actions = new List<ActionWithExcludeValue>();
                 permission = await GetCustomerPermission(cancellationToken);
             }
             else if (user is Doctor doctor)
             {
                 roles = new List<Role>();
-                actions = new List<ActionWithExcludeValue>();
                 permission = await GetDoctorPermission(cancellationToken);
             }
             else if (user is Employee employee)

@@ -12,7 +12,7 @@ namespace Hospital.SharedKernel.Infrastructure.Databases.Extensions
             ConnectionStringConfig.ConnectionStrings = configuration.GetRequiredSection("ConnectionStrings").Get<Dictionary<string, string>>();
         }
 
-        public static IServiceCollection AddDbConenctionService(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDbConnectionService(this IServiceCollection services, IConfiguration configuration)
         {
             SetConnectionStrings(configuration);
             return services.AddScoped<IDbConnection, DbConnection>();
